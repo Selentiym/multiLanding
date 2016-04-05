@@ -1,0 +1,25 @@
+/* reset */
+html, body, h1, h2, ul, li, p { margin: 0; padding: 0; border: 0; }
+
+
+
+A { color: #106d9f; text-decoration: underline; }
+
+
+
+
+
+
+/* global */
+.g-hidden { display: none; }
+.g-line { zoom: 1; }
+.g-line:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+/* layouts */
+.l-container { width: 720px; padding: 0 40px; margin: 0 auto; }
+
+/* header */
+.b-header { position: relative; padding-top: 32px; }
+.b-header .title { float: left; padding: 18px 0 0 0; }
+.b-header .title .name { float: left; padding: 4px 12px; background: #86c7e0; color: #fff; font-size: 36px; line-height: 40px; }
+.b-header .title .slogan { padding: 4px 0 0 13px; color: #545454; font: italic 18px/22px Georgia, "Century Schoolbook L", Serif; }
