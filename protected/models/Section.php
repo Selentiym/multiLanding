@@ -11,6 +11,7 @@
  */
 class Section extends UModel
 {
+	const VIEW_PREFIX = '//subs/';
 	/**
 	 * @return string the associated database table name
 	 */

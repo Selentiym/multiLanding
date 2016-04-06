@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var Rule $model a Rule that worked now.
+ * @var Rule $rule - the same, just alias.
+ */
+$rule = $model;
+?>
 <!DOCTYPE html>
 <html lang="ru" >
 <head>
@@ -221,20 +228,19 @@
         <div class="main-content">
             <div class="main-content-left">
                 <div class="in_main-content-left">
-					 <?php $this -> renderPartial('//subs/prices', array('model' => $model)); ?>
-					 <div class="clear"></div>
-					 <?php $this -> renderPartial('//subs/skidki', array('model' => $model)); ?>
-					 <div class="clear"></div>
-					 <?php $this -> renderPartial('//subs/jelezo', array('model' => $model)); ?>
-					 <div class="clear"></div>
-					 <?php $this -> renderPartial('//subs/raznica', array('model' => $model)); ?>
-					 <div class="clear"></div>
-					 <?php $this -> renderPartial('//subs/doctors', array('model' => $model)); ?>
-					 <div class="clear"></div>
-					 <?php $this -> renderPartial('//subs/geo', array('model' => $model)); ?>
-					 <div class="clear"></div>
-					 <?php $this -> renderPartial('//subs/faq', array('model' => $model)); ?>
-					 <div class="clear"></div>
+                    <?php
+                        if (is_a($rule -> section,'Section')) {
+                            $this->renderPartial('//subs/_section', array('section'=> $rule -> section, 'rule' => $rule));
+                        }
+
+
+                        foreach(Section::model() -> findAll() as $section){
+                            if ($section -> id == $rule -> section -> id) {
+                                continue;
+                            }
+                            $this->renderPartial('//subs/_section', array('section' => $section, 'rule' => $rule));
+                        }
+                    ?>
                  </div>
             </div>
 

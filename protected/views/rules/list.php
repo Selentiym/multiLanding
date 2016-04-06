@@ -16,9 +16,9 @@ $rules = Rule::model() -> findAll(array('order' => 'prior DESC'));
         <td>Цена</td>
         <td>Блок</td>
     </tr>
-<?php
-foreach ($rules as $rule) {
-    $this -> renderPartial('//rules/_single', array('rule' => $rule));
-}
-?>
+    <?php
+        foreach ($rules as $rule) {
+            $this -> renderPartial('//rules/_single', array('rule' => $rule));
+        }
+    ?>
 </table>

@@ -14,7 +14,7 @@ class SiteController extends Controller
 			),*/
 			'index'=>array(
 				'class'=>'application.controllers.site.ModelViewAction',
-				'modelClass' => 'Sub',
+				'modelClass' => 'Rule',
 				'view' => '//subs/index',
 				'external' => $_GET
 			),

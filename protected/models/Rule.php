@@ -152,4 +152,29 @@ class Rule extends UModel {
 		var_dump($this -> getErrors());
 		return;
 	}
+	/**
+	 * Function to be used in ViewModel action to have more flexibility
+	 * @arg mixed $arg - the argument populated from the controller.
+	 * @arg mixed $external - another arguments
+	 */
+	public function customFind($arg, $external = false){
+		$input = $external['utm_term'];
+		//Если вдруг потребутся обработка
+		$phrase = $input;
+		$rules = self::model() -> findAll(array('order' => 'prior DESC'));
+		foreach($rules as $rule){
+			if ($rule -> check($input)){
+				return $rule;
+			}
+		}
+		reset($rules);
+		return current($rules);
+	}
+	/**
+	 * @arg string $string - a string that may or may not subject to the this rule
+	 * @return bool whether the string corresponds to the rule.
+	 */
+	public function check($string){
+		return preg_match('/'.$this -> word.'/iu',$string);
+	}
 }
