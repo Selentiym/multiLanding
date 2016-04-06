@@ -13,13 +13,13 @@ class SiteController extends Controller
 				'view' => '//subs/index'
 			),*/
 			'index'=>array(
-				'class'=>'application.controllers.actions.ModelViewAction',
+				'class'=>'application.controllers.site.ModelViewAction',
 				'modelClass' => 'Sub',
 				'view' => '//subs/index',
 				'external' => $_GET
 			),
 			'post' => array(
-				'class'=>'application.controllers.actions.FileViewAction',
+				'class'=>'application.controllers.site.FileViewAction',
 				'view' => '//subs/post',
 				'partial' => true
 			)

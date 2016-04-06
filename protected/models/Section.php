@@ -1,21 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "{{price}}".
+ * This is the model class for table "{{sections}}".
  *
- * The followings are the available columns in table '{{price}}':
+ * The followings are the available columns in table '{{sections}}':
  * @property integer $id
- * @property string $text
- * @property integer $price
+ * @property string $name
+ * @property string $view
+ * @property integer $num
  */
-class Price extends UModel
+class Section extends UModel
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{price}}';
+		return '{{sections}}';
 	}
 
 	/**
@@ -26,12 +27,13 @@ class Price extends UModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('text, price', 'required'),
-			array('price', 'numerical', 'integerOnly'=>true),
-			array('text', 'length', 'max'=>1024),
+			array('name, view, num', 'required'),
+			array('num', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>512),
+			array('view', 'length', 'max'=>256),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, text, price', 'safe', 'on'=>'search'),
+			array('id, name, view, num', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,8 +45,6 @@ class Price extends UModel
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'sub' => array(self::HAS_MANY, 'Sub', 'id_price'),
-			'block' => array(self::BELONGS_TO, 'PriceBlock', 'id_block')
 		);
 	}
 
@@ -55,8 +55,9 @@ class Price extends UModel
 	{
 		return array(
 			'id' => 'ID',
-			'text' => 'Text',
-			'price' => 'Price',
+			'name' => 'Name',
+			'view' => 'View',
+			'num' => 'Num',
 		);
 	}
 
@@ -79,27 +80,30 @@ class Price extends UModel
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('text',$this->text,true);
-		$criteria->compare('price',$this->price);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('view',$this->view,true);
+		$criteria->compare('num',$this->num);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
-	/**
-	 * @return integer - id of the first price
-	 */
-	public static function trivialId(){
-		return self::model() -> find() -> id;
-	}
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Price the static model class
+	 * @return Section the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	/**
+	 * @return integer - id of the first price
+	 */
+	public static function trivialId(){
+		echo "trivial";
+		return self::model() -> findByAttributes(array('view' => 'prices')) -> id;
 	}
 }

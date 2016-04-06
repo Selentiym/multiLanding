@@ -14,6 +14,7 @@ return array(
 
 	// autoloading model and component classes
 	'import'=>array(
+		'application.components.CHtml',
 		'application.models.*',
 		'application.components.*',
 	),
@@ -45,6 +46,8 @@ return array(
 				'gii'=>'gii',
 				'gii/<controller:\w+>'=>'gii/<controller>',
 				'gii/<controller:\w+>/<action:\w+>'=>'gii/<controller>/<action>',
+
+				'admin/<action:(create|update|delete)><modelClass:(Rule)>/<arg:\w*>' => 'admin/<action><modelClass>',
 				
 				'<action:\w+>' => 'site/<action>',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
