@@ -10,7 +10,10 @@ class AdminController extends CController{
      * @var string $layout
      */
     public $layout = 'adminLayout';
-
+    /**
+     * @var string $defaultAction
+     */
+    public $defaultAction = 'rules';
     public function actions(){
         return array(
             'createRule' => array(
@@ -27,7 +30,8 @@ class AdminController extends CController{
             ),
             'rules' => array(
                 'class' => 'application.controllers.site.FileViewAction',
-                'view' => '//rules/list'
+                'view' => '//rules/list',
+                'access' => Yii::app()->user->getState('logged',false)
             )
         );
     }

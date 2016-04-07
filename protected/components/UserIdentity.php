@@ -7,6 +7,7 @@
  */
 class UserIdentity extends CUserIdentity
 {
+	private $_id;
 	/**
 	 * Authenticates a user.
 	 * The example implementation makes sure if the username and password
@@ -15,6 +16,27 @@ class UserIdentity extends CUserIdentity
 	 * against some persistent user identity storage (e.g. database).
 	 * @return boolean whether authentication succeeds.
 	 */
+    public function authenticate()
+    {
+        $record=User::model()->findByAttributes(array('username'=>$this->username));
+        if($record===null)
+            $this->errorCode=self::ERROR_USERNAME_INVALID;
+        //else if(!CPasswordHelper::verifyPassword($this->password,$record->password))
+        else if(md5($this->password.'salt_mine!') != $record->password)
+            $this->errorCode=self::ERROR_PASSWORD_INVALID;
+        else
+        {
+            $this->_id=$record->id;
+            $this->errorCode=self::ERROR_NONE;
+        }
+        return !$this->errorCode;
+    }
+ 
+    public function getId()
+    {
+        return $this->_id;
+    }
+	/* default
 	public function authenticate()
 	{
 		$users=array(
@@ -29,5 +51,5 @@ class UserIdentity extends CUserIdentity
 		else
 			$this->errorCode=self::ERROR_NONE;
 		return !$this->errorCode;
-	}
+	}*/
 }

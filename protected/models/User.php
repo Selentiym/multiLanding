@@ -1,23 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "{{sections}}".
+ * This is the model class for table "{{user}}".
  *
- * The followings are the available columns in table '{{sections}}':
+ * The followings are the available columns in table '{{user}}':
  * @property integer $id
- * @property string $name
- * @property string $view
- * @property integer $num
+ * @property string $username
+ * @property string $password
  */
-class Section extends UModel
+class User extends UModel
 {
-	const VIEW_PREFIX = '//subs/';
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{sections}}';
+		return '{{user}}';
 	}
 
 	/**
@@ -28,13 +26,11 @@ class Section extends UModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, view, num', 'required'),
-			array('num', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>512),
-			array('view', 'length', 'max'=>256),
+			array('username, password', 'required'),
+			array('username, password', 'length', 'max'=>256),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, view, num', 'safe', 'on'=>'search'),
+			array('id, username, password', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,9 +52,8 @@ class Section extends UModel
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
-			'view' => 'View',
-			'num' => 'Num',
+			'username' => 'Username',
+			'password' => 'Password',
 		);
 	}
 
@@ -81,9 +76,8 @@ class Section extends UModel
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('view',$this->view,true);
-		$criteria->compare('num',$this->num);
+		$criteria->compare('username',$this->username,true);
+		$criteria->compare('password',$this->password,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -94,16 +88,10 @@ class Section extends UModel
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Section the static model class
+	 * @return User the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
-	/**
-	 * @return integer - id of the first price
-	 */
-	public static function trivialId(){
-		return self::model() -> findByAttributes(array('view' => 'prices')) -> id;
 	}
 }

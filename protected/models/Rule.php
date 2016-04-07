@@ -141,7 +141,7 @@ class Rule extends UModel {
 		}
 		if (!$this -> id_section) {
 			$this -> id_section = Section::trivialId();
-			echo $this -> id_section;
+			//echo $this -> id_section;
 		}
 		return parent::beforeSave();
 	}
@@ -157,18 +157,22 @@ class Rule extends UModel {
 	 * @arg mixed $arg - the argument populated from the controller.
 	 * @arg mixed $external - another arguments
 	 */
-	public function customFind($arg, $external = false){
-		$input = $external['utm_term'];
-		//Если вдруг потребутся обработка
-		$phrase = $input;
-		$rules = self::model() -> findAll(array('order' => 'prior DESC'));
-		foreach($rules as $rule){
-			if ($rule -> check($input)){
-				return $rule;
+	public function customFind($arg = false, $external = false){
+
+		if ($input = $external['utm_term']) {
+			//Если вдруг потребутся обработка
+			$phrase = $input;
+			$rules = self::model()->findAll(array('order' => 'prior DESC'));
+			foreach ($rules as $rule) {
+				if ($rule->check($input)) {
+					return $rule;
+				}
 			}
+			reset($rules);
+			return current($rules);
+		} else {
+			return $this -> findByPk($arg);
 		}
-		reset($rules);
-		return current($rules);
 	}
 	/**
 	 * @arg string $string - a string that may or may not subject to the this rule

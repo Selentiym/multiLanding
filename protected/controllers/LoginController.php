@@ -8,8 +8,7 @@
 /**
  * Login controller
  */
-class LoginController extends CController
-{
+class LoginController extends CController {
     public $defaultAction = 'index';
     public function actionIndex() {
         $model = new LoginForm;
@@ -26,8 +25,10 @@ class LoginController extends CController
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
-            if ($model->validate() && $model->login())
-                $this->redirect(Yii::app()->baseUrl);
+            if (/*$model->validate() && */$model->login()) {
+                Yii::app()->user->setState("logged",true);
+                $this->redirect(Yii::app()->baseUrl . '/admin');
+            }
         }
         // display the login form
         $this->renderPartial('//login/loginform', array('model' => $model));
@@ -50,6 +51,7 @@ class LoginController extends CController
     public function actionLogout()
     {
         Yii::app()->user->logout();
+        Yii::app()->user->setState("logged",false);
         $this->redirect(Yii::app()->homeUrl);
     }
 }

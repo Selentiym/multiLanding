@@ -38,7 +38,11 @@ return array(
 			'allowAutoLogin'=>true,
 		),
 		// uncomment the following to enable URLs in path-format
-		
+		//authManager to enable RBAC - authorization. All info about roles, operations and tasks is stored in a database db.
+		'authManager'=>array(
+				'class'=>'CPhpAuthManager',
+				//'connectionID'=>'db',
+		),
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName' => false,
@@ -47,6 +51,8 @@ return array(
 				'gii/<controller:\w+>'=>'gii/<controller>',
 				'gii/<controller:\w+>/<action:\w+>'=>'gii/<controller>/<action>',
 
+				'admin' => 'admin',
+				'login' => 'login',
 				'admin/<action:(create|update|delete)><modelClass:(Rule)>/<arg:\w*>' => 'admin/<action><modelClass>',
 				
 				'<action:\w+>' => 'site/<action>',

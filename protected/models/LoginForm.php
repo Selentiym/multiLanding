@@ -60,6 +60,7 @@ class LoginForm extends CFormModel
 	 */
 	public function login()
 	{
+		//return (($this -> username=='shubinsa')&&(md5($this -> password)==md5('shubinsa7shubinsa')));
 		if($this->_identity===null)
 		{
 			$this->_identity=new UserIdentity($this->username,$this->password);
