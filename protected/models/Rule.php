@@ -180,10 +180,9 @@ class Rule extends UModel {
 			$rules = self::model()->findAll(array('order' => 'prior DESC'));
 			foreach ($rules as $rule) {
 				if ($rule->check($input)) {
-					$ret ($rule);
+					return $ret ($rule);
 				}
 			}
-
 			return $ret(array_shift($rules));
 		} else {
 			return $ret($this -> findByPk($arg));
