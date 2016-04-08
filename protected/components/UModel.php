@@ -54,9 +54,15 @@ class UModel extends CActiveRecord {
     /**
      * Function to be used in ViewModel action to have more flexibility
      * @arg mixed arg - the argument populated from the controller.
+     * @arg string scenario - scenario that is to be assigned to the model
      */
-    public function customFind($arg){
-        return $this -> model() -> findByPk($arg);
+    public $scenario = false;
+    public function customFind($arg, $external = false, $scenario = false){
+        $model =  $this -> model() -> findByPk($arg);
+        if ($scenario) {
+            $model -> setScenario($scenario);
+        }
+        return $model;
     }
 }
 ?>

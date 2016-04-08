@@ -17,6 +17,10 @@
  */
 class Rule extends UModel {
 	/**
+	 * @const USE_RULE - name of the Rule model scenario which corresponds to using one of the rules
+	 */
+	const USE_RULE = 'useRule';
+	/**
 	 * @property integer $object_input - contains id of the price or -id of the section
 	 */
 	public $object_input;
@@ -156,22 +160,33 @@ class Rule extends UModel {
 	 * Function to be used in ViewModel action to have more flexibility
 	 * @arg mixed $arg - the argument populated from the controller.
 	 * @arg mixed $external - another arguments
+	 *
 	 */
-	public function customFind($arg = false, $external = false){
-
-		if ($input = $external['utm_term']) {
+	public function customFind($arg = false, $external = false, $scenario = false){
+		//set scenario before returning the found record.
+		$ret = function($obj){
+			global $scenario;
+			if (is_a($obj, 'Rule')) {
+				if ($scenario) {
+					$obj->setScenario($scenario);
+				}
+			}
+			return $obj;
+		};
+		if ($scenario == self::USE_RULE) {
+			$input = $external['utm_term'];
 			//Если вдруг потребутся обработка
 			$phrase = $input;
 			$rules = self::model()->findAll(array('order' => 'prior DESC'));
 			foreach ($rules as $rule) {
 				if ($rule->check($input)) {
-					return $rule;
+					$ret ($rule);
 				}
 			}
-			reset($rules);
-			return current($rules);
+
+			return $ret(array_shift($rules));
 		} else {
-			return $this -> findByPk($arg);
+			return $ret($this -> findByPk($arg));
 		}
 	}
 	/**

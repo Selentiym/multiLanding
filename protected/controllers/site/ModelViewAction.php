@@ -14,6 +14,10 @@
 		 */
 		public $view;
 		/**
+		 * @var string scenario - scenario that is to be assigned to the model
+		 */
+		public $scenario = false;
+		/**
 		 * @var boolean partial - whether to user render partial.
 		 */
 		public $partial = false;
@@ -29,7 +33,7 @@
 		public function run($arg = false)
 		{
 			if ((!Yii::app() -> user -> isGuest)||($this -> everyone)) {
-				$model = CActiveRecord::model($this->modelClass)->customFind($arg, $this -> external);
+				$model = CActiveRecord::model($this->modelClass)->customFind($arg, $this -> external, $this -> scenario);
 				//echo $arg."<br/>";
 				//return;
 				//if(Yii::app()->user->checkAccess('createPost')) {
