@@ -234,7 +234,7 @@ $rule = $model;
                         }
 
 
-                        foreach(Section::model() -> findAll() as $section){
+                        foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
                             if ($section -> id == $rule -> section -> id) {
                                 continue;
                             }

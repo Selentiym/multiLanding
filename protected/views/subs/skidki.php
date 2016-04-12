@@ -6,7 +6,7 @@
 	</div>
 	
 	<div class="time_akciy">
-		<h2>АКЦИЯ: <?php echo $model -> price -> text; ?> бесплатно!</h2>
+		<h2>АКЦИЯ: <?php echo $model -> price -> text. ' '. $model -> price -> price.'р!'; ?></h2>
 		<div class="timer">
 			<div style="display:none;">
 				$('#countdown').timeTo(new Date('<span id="date-str"></span>'));
