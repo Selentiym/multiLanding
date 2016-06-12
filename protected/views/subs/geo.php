@@ -1,4 +1,4 @@
-<div class="raions">
+<div class="raions" style="margin-top: 50px">
 <h2>НАШИ ЦЕНТРЫ – ГЕОГРАФИЯ</h2>
 <p class="dashed "> <img class="doctor" src="<?php echo Yii::app() -> baseUrl; ?>/img/doctor.png" alt="Доктор">
 	   Мы во всех районах города!
@@ -191,6 +191,58 @@
 					<p>Адресс: Малая Балканская, 26В</p>
 					<p>МРТ и КТ: Toshiba<br>
 						Поле магнита: 1,5Тл (закрытый)</p>
+					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+				</div>
+				<div class="map_clinic_marker">
+				</div>
+			</div>
+
+			<div class="map_clinic_block" id="ndc_bor">
+				<div class="map_clinic_description map_adres_hide" style="display:none">
+					<span class="delete"><a>x</a></span>
+					<p>Название центра: <br>НДЦ Боровая</p>
+					<p>Адресс: ул.Боровая, 55</p>
+					<p>МРТ и КТ: Hitachi<br>
+						Поле магнита: 0,4Тл (открытый)</p>
+					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+				</div>
+				<div class="map_clinic_marker">
+				</div>
+			</div>
+
+			<div class="map_clinic_block" id="ndc_isp">
+				<div class="map_clinic_description map_adres_hide" style="display:none">
+					<span class="delete"><a>x</a></span>
+					<p>Название центра: <br>НДЦ Испытателей</p>
+					<p>Адресс: пр. Испытателей, д. 39</p>
+					<p>МРТ: Siemens<br>
+						Поле магнита: 1,5Тл (закрытый)</p>
+					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+				</div>
+				<div class="map_clinic_marker">
+				</div>
+			</div>
+
+			<div class="map_clinic_block" id="ndc_ent">
+				<div class="map_clinic_description map_adres_hide" style="display:none">
+					<span class="delete"><a>x</a></span>
+					<p>Название центра: <br>НДЦ Энтузиастов</p>
+					<p>Адресс: пр-т Энтузиастов, д. 33, к. 1, л. А</p>
+					<p>МРТ: General Electric<br>
+						Поле магнита: 0,2Тл (открытый)</p>
+					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+				</div>
+				<div class="map_clinic_marker">
+				</div>
+			</div>
+
+			<div class="map_clinic_block" id="prior">
+				<div class="map_clinic_description map_adres_hide" style="display:none">
+					<span class="delete"><a>x</a></span>
+					<p>Название центра: <br>Приоритет</p>
+					<p>Адресс: ул. Руставели 66Г</p>
+					<p>МРТ: Siemens<br>
+						</p>
 					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
 				</div>
 				<div class="map_clinic_marker">

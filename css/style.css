@@ -62,7 +62,7 @@ header{
     font-weight:normal;
 }
 
-/*Меню начало*/
+/*пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ*/
 .menu {
     display:inline-block;
     float:right;
@@ -146,9 +146,9 @@ h2.all_price a:hover {
     color:inherit;
 }
 
-/*Меню конец*/
+/*пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ*/
 
-/* Модальное окно начало*/
+/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ*/
 
 .m-dotted{
     display:block;
@@ -161,9 +161,9 @@ h2.all_price a:hover {
 
 }
 
-/* Модальное окно конец*/
+/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ*/
 
-/* Блок obchestvo начало*/
+/* пїЅпїЅпїЅпїЅ obchestvo пїЅпїЅпїЅпїЅпїЅпїЅ*/
 .clear {
     clear: both;
 }
@@ -291,9 +291,9 @@ h2.all_price a:hover {
     margin-bottom:40px;
     margin-top: 15px;
 }
-/* Блок obchestvo конец*/
+/* пїЅпїЅпїЅпїЅ obchestvo пїЅпїЅпїЅпїЅпїЅ*/
 
-/* Блок srochno начало*/
+/* пїЅпїЅпїЅпїЅ srochno пїЅпїЅпїЅпїЅпїЅпїЅ*/
 
 .srochno {
 
@@ -358,9 +358,9 @@ h2.all_price a:hover {
     padding-top: 10px !important;
 }
 
-/* Блок srochno конец*/
+/* пїЅпїЅпїЅпїЅ srochno пїЅпїЅпїЅпїЅпїЅ*/
 
-/* Блок main-content начало*/
+/* пїЅпїЅпїЅпїЅ main-content пїЅпїЅпїЅпїЅпїЅпїЅ*/
 
 .main-content{
     overflow: hidden;
@@ -534,7 +534,7 @@ p.solid {
 }
 
 
-/* TIMER BLOCK начало*/
+/* TIMER BLOCK пїЅпїЅпїЅпїЅпїЅпїЅ*/
 
 .main_time_akciy{
     margin-bottom:30px;
@@ -609,7 +609,7 @@ p.solid {
     margin-bottom:5px;
 }
 
-/* TIMER BLOCK конец*/
+/* TIMER BLOCK пїЅпїЅпїЅпїЅпїЅ*/
 p.dashed.dashed2 {
     width:40% !important;
 }
@@ -1196,7 +1196,7 @@ a.pointer:hover{
 	color:#e12923;
 }
 
-/* Карта начало*/
+/* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ*/
 
 .main_map{
 
@@ -1277,6 +1277,22 @@ a.pointer:hover{
 	top:50px;
 	left:-10px;
 }
+#ndc_bor{
+	top:40px;
+    left:-20px;
+}
+#ndc_isp{
+	top:-150px;
+    left:-85px;
+}
+#ndc_ent{
+	top:-20px;
+    left:90px;
+}
+#prior{
+	top:-140px;
+    left:60px;
+}
 .map_clinic_block {
 	position:absolute;
 }
@@ -1290,13 +1306,17 @@ a.pointer:hover{
 	top:193px;
 }
 
+.map_clinic_block .map_clinic_marker:hover {
+    z-index:1000;
+}
+
 .map_clinic_block .map_clinic_description{
 	background: url("../img/map_adres5.png") no-repeat top;
 	padding-left:11px;
 	width:235px;
     height:194px;
 	position:absolute;
-	
+	z-index:1;
 }
 .map_clinic_block .map_clinic_description .delete {
 	
@@ -1475,11 +1495,11 @@ a.pointer:hover{
     text-decoration:none;
     cursor:pointer;
 }
-/*Карта конец*/
+/*пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ*/
 
 
 
-/* раскрывающиеся блоки*/
+/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ*/
 .show_more{
     width:100%;
 
@@ -1489,7 +1509,7 @@ a.pointer:hover{
     padding:0 !important;
     margin-top:2px !important;
 }
-/* раскрывающиеся блоки*/
+/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ*/
 .main_form .dashed{
 	max-width:45% !important;
 }
@@ -1556,7 +1576,7 @@ input:-moz-placeholder { color: #fff; }
     margin-left:10px;
 }
 
-/* Блок main-content конец*/
+/* пїЅпїЅпїЅпїЅ main-content пїЅпїЅпїЅпїЅпїЅ*/
 
 @media screen and (max-width: 1600px){
     .box-modal{
