@@ -1,3 +1,5 @@
+<a name="geo" style="padding-bottom: 100px;display: block;margin-top:-100px;"></a>
+<a name="centru" style="padding-bottom: 100px;display: block;margin-top:-100px;"></a>
 <div class="raions" style="margin-top: 50px">
 <h2>НАШИ ЦЕНТРЫ – ГЕОГРАФИЯ</h2>
 <p class="dashed "> <img class="doctor" src="<?php echo Yii::app() -> baseUrl; ?>/img/doctor.png" alt="Доктор">
@@ -251,7 +253,6 @@
 		</div>
 
 		<!--<img id='kartina' src="<?php echo Yii::app() -> baseUrl; ?>/img/smal_map.png" alt="Карта" >-->
-<p ><a name="vopros"></a></p>
 	</div>
 
 </div>

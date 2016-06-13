@@ -30,8 +30,6 @@
 	</p>
 </div>
 <div class="main_uzi">
-<p><a name="doctora"></a></p>
 <p class="uzi"></p>
-
 <p class="p_uzi">Записаться на МРТ и/или <br>КТ можно по телефону:<br><?php echo $model -> tel -> tel; ?></p>
 </div>

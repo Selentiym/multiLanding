@@ -1,3 +1,5 @@
+<a name="vopros" style="padding-bottom: 100px;display: block;margin-top:-100px;"></a>
+<a name="questions" style="padding-bottom: 100px;display: block;margin-top:-100px;"></a>
 <div class="otvets">
 	<h2 class="smaller">--- Вопросы и ответы ---</h2>
 	<p class="dashed "> <img class="doctor" src="<?php echo Yii::app() -> baseUrl; ?>/img/doctor.png" alt="Доктор">
@@ -275,6 +277,7 @@
 			</div>
 
 		</li>
+		<a name="kids" style="padding-bottom: 100px;display: block;margin-top:-100px;"></a>
 		<li class="otvets_left">
 			<div class="digits">12</div>
 			<div class="otvet_text">
@@ -538,6 +541,7 @@
 </div>
 <div class="clear"></div>
 <div class="main_uzi">
-	
+	<p class="uzi"></p>
+	<p class="p_uzi">Записаться на МРТ и/или <br>КТ можно по телефону:<br><?php echo $model -> tel -> tel; ?></p>
 </div>
 

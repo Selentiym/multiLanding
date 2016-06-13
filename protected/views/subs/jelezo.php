@@ -1,5 +1,6 @@
+<a name="oborud" style="padding-bottom: 100px;display: block;margin-top:-100px;"></a>
+<a name="oboruddva" style="padding-bottom: 100px;display: block;margin-top:-100px;"></a>
 <h2>ОБОРУДОВАНИЕ</h2>
-
 <p class="dashed "> <img class="doctor" src="<?php echo Yii::app() -> baseUrl; ?>/img/doctor.png" alt="Доктор">
 	В наших центрах Вы можете пройти обследование на современных МРТ и КТ томографах, экспертного класса (производство компаний «General Electric Medical Systems» и «Siemens»)открытого и закрытого типов.
 	В наших клиниках установлено следующее ОБОРУДОВАНИЕ:

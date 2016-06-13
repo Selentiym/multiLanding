@@ -1,4 +1,6 @@
 	<p><a name="price"></a></p>
+	<a name="reviewsdva"></a>
+	<a name="plus"></a>
 	<h2>ЦЕНЫ, АКЦИИ И СКИДКИ</h2>
 	
 

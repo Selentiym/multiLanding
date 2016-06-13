@@ -1,5 +1,5 @@
 <div class="clear"></div>
-
+<a name="discount" style="padding-bottom: 100px;display: block;margin-top:-100px;"></a>
 <div class="main_time_akciy">
 	<div class="skidka_time_akciy">
 		<img src="<?php echo Yii::app() -> baseUrl; ?>/img/skidka_time.png" alt="Скидки и акции"><p>АКЦИИ И СКИДКИ</p>
@@ -29,7 +29,6 @@
 		<p>Консультация ДИАГНОСТА– <span>БЕСПЛАТНО</span></p>
 
 		<p style="border:none;color:#e12b25;font-weight:600;">Скидки на АНАЛИЗЫ до 50%</p>
-		<p><a name="oborud"></a></p>
 		<p class="dashed "> <img class="doctor" src="<?php echo Yii::app() -> baseUrl; ?>/img/ktdoctor.png" alt="Доктор">
 			Но снизив цены, мы все равно будем лучшие, т.к.:<br>
 			1.У нас лучшие Врачи;<br>

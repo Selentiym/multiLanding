@@ -1,3 +1,4 @@
+<a name="doctora" style="padding-bottom: 100px;display: block;margin-top:-100px;"></a>
 <div class="doctors">
 	<h2>ВРАЧИ</h2>
 	<p class="dashed "> <img class="doctor" src="<?php echo Yii::app() -> baseUrl; ?>/img/doctor.png" alt="Доктор">
@@ -110,7 +111,6 @@
 <div class="clear"></div>
 
 	 <div class="main_uzi">
-	 <p><a name="centru"></a></p>
 <p class="uzi"></p>
 
 <p class="p_uzi">Записаться на МРТ и/или <br>КТ можно по телефону:<br><?php echo $model -> tel -> tel; ?></p>

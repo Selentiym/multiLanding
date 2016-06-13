@@ -170,7 +170,7 @@ $rule = $model;
                     <li><a href="#price" >Цены</a></li>
                     <li><a href="#oborud">Оборудование</a></li>
                     <li><a href="#doctora">Врачи</a></li>
-                    <li><a href="#centru" >Центры</a></li>
+                    <!--<li><a href="#centru" >Центры</a></li>-->
                     <li><a href="#vopros">Ответы и вопросы</a></li>
 					<li class="zapis_modal" id="#example1" onclick="$('#exampleModal1').arcticmodal()"><span class="m-dotted" ></span></li>
 
@@ -404,9 +404,11 @@ $rule = $model;
                     <li>
                         <a href="#vopros">Ответы и вопросы</a>
                     </li>
-					<li>
+					<!--<li>
                         <a href="#centru" >Центры</a>
                     </li>
+                    uncoment!
+                    -->
 					<li>
                         <a href="#doctora">Врачи</a>
                     </li>
