@@ -14,8 +14,8 @@
 			<div class="map_clinic_block" id="ramsey">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
-					<p>Название центра: <br>МДЦ РЭМСИ</p>
-					<p>Адресс: Чапаева, 5</p>
+					<p>Название центра: <br>МДЦ "РЭМСИ Диагностика"</p>
+					<p>Адресс: ул. Чапаева, д.5 лит А</p>
 					<p>МРТ и КТ: General Electric<br>
 						Поле магнита: 1,5Тл</p>
 					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
@@ -137,8 +137,8 @@
 			<div class="map_clinic_block" id="magnet">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
-					<p>Название центра: <br>МДЦ Магнит</p>
-					<p>Адресс: 6-я Красноармейская, 7</p>
+					<p>Название центра: <br>МДЦ "Магнит"</p>
+					<p>Адресс: 6-я Красноармейская, д.7 лит А</p>
 					<p>МРТ и КТ: Siemens<br>
 						Поле магнита: 1,5Тл (полуоткрытый)</p>
 					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
@@ -163,8 +163,8 @@
 			<div class="map_clinic_block" id="north-west">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
-					<p>Название центра: <br>МДЦ Северо-Западный</p>
-					<p>Адресс: Боровая, 55</p>
+					<p>Название центра: <br>МДЦ "Северо-Западный Медицинский Центр"</p>
+					<p>Адресс: Боровая, д.55</p>
 					<p>КТ: Toshiba Aquilion<br>
 						Срезов: 16</p>
 					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
@@ -241,8 +241,8 @@
 			<div class="map_clinic_block" id="prior">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
-					<p>Название центра: <br>Приоритет</p>
-					<p>Адресс: ул. Руставели 66Г</p>
+					<p>Название центра: <br>Медицинский Центр "Приоритет"</p>
+					<p>Адресс: ул. Руставели, д.66 лит.&nbspГ</p>
 					<p>МРТ: Siemens<br>
 						</p>
 					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
