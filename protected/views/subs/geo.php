@@ -163,7 +163,7 @@
 			<div class="map_clinic_block" id="north-west">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
-					<p>Название центра: <br>МДЦ "Северо-Западный Медицинский Центр"</p>
+					<p>Название центра: <br>"Северо-Западный Медицинский Центр"</p>
 					<p>Адресс: Боровая, д.55</p>
 					<p>КТ: Toshiba Aquilion<br>
 						Срезов: 16</p>
