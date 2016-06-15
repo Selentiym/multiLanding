@@ -24,14 +24,14 @@
 				</div>
 			</div>
 			
-			<div class="map_clinic_block" id="mart">
+			<!--<div class="map_clinic_block" id="mart">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>МДЦ МАРТ</p>
 					<p>Адресс: Малый пр. В.О., 54, корп. 3</p>
 					<p>МРТ и КТ: Siemens<br>
 						Поле магнита: 1,5Тл</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
@@ -44,7 +44,7 @@
 					<p>Адресс: Рентгена, 5</p>
 					<p>МРТ и КТ: General Electric<br>
 						Поле магнита: 0,2Тл (открытый)</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
@@ -57,7 +57,7 @@
 					<p>Адресс: В.О. 16-я линия, 81А</p>
 					<p>МРТ и КТ: Siemens Symphony<br>
 						Поле магнита: 1,5Тл</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
@@ -70,7 +70,7 @@
 					<p>Адресс: Северный, 1А</p>
 					<p>МРТ и КТ: Siemens Magnetom Symphony<br>
 						Поле магнита: 1,5Тл</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
@@ -85,7 +85,7 @@
 					<p>Адресс: Энгельса, 33, корп. 1</p>
 					<p>МРТ и КТ: General Electric<br>
 						Поле магнита: 1,5Тл</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
@@ -98,7 +98,7 @@
 					<p>Адресс:  Марата, 6А</p>
 					<p>МРТ и КТ: General Electric Signa<br>
 						Поле магнита: 3,0Тл</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
@@ -111,11 +111,11 @@
 					<p>Адресс: ул. Маяковского, 12</p>
 					<p>МРТ и КТ: Siemens<br>
 						Поле магнита: 1,5Тл (закрытый)</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>
+			</div>-->
 			
 			
 			
@@ -147,18 +147,18 @@
 				</div>
 			</div>
 			
-			<div class="map_clinic_block" id="standard">
+			<!--<div class="map_clinic_block" id="standard">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>МДЦ Стандарт МРТ</p>
 					<p>Адресс: пл. Карла Фаберже, 8, корп. 2</p>
 					<p>МРТ и КТ: Siemens Symphony<br>
 						Поле магнита: 1,5Тл</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>
+			</div>-->
 			
 			<div class="map_clinic_block" id="north-west">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
@@ -173,70 +173,70 @@
 				</div>
 			</div>
 			
-			<div class="map_clinic_block" id="energo_len">
+			<!--<div class="map_clinic_block" id="energo_len">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>МДЦ ЭНЕРГО</p>
 					<p>Адресс: Ленинский, 160 </p>
 					<p>МРТ и КТ: General Electric<br>
 						Поле магнита: 1,5Тл</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>
+			</div>-->
 			
-			<div class="map_clinic_block" id="kup">
+			<!--<div class="map_clinic_block" id="kup">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>МДЦ МРТ Купчино</p>
 					<p>Адресс: Малая Балканская, 26В</p>
 					<p>МРТ и КТ: Toshiba<br>
 						Поле магнита: 1,5Тл (закрытый)</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>
+			</div>-->
 
-			<div class="map_clinic_block" id="ndc_bor">
+			<!--<div class="map_clinic_block" id="ndc_bor">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>НДЦ Боровая</p>
 					<p>Адресс: ул.Боровая, 55</p>
 					<p>МРТ и КТ: Hitachi<br>
 						Поле магнита: 0,4Тл (открытый)</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>
+			</div>-->
 
-			<div class="map_clinic_block" id="ndc_isp">
+			<!--<div class="map_clinic_block" id="ndc_isp">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>НДЦ Испытателей</p>
 					<p>Адресс: пр. Испытателей, д. 39</p>
 					<p>МРТ: Siemens<br>
 						Поле магнита: 1,5Тл (закрытый)</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>
+			</div>-->
 
-			<div class="map_clinic_block" id="ndc_ent">
+			<!--<div class="map_clinic_block" id="ndc_ent">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>НДЦ Энтузиастов</p>
 					<p>Адресс: пр-т Энтузиастов, д. 33, к. 1, л. А</p>
 					<p>МРТ: General Electric<br>
 						Поле магнита: 0,2Тл (открытый)</p>
-					<p>Телефон для записи: <?php echo $model -> tel -> tel; ?></p>
+					<p>Телефон для записи: <?php /*echo $model -> tel -> tel; */?></p>
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>
+			</div>-->
 
 			<div class="map_clinic_block" id="prior">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
