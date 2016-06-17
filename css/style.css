@@ -541,11 +541,14 @@ p.solid {
 }
 
 .time_akciy{
-    width:315px;
+    min-width:700px;
     margin:0 auto;
-
+    text-align:center;
 }
-
+#akcii_other_cont {
+    width:315px;
+    display:inline-block;
+}
 .time_akciy h2{
     color:#e12b25;
 }

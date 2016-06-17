@@ -2,26 +2,47 @@
 <a name="discount" style="padding-bottom: 100px;display: block;margin-top:-100px;"></a>
 <div class="main_time_akciy">
 	<div class="skidka_time_akciy">
-		<img src="<?php echo Yii::app() -> baseUrl; ?>/img/skidka_time.png" alt="Скидки и акции"><p>АКЦИИ И СКИДКИ</p>
+		<div class="blocks_label">
+			<span class="label_img"></span><span class="label_text">Акции и скидки</span>
+		</div>
+
 	</div>
 	
 	<div class="time_akciy">
 		<h2>АКЦИЯ: <?php echo $model -> price -> text. ' '. $model -> price -> price.'р!'; ?></h2>
-		<div class="timer">
-			<div style="display:none;">
-				$('#countdown').timeTo(new Date('<span id="date-str"></span>'));
-				$('#countdown').timeTo({
-				timeTo: new Date(new Date('<span id="date2-str"></span>')),
-				displayDays: 2,
-				theme: "black",
-				displayCaptions: true,
-				fontSize: 8,
-				captionSize: 14
-				});
-			</div>
+		<div id="timer">
+			<?php
+			Yii::app() -> getClientScript() -> registerScriptFile('js/flipclock.js', CClientScript::POS_BEGIN);
+			Yii::app() -> ClientScript -> registerCssFile('css/flipclock.css');
+			Yii::app() -> ClientScript -> registerScript('countDown',"
+			var clock;
+			clock = $('#clock').FlipClock({
+		        clockFace: 'DailyCounter',
+		        autoStart: false,
+		        defaultLanguage: 'rus',
+		        callbacks: {
+		        	stop: function() {
+		        		$('.message').html('Время вышло!')
+		        	}
+		        }
+		    });
+		    var toTime = new Date();
+		    var toAdd = toTime.getDate() % 3 + 1;
+		    toTime.setMinutes(0);
+		    toTime.setSeconds(0);
+		    toTime.setHours(toAdd*24);
+		    var nowTime = new Date();
+		    clock.setTime(Math.floor((toTime - nowTime)/1000));
+		    clock.setCountdown(true);
+		    clock.start();
+			",CClientScript::POS_READY);
+			?>
 			<h4>До конца акции осталось</h4>
-			<div id="countdown-3"></div>
+			<div class="container_countdown">
+				<div id="clock"></div>
+			</div>
 		</div>
+		<div id="akcii_other_cont">
 		<p>Консультация НЕВРОЛОГА – <span>БЕСПЛАТНО</span></p>
 
 		<p>Консультация ТРАВМАТОЛОГА - <span>БЕСПЛАТНО</span></p>
@@ -36,6 +57,6 @@
 			
 
 		</p>
+		</div>
 	</div>
-
 </div>

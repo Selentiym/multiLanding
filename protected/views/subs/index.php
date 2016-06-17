@@ -632,68 +632,8 @@ $rule = $model;
         });
     </script>
         <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
-        <script src="js/jquery.timeTo.js"></script>
-        <script>
-            /**
-             * Set timer countdown in seconds with callback
-             */
-            $('#countdown-1').timeTo(1000, function(){
-                alert('Countdown finished');
-            });
-            $('#reset-1').click(function() {
-                $('#countdown-1').timeTo('reset');
-            });
 
-            // $('.clock').timeTo();
 
-            /**
-             * Hide hours
-             */
-            $('#countdown-11').timeTo({
-                seconds: 100,
-                displayHours: false
-            });
-
-            var date = getRelativeDate(20);
-
-            document.getElementById('date-str').innerHTML = date.toString();
-
-            /**
-             * Set timer countdown to specyfied date
-             */
-            $('#countdown-2').timeTo(date);
-
-            date = getRelativeDate(7, 9);
-            document.getElementById('date2-str').innerHTML = date.toString();
-
-            /**
-             * Set theme and captions
-             */
-            $('#countdown-3').timeTo({
-                timeTo: date,
-                displayDays: 2,
-                theme: "black",
-                displayCaptions: true,
-                fontSize: 22,
-                captionSize: 14
-            });
-
-            /**
-             * Simple digital clock
-             Устанавливаем время до конца таймера
-             */
-            $('#clock-1').timeTo();
-
-            function getRelativeDate(days, hours, minutes){
-                var date = new Date((new Date()).getTime() + 90000 /* milisec */ * 60 /* minutes */ * 24 /* hours */ * days /* days */);
-
-                date.setHours(hours || 0);
-                date.setMinutes(minutes || 0);
-                date.setSeconds(0);
-
-                return date;
-            }
-        </script>
 <script>
 
     var s = document.getElementById('read_more_child')
