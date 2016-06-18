@@ -7,7 +7,6 @@
  * @property integer $id
  * @property string $word
  * @property integer $id_tel
- * @property integer $id_price
  * @property integer $id_section
  * @property integer $prior
  *
@@ -21,6 +20,10 @@ class Rule extends UModel {
 	 * @const USE_RULE - name of the Rule model scenario which corresponds to using one of the rules
 	 */
 	const USE_RULE = 'useRule';
+	/**
+	 * @var Price $price
+	 */
+	public $price;
 	/**
 	 * @var int[] $prices_input - contains an array of ids of prices to show.
 	 */
@@ -46,7 +49,7 @@ class Rule extends UModel {
 		// will receive user inputs.
 		return array(
 			//array('word, id_tel, id_section', 'required'),
-			array('id_tel, id_price, id_section', 'numerical', 'integerOnly'=>true),
+			array('id_tel, id_section', 'numerical', 'integerOnly'=>true),
 			array('word', 'length', 'max'=>512),
 			array('id, word, id_tel, prices_input, prior', 'safe', 'on'=>'create, update'),
 		);
@@ -61,7 +64,6 @@ class Rule extends UModel {
 		// class name for the relations automatically generated below.
 		return array(
 				'assignments' => array(self::HAS_MANY, 'PriceAssignment', 'id_rule'),
-				'price' => array(self::BELONGS_TO, 'Price', 'id_price'),
 				'prices' => array(self::MANY_MANY, 'Price', '{{price_assignments}}(id_rule, id_price)'),
 				'section' => array(self::BELONGS_TO, 'Section', 'id_section'),
 				'tel' => array(self::BELONGS_TO, 'Tel', 'id_tel'),
@@ -77,7 +79,6 @@ class Rule extends UModel {
 			'id' => 'ID',
 			'word' => 'Word',
 			'id_tel' => 'Id Tel',
-			'id_price' => 'Id Price',
 			'id_section' => 'Id Section',
 		);
 	}
@@ -103,7 +104,6 @@ class Rule extends UModel {
 		$criteria->compare('id',$this->id);
 		$criteria->compare('word',$this->word,true);
 		$criteria->compare('id_tel',$this->id_tel);
-		$criteria->compare('id_price',$this->id_price);
 		$criteria->compare('id_section',$this->id_section);
 
 		return new CActiveDataProvider($this, array(
@@ -126,30 +126,6 @@ class Rule extends UModel {
 	 * @return bool whether to make database changes
 	 */
 	public function beforeSave(){
-		/**
-		 * Set the id_price and id_section parameters from data in $this -> object_input
-		 */
-		//Если айдишник отрицательный, то ставим номер -id в id_section,
-		//иначе id в id_price номер секции price в id_section
-		if ($this -> object_input) {
-			if ($this -> object_input < 0) {
-				$id = - $this -> object_input;
-				if (Section::model() -> findByPk($id)) {
-					$this -> id_section = $id;
-					unset($this -> id_price);
-				}
-			} elseif ($this -> object_input > 0) {
-				$id = $this -> object_input;
-				if (Price::model() -> findByPk($id)) {
-					$this -> id_price = $id;
-					unset($this -> id_section);
-				}
-			}
-		}
-		//Первая попытка преотвратить неопределенные атрибуты в релейшене
-		if (!$this -> id_price) {
-			$this -> id_price = Price::trivialId();
-		}
 		if (!$this -> id_section) {
 			$this -> id_section = Section::trivialId();
 			//echo $this -> id_section;

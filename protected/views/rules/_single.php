@@ -12,7 +12,7 @@
         <?php echo CHtml::link($rule -> word,Yii::app() -> baseUrl.'/admin/updateRule/'.$rule -> id); ?>
     </td>
     <td>
-        <?php echo $rule -> price -> text; ?>
+        <?php echo implode(',<br/>',CHtml::giveAttributeArray($rule -> prices, 'text')); ?>
     </td>
     <td>
         <?php echo $rule -> section -> name; ?>

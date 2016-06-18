@@ -4,6 +4,10 @@
  * @var Rule $rule - the same, just alias.
  */
 $rule = $model;
+$rule -> price = current($rule -> prices);
+if (!(is_a($rule -> prices, 'Price'))) {
+    $rule -> price = Price::model() -> findByPk(Price::trivialId());
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru" >
