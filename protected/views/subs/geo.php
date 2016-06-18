@@ -24,7 +24,7 @@
 				</div>
 			</div>
 			
-			<!--<div class="map_clinic_block" id="mart">
+			<div class="map_clinic_block" id="mart">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>МДЦ МАРТ</p>
@@ -115,13 +115,13 @@
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>-->
+			</div>
 			
 			
 			
 			
 			
-			<!--<div class="map_clinic_block" id="kup">
+			<div class="map_clinic_block" id="kup">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>МДЦ МРТ Купчино</p>
@@ -132,7 +132,7 @@
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>-->
+			</div>
 			
 			<div class="map_clinic_block" id="magnet">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
@@ -147,7 +147,7 @@
 				</div>
 			</div>
 			
-			<!--<div class="map_clinic_block" id="standard">
+			<div class="map_clinic_block" id="standard">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>МДЦ Стандарт МРТ</p>
@@ -158,7 +158,7 @@
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>-->
+			</div>
 			
 			<div class="map_clinic_block" id="north-west">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
@@ -173,7 +173,7 @@
 				</div>
 			</div>
 			
-			<!--<div class="map_clinic_block" id="energo_len">
+			<div class="map_clinic_block" id="energo_len">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>МДЦ ЭНЕРГО</p>
@@ -184,9 +184,9 @@
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>-->
+			</div>
 			
-			<!--<div class="map_clinic_block" id="kup">
+			<div class="map_clinic_block" id="kup">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>МДЦ МРТ Купчино</p>
@@ -197,9 +197,9 @@
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>-->
+			</div>
 
-			<!--<div class="map_clinic_block" id="ndc_bor">
+			<div class="map_clinic_block" id="ndc_bor">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>НДЦ Боровая</p>
@@ -210,9 +210,9 @@
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>-->
+			</div>
 
-			<!--<div class="map_clinic_block" id="ndc_isp">
+			<div class="map_clinic_block" id="ndc_isp">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>НДЦ Испытателей</p>
@@ -223,9 +223,9 @@
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>-->
+			</div>
 
-			<!--<div class="map_clinic_block" id="ndc_ent">
+			<div class="map_clinic_block" id="ndc_ent">
 				<div class="map_clinic_description map_adres_hide" style="display:none">
 					<span class="delete"><a>x</a></span>
 					<p>Название центра: <br>НДЦ Энтузиастов</p>
@@ -236,7 +236,7 @@
 				</div>
 				<div class="map_clinic_marker">
 				</div>
-			</div>-->
+			</div>
 
 			<div class="map_clinic_block" id="prior">
 				<div class="map_clinic_description map_adres_hide" style="display:none">

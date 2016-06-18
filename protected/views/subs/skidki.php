@@ -38,7 +38,7 @@
 			",CClientScript::POS_READY);
 			?>
 			<h4>До конца акции осталось</h4>
-			<div class="container_countdown">
+			<div class="container_countdown" style="width:380px;margin:0 auto;overflow:hidden;">
 				<div id="clock"></div>
 			</div>
 		</div>
