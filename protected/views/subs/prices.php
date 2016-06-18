@@ -18,7 +18,7 @@
 	<?php
 		//Нашли все блоки.
 		$blocks = PriceBlock::model() -> findAll(array('order' => '`num` ASC'));
-		foreach ($model -> prices as $price) {
+		foreach (array_reverse($model -> prices) as $price) {
 			//Перемещаем блоки с нужными ценами в начало массива
 			$block = $price -> block;
 			$key = array_search($block, $blocks);
