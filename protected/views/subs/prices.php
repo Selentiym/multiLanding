@@ -26,7 +26,7 @@
 			array_unshift($blocks,$block);
 		}
 		$prev = NULL;
-		$light = CHtml::giveAttributeArray($model -> prices, 'id');
+		$light = array_reverse(CHtml::giveAttributeArray($model -> prices, 'id'));
 		foreach($blocks as $key => $block){
 			$this -> renderPartial('//prices/_price_block',array(
 					'prev' => $prev,
