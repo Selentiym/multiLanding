@@ -6,6 +6,7 @@
  * The followings are the available columns in table '{{price_blocks}}':
  * @property integer $id
  * @property string $name
+ * @property string $category_name
  */
 class PriceBlock extends CActiveRecord
 {

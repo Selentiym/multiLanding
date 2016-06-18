@@ -27,7 +27,7 @@
 		        }
 		    });
 		    var toTime = new Date();
-		    var toAdd = toTime.getDate() % 3 + 1;
+		    var toAdd = toTime.getDate() % 3 + 2;
 		    toTime.setMinutes(0);
 		    toTime.setSeconds(0);
 		    toTime.setHours(toAdd*24);

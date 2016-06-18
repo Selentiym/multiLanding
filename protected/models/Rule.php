@@ -11,15 +11,20 @@
  * @property integer $id_section
  * @property integer $prior
  *
- * @property Price $price
+ * @property Price[] $prices
  * @property Tel $tel
  * @property Section $section
+ * @property PriceAssignment[] $assignments
  */
 class Rule extends UModel {
 	/**
 	 * @const USE_RULE - name of the Rule model scenario which corresponds to using one of the rules
 	 */
 	const USE_RULE = 'useRule';
+	/**
+	 * @var int[] $prices_input - contains an array of ids of prices to show.
+	 */
+	public $prices_input;
 	/**
 	 * @property integer $object_input - contains id of the price or -id of the section
 	 */
@@ -43,7 +48,7 @@ class Rule extends UModel {
 			//array('word, id_tel, id_section', 'required'),
 			array('id_tel, id_price, id_section', 'numerical', 'integerOnly'=>true),
 			array('word', 'length', 'max'=>512),
-			array('id, word, id_tel, object_input, prior', 'safe', 'on'=>'create, update'),
+			array('id, word, id_tel, prices_input, prior', 'safe', 'on'=>'create, update'),
 		);
 	}
 
@@ -55,9 +60,11 @@ class Rule extends UModel {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'price' => array(self::BELONGS_TO, 'Price', 'id_price'),
-			'section' => array(self::BELONGS_TO, 'Section', 'id_section'),
-			'tel' => array(self::BELONGS_TO, 'Tel', 'id_tel'),
+				'assignments' => array(self::HAS_MANY, 'PriceAssignment', 'id_rule'),
+				'price' => array(self::BELONGS_TO, 'Price', 'id_price'),
+				'prices' => array(self::MANY_MANY, 'Price', '{{price_assignments}}(id_rule, id_price)'),
+				'section' => array(self::BELONGS_TO, 'Section', 'id_section'),
+				'tel' => array(self::BELONGS_TO, 'Tel', 'id_tel'),
 		);
 	}
 
@@ -194,5 +201,35 @@ class Rule extends UModel {
 	 */
 	public function check($string){
 		return preg_match('/'.$this -> word.'/iu',$string);
+	}
+	public function afterSave() {
+
+		parent::afterSave();
+		//массив ИД цен, которые уже присвоены
+		$has = CHtml::giveAttributeArray($this -> prices,'id');
+		//Массив ИД цен, которые должны получиться.
+		$toHave = array_unique($this -> prices_input);
+		//ИД цен, которые нужно удалить
+		$toDel = array_diff($has, $toHave);
+		//ИД цен, которые нужно добавить
+		$toAdd = array_diff($toHave, $has);
+		//$this -> assignments = PriceAssignment::model() -> findAllByAttributes(array('id_rule' => $this -> id));
+		//Удаляем ненужные
+		if (!empty($this -> assignments)) {
+			foreach ($this->assignments as $assign) {
+				if (in_array($assign->id_price, $toDel)) {
+					$assign->delete();
+				}
+			}
+		}
+		//Добавляем недостающие.
+		foreach ($toAdd as $add) {
+			$assign = new PriceAssignment();
+			$assign -> id_rule = $this -> id;
+			$assign -> id_price = $add;
+			$assign -> save();
+		}
+		//Устанавливаем правильные цены на выходе.
+		$this -> prices = Price::model() -> findAllByPk($toHave);
 	}
 }

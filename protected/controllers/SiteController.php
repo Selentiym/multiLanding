@@ -40,5 +40,21 @@ class SiteController extends Controller
 				$this->render('error', $error);
 		}
 	}
-
+	/**
+	 *
+	 */
+	public function actionTransfer(){
+		$count = 0;
+		foreach (Rule::model() -> findAll() as $rule) {
+			if ($rule -> price) {
+				$rule -> prices_input = array($rule -> price -> id);
+			}
+			if ($rule -> save()){
+				$count ++;
+			} else {
+				var_dump($rule -> getErrors());
+			}
+		}
+		echo $count;
+	}
 }

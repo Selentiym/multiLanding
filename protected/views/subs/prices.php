@@ -1,3 +1,8 @@
+<?php
+/**
+ * @type Rule $model
+ */
+?>
 	<p><a name="price"></a></p>
 	<a name="reviewsdva"></a>
 	<a name="plus"></a>
@@ -11,54 +16,25 @@
 
 	<!--<img class="price" src="<?php //echo Yii::app() -> baseUrl; ?>/img/price.png" alt="price">-->
 	<?php
-		/**
-		 * Массив категорий
-		 */
-		$names = array(
-			'mrt' => 'Цены МРТ',
-			'kt_' => 'Цены КТ',
-			'sel' => 'Общие цены',
-		);
-		/**
-		 * Выводим блок цен, в котором находится выделенная цена.
-		 */
-		$block = $model -> price -> block;
-		/**
-		 * Сохраняем на будущее айдишник единственной выбранной цены
-		 */
-		$id = $model -> price -> id;
-		//Рендерим заголовки и выбранную цену.
-		?>
-		<div class="blocks_label">
-			<span class="label_img"></span><span class="label_text"><?php echo $names[$block -> category_name]; ?></span>
-		</div>
-		<?php
-		if (is_a($block, 'PriceBlock')) {
-			$block -> renderHeading();
-			if ($model -> price) {
-				$this -> renderPartial('//subs/_single_price', array('price' => $model -> price, 'active' => true));
-			}
-			$this -> renderPartial('//subs/_price_block', array('block' => $block, 'id' => $id, 'opened' => true, 'noHeading' => true));
+		//Нашли все блоки.
+		$blocks = PriceBlock::model() -> findAll(array('order' => '`num` ASC'));
+		foreach ($model -> prices as $price) {
+			//Перемещаем блоки с нужными ценами в начало массива
+			$block = $price -> block;
+			$key = array_search($block, $blocks);
+			array_splice($blocks,$key,1);
+			array_unshift($blocks,$block);
 		}
-		
-		$blocks['mrt'] = PriceBlock::model() -> findAllByAttributes(array('category_name'=>'mrt'));
-		$blocks['kt_'] = PriceBlock::model() -> findAllByAttributes(array('category_name'=>'kt_'));
-		$blocks['sel'] = PriceBlock::model() -> findAllByAttributes(array('category_name'=>'sel'));
-		
-		$this -> renderPartial('//subs/_block_category',array('label' => $names[$block -> category_name], 'blocks' => $blocks[$block -> category_name], 'id' => $id, 'block' => $block,'noHeading' => true));
-		foreach($blocks as $category => $block_arr){
-			if ($category == $block -> category_name) {continue;}
-			$this -> renderPartial('//subs/_block_category',array('label' => $names[$category], 'blocks' => $block_arr, 'id' => $id, 'block' => $block));
+		$prev = NULL;
+		$light = CHtml::giveAttributeArray($model -> prices, 'id');
+		foreach($blocks as $key => $block){
+			$this -> renderPartial('//prices/_price_block',array(
+					'prev' => $prev,
+					'block' => $block,
+					'highlight' => $light
+			));
+			$prev = $block;
 		}
-		
-		//echo $price;
-		/*Yii::app()->getClientScript()->registerScript('highlight',"
-			var highlight = $('div.left-center:contains(\"$price\")');
-			highlight.css('color','red');
-			highlight.detach();
-			//alert($('div.left-center:first').html());
-			$('div.left-center:first').before(highlight);
-		",CClientScript::POS_READY);*/
 	?>
 	<div class="main_uzi">
 	

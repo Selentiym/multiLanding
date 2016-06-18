@@ -1,23 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "{{price}}".
+ * This is the model class for table "{{price_assignments}}".
  *
- * The followings are the available columns in table '{{price}}':
- * @property integer $id
- * @property string $text
- * @property integer $price
- * @property integer $price_old
- * @property integer $id_block
+ * The followings are the available columns in table '{{price_assignments}}':
+ * @property integer $id_price
+ * @property integer $id_rule
+ * @property string $created
  */
-class Price extends UModel
+class PriceAssignment extends UModel
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{price}}';
+		return '{{price_assignments}}';
 	}
 
 	/**
@@ -28,12 +26,11 @@ class Price extends UModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('text, price', 'required'),
-			array('price', 'numerical', 'integerOnly'=>true),
-			array('text', 'length', 'max'=>1024),
+			array('id_price, id_rule', 'required'),
+			array('id_price, id_rule', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, text, price', 'safe', 'on'=>'search'),
+			array('id_price, id_rule, created', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,8 +42,8 @@ class Price extends UModel
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'sub' => array(self::HAS_MANY, 'Sub', 'id_price'),
-			'block' => array(self::BELONGS_TO, 'PriceBlock', 'id_block')
+			'rule' => array(self::BELONGS_TO, 'Rule', 'id_rule'),
+			'price' => array(self::BELONGS_TO, 'Price', 'id_price'),
 		);
 	}
 
@@ -56,9 +53,9 @@ class Price extends UModel
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'text' => 'Text',
-			'price' => 'Price',
+			'id_price' => 'Id Price',
+			'id_rule' => 'Id Rule',
+			'created' => 'Created',
 		);
 	}
 
@@ -80,25 +77,20 @@ class Price extends UModel
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('text',$this->text,true);
-		$criteria->compare('price',$this->price);
+		$criteria->compare('id_price',$this->id_price);
+		$criteria->compare('id_rule',$this->id_rule);
+		$criteria->compare('created',$this->created,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
-	/**
-	 * @return integer - id of the first price
-	 */
-	public static function trivialId(){
-		return self::model() -> find() -> id;
-	}
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Price the static model class
+	 * @return PriceAssignment the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
