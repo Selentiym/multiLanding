@@ -238,7 +238,7 @@ if (!(is_a($rule -> price, 'Price'))) {
                     <p><?php echo $model -> price -> text.' '. $model -> price -> price.'р'; ?></p>
 
                 </div>
-                <h1 class="zagolovok">МРТ в Санкт-Петербурге от 1500р.</h1>
+                <h1 class="zagolovok">МРТ в Санкт-Петербурге от 1700р.</h1>
 
             </div>
 
