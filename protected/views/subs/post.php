@@ -2,6 +2,7 @@
 // ----------------------------конфигурация-------------------------- // 
 
 $adminemail="shubinsa1@gmail.com";  // e-mail админа
+//$adminemail="bondartsev.nikita@gmail.com";  // e-mail админа
 $theme="Заказ с сайта MRT";
  
 $date=date("d.m.y"); // число.месяц.год 
@@ -33,17 +34,28 @@ $headers .= "Content-type: text/html\r\n";
  
  
  require_once(Yii::getPathOfAlias('webroot.vendor') . DIRECTORY_SEPARATOR . 'autoload.php');
- $mail = new PHPMailer();
-			$mail->CharSet = "UTF-8";
-			$mail->From = 'mrt-to-go@mail.ru';
-			$mail->FromName = 'mrttogo';
+ $mail = new PHPMailer(true);
+	$mail = new PHPMailer(true);
+	$mail->IsSMTP();
+	$mail->Host = 'smtp.gmail.com';
+	$mail->Port = 465;
+	$mail->SMTPSecure = 'ssl';
+	$mail->SMTPAuth = true;
+	$mail->Username = 'mrimaster.msk@gmail.com';
+	$mail->Password = 'shubinsa7shubinsa';
+	$mail->Mailer = "smtp";
+
+	$mail->From = 'directors@mrimaster.ru';
+	$mail->FromName = 'mrt-to-go.ru';
+	$mail->Sender = 'directors@mrimaster.ru';
+	$mail->CharSet = "UTF-8";
 			$mail->addAddress($adminemail);
 
 			$mail->Subject = $theme;
-
+	$mail->isHtml(true);
 			$mail->Body = $text;
 			if (!$mail->Send()) {
-
+echo "sent!";
 			}
  
  //*/
