@@ -1,0 +1,12 @@
+{
+  "require": {
+    "php":">=5.3",
+    "PHPMailer/PHPMailer":"*"
+  },
+  "repositories": [
+    {
+      "type" : "git",
+      "url" : "https://github.com/PHPMailer/PHPMailer"
+    }
+  ]
+}

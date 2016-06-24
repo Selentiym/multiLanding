@@ -1,9 +1,8 @@
 <? 
 // ----------------------------конфигурация-------------------------- // 
 
-
 $adminemail="shubinsa1@gmail.com";  // e-mail админа
-$adminemail2="Заказ с сайта MRT";
+$theme="Заказ с сайта MRT";
  
 $date=date("d.m.y"); // число.месяц.год 
  
@@ -27,12 +26,28 @@ $name2=$_POST['name2'];
 $headers = "From: mrt-to-go@mail.ru\r\n";
 $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/html\r\n";
-$mail = "Дата: <strong>{$date}</strong><br/>";
-$mail .= "Время: <strong>{$time}</strong><br/>";
-$mail .= "Имя: <strong>{$name}</strong><br/>";
-$mail .= "Телефон: <strong>{$name2}</strong><br/>";
- // Отправляем письмо админу  
-mail("$adminemail", "$adminemail2", $mail, $headers); //*/
+	$text = "Дата: <strong>{$date}</strong><br/>";
+	$text .= "Время: <strong>{$time}</strong><br/>";
+	$text .= "Имя: <strong>{$name}</strong><br/>";
+	$text .= "Телефон: <strong>{$name2}</strong><br/>";
+ 
+ 
+ require_once(Yii::getPathOfAlias('webroot.vendor') . DIRECTORY_SEPARATOR . 'autoload.php');
+ $mail = new PHPMailer();
+			$mail->CharSet = "UTF-8";
+			$mail->From = 'mrt-to-go@mail.ru';
+			$mail->FromName = 'mrttogo';
+			$mail->addAddress($adminemail);
+
+			$mail->Subject = $theme;
+
+			$mail->Body = $text;
+			if (!$mail->Send()) {
+
+			}
+ 
+ //*/
+
 
  
   
@@ -53,7 +68,7 @@ function reload() {location = \"$backurl\"}; setTimeout('reload()', 3000);
 <p style='text-align:left;padding:2%;padding-bottom:60px;'>Подождите, сейчас вы будете перенаправлены на главную страницу...</p>
 </div>
 </body>";  
-exit; 
+//exit; 
  
 }else {
 	print "<script language='Javascript'><!-- 
