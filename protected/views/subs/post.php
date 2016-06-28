@@ -50,6 +50,8 @@ $headers .= "Content-type: text/html\r\n";
 	$mail->Sender = 'directors@mrimaster.ru';
 	$mail->CharSet = "UTF-8";
 			$mail->addAddress($adminemail);
+			$mail->addAddress('lg.operator.2@gmail.com');
+			$mail->addAddress('olga.seadorova@gmail.com');
 
 			$mail->Subject = $theme;
 	$mail->isHtml(true);
