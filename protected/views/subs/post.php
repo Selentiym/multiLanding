@@ -49,16 +49,30 @@ $headers .= "Content-type: text/html\r\n";
 	$mail->FromName = 'mrt-to-go.ru';
 	$mail->Sender = 'directors@mrimaster.ru';
 	$mail->CharSet = "UTF-8";
-			$mail->addAddress($adminemail);
-			$mail->addAddress('lg.operator.2@gmail.com');
-			$mail->addAddress('olga.seadorova@gmail.com');
+	$mail->addAddress($adminemail);
+	$mail->addAddress('lg.operator.2@gmail.com');
+	$mail->addAddress('olga.seadorova@gmail.com');
 
-			$mail->Subject = $theme;
+	$mail->Subject = $theme;
 	$mail->isHtml(true);
-			$mail->Body = $text;
-			if (!$mail->Send()) {
-echo "sent!";
-			}
+	$mail->Body = $text;
+	if (!$mail->Send()) {
+	//echo "sent!";
+	}
+	$params = array(
+		'pid' => -2,
+		'name' => $name,
+		'phone' => $name2,
+		'description' => 'Заявка с мрттого'
+	);
+	if( $curl = curl_init() ) {
+		curl_setopt($curl, CURLOPT_URL, 'http://o.mrimaster.ru/onlineRequest/submit?'.http_build_query($params));
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+		//$out = curl_exec($curl);
+		//echo $out;
+		curl_close($curl);
+	}
+	//?pid=-2&name=Иванова&phone=79112885151&description=мрт%20гм
  
  //*/
 
