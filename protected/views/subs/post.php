@@ -68,7 +68,7 @@ $headers .= "Content-type: text/html\r\n";
 	if( $curl = curl_init() ) {
 		curl_setopt($curl, CURLOPT_URL, 'http://o.mrimaster.ru/onlineRequest/submit?'.http_build_query($params));
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-		//$out = curl_exec($curl);
+		$out = curl_exec($curl);
 		//echo $out;
 		curl_close($curl);
 	}
