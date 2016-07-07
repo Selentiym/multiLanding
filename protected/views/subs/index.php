@@ -86,7 +86,8 @@ if (!(is_a($rule -> price, 'Price'))) {
     <link href="<?php echo Yii::app() -> baseUrl; ?>/css/timeTo.css" type="text/css" rel="stylesheet"/>
     <script src="js/modernizr.custom.17475.js"></script>
     <script>window.jQuery || document.write('<script src="js/jquery-1.8.min.js">\x3C/script>')</script>
-	
+    <!-- Скрипт от Сергея -->
+    <script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=ZoWPAij/XsvmYwpBVp*mHyjxYFmtRk9FQyha6GkvAtetr588U5wbF5MZJj/ib6UydXHnWNMMtMP7Z8WtwIkSkH8cdWpm3HrI1QN5riGW/XLGtfE3*v7iSfoAoNxRKWe6XZ0BbseP2AqkhvDT8d**YI2Z7hHOYfH/YO7YrxfuUPw-';</script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
 (function (d, w, c) {
