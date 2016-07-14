@@ -12,9 +12,9 @@ if (!(is_a($rule -> price, 'Price'))) {
 //Временно!
 $tel = new Tel();
 if ($_GET['source_type'] == 'context') {
-    $tel->tel = '7 (812) 241-10-59';
+    $tel->tel = '7 (812) 241-10-52';
 } else {
-    $tel -> tel = '7 (812) 241-10-52';
+    $tel -> tel = '7 (812) 313-27-04';
 }
 $rule -> tel = $tel;
 ?>
