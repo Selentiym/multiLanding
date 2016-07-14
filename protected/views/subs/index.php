@@ -9,6 +9,14 @@ $rule -> price = current($prices_temp);
 if (!(is_a($rule -> price, 'Price'))) {
     $rule -> price = Price::model() -> findByPk(Price::trivialId());
 }
+//Временно!
+$tel = new Tel();
+if ($_GET['source_type'] == 'context') {
+    $tel->tel = '7 (812) 241-10-59';
+} else {
+    $tel -> tel = '7 (812) 241-10-52';
+}
+$rule -> tel = $tel;
 ?>
 <!DOCTYPE html>
 <html lang="ru" >
