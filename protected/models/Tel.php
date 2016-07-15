@@ -6,8 +6,10 @@
  * The followings are the available columns in table '{{tel}}':
  * @property integer $id
  * @property string $tel
+ * @property string $word
+ * @property int $prior
  */
-class Tel extends CActiveRecord
+class Tel extends UModel
 {
 	/**
 	 * @return string the associated database table name
@@ -30,6 +32,8 @@ class Tel extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, tel', 'safe', 'on'=>'search'),
+			array('prior, word, tel', 'safe', 'on'=>'create'),
+			array('prior, word, tel', 'safe', 'on'=>'update'),
 		);
 	}
 

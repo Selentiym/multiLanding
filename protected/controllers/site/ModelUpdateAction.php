@@ -47,6 +47,9 @@
 						
 						if ($model -> save()) {
 							//uncomment$this->controller->redirect($model -> redirectAfterUpdate($this -> redirectUrl));
+							if ($this -> redirectUrl) {
+								$this->controller->redirect($this -> redirectUrl);
+							}
 							new CustomFlash('success',$this -> modelClass, 'CreateSuccess','Редактирование успешно!',true);
 						}				
 					}

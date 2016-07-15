@@ -28,13 +28,13 @@ $form=$this->beginWidget('CActiveForm', array(
             <label>Слово</label>
             <?php echo $form->textField($model, 'word',array('size'=>60,'maxlength'=>512,'placeholder'=>'Слово')); ?>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label>Телефон</label>
-            <?php CHtml::activeDropDownListChosen2(Tel::model(), 'id',CHtml::listData(Tel::model() -> findAll(),'id','tel'), array('style' => 'width:300px;','class' => 'select2','name' => 'Rule[id_tel]'), ($model -> id_tel ? array($model -> id_tel) : false), '{
+            <?php/* CHtml::activeDropDownListChosen2(Tel::model(), 'id',CHtml::listData(Tel::model() -> findAll(),'id','tel'), array('style' => 'width:300px;','class' => 'select2','name' => 'Rule[id_tel]'), ($model -> id_tel ? array($model -> id_tel) : false), '{
 						tokenSeparators: [";"],
 						placeholder:"Номер телефона для отображения на странице",
-					}'); ?>
-        </div>
+					}');*/ ?>
+        </div>-->
         <div class="form-group">
             <label>Приоритет</label>
             <?php echo $form->textField($model, 'prior',array('size'=>60,'maxlength'=>512,'placeholder'=>'Приоритет')); ?>

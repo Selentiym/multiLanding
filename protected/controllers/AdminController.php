@@ -32,7 +32,26 @@ class AdminController extends CController{
                 'class' => 'application.controllers.site.FileViewAction',
                 'view' => '//rules/list',
                 'access' => Yii::app()->user->getState('logged',false)
-            )
+            ),
+            'tel' => array(
+                'class' => 'application.controllers.site.FileViewAction',
+                'view' => '//tel/list',
+                'access' => Yii::app()->user->getState('logged',false)
+            ),
+            'createTel' => array(
+                'class' => 'application.controllers.site.ModelCreateAction',
+                'modelClass' => 'Tel',
+                'view' => '//tel/create',
+                'scenario' => 'create',
+                'redirectUrl' => Yii::app() -> baseUrl.'/admin/tel'
+            ),
+            'updateTel' => array(
+                'class' => 'application.controllers.site.ModelUpdateAction',
+                'modelClass' => 'Tel',
+                'view' => '//tel/update',
+                'scenario' => 'update',
+                'redirectUrl' => Yii::app() -> baseUrl.'/admin/tel'
+            ),
         );
     }
 }

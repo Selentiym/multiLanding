@@ -53,7 +53,7 @@ return array(
 
 				'admin' => 'admin',
 				'login' => 'login',
-				'admin/<action:(create|update|delete)><modelClass:(Rule)>/<arg:\w*>' => 'admin/<action><modelClass>',
+				'admin/<action:(create|update|delete)><modelClass:(Rule|Tel)>/<arg:\w*>' => 'admin/<action><modelClass>',
 				
 				'<action:\w+>' => 'site/<action>',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',

@@ -7,6 +7,7 @@
  */
 $rules = Rule::model() -> findAll(array('order' => 'prior DESC'));
 ?>
+<a href="<?php echo Yii::app() -> createUrl("admin/tel"); ?>">Правила для телефонов</a>
 <h1>Список правил</h1>
 <button onClick="location.href='<?php echo Yii::app() -> baseUrl.'/admin/createRule'; ?>'">Создать</button>
 <table>
