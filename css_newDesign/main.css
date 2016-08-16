@@ -186,10 +186,10 @@ ORDER BUTTON
     position: relative;
     font-size: 17px;
     background: #d6585c;
-    background: url(../img/top-phone.png) 7% 40% no-repeat, -webkit-gradient( linear, left top, left bottom, from(#eb787b), color-stop(0.50, #ad1a1f), color-stop(0.50, #b5090f), to(#d6585c));
-    background: url(../img/top-phone.png) 7% 40% no-repeat,-moz-linear-gradient(top, #eb787b 0%, #ad1a1f 50%,#b5090f 50%, #d6585c 100%);
-    background: url(../img/top-phone.png) 7% 40% no-repeat,-o-linear-gradient(top, #eb787b 0%,#ad1a1f 50%,#b5090f 50%,#d6585c 100%);
-    background: url(../img/top-phone.png) 7% 40% no-repeat, linear-gradient(top, #eb787b 0%,#ad1a1f 50%,#b5090f 50%,#d6585c 100%);
+    background: url(../img_newDesign/top-phone.png) 7% 40% no-repeat, -webkit-gradient( linear, left top, left bottom, from(#eb787b), color-stop(0.50, #ad1a1f), color-stop(0.50, #b5090f), to(#d6585c));
+    background: url(../img_newDesign/top-phone.png) 7% 40% no-repeat,-moz-linear-gradient(top, #eb787b 0%, #ad1a1f 50%,#b5090f 50%, #d6585c 100%);
+    background: url(../img_newDesign/top-phone.png) 7% 40% no-repeat,-o-linear-gradient(top, #eb787b 0%,#ad1a1f 50%,#b5090f 50%,#d6585c 100%);
+    background: url(../img_newDesign/top-phone.png) 7% 40% no-repeat, linear-gradient(top, #eb787b 0%,#ad1a1f 50%,#b5090f 50%,#d6585c 100%);
     border-radius: 10px;
     z-index: 5;
     text-shadow: 0px 1px 0px #8D827B;
@@ -259,7 +259,7 @@ ADVANTAGES
 */
 
 .advantages{
-	background:url(../img/advantages_back.png) no-repeat;
+	background:url(../img_newDesign/advantages_back.png) no-repeat;
     background-size: cover;
     padding-top: 40px;
     margin-top: 170px;
@@ -307,7 +307,7 @@ ADVANTAGES
 PRICES BLOCK
 */
 .block-prices .container{
-    background: url(../img/big_shad.png) 50% 0 no-repeat, #e4f6f9;
+    background: url(../img_newDesign/big_shad.png) 50% 0 no-repeat, #e4f6f9;
 /*	width: 1150px;
 	padding: 0 250px 0 0;*/
     position: relative;
@@ -340,12 +340,12 @@ PRICES BLOCK
 }
 
 .block-prices ul li.mrt .h1:after{
-	background: url(../img/lines.png) no-repeat;
+	background: url(../img_newDesign/lines.png) no-repeat;
     left: 0;
 }
 
 .block-prices ul li.kt .h1:after{
-	background: url(../img/lines2.png) no-repeat;
+	background: url(../img_newDesign/lines2.png) no-repeat;
 	right: 0;
 }
 
@@ -370,7 +370,7 @@ PRICES BLOCK
 }
 .price-content table td.price-name{
     vertical-align: bottom;
-    background: url(../img/tbl-dot.png) repeat-x;
+    background: url(../img_newDesign/tbl-dot.png) repeat-x;
     background-position: 100% 100%;
 }
 .price-content table td.price-name span{
@@ -449,59 +449,59 @@ NAVIGATION
 	padding:0;
 }
 .navigation li:nth-child(1) a{
-	background:url(../img/nav1.png) no-repeat;
+	background:url(../img_newDesign/nav1.png) no-repeat;
 }
 .navigation li:nth-child(2) a{
-	background:url(../img/nav2.png) no-repeat;
+	background:url(../img_newDesign/nav2.png) no-repeat;
 }
 .navigation li:nth-child(3) a{
-	background:url(../img/nav3.png) no-repeat;
+	background:url(../img_newDesign/nav3.png) no-repeat;
 }
 .navigation li:nth-child(4) a{
-	background:url(../img/nav4.png) no-repeat;
+	background:url(../img_newDesign/nav4.png) no-repeat;
 }
 .navigation li:nth-child(5) a{
-	background:url(../img/nav5.png) no-repeat;
+	background:url(../img_newDesign/nav5.png) no-repeat;
 }
 .navigation li:nth-child(6) a{
-	background:url(../img/nav6.png) no-repeat;
+	background:url(../img_newDesign/nav6.png) no-repeat;
 }
 .navigation li:nth-child(7) a{
-	background:url(../img/nav7.png) no-repeat;
+	background:url(../img_newDesign/nav7.png) no-repeat;
 }
 .navigation li:nth-child(8) a{
-	background:url(../img/nav8.png) no-repeat;
+	background:url(../img_newDesign/nav8.png) no-repeat;
 }
 .navigation li:nth-child(9) a{
-	background:url(../img/nav9.png) no-repeat;
+	background:url(../img_newDesign/nav9.png) no-repeat;
 }
 
 .navigation li:nth-child(1) a:hover{
-	background:url(../img/nav1-hover.png) no-repeat;
+	background:url(../img_newDesign/nav1-hover.png) no-repeat;
 }
 .navigation li:nth-child(2) a:hover{
-	background:url(../img/nav2-hover.png) no-repeat;
+	background:url(../img_newDesign/nav2-hover.png) no-repeat;
 }
 .navigation li:nth-child(3) a:hover{
-	background:url(../img/nav3-hover.png) no-repeat;
+	background:url(../img_newDesign/nav3-hover.png) no-repeat;
 }
 .navigation li:nth-child(4) a:hover{
-	background:url(../img/nav4-hover.png) no-repeat;
+	background:url(../img_newDesign/nav4-hover.png) no-repeat;
 }
 .navigation li:nth-child(5) a:hover{
-	background:url(../img/nav5-hover.png) no-repeat;
+	background:url(../img_newDesign/nav5-hover.png) no-repeat;
 }
 .navigation li:nth-child(6) a:hover{
-	background:url(../img/nav6-hover.png) no-repeat;
+	background:url(../img_newDesign/nav6-hover.png) no-repeat;
 }
 .navigation li:nth-child(7) a:hover{
-	background:url(../img/nav7-hover.png) no-repeat;
+	background:url(../img_newDesign/nav7-hover.png) no-repeat;
 }
 .navigation li:nth-child(8) a:hover{
-	background:url(../img/nav8-hover.png) no-repeat;
+	background:url(../img_newDesign/nav8-hover.png) no-repeat;
 }
 .navigation li:nth-child(9) a:hover{
-	background:url(../img/nav9-hover.png) no-repeat;
+	background:url(../img_newDesign/nav9-hover.png) no-repeat;
 }
 
 
@@ -595,7 +595,7 @@ REVIEWS
 	position: absolute;
     right: -7px;
     top: 0;
-    background: url(../img/reviews-h1.png) 100% 50% no-repeat;
+    background: url(../img_newDesign/reviews-h1.png) 100% 50% no-repeat;
     color: #fff;
     width: 160px;
     height: 55px;
@@ -614,7 +614,7 @@ REVIEWS
 	margin-top:10px;
 }
 .one-review{
-    background:#f2fafc url(../img/quotes.png) no-repeat;
+    background:#f2fafc url(../img_newDesign/quotes.png) no-repeat;
 	padding: 5px 15px;
 	margin-bottom:10px;
 }
@@ -629,7 +629,7 @@ CALL ME
 */
 
 .call-me{
- 	background: url(../img/call-me.jpg) 100% 100% no-repeat;
+ 	background: url(../img_newDesign/call-me.jpg) 100% 100% no-repeat;
     border-bottom: 2px solid #5fc3e8;
     min-height: 70px;
     padding: 20px 67px 15px 40px;
@@ -651,7 +651,7 @@ CALL ME
 	float:left;
 }
 .call-me:after {
-    background: url(../img/lines2.png) no-repeat;
+    background: url(../img_newDesign/lines2.png) no-repeat;
     content: '';
     width: 100px;
     height: 22px;
@@ -664,7 +664,7 @@ DISCOUNT
 */
 
 .discount{
-    background: url(../img/big_shad.png) 50% 0 no-repeat, url(../img/big_shad_bottom.png) 50% 100% no-repeat, #eff6fe;
+    background: url(../img_newDesign/big_shad.png) 50% 0 no-repeat, url(../img_newDesign/big_shad_bottom.png) 50% 100% no-repeat, #eff6fe;
     background-size: contain;
     text-align: center;
     padding: 20px 0;
@@ -764,7 +764,7 @@ MAP
 
 .main_map {
     width: 100%;
-    background: url("../img/main_map.jpg") no-repeat center;
+    background: url("../img_newDesign/main_map.jpg") no-repeat center;
     background-size: 100%;
     margin-top: 30px;
 }
@@ -776,8 +776,8 @@ MAP
 #kartina {
     display: block;
     position: relative;
-    /* background: url("../img/smal_map3.png") no-repeat center; */
-    background: url("../img/map_small2.png") no-repeat center;
+    /* background: url("../img_newDesign/smal_map3.png") no-repeat center; */
+    background: url("../img_newDesign/map_small2.png") no-repeat center;
     width: 355px;
     height: 454px;
 }
@@ -864,7 +864,7 @@ MAP
 	width:30px;
 	height:38px;
 	background:blue;
-	background:url(../img/marker.png) no-repeat;
+	background:url(../img_newDesign/marker.png) no-repeat;
 	position:absolute;
 	left:190px;
 	top:193px;
@@ -875,7 +875,7 @@ MAP
 }
 
 .map_clinic_block .map_clinic_description{
-	background: url("../img/map_adres5.png") no-repeat top;
+	background: url("../img_newDesign/map_adres5.png") no-repeat top;
 	padding-left:11px;
 	width:235px;
     height:194px;
@@ -892,7 +892,7 @@ MAP
     left:30px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres5.png") no-repeat top;
+    background: url("../img_newDesign/map_adres5.png") no-repeat top;
     display:none;
 }
 
@@ -902,7 +902,7 @@ MAP
     left:65px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres6.png") no-repeat top;
+    background: url("../img_newDesign/map_adres6.png") no-repeat top;
     display:none;
 }
 #map_adres2 :last-child{
@@ -919,7 +919,7 @@ MAP
     left:50px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres2.png") no-repeat top;
+    background: url("../img_newDesign/map_adres2.png") no-repeat top;
     display:none;
 }
 
@@ -929,7 +929,7 @@ MAP
     left:35px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres2.png") no-repeat top;
+    background: url("../img_newDesign/map_adres2.png") no-repeat top;
     display:none;
 }
 
@@ -939,7 +939,7 @@ MAP
     left:60px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres.png") no-repeat top;
+    background: url("../img_newDesign/map_adres.png") no-repeat top;
     display:none;
 }
 
@@ -949,7 +949,7 @@ MAP
     left:20px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres4.png") no-repeat top;
+    background: url("../img_newDesign/map_adres4.png") no-repeat top;
     display:none;
 }
 
@@ -959,7 +959,7 @@ MAP
     left: 86px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres4.png") no-repeat top;
+    background: url("../img_newDesign/map_adres4.png") no-repeat top;
     display:none;
 }
 
@@ -969,7 +969,7 @@ MAP
     left:65px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres4.png") no-repeat top;
+    background: url("../img_newDesign/map_adres4.png") no-repeat top;
     display:none;
 }
 
@@ -979,7 +979,7 @@ MAP
     left:30px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres4.png") no-repeat top;
+    background: url("../img_newDesign/map_adres4.png") no-repeat top;
     display:none;
 }
 
@@ -989,7 +989,7 @@ MAP
     left:-20px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres4.png") no-repeat top;
+    background: url("../img_newDesign/map_adres4.png") no-repeat top;
     display:none;
 }
 #map_adres10_2{
@@ -998,7 +998,7 @@ MAP
     left:-10px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres4.png") no-repeat top;
+    background: url("../img_newDesign/map_adres4.png") no-repeat top;
     display:none;
 }
 #map_adres11{
@@ -1007,7 +1007,7 @@ MAP
     left:45px;
     width:246px;
     height:194px;
-    background: url("../img/map_adres4.png") no-repeat top;
+    background: url("../img_newDesign/map_adres4.png") no-repeat top;
     display:none;
 }
 
@@ -1081,7 +1081,7 @@ QUESTIONS AND ANSWERS
 */
 
 .question-answer{
-    background: #f4f6f6 url(../img/question.png) 5px 7px no-repeat;
+    background: #f4f6f6 url(../img_newDesign/question.png) 5px 7px no-repeat;
     border-radius: 5px;
     padding: 5px 10px 5px 50px;
     margin: 45px 0;
@@ -1171,10 +1171,10 @@ ORDER-FORM
 }
 
 input.your-name{
-	background:#e0f2ff url(../img/input-name.png) 97% 50% no-repeat;
+	background:#e0f2ff url(../img_newDesign/input-name.png) 97% 50% no-repeat;
 }
 input.your-phone{
-	background:#e0f2ff url(../img/input-phone.png) 97% 50% no-repeat;
+	background:#e0f2ff url(../img_newDesign/input-phone.png) 97% 50% no-repeat;
 }
 
 button.order-button{
@@ -1197,10 +1197,10 @@ button.order-button span{
     position: relative;
     font-size: 17px;
     background: #d6585c;
-    background: url(../img/top-phone.png) 7% 40% no-repeat, -webkit-gradient( linear, left top, left bottom, from(#eb787b), color-stop(0.50, #ad1a1f), color-stop(0.50, #b5090f), to(#d6585c));
-    background: url(../img/top-phone.png) 7% 40% no-repeat,-moz-linear-gradient(top, #eb787b 0%, #ad1a1f 50%,#b5090f 50%, #d6585c 100%);
-    background: url(../img/top-phone.png) 7% 40% no-repeat,-o-linear-gradient(top, #eb787b 0%,#ad1a1f 50%,#b5090f 50%,#d6585c 100%);
-    background: url(../img/top-phone.png) 7% 40% no-repeat, linear-gradient(top, #eb787b 0%,#ad1a1f 50%,#b5090f 50%,#d6585c 100%);
+    background: url(../img_newDesign/top-phone.png) 7% 40% no-repeat, -webkit-gradient( linear, left top, left bottom, from(#eb787b), color-stop(0.50, #ad1a1f), color-stop(0.50, #b5090f), to(#d6585c));
+    background: url(../img_newDesign/top-phone.png) 7% 40% no-repeat,-moz-linear-gradient(top, #eb787b 0%, #ad1a1f 50%,#b5090f 50%, #d6585c 100%);
+    background: url(../img_newDesign/top-phone.png) 7% 40% no-repeat,-o-linear-gradient(top, #eb787b 0%,#ad1a1f 50%,#b5090f 50%,#d6585c 100%);
+    background: url(../img_newDesign/top-phone.png) 7% 40% no-repeat, linear-gradient(top, #eb787b 0%,#ad1a1f 50%,#b5090f 50%,#d6585c 100%);
     border-radius: 10px;
     z-index: 5;
     text-shadow: 0px 1px 0px #8D827B;
@@ -1239,7 +1239,7 @@ footer div:first-child {
 
 
 .vrezka{
-	background:#f4f6f6 url(../img/ktdoctor.png) 15px 50% no-repeat;
+	background:#f4f6f6 url(../img_newDesign/ktdoctor.png) 15px 50% no-repeat;
 	border-radius:5px;
 	padding:10px 10px 10px 50px;
 	overflow:hidden;
