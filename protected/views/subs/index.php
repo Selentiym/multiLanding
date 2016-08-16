@@ -4,22 +4,19 @@
  * @var Rule $rule - the same, just alias.
  */
 $rule = $model;
-$prices_temp = $rule -> prices;
+/*$prices_temp = $rule -> prices;
 $rule -> price = current($prices_temp);
 if (!(is_a($rule -> price, 'Price'))) {
     $rule -> price = Price::model() -> findByPk(Price::trivialId());
 }
 //Временно!
 foreach(Tel::model() -> findAll(array('order' => 'prior DESC')) as $tel) {
-    /**
-     * @type Tel $tel
-     */
     if (!$tel -> word) {break;}
     if (strpos($_SERVER['REQUEST_URI'], $tel -> word) !== false) {
         break;
     }
 }
-$rule -> tel = $tel;
+$rule -> tel = $tel;*/
 ?>
 <!DOCTYPE html>
 <html lang="ru" >

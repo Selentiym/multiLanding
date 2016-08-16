@@ -2,6 +2,7 @@
 
 class SiteController extends Controller
 {
+	const FULL_CYCLE_MINS = 10;
 	/**
 	 * Declares class-based actions.
 	 */
@@ -15,7 +16,28 @@ class SiteController extends Controller
 			'index'=>array(
 				'class'=>'application.controllers.site.ModelViewAction',
 				'modelClass' => 'Rule',
-				'view' => '//subs/index',
+				'view' => function($rule){
+					/**
+					 * @type CWebApplication $app
+					 */
+					$app = Yii::app();
+					$folder = $app->session->get('folder');
+					if (!$folder) {
+						$time = time();
+						//Каждые self::FULL_CYCLE_MINS/2 минут меняем представление.
+						if ($time % (60 * self::FULL_CYCLE_MINS) < 30 * self::FULL_CYCLE_MINS) {
+							$folder = '//subs/';
+						} else {
+							$folder = '//subs_newDesign/';
+						}
+					}
+					//пересохраняем сессию
+					//@todo убрать!
+					//$folder = '//subs_newDesign/';
+					//$folder = '//subs/';
+					$app->session->add('folder', $folder);
+					return $folder . 'index';
+				},
 				'scenario' => Rule::USE_RULE,
 				'external' => $_GET
 			),
@@ -23,7 +45,13 @@ class SiteController extends Controller
 				'class'=>'application.controllers.site.FileViewAction',
 				'view' => '//subs/post',
 				'partial' => true
-			)
+			),
+			'post_newDesign' => array(
+				'class'=>'application.controllers.site.FileViewAction',
+				'view' => '//subs_newDesign/post',
+				'partial' => true
+			),
+
 		);
 	}
 

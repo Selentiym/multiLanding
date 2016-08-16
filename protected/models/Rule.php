@@ -149,12 +149,38 @@ class Rule extends UModel {
 		//set scenario before returning the found record.
 		$ret = function($obj){
 			global $scenario;
+			//Задаем сценарий
 			if (is_a($obj, 'Rule')) {
 				if ($scenario) {
 					$obj->setScenario($scenario);
 				}
 			}
-			return $obj;
+			//Ищем номер телефона! Важно!
+			/**
+			 * @var Rule $rule - a Rule that worked now.
+			 */
+			$rule = $obj;
+			$prices_temp = $rule -> prices;
+			$rule -> price = current($prices_temp);
+			if (!(is_a($rule -> price, 'Price'))) {
+				$rule -> price = Price::model() -> findByPk(Price::trivialId());
+			}
+			//Временно!
+			//foreach(Tel::model() -> findAll(array('order' => 'prior DESC')) as $tel) {
+				/**
+				 * @type Tel $tel
+				 */
+			/*	if (!$tel -> word) {break;}
+				if (strpos($_SERVER['REQUEST_URI'], $tel -> word) !== false) {
+					break;
+				}
+			}
+			$rule -> tel = $tel;*/
+			//Временно! Для показа на старом дизайне
+			$rule -> tel = new Tel();
+			$rule -> tel ->tel = '7 (812) 313-27-04';
+
+			return $rule;
 		};
 		if ($scenario == self::USE_RULE) {
 			$input = $external['utm_term'];

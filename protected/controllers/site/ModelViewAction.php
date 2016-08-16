@@ -10,7 +10,7 @@
 		 */
 		public $external = false;
 		/**
-		 * @var string view for render
+		 * @var string|callable view for render
 		 */
 		public $view;
 		/**
@@ -41,6 +41,9 @@
 						throw new CHttpException(404, "{$this->modelClass} not found");
 					//echo $this -> view;
 					//var_dump($model);
+					if (is_callable($this -> view)) {
+						$this -> view = call_user_func($this -> view,$model);
+					}
 					$this->controller->layout = '//layouts/site';
 					if ($this -> partial) {
 						$this->controller->renderPartial($this->view, array('model' => $model, 'get' => $_GET), false, true);

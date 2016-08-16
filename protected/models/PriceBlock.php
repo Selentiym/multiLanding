@@ -6,6 +6,7 @@
  * The followings are the available columns in table '{{price_blocks}}':
  * @property integer $id
  * @property string $name
+ * @property string $className
  * @property string $category_name
  */
 class PriceBlock extends CActiveRecord
@@ -95,15 +96,21 @@ class PriceBlock extends CActiveRecord
 		return parent::model($className);
 	}
 	/**
-	 * @param bool show - returns instead of printing if false
+	 * @param bool $show - returns instead of printing if false
 	 * renders a simple heading
+	 * @return string
 	 */
 	public function renderHeading($show = true){
-		$text = "<h2>---".$this -> name."---</h2>";
+		if (Yii::app() -> session -> get('folder') == '//subs/') {
+			$text = "<h2>---" . $this->name . "---</h2>";
+		} else {
+			$text = "<h2>---" . $this->name . "---</h2>";
+		}
 		if ($show) {
 			echo $text;
 		} else {
 			return $text;
 		}
+		return $text;
 	}
 }

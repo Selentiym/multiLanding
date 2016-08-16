@@ -16,7 +16,7 @@ $renderBlockCategoryHeading |= (!is_a($prev,'PriceBlock'));
 $renderBlockCategoryHeading |= ($prev -> category_name != $block -> category_name);
 
 if ($renderBlockCategoryHeading) {
-    $this -> renderPartial('//prices/_category_heading', array('name' => $block -> category_name));
+    $this -> renderPartial(Yii::app() -> session -> get('folder').'_category_heading', array('name' => $block -> category_name));
 }
 
 $prices_initial = $block -> prices;
@@ -28,30 +28,14 @@ foreach ($prices_initial as $price) {
         array_push($prices, $price);
     }
 }
-$count = 0;
-$max = count ($prices);
 
-$block -> renderHeading();
-
-
-for ($i = 0; $i < 3; $i ++) {
-    $price = $prices[$i];
-    if (!$price) {
-        break;
-    }
-    $this -> renderPartial('//subs/_single_price',array('price' => $price, 'active' => in_array($price -> id, $highlight)));
-}
+/**
+ * Конец обще части, теперь рендерим частности
+ */
+$this -> renderPartial(Yii::app() -> session -> get('folder').'/_price_block',[
+    'block' => $block,
+    'prices' => $prices,
+    'opened' => $opened,
+    'highlight' => $highlight
+]);
 ?>
-
-<div>
-    <div class="nav-submenu" <?php if ($opened) { echo "style='display:block;'"; } ?>>
-        <?php
-        $i = 3;
-        while($price = $prices[$i]){
-            $i++;
-            $this -> renderPartial('//subs/_single_price',array('price' => $price, 'active' => false));
-        }
-        ?>
-    </div>
-    <?php if ((!$opened)&&($prices[3])) : ?><h2 class="all_price nav-click" ><a>ВСЕ ЦЕНЫ</a></h2><?php endif; ?>
-</div>

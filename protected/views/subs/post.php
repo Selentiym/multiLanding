@@ -3,7 +3,7 @@
 
 $adminemail="shubinsa1@gmail.com";  // e-mail админа
 //$adminemail="bondartsev.nikita@gmail.com";  // e-mail админа
-$theme="Заказ с сайта MRT";
+$theme="Заказ с сайта MRT (старый дизайн)";
  
 $date=date("d.m.y"); // число.месяц.год 
  
