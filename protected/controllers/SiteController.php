@@ -33,7 +33,7 @@ class SiteController extends Controller
 					}
 					//пересохраняем сессию
 					//@todo убрать!
-					$folder = '//subs_newDesign/';
+					//$folder = '//subs_newDesign/';
 					//$folder = '//subs/';
 					$app->session->add('folder', $folder);
 					return $folder . 'index';

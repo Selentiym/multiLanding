@@ -1177,7 +1177,7 @@ button.order-button span{
     display: block;
     position: relative;
     font-size: 17px;
-    background: #d6585c;
+    background: #d6585c url(../img_newDesign/top-phone.png) 7% 40% no-repeat;
     background: url(../img_newDesign/top-phone.png) 7% 40% no-repeat, -webkit-gradient( linear, left top, left bottom, from(#eb787b), color-stop(0.50, #ad1a1f), color-stop(0.50, #b5090f), to(#d6585c));
     background: url(../img_newDesign/top-phone.png) 7% 40% no-repeat,-moz-linear-gradient(top, #eb787b 0%, #ad1a1f 50%,#b5090f 50%, #d6585c 100%);
     background: url(../img_newDesign/top-phone.png) 7% 40% no-repeat,-o-linear-gradient(top, #eb787b 0%,#ad1a1f 50%,#b5090f 50%,#d6585c 100%);
