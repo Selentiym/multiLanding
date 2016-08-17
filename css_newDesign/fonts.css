@@ -1,10 +1,10 @@
 /* font-family: "PTSans"; */
 @font-face {
 	font-family: "PTSans";
-	src: url("../fonts/PTSans/PTSans.eot");
-	src: url("../fonts/PTSans/PTSans.eot?#iefix")format("embedded-opentype"),
-	url("../fonts/PTSans/PTSans.woff") format("woff"),
-	url("../fonts/PTSans/PTSans.ttf") format("truetype");
+	src: url("../fonts_newDesign/PTSans/PTSans.eot");
+	src: url("../fonts_newDesign/PTSans/PTSans.eot?#iefix")format("embedded-opentype"),
+	url("../fonts_newDesign/PTSans/PTSans.woff") format("woff"),
+	url("../fonts_newDesign/PTSans/PTSans.ttf") format("truetype");
 	font-style: normal;
 	font-weight: normal;
 }
@@ -12,10 +12,10 @@
 /* font-family: "PTSansBold"; */
 @font-face {
 	font-family: "PTSans_bold";
-	src: url("../fonts/PTSans/PTSans_bold.eot");
-	src: url("../fonts/PTSans/PTSans_bold.eot?#iefix")format("embedded-opentype"),
-	url("../fonts/PTSans/PTSans_bold.woff") format("woff"),
-	url("../fonts/PTSans/PTSans_bold.ttf") format("truetype");
+	src: url("../fonts_newDesign/PTSans/PTSans_bold.eot");
+	src: url("../fonts_newDesign/PTSans/PTSans_bold.eot?#iefix")format("embedded-opentype"),
+	url("../fonts_newDesign/PTSans/PTSans_bold.woff") format("woff"),
+	url("../fonts_newDesign/PTSans/PTSans_bold.ttf") format("truetype");
 	font-style: normal;
 	font-weight: bold;
 }
