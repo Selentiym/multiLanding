@@ -35,6 +35,9 @@ class SiteController extends Controller
 					//@todo убрать!
 					//$folder = '//subs_newDesign/';
 					//$folder = '//subs/';
+					$view = new View();
+					$view -> folder = $folder;
+					$view -> save();
 					$app->session->add('folder', $folder);
 					return $folder . 'index';
 				},
