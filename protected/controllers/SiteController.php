@@ -2,7 +2,7 @@
 
 class SiteController extends Controller
 {
-	const FULL_CYCLE_MINS = 1;
+	const FULL_CYCLE_MINS = 60;
 	/**
 	 * Declares class-based actions.
 	 */
