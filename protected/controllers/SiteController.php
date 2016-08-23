@@ -22,7 +22,9 @@ class SiteController extends Controller
 					 */
 					$app = Yii::app();
 					$folder = $app->session->get('folder');
+					$newVisit = false;
 					if (!$folder) {
+						$newVisit = true;
 						$time = time();
 						//Каждые self::FULL_CYCLE_MINS/2 минут меняем представление.
 						if ($time % (60 * self::FULL_CYCLE_MINS) < 30 * self::FULL_CYCLE_MINS) {
@@ -37,6 +39,9 @@ class SiteController extends Controller
 					//$folder = '//subs/';
 					$view = new View();
 					$view -> folder = $folder;
+					$view -> newVisit = $newVisit;
+					$view -> agent = $_SERVER['HTTP_USER_AGENT'];
+					$view -> address = urldecode($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 					$view -> save();
 					$app->session->add('folder', $folder);
 					return $folder . 'index';

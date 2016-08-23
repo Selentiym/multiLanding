@@ -7,6 +7,10 @@
  * @property integer $id
  * @property string $folder
  * @property string $date
+ * @property string $agent
+ * @property string $address
+ * @property bool $newVisit
+ * @property bool $robot
  */
 class View extends UModel
 {
@@ -95,4 +99,28 @@ class View extends UModel
 	{
 		return parent::model($className);
 	}
+	protected function beforeSave() {
+		$this -> robot = isBot($this -> agent);
+		return parent::beforeSave();
+	}
+}
+function isBot($userAgent, &$botname = ''){
+	/* Эта функция будет проверять, является ли посетитель роботом поисковой системы */
+	$bots = array(
+			'rambler','googlebot','aport','yahoo','msnbot','turtle','mail.ru','omsktele',
+			'yetibot','picsearch','sape.bot','sape_context','gigabot','snapbot','alexa.com',
+			'megadownload.net','askpeter.info','igde.ru','ask.com','qwartabot','yanga.co.uk',
+			'scoutjet','similarpages','oozbot','shrinktheweb.com','aboutusbot','followsite.com',
+			'dataparksearch','google-sitemaps','appEngine-google','feedfetcher-google',
+			'liveinternet.ru','xml-sitemaps.com','agama','metadatalabs.com','h1.hrn.ru',
+			'googlealert.com','seo-rus.com','yaDirectBot','yandeG','yandex',
+			'yandexSomething','Copyscape.com','AdsBot-Google','domaintools.com',
+			'Nigma.ru','bing.com','dotnetdotcom'
+	);
+	foreach($bots as $bot)
+		if(stripos($userAgent, $bot) !== false){
+			$botname = $bot;
+			return true;
+		}
+	return false;
 }
