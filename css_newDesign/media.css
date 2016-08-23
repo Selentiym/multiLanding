@@ -138,7 +138,14 @@
 	.advantages .adv-comment{
 		display:none;
 	}	
-
+	.price-content table td.price-name {
+		min-width: 280px;
+	}
+	.top_header a#order-button{
+		float:none;
+		margin:0 auto;
+		width:50%;
+	}
 }
 
 /* Extra Small Devices, Phones */
@@ -155,6 +162,7 @@
 	}
 	.top_header a#order-button{
 		float:none;
+		width:100%;
 	}
 	.block-prices .h1{
 		font-size:24px;
@@ -196,10 +204,19 @@
 	.container_countdown{
 		width:auto;
 	}
+	.price-content table td.price-name {
+		min-width: 10px;
+	}
+	.flip-clock-wrapper ul{
+		width:25px;
+	}
 }
 
 /* Custom, iPhone Retina */
 @media only screen and (max-width : 320px) {
+	.flip-clock-wrapper ul{
+		width:20px;
+	}
 
 }
 

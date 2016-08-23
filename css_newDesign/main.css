@@ -360,6 +360,7 @@ PRICES BLOCK
     vertical-align: bottom;
     background: url(../img_newDesign/tbl-dot.png) repeat-x;
     background-position: 100% 100%;
+	min-width:500px;
 }
 .price-content table td.price-name span{
 	background:#e4f6f9;
@@ -368,7 +369,7 @@ PRICES BLOCK
 }
 
 .price-content table td.price-new{
-	color:#004391;
+	color:#da050d;
 	text-align:center;
 }
 
@@ -616,7 +617,6 @@ CALL ME
     padding: 20px 67px 15px 40px;
     font-size: 18px;
     margin: 0 auto;
-	width:90%;
 	position:relative;
 	margin-bottom:25px;
 }
