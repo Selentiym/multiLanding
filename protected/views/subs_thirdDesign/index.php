@@ -11,11 +11,13 @@
  */
 
 ?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]><html lang="ru" class="lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 <!--[if IE 7]><html lang="ru" class="lt-ie9 lt-ie8"><![endif]-->
 <!--[if IE 8]><html lang="ru" class="lt-ie9"><![endif]-->
 <!--[if gt IE 8]><!-->
+<?php $base = Yii::app() -> baseUrl; ?>
 <html lang="ru">
 <!--<![endif]-->
 <head>
@@ -24,58 +26,61 @@
     <meta name="description" content="МРТ и КТ ЦЕНТРЫ ВО ВСЕХ РАЙОНАХ САНКТ-ПЕТЕРБУРГА" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link rel="shortcut icon" href="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/favicon.png" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/bootstrap/bootstrap-grid-3.3.1.min.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/bootstrap/bootstrap_col_5.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/font-awesome-4.2.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/fancybox/jquery.fancybox.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/owl-carousel/owl.carousel.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/countdown/jquery.countdown.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css_newDesign/fonts.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css_newDesign/main.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css_newDesign/flipclock.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css_newDesign/tabulous.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css_newDesign/media.css" />
+    <link href="<?php echo $base; ?>/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="shortcut icon" href="<?php echo $base; ?>/favicon.png" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs_thirdDesign/bootstrap/bootstrap-grid-3.3.1.min.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs_thirdDesign/bootstrap/bootstrap_col_5.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs_thirdDesign/font-awesome-4.2.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs_thirdDesign/fancybox/jquery.fancybox.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs_thirdDesign/owl-carousel/owl.carousel.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs_thirdDesign/countdown/jquery.countdown.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css_thirdDesign/fonts.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css_thirdDesign/main.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css_thirdDesign/flipclock.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css_thirdDesign/tabulous.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css_thirdDesign/media.css" />
+
 
     <script>
         baseUrl = '<?php echo Yii::app() -> baseUrl; ?>';
     </script>
-    <!-- Скрипт от Сергея -->
-    <script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=ZoWPAij/XsvmYwpBVp*mHyjxYFmtRk9FQyha6GkvAtetr588U5wbF5MZJj/ib6UydXHnWNMMtMP7Z8WtwIkSkH8cdWpm3HrI1QN5riGW/XLGtfE3*v7iSfoAoNxRKWe6XZ0BbseP2AqkhvDT8d**YI2Z7hHOYfH/YO7YrxfuUPw-';</script>
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function (d, w, c) {
-            (w[c] = w[c] || []).push(function() {
-                try {
-                    w.yaCounter37896725 = new Ya.Metrika({
-                        id:37896725,
-                        clickmap:true,
-                        trackLinks:true,
-                        accurateTrackBounce:true,
-                        webvisor:true
-                    });
-                } catch(e) { }
-            });
 
-            var n = d.getElementsByTagName("script")[0],
-                s = d.createElement("script"),
-                f = function () { n.parentNode.insertBefore(s, n); };
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = "https://mc.yandex.ru/metrika/watch.js";
 
-            if (w.opera == "[object Opera]") {
-                d.addEventListener("DOMContentLoaded", f, false);
-            } else { f(); }
-        })(document, window, "yandex_metrika_callbacks");
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/37896725" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
 
 
 </head>
 <body>
+<!-- Скрипт от Сергея -->
+<script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=ZoWPAij/XsvmYwpBVp*mHyjxYFmtRk9FQyha6GkvAtetr588U5wbF5MZJj/ib6UydXHnWNMMtMP7Z8WtwIkSkH8cdWpm3HrI1QN5riGW/XLGtfE3*v7iSfoAoNxRKWe6XZ0BbseP2AqkhvDT8d**YI2Z7hHOYfH/YO7YrxfuUPw-';</script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter37896725 = new Ya.Metrika({
+                    id:37896725,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/37896725" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 <header class="top_header">
     <div class="header_topline default" id="topline">
         <div class="container">
@@ -83,12 +88,12 @@
                 <div class="row">
 
                     <div class="col-lg-3 col-md-1 col-sm-1 col-xs-1 logo-outer" id="logo-outer">
-                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 logo"><a href="#"><img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/logo.png"></a></div>
-                        <div class="col-lg-9 logo-text" id="logo-text">Записаться на МРТ и КТ по телефону</div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 logo"><a href="<?php echo $base; ?>/#"><img src="<?php echo $base; ?>/img_thirdDesign/logo.png"></a></div>
+                        <div class="col-lg-9 logo-text" id="logo-text"><a href="<?php echo $base; ?>/#slujba-info">Бесплатная общегородская служба записи на МРТ и КТ</a></div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-10 col-xs-10 top_contacts">
                         <div>8 (812) 241-10-52</div>
-                        <a href="#callback" class="order fancybox"><img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/phone-sm.png"><span>Заказать обратный звонок</span></a>
+                        <a href="<?php echo $base; ?>/#callback" class="order fancybox"><img src="<?php echo $base; ?>/img_thirdDesign/phone-sm.png"><span>Заказать обратный звонок</span></a>
                         <span class="perezvonim">Перезвоним в течение 10 минут!</span>
                     </div>
                     <nav class="col-lg-6 col-md-8 col-sm-1 col-xs-1 main_menu clearfix">
@@ -105,6 +110,7 @@
                     <div class="col-md-2" id="callback-on-fix-menu">
                         <a href="#callback-registration" class="fancybox" id="order-button"> <span class="btn-title">Записаться <br> на МРТ и КТ</span><span class="day-and-night">Круглосуточно!</span> </a>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -117,57 +123,66 @@
         <div class="next_button"><i class="fa fa-angle-right"></i></div>
         <div class="prev_button"><i class="fa fa-angle-left"></i></div>
         <div class="carousel">
-            <div class="slide_item"><img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/background1.jpg" alt="alt" /></div>
-            <div class="slide_item"><img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/background2.jpg" alt="alt" /></div>
-            <div class="slide_item"><img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/background3.jpg" alt="alt" /></div>
-            <div class="slide_item"><img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/background5.jpg" alt="alt" /></div>
+            <div class="slide_item"><img src="<?php echo $base; ?>/img_thirdDesign/background1.jpg" alt="alt" /></div>
+            <div class="slide_item"><img src="<?php echo $base; ?>/img_thirdDesign/background2.jpg" alt="alt" /></div>
+            <div class="slide_item"><img src="<?php echo $base; ?>/img_thirdDesign/background3.jpg" alt="alt" /></div>
+            <div class="slide_item"><img src="<?php echo $base; ?>/img_thirdDesign/background5.jpg" alt="alt" /></div>
         </div>
 
     </div>
 
 
     <div class="over-slider-container">
+        <marquee behavior="scroll" direction="left" scrollamount="5">
+            Запись на приём через Общегородскую службу записи на МРТ и КТ теперь не только удобнее, но и <b>дешевле, чем напрямую</b>!
+        </marquee>
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-8">
                     <div class="discount-header">
-                        <div class="discount-top"><img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/discount-top.png"></div>
+                        <div class="discount-top"><img src="<?php echo $base; ?>/img_thirdDesign/discount-top.png"></div>
                         <div class="discount-content">
-                            <span class="discount-name"><?php echo $model -> price -> text; ?></span>
-                            <span class="discount-old-price"><?php echo $model -> price -> price_old;?>р.</span>
-                            <span class="discount-price"><?php echo $model -> price -> price;?>р.</span>
+                            <span class="discount-name">МРТ головного мозга </span>
+                            <span class="discount-old-price">3300р.</span>
+                            <span class="discount-price">2370р.</span>
                         </div>
-                        <div class="discount-bottom"><img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/discount-bottom.png"></div>
+                        <div class="discount-bottom"><img src="<?php echo $base; ?>/img_thirdDesign/discount-bottom.png"></div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-4">
+
                     <a href="#callback-registration" class="fancybox" id="order-button"> <span class="btn-title">Записаться <br> на МРТ и КТ</span> <span class="day-and-night">Круглосуточно!</span></a>
                 </div>
             </div>
             <div class="advantages row">
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6" style="margin-top:10px;">
-                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage1.png">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6" style="margin-top:10px;pading-left: 5px;">
+                    <img src="<?php echo $base; ?>/img_thirdDesign/advantage1.png">
                     <span>МРТ и КТ<br> срочно</span>
                     <p class="adv-comment">Обследование <br>в день обращения</p>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage4.png">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6 narrow">
+                    <img src="<?php echo $base; ?>/img_thirdDesign/advantage4.png">
                     <span>Скидки<br> Акции</span>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage6.png">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6">
+                    <img src="<?php echo $base; ?>/img_thirdDesign/advantage6.png">
                     <span>Результат<br> за час</span>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage3.png">
+                <div class="col15-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <img src="<?php echo $base; ?>/img_thirdDesign/advantage7.png">
+                    <span class="best-price">Гарантия лучшей цены</span>
+                    <p class="adv-comment" style="color: #d82b3a;padding-left: 40px;border-top: 1px dashed #d82b3a;">Наши услуги <br>абсолютно бесплатны! </p>
+                </div>
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6 narrow">
+                    <img src="<?php echo $base; ?>/img_thirdDesign/advantage3.png">
                     <span>Опыт работы<br> 24 года</span>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage5.png">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6">
+                    <img src="<?php echo $base; ?>/img_thirdDesign/advantage5.png">
                     <span>Бесплатная<br> консультация врача </span>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6" style="margin-top:10px;">
-                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage2.png">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6" style="margin-top:10px;">
+                    <img src="<?php echo $base; ?>/img_thirdDesign/advantage2.png">
                     <span>МРТ и КТ<br> ночью</span>
                     <p class="adv-comment">Скидка 50%</p>
                 </div>
@@ -181,8 +196,8 @@
 
 <?php
 $rule = $model;
-if (is_a($model -> section,'Section')) {
-    $this->renderPartial('//subs_newDesign/_section', array('section'=> $model -> section, 'rule' => $model));
+if (is_a($rule -> section,'Section')) {
+    $this->renderPartial('//subs_thirdDesign/_section', array('section'=> $rule -> section, 'rule' => $rule,'base' => $base));
 }
 
 
@@ -190,33 +205,28 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
     if ($section -> id == $rule -> section -> id) {
         continue;
     }
-    $this->renderPartial('//subs_newDesign/_section', array('section' => $section, 'rule' => $model));
+    $this->renderPartial('//subs_thirdDesign/_section', array('section' => $section, 'rule' => $model, 'base' => $base));
 }
 ?>
 
 
-<?php /* $this -> renderPartial('//subs_newDesign/prices', [
+<?php /* $this -> renderPartial('//subs_thirdDesign/prices', [
     'model'=>$model
-]);  $this -> renderPartial('//subs_newDesign/skidki', [
+]);  $this -> renderPartial('//subs_thirdDesign/skidki', [
     'model'=>$model
-]);  $this -> renderPartial('//subs_newDesign/doctors', [
+]);  $this -> renderPartial('//subs_thirdDesign/doctors', [
     'model'=>$model
-]);  $this -> renderPartial('//subs_newDesign/jelezo', [
+]);  $this -> renderPartial('//subs_thirdDesign/jelezo', [
     'model'=>$model
-]);  $this -> renderPartial('//subs_newDesign/geo', [
+]);  $this -> renderPartial('//subs_thirdDesign/geo', [
     'model'=>$model
-]); $this -> renderPartial('//subs_newDesign/raznica', [
+]); $this -> renderPartial('//subs_thirdDesign/raznica', [
     'model'=>$model
-]); $this -> renderPartial('//subs_newDesign/faq', [
+]); $this -> renderPartial('//subs_thirdDesign/faq', [
     'model'=>$model
-]); $this -> renderPartial('//subs_newDesign/form', [
+]); $this -> renderPartial('//subs_thirdDesign/form', [
     'model'=>$model
 ]); //*/ ?>
-
-
-
-
-
 
 <footer>
     <div class="container">
@@ -225,7 +235,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
                 <span>© 2016</span>
             </div>
             <div class="col-md-6">
-                <a class="phone-footer" href="tel:88122411052">8 (812) 241-10-52</a>
+                <a class="phone-footer" href="<?php echo $base; ?>/tel:88122411052">8 (812) 241-10-52</a>
             </div>
         </div>
     </div>
@@ -238,7 +248,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
 </div>
 
 <div id="info2" style="display:none">
-    <h2>Ананьева Наталия Исаевна</h2><img src="img/1.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <h2>Ананьева Наталия Исаевна</h2><img src="<?php echo $base; ?>/img_thirdDesign/1.jpg" alt="alt" style="float: left;margin-right: 20px;">
     <p>Более 25 лет работает в Научно-исследовательском психоневрологическом институте имени В. М. Бехтерева, в настоящее время – руководитель отдела неврологии и клинико-диагностических методов исследования психоневрологических больных.
     </p>
     <p>Профессор научно-клинического и образовательного центра «Лучевая диагностика и ядерная медицина» Института высоких медицинских технологий СПбГУ. Ученый секретарь Санкт-Петербургского радиологического общества. Член Европейского общества радиологов (ESR), Европейского общества нейрорадиологов (ESNR), Европейского общества магнитного резонанса в биологии и медицине (ESMRMB).
@@ -256,7 +266,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
     </ul>
 </div>
 
-<div id="info3" style="display:none"><img src="img/2.jpg" alt="alt" style="float: left;margin-right: 20px;">
+<div id="info3" style="display:none"><img src="<?php echo $base; ?>/img_thirdDesign/2.jpg" alt="alt" style="float: left;margin-right: 20px;">
     <h2>Голимбиевская Тамара Анатольевна</h2>
     <p>Научно-педагогический, рентгенологический стаж более 38 лет.</p>
     <p>С 1999 года – доцент кафедры рентгенологии СПб МАПО, в настоящий момент доцент кафедры лучевой диагностики и лучевой терапии Северо-Западного медицинского университета имени И. И. Мечникова. Является членом СПб радиологического общества. Член Европейского общества радиологов (ESR).</p>
@@ -270,7 +280,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
 </div>
 
 <div id="info4" style="display:none">
-    <h2>Холин А.В.</h2><img src="img/9.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <h2>Холин А.В.</h2><img src="<?php echo $base; ?>/img_thirdDesign/9.jpg" alt="alt" style="float: left;margin-right: 20px;">
     <p>Заведующий кафедрой лучевой диагностики СПб МАПО, профессор, член Европейского научного общества нейрорадиологов, член Европейского Конгресса Радиологов, член редакционного совета Британского журнала радиологии (British Journal of Radiology), член Европейского общества Академических радиологов.</p>
     <p>С 1996 по 2002, зам. главного врача по диагностике ГМПБ №2.</p>
     <p>С 2002 по 2009 руководитель отделения лучевой диагностики и адаптационных процессов Российского НИИ травматологии и ортопедии им. Р.Р.Вредена.  </p>
@@ -280,7 +290,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
     <p>Стажировки за рубежом: Великобритания, Швеция. </p>
 </div>
 
-<div id="info5" style="display:none"><img src="img/3.jpg" alt="alt" style="float: left;margin-right: 20px;">
+<div id="info5" style="display:none"><img src="<?php echo $base; ?>/img_thirdDesign/3.jpg" alt="alt" style="float: left;margin-right: 20px;">
     <h2>Савельева Татьяна Вячеславовна</h2>
     <p>Стаж работы врачом- рентгенологом на КТ - 12 лет, на МРТ - 9 лет.</p>
     <p>Доцент кафедры рентгенологии Санкт-Петербургского Государственного медицинского университета. Доцент научно-клинического и образовательного центра «Лучевая диагностика и ядерная медицина» Института высоких медицинских технологий СПбГУ. В 2009 г защитила диссертацию «Возможности МСКТ в выявлении опухолевого поражения поджелудочной железы и желчевыводящих протоков». Много лет работает в области компьютерной и магнитно-резонансной томографии, специалист широкого профиля. В настоящее время заведует кабинетами МРТ клинической больницы № 122 имени Л. Г. Соколова ФМБА России.</p>
@@ -294,7 +304,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
 </div>
 
 <div id="info6" style="display:none">
-    <h2>Макогонова Марина Евгеньевна</h2><img src="img/4.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <h2>Макогонова Марина Евгеньевна</h2><img src="<?php echo $base; ?>/img_thirdDesign/4.jpg" alt="alt" style="float: left;margin-right: 20px;">
     <p>Работает врачом-рентгенологом с 2005 года после окончания клинической ординатуры в СПбМАПО. Работала врачом-рентгенологом в кабинетах компьютерной томографии клиники СПб МАПО, МЦ «Адмиралтейские верфи».</p>
     <p>В настоящее время заведует кабинетом магнитно-резонансной томографии НИИ фтизиопульмонологии и работает врачом кабинета МРТ в международной клинике «МЕДЕМ».</p>
     <p>Готовит кандидатскую диссертацию на тему «Диагностические возможности магнитно-резонансной томографии (МРТ) в оценке состояния спинного мозга и позвоночника при спондилитах».</p>
@@ -307,7 +317,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
 </div>
 
 <div id="info7" style="display:none">
-    <h2>Гарапач Ирина Анатольевна</h2><img src="img/6.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <h2>Гарапач Ирина Анатольевна</h2><img src="<?php echo $base; ?>/img_thirdDesign/6.jpg" alt="alt" style="float: left;margin-right: 20px;">
     <p>Работает врачом-рентгенологом с 2000 года после окончания клинической ординатуры в СПбМАПО.</p>
     <p>Доцент кафедры рентгенологии Санкт-Петербургского Государственного медицинского университета. В 2006 г защитила диссертацию о возможностях лучевой диагностики в стоматологии. Член Санкт-Петербургского радиологического общества, Европейской ассоциации радиологов. Много лет работает в области компьютерной и магнитно-резонансной томографии, специалист широкого профиля. Работала в кабинете компьютерной томографии ГБ №2, в течении четырех лет работала заведующей отделением лучевой диагностики ДГБ № 2 «Святой Марии Магдалины».</p>
     <p>С 2015 года врач-рентгенолог МРТ и КТ в МДЦ Рэмси Диагностика</p>
@@ -319,7 +329,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
 </div>
 
 <div id="info8" style="display:none">
-    <h2>Меньков Игорь Анатольевич</h2><img src="img/5.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <h2>Меньков Игорь Анатольевич</h2><img src="<?php echo $base; ?>/img_thirdDesign/5.jpg" alt="alt" style="float: left;margin-right: 20px;">
     <p>С ноября 2014 года по настоящее время – заведующий отделениями компьютерной томографии и неотложной диагностики кафедры рентгенологии и радиологии (с курсом ультразвуковой диагностики) Военно-медицинской академии им. С.М. Кирова.</p>
     <p>С 2011 года по ноябрь 2014 года – врач-рентгенолог рентгеновского отделения (компьютерной томографии) кафедры рентгенологии и радиологии (с курсом ультразвуковой диагностики) Военно-медицинской академии им. С.М.Кирова.</p>
     <p>С 2012 года по настоящее время – врач-рентгенолог отделения лучевой диагностики СПБ ГУЗ «Городская Александровская больница».</p>
@@ -334,7 +344,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
 </div>
 
 <div id="info9" style="display:none">
-    <h2>Марченко Наталья Викторовна</h2><img src="img/8.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <h2>Марченко Наталья Викторовна</h2><img src="<?php echo $base; ?>/img_thirdDesign/8.jpg" alt="alt" style="float: left;margin-right: 20px;">
     <p>Врач-рентгенолог (МРТ), заведующий кабинетом МРТ</p>
     <p>Высшая квалификационная категория, кандидат медицинских наук</p>
     <p>Врачебный стаж: 18 лет		</p>
@@ -344,12 +354,13 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
 </div>
 
 <div id="info10" style="display:none">
-    <h2>Силина Галина Ивановна</h2><img src="img/7.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <h2>Силина Галина Ивановна</h2><img src="<?php echo $base; ?>/img_thirdDesign/7.jpg" alt="alt" style="float: left;margin-right: 20px;">
     <p>	Врач-рентгенолог (МРТ)</p>
     <p>Врачебный стаж: 12 лет</p>
     <p> Образование: СПБГМА им И.И. Мечникова 2001-2007 г.</p>
     <p> Работала врачом-рентгенологом в Санкт-Петербургском клиническом научно-практическом центре специализированных видов медицинской помощи (онкологический). С 2012 г. по настоящее время работаю врачом-рентгенологом в ФГБУЗ Клиническая больница №122 им. Л.Г. Соколова. С 2013 г. работаю врачом-рентгенологом кабинета МРТ медицинского центра МАРТ.</p>
 </div>
+
 
 
 <div class="hidden">
@@ -358,7 +369,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
         <p>Врач-консультант перезвонит вам в течение 10 минут!</p>
         <p>Вы сможете получить подробную консультацию по всем вопросам, связанным с МРТ и КТ исследованием и при желании записаться на обследование в удобное для вас время по лучшей цене!</p>
         <input type="text" class="your-name form_field" name="name" placeholder="Ваше имя..." required />
-        <input type="text" class="your-phone form_field" name="phone" placeholder="Ваш телефон..." required />
+        <input type="text" class="your-phone form_field" name="phone" placeholder="Ваше телефон..." required />
         <button class="order-button" name="your-name" value="" size="40" type="submit"><span class="btn-title">Отправить <br> запрос</span></button>
     </form>
 </div>
@@ -372,25 +383,25 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
     </form>
 </div>
 <!--[if lt IE 9]>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/html5shiv/es5-shim.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/html5shiv/html5shiv.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/html5shiv/html5shiv-printshiv.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/respond/respond.min.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/html5shiv/es5-shim.min.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/html5shiv/html5shiv.min.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/html5shiv/html5shiv-printshiv.min.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/respond/respond.min.js"></script>
 <![endif]-->
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/jquery/jquery-1.11.1.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/jquery-mousewheel/jquery.mousewheel.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/fancybox/jquery.fancybox.pack.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/waypoints/waypoints-1.6.2.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/scrollto/jquery.scrollTo.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/owl-carousel/owl.carousel.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/countdown/jquery.plugin.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/countdown/jquery.countdown.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/countdown/jquery.countdown-ru.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/landing-nav/navigation.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/common.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/flipclock.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/tabulous.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/jquery.maskedinput.min.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/jquery/jquery-1.11.1.min.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/fancybox/jquery.fancybox.pack.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/waypoints/waypoints-1.6.2.min.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/scrollto/jquery.scrollTo.min.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/owl-carousel/owl.carousel.min.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/countdown/jquery.plugin.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/countdown/jquery.countdown.min.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/countdown/jquery.countdown-ru.js"></script>
+<script src="<?php echo $base; ?>/libs_thirdDesign/landing-nav/navigation.js"></script>
+<script src="<?php echo $base; ?>/js_thirdDesign/common.js"></script>
+<script src="<?php echo $base; ?>/js_thirdDesign/flipclock.js"></script>
+<script src="<?php echo $base; ?>/js_thirdDesign/tabulous.js"></script>
+<script src="<?php echo $base; ?>/js_thirdDesign/jquery.maskedinput.min.js"></script>
 
 
 

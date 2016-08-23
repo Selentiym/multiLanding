@@ -1,0 +1,257 @@
+/*==========  Desktop First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+	.logo-text{
+		display:none;
+	}
+	.logo-outer{
+		padding:0;
+	}
+	.top_contacts div {
+		font-size:26px;
+	}
+	.advantages	{
+		background:none;
+	}
+	.reviews{
+		display:none;
+	}
+	.container-shift    {
+		margin-right: auto;
+		margin-left: auto;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.order-form  p{
+		text-align:center;
+	}
+	.block-prices ul{
+		padding:0;
+	}
+	.price-content table td.price-new {
+		padding-right: 10px;
+	}
+	.kons{
+		text-align:center;
+	}
+	.call-me p b {
+		display:block;
+	}
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+	marquee{
+		position: relative;
+		width:100%;
+	}
+	.over-slider-container{
+		position: relative;
+		top:0;
+	}
+	.discount-header{
+		left:0;
+	}
+	.next_button, .prev_button{
+		top:30%;
+	}
+	.sell_right .button {
+		margin: 15px auto;
+		float: none;
+		max-width: 250px;
+	}
+	.sell_descr {
+		text-align: center;
+	}
+
+	.main_menu ul {
+		background-color: #3797bf;
+		display: none;
+		position: absolute;
+		width: 100%;
+		right: -10px;
+		min-width: 170px;
+	}
+	.main_menu ul li {
+		display: block;
+	}
+
+	.discount-header{
+		margin-top: 10px;
+		position:relative;
+	}
+	.discount-content{
+		width: 250px;	
+	}
+	.advantages {
+		margin-top:0;
+		padding-top:0;
+		text-align:center;
+	}
+	.advantages div{
+		margin-top:10px;
+	}
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 769px) {
+	footer div:first-child, footer div:last-child{
+		text-align:center;
+	}
+	.top_links {
+		background-color: #585d61;
+		display: none;
+		margin-top: 15px;
+		padding: 14px;
+		position: absolute;
+		vertical-align: middle;
+		width: 100%;
+	}
+	.logo img{
+	   width: 40px;
+	}
+
+	.top_contacts div{
+		font-size:24px;
+	}
+	.order-form{
+		padding:20px;
+	}
+	.order-form img{
+		display:none;
+	}
+	.we-are-best div img{
+		float:none;
+		display:block;
+		margin:0 auto;
+	}
+	.we-are-best span{
+		display:block;
+		margin:0 auto;
+		height:auto;
+		text-align: center;
+	}
+	.call-me{
+		padding: 20px 47px 15px 0px;
+	}
+	.order-form  p {
+		font-size:14px;
+	}
+	.advantages .adv-comment{
+		display:none;
+	}	
+	.price-content table td.price-name {
+		min-width: 280px;
+	}
+	.top_header a#order-button{
+		float:none;
+		margin:0 auto;
+		width:50%;
+	}
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+
+	.logo, .logo-outer{
+		display:none;
+	}
+	.top_contacts  div{
+		font-size: 22px;
+	}
+	.top_contacts a {
+		font-size: 14px;
+	}
+	.top_header a#order-button{
+		float:none;
+		width:100%;
+	}
+	.block-prices .h1{
+		font-size:24px;
+	}
+	.price-content table{
+		font-size:15px;
+	}
+	#tabs li a{
+	    padding: 10px;
+		font-size: 15px;
+		max-width: 110px;
+		height: 64px;
+	}
+	#tabs2 li a{
+	    padding: 10px;
+		font-size: 15px;
+		max-width: 90px;
+		height: 80px;
+		text-transform:none;
+	}
+	#tabs_container img{
+		float:none;
+	}
+	.in_main_map{
+		width:100%;
+	}
+	.advantages div img {
+		float:none;
+		display:block;
+		margin:0 auto;
+	}
+	.advantages div span {
+		text-align:center;
+		display:block;
+	}
+	#kartina{
+		width:100%;
+	}
+	.container_countdown{
+		width:auto;
+	}
+	.price-content table td.price-name {
+		min-width: 10px;
+	}
+	.flip-clock-wrapper ul{
+		width:25px;
+	}
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+	.flip-clock-wrapper ul{
+		width:20px;
+	}
+
+}
+
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+	.top_links {
+		display: inline-block !important;
+	}
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+	.main_menu ul {
+		display: block !important;
+	}
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}

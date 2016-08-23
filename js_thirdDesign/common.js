@@ -71,7 +71,7 @@ $(document).ready(function() {
 	$("#callback").submit(function() {
 		$.ajax({
 			type: "GET",
-			url: baseUrl + "/post_newDesign",
+			url: baseUrl + "/post_thirdDesign",
 			data: $("#callback").serialize()
 		}).done(function() {
 			alert("Спасибо за заявку!");
@@ -85,7 +85,7 @@ $(document).ready(function() {
 	$("#callback-registration").submit(function() {
 		$.ajax({
 			type: "GET",
-			url: baseUrl + "/post_newDesign",
+			url: baseUrl + "/post_thirdDesign",
 			data: $("#callback-registration").serialize()
 		}).done(function() {
 			alert("Спасибо за заявку!");
@@ -99,7 +99,7 @@ $(document).ready(function() {
 	$("#callback-from-page").submit(function() {
 		$.ajax({
 			type: "GET",
-			url: baseUrl + "/post_newDesign",
+			url: baseUrl + "/post_thirdDesign",
 			data: $("#callback-from-page").serialize()
 		}).done(function() {
 			alert("Спасибо за заявку!");

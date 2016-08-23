@@ -30,11 +30,13 @@ class SiteController extends Controller
 						if ($time % (60 * self::FULL_CYCLE_MINS) < 30 * self::FULL_CYCLE_MINS) {
 							$folder = '//subs/';
 						} else {
-							$folder = '//subs_newDesign/';
+							$folder = '//subs_thirdDesign/';
+							//$folder = '//subs_newDesign/';
 						}
 					}
 					//пересохраняем сессию
 					//@todo убрать!
+					//$folder = '//subs_thirdDesign/';
 					//$folder = '//subs_newDesign/';
 					//$folder = '//subs/';
 					$view = new View();
@@ -57,6 +59,11 @@ class SiteController extends Controller
 			'post_newDesign' => array(
 				'class'=>'application.controllers.site.FileViewAction',
 				'view' => '//subs_newDesign/post',
+				'partial' => true
+			),
+			'post_thirdDesign' => array(
+				'class'=>'application.controllers.site.FileViewAction',
+				'view' => '//subs_thirdDesign/post',
 				'partial' => true
 			),
 
