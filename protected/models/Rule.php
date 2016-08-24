@@ -210,6 +210,9 @@ class Rule extends UModel {
 		//массив ИД цен, которые уже присвоены
 		$has = CHtml::giveAttributeArray($this -> prices,'id');
 		//Массив ИД цен, которые должны получиться.
+		if (empty($this -> prices_input)) {
+			$this -> prices_input = [];
+		}
 		$toHave = array_unique($this -> prices_input);
 		//ИД цен, которые нужно удалить
 		$toDel = array_diff($has, $toHave);
