@@ -8,7 +8,7 @@
 <section>
     <div class="container">
         <div class="row" id="vopros">
-            <h1>Вопросы и ответы</h1>
+            <h1>Вопросы и ответы.</h1>
             <div class="question-answer">
                 <div class="question">
                     <p class="question-title">Где лучше пройти МРТ и/или КТ исследование?</p>
