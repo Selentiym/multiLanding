@@ -42,7 +42,7 @@ $headers .= "Content-type: text/html\r\n";
 	$mail->SMTPSecure = 'ssl';
 	$mail->SMTPAuth = true;
 	$mail->Username = 'mrimaster.msk@gmail.com';
-	$mail->Password = 'shubinsa7shubinsa';
+	$mail->Password = include(Yii::app() -> getPathOfTheAlias('application.components') . '/mrimaster.pss.php');
 	$mail->Mailer = "smtp";
 
 	$mail->From = 'directors@mrimaster.ru';
