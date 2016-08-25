@@ -17,9 +17,9 @@
             <h2>мрт аппараты</h2>
             <div id="tabs">
                 <ul>
-                    <li><a href="<?php echo $base; ?>/#tabs-1" title="">3 Тесла</a></li>
-                    <li><a href="<?php echo $base; ?>/#tabs-2" title="">1,5 Тесла</a></li>
-                    <li><a href="<?php echo $base; ?>/#tabs-3" title="">Открытого типа</a></li>
+                    <li><a href="#tabs-1" title="">3 Тесла</a></li>
+                    <li><a href="#tabs-2" title="">1,5 Тесла</a></li>
+                    <li><a href="#tabs-3" title="">Открытого типа</a></li>
                 </ul>
                 <div id="tabs_container">
                     <div id="tabs-1">
@@ -68,9 +68,9 @@
             </div>
             <div id="tabs2" class="col-lg-9">
                 <ul>
-                    <li><a href="<?php echo $base; ?>/#tabs-1" title="">16 срезовый аппарат </a></li>
-                    <li><a href="<?php echo $base; ?>/#tabs-2" title="">64 срезовый аппарат</a></li>
-                    <li><a href="<?php echo $base; ?>/#tabs-3" title="">128 срезовый аппарат</a></li>
+                    <li><a href="#tabs-1" title="">16 срезовый аппарат </a></li>
+                    <li><a href="#tabs-2" title="">64 срезовый аппарат</a></li>
+                    <li><a href="#tabs-3" title="">128 срезовый аппарат</a></li>
                 </ul>
                 <div id="tabs_container">
                     <div id="tabs-1">

@@ -88,12 +88,12 @@
                 <div class="row">
 
                     <div class="col-lg-3 col-md-1 col-sm-1 col-xs-1 logo-outer" id="logo-outer">
-                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 logo"><a href="<?php echo $base; ?>/#"><img src="<?php echo $base; ?>/img_thirdDesign/logo.png"></a></div>
-                        <div class="col-lg-9 logo-text" id="logo-text"><a href="<?php echo $base; ?>/#slujba-info">Бесплатная общегородская служба записи на МРТ и КТ</a></div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 logo"><a href="#"><img src="<?php echo $base; ?>/img_thirdDesign/logo.png"></a></div>
+                        <div class="col-lg-9 logo-text" id="logo-text"><a href="#slujba-info">Бесплатная общегородская служба записи на МРТ и КТ</a></div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-10 col-xs-10 top_contacts">
                         <div>8 (812) 241-10-52</div>
-                        <a href="<?php echo $base; ?>/#callback" class="order fancybox"><img src="<?php echo $base; ?>/img_thirdDesign/phone-sm.png"><span>Заказать обратный звонок</span></a>
+                        <a href="#callback" class="order fancybox"><img src="<?php echo $base; ?>/img_thirdDesign/phone-sm.png"><span>Заказать обратный звонок</span></a>
                         <span class="perezvonim">Перезвоним в течение 10 минут!</span>
                     </div>
                     <nav class="col-lg-6 col-md-8 col-sm-1 col-xs-1 main_menu clearfix">
