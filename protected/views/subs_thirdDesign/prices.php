@@ -16,29 +16,29 @@ $a = 5;
         <div class="navigation default" id="navigation">
             <p>Цены на МРТ и КТ:</p>
             <ul>
-                <li><a id="price_head" href="<?php echo $base; ?>/#mrt-head" title="МРТ и КТ головы и шеи"></a></li>
-                <li><a id="price_pozv" href="<?php echo $base; ?>/#mrt-pozv" title="МРТ и КТ позвоночника"></a></li>
-                <li><a id="price_br" href="<?php echo $base; ?>/#mrt-br" title="МРТ и КТ брюшной полости"></a></li>
-                <li><a id="price_taz" href="<?php echo $base; ?>/#mrt-taz" title="МРТ и КТ органов малого таза"></a></li>
-                <li><a id="price_sust" href="<?php echo $base; ?>/#mrt-sust" title="МРТ и КТ суставов"></a></li>
-                <li><a id="price_org" href="<?php echo $base; ?>/#mrt-org" title="МРТ и КТ органов"></a></li>
-                <li><a id="price_heart" href="<?php echo $base; ?>/#mrt-serd" title="МРТ и КТ сердца и сосудов"></a></li>
-                <li><a id="price_kon" href="<?php echo $base; ?>/#mrt-kon" title="МРТ и КТ конечностей"></a></li>
-                <li><a id="price_grud" href="<?php echo $base; ?>/#mrt-grud" title="МРТ и КТ грудной клетки"></a></li>
+                <li><a id="price_head" href="#mrt-head" title="МРТ и КТ головы и шеи"></a></li>
+                <li><a id="price_pozv" href="#mrt-pozv" title="МРТ и КТ позвоночника"></a></li>
+                <li><a id="price_br" href="#mrt-br" title="МРТ и КТ брюшной полости"></a></li>
+                <li><a id="price_taz" href="#mrt-taz" title="МРТ и КТ органов малого таза"></a></li>
+                <li><a id="price_sust" href="#mrt-sust" title="МРТ и КТ суставов"></a></li>
+                <li><a id="price_org" href="#mrt-org" title="МРТ и КТ органов"></a></li>
+                <li><a id="price_heart" href="#mrt-serd" title="МРТ и КТ сердца и сосудов"></a></li>
+                <li><a id="price_kon" href="#mrt-kon" title="МРТ и КТ конечностей"></a></li>
+                <li><a id="price_grud" href="#mrt-grud" title="МРТ и КТ грудной клетки"></a></li>
             </ul>
         </div>
         <div class="navigation navigation-mobile" id="navigation-mobile">
             <p>Цены на<br>МРТ и КТ:</p>
             <ul>
-                <li><a href="<?php echo $base; ?>/#mrt-head" title="МРТ и КТ головы и шеи"></a></li>
-                <li><a href="<?php echo $base; ?>/#mrt-pozv" title="МРТ и КТ позвоночника"></a></li>
-                <li><a href="<?php echo $base; ?>/#mrt-br" title="МРТ и КТ брюшной полости"></a></li>
-                <li><a href="<?php echo $base; ?>/#mrt-taz" title="МРТ и КТ органов малого таза"></a></li>
-                <li><a href="<?php echo $base; ?>/#mrt-sust" title="МРТ и КТ суставов"></a></li>
-                <li><a href="<?php echo $base; ?>/#mrt-org" title="МРТ и КТ органов"></a></li>
-                <li><a href="<?php echo $base; ?>/#mrt-serd" title="МРТ и КТ сердца и сосудов"></a></li>
-                <li><a href="<?php echo $base; ?>/#mrt-kon" title="МРТ и КТ конечностей"></a></li>
-                <li><a href="<?php echo $base; ?>/#mrt-grud" title="МРТ и КТ грудной клетки"></a></li>
+                <li><a href="#mrt-head" title="МРТ и КТ головы и шеи"></a></li>
+                <li><a href="#mrt-pozv" title="МРТ и КТ позвоночника"></a></li>
+                <li><a href="#mrt-br" title="МРТ и КТ брюшной полости"></a></li>
+                <li><a href="#mrt-taz" title="МРТ и КТ органов малого таза"></a></li>
+                <li><a href="#mrt-sust" title="МРТ и КТ суставов"></a></li>
+                <li><a href="#mrt-org" title="МРТ и КТ органов"></a></li>
+                <li><a href="#mrt-serd" title="МРТ и КТ сердца и сосудов"></a></li>
+                <li><a href="#mrt-kon" title="МРТ и КТ конечностей"></a></li>
+                <li><a href="#mrt-grud" title="МРТ и КТ грудной клетки"></a></li>
             </ul>
         </div>
         <div class="reviews default" id="reviews">

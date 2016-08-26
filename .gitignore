@@ -18,3 +18,4 @@ date.d
 protected/runtime/**/*
 #ignore the tokendata files
 *.tokendata
+*.pss.php
