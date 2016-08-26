@@ -33,12 +33,10 @@
     <link rel="stylesheet" href="<?php echo $base; ?>/libs_thirdDesign/font-awesome-4.2.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="<?php echo $base; ?>/libs_thirdDesign/fancybox/jquery.fancybox.css" />
     <link rel="stylesheet" href="<?php echo $base; ?>/libs_thirdDesign/owl-carousel/owl.carousel.css" />
-    <link rel="stylesheet" href="<?php echo $base; ?>/libs_thirdDesign/countdown/jquery.countdown.css" />
     <link rel="stylesheet" href="<?php echo $base; ?>/css_thirdDesign/fonts.css" />
     <link rel="stylesheet" href="<?php echo $base; ?>/css_thirdDesign/main.css" />
     <link rel="stylesheet" href="<?php echo $base; ?>/css_thirdDesign/flipclock.css" />
     <link rel="stylesheet" href="<?php echo $base; ?>/css_thirdDesign/tabulous.css" />
-    <link rel="stylesheet" href="<?php echo $base; ?>/css_thirdDesign/media.css" />
 
 
     <script>
@@ -389,18 +387,12 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
 <script src="<?php echo $base; ?>/libs_thirdDesign/respond/respond.min.js"></script>
 <![endif]-->
 <script src="<?php echo $base; ?>/libs_thirdDesign/jquery/jquery-1.11.1.min.js"></script>
-<script src="<?php echo $base; ?>/libs_thirdDesign/jquery-mousewheel/jquery.mousewheel.min.js"></script>
 <script src="<?php echo $base; ?>/libs_thirdDesign/fancybox/jquery.fancybox.pack.js"></script>
-<script src="<?php echo $base; ?>/libs_thirdDesign/waypoints/waypoints-1.6.2.min.js"></script>
-<script src="<?php echo $base; ?>/libs_thirdDesign/scrollto/jquery.scrollTo.min.js"></script>
 <script src="<?php echo $base; ?>/libs_thirdDesign/owl-carousel/owl.carousel.min.js"></script>
-<script src="<?php echo $base; ?>/libs_thirdDesign/countdown/jquery.plugin.js"></script>
-<script src="<?php echo $base; ?>/libs_thirdDesign/countdown/jquery.countdown.min.js"></script>
-<script src="<?php echo $base; ?>/libs_thirdDesign/countdown/jquery.countdown-ru.js"></script>
 <script src="<?php echo $base; ?>/libs_thirdDesign/landing-nav/navigation.js"></script>
 <script src="<?php echo $base; ?>/js_thirdDesign/common.js"></script>
-<script src="<?php echo $base; ?>/js_thirdDesign/flipclock.js"></script>
-<script src="<?php echo $base; ?>/js_thirdDesign/tabulous.js"></script>
+<script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/flipclock.min.js"></script>
+<script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/tabulous.min.js"></script>
 <script src="<?php echo $base; ?>/js_thirdDesign/jquery.maskedinput.min.js"></script>
 
 

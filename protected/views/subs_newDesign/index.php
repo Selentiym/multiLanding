@@ -31,12 +31,10 @@
     <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/font-awesome-4.2.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/fancybox/jquery.fancybox.css" />
     <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/owl-carousel/owl.carousel.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/countdown/jquery.countdown.css" />
     <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css_newDesign/fonts.css" />
     <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css_newDesign/main.css" />
     <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css_newDesign/flipclock.css" />
     <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css_newDesign/tabulous.css" />
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css_newDesign/media.css" />
 
     <script>
         baseUrl = '<?php echo Yii::app() -> baseUrl; ?>';
@@ -378,18 +376,12 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
 <script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/respond/respond.min.js"></script>
 <![endif]-->
 <script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/jquery/jquery-1.11.1.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/jquery-mousewheel/jquery.mousewheel.min.js"></script>
 <script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/fancybox/jquery.fancybox.pack.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/waypoints/waypoints-1.6.2.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/scrollto/jquery.scrollTo.min.js"></script>
 <script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/owl-carousel/owl.carousel.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/countdown/jquery.plugin.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/countdown/jquery.countdown.min.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/countdown/jquery.countdown-ru.js"></script>
 <script src="<?php echo Yii::app() -> baseUrl; ?>/libs_newDesign/landing-nav/navigation.js"></script>
 <script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/common.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/flipclock.js"></script>
-<script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/tabulous.js"></script>
+<script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/flipclock.min.js"></script>
+<script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/tabulous.min.js"></script>
 <script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/jquery.maskedinput.min.js"></script>
 
 
