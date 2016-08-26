@@ -107,7 +107,10 @@ $rule -> tel = $tel;*/
                         clickmap:true,
                         trackLinks:true,
                         accurateTrackBounce:true,
-                        webvisor:true
+                        webvisor:true,
+                        params:{
+                            design:"old"
+                        }
                     });
                 } catch(e) { }
             });
@@ -140,12 +143,18 @@ $rule -> tel = $tel;*/
 					
                     <div class="form">
 					
-                        <form action="<?php echo Yii::app() -> baseUrl;?>/post" method="POST">
+                        <form id="form1" action="<?php echo Yii::app() -> baseUrl;?>/post" method="POST">
 							
                             <img src="<?php echo Yii::app() -> baseUrl; ?>/img/fio.png" class="form_fio" alt="fio"><input type="text" name="name" required placeholder="Ваше ФИО"><br>
                             <img class="form_mobile" src="<?php echo Yii::app() -> baseUrl; ?>/img/mobile.png" alt="mobile"><input type="text" name="name2" required placeholder="Ваш телефон"><br>
-                            <span style="font-size:9px;color:red;display:block;padding-left:10px;text-align:center;width:50%;float:left;padding-top:14px;margin-left:-10px;">    Вам перезвонят в течении 15 минут!</span><button type="submit" class="pointer"><img src="<?php echo Yii::app() -> baseUrl; ?>/img/submit.png" alt="submit"></button>
+                            <span style="font-size:9px;color:red;display:block;padding-left:10px;text-align:center;width:50%;float:left;padding-top:14px;margin-left:-10px;">    Вам перезвонят в течении 15 минут!</span><button id="submitForm1" type="button" class="pointer"><img src="<?php echo Yii::app() -> baseUrl; ?>/img/submit.png" alt="submit"></button>
                         </form>
+                        <script>
+                            $("#submitForm1").click(function(e){
+                                yaCounter37896725.reachGoal('formSent');
+                                $("form1").submit();
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
@@ -163,11 +172,17 @@ $rule -> tel = $tel;*/
                 <div class="box-modal" id="exampleModal2">
                     <div class="box-modal_close arcticmodal-close">закрыть</div>
                     <div class="form">
-                        <form action="<?php echo Yii::app() -> baseUrl;?>/post" method="POST">
+                        <form id="form2" action="<?php echo Yii::app() -> baseUrl;?>/post" method="POST">
                             <img src="<?php echo Yii::app() -> baseUrl; ?>/img/fio.png" class="form_fio" alt="fio"><input type="text" name="name" required placeholder="Ваше ФИО"><br>
                             <img class="form_mobile" src="<?php echo Yii::app() -> baseUrl; ?>/img/mobile.png" alt="mobile"><input type="text" name="name2" required placeholder="Ваш телефон"><br>
-                             <span style="font-size:9px;color:red;display:block;padding-left:10px;text-align:center;width:50%;float:left;padding-top:14px;margin-left:-10px;">    Вам перезвонят в течении 15 минут!</span><button type="submit" class="pointer"><img src="<?php echo Yii::app() -> baseUrl; ?>/img/submit.png" alt="submit"></button>
+                             <span style="font-size:9px;color:red;display:block;padding-left:10px;text-align:center;width:50%;float:left;padding-top:14px;margin-left:-10px;">    Вам перезвонят в течении 15 минут!</span><button id="submitForm2" type="button" class="pointer"><img src="<?php echo Yii::app() -> baseUrl; ?>/img/submit.png" alt="submit"></button>
                         </form>
+                        <script>
+                            $("#submitForm2").click(function(e){
+                                yaCounter37896725.reachGoal('formSent');
+                                $("#form2").submit();
+                            });
+                        </script>
                     </div>
                 </div>
             </div>

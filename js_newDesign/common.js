@@ -69,6 +69,7 @@ $(document).ready(function() {
 	//Аякс отправка форм
 	//Документация: http://api.jquery.com/jquery.ajax/
 	$("#callback").submit(function() {
+		yaCounter37896725.reachGoal('formSent');
 		$.ajax({
 			type: "GET",
 			url: baseUrl + "/post_newDesign",
@@ -83,6 +84,7 @@ $(document).ready(function() {
 	});
 	
 	$("#callback-registration").submit(function() {
+		yaCounter37896725.reachGoal('formSent');
 		$.ajax({
 			type: "GET",
 			url: baseUrl + "/post_newDesign",
@@ -97,6 +99,7 @@ $(document).ready(function() {
 	});
 	
 	$("#callback-from-page").submit(function() {
+		yaCounter37896725.reachGoal('formSent');
 		$.ajax({
 			type: "GET",
 			url: baseUrl + "/post_newDesign",

@@ -51,7 +51,10 @@
                         clickmap:true,
                         trackLinks:true,
                         accurateTrackBounce:true,
-                        webvisor:true
+                        webvisor:true,
+                        params:{
+                            design:"new1"
+                        }
                     });
                 } catch(e) { }
             });
