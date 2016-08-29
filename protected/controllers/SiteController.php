@@ -2,7 +2,7 @@
 
 class SiteController extends Controller
 {
-	const FULL_CYCLE_MINS = 60;
+	const FULL_CYCLE_MINS = 2;
 	/**
 	 * Declares class-based actions.
 	 */
@@ -82,6 +82,14 @@ class SiteController extends Controller
 			else
 				$this->render('error', $error);
 		}
+	}
+	public function actionCheck() {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Устанавливаем параметр, чтобы curl возвращал данные, вместо того, чтобы выводить их в браузер.
+		curl_setopt($ch, CURLOPT_URL, 'http://mrt-to-go.ru');
+		curl_setopt($ch, CURLOPT_COOKIE, '');
+		$data = curl_exec($ch);
 	}
 	/**
 	 *

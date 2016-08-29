@@ -1,4 +1,7 @@
 <?php
+//turn on gzip
+ini_set('zlib.output_compression', 'On');
+ini_set('zlib.output_compression_level', '1');
 
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/../yii/framework/yii.php';
