@@ -60,7 +60,7 @@ HEADER
 .logo-text{
     font-size: 18px;
     text-transform: uppercase;
-    font-family: "PT Sans bold", arial, sans-serif;
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
     text-align: center;
 	padding: 0;
     padding-left: 5px;
@@ -120,7 +120,7 @@ TOP MENY
     -webkit-transition: all .25s;
     -o-transition: all .25s;
     transition: all .25s;
-    font-family: "PT Sans bold";
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
     vertical-align: middle;
     text-align: center;
     font-size: 15px;
@@ -201,7 +201,7 @@ ORDER BUTTON
     text-transform: uppercase;
     font-size: 14px;
     color: #00507f;
-	font-family: "PT Sans bold";
+	font-family: "PT Sans", arial, sans-serif;font-weight:bold;
 }
 
 /*
@@ -230,7 +230,7 @@ DISCOUNT
     margin: 0 auto;
     background: #cbdee8;
     font-size: 18px;
-    font-family: "PT Sans bold";
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
     box-shadow: 0px 0px 1px 1px #e5e5e5 inset;
     border: 1px solid #e6e6e6;
 }
@@ -268,7 +268,7 @@ ADVANTAGES
     margin: 40px 0 0 0;
 	color:#0085bd;
 	font-size:14px;
-    font-family: "PT Sans bold";
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
     text-transform: uppercase;
 	height:107px;
 }
@@ -350,7 +350,7 @@ PRICES BLOCK
 .price-content table{
 	width: 100%;
 	font-size:17px;
-    font-family: "PT Sans bold";
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
 }
 .price-content table td{
 	padding: 5px 0 0 5px;
@@ -591,7 +591,7 @@ position:absolute;
     padding: 10px;
     text-transform: uppercase;
     text-align: center;
-    font-family: "PT Sans bold", arial, sans-serif;
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
     font-size: 19px;
 }
 .review-author{
@@ -630,7 +630,7 @@ CALL ME
 .call-me p{
 	text-align:center;
     color: #00507f;
-    font-family: "PT Sans bold", arial, sans-serif;
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
 }
 .call-me p b{
 	font-size: 21px;
@@ -686,7 +686,7 @@ DISCOUNT
 .we-are-best span{
     color: #0085bd;
     font-size: 17px;
-    font-family: "PT Sans bold";
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
     text-transform: uppercase;
     display: table-cell;
     height: 130px;
@@ -1134,7 +1134,7 @@ ORDER-FORM
 .order-form  form div p{
 	text-transform:uppercase;
 	color:#fff;
-    font-family: "PT Sans bold", arial, sans-serif;
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
     font-size: 19px;
 }
 
@@ -1205,7 +1205,7 @@ footer{
 	padding:20px;
 }
 footer a.phone-footer{
-    font-family: "PT Sans bold", arial, sans-serif;
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
 }
 footer div:last-child {
 	text-align:right;
@@ -1245,7 +1245,7 @@ input, button{
 }
 
 b, strong{
-    font-family: "PT Sans bold", arial, sans-serif;
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
 }
 
 h1 {
@@ -1254,14 +1254,14 @@ h1 {
 	text-align: center;
 	padding: 16px 0;
 	background:#cee0e4;
-    font-family: "PT Sans bold";
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
 }
 
 h2{
 	color:#005275;
 	text-transform: uppercase;
 	text-align: center;
-    font-family: "PT Sans bold";
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
 }
 
 ol {
@@ -1283,7 +1283,7 @@ ol li:before {
     border-radius: 2em;
     transition: all .3s ease-out;
     color: #006894;
-    font-family: "PT Sans bold";
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
 }
 	
 ol li	{
@@ -1386,7 +1386,7 @@ button.order-button:hover{
     text-align: center;
     font-weight: normal;
     text-transform: uppercase;
-    font-family: "PT Sans bold", arial, sans-serif;
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
 }
 
 .pop_form p{

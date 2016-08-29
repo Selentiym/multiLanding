@@ -23,7 +23,7 @@
 	text-decoration: none;
 	color: #677378;
 	text-transform: uppercase;
-    font-family: "PT Sans bold";
+    font-family: "PT Sans", arial, sans-serif;font-weight:bold;
 	font-size:16px;
 }
 
