@@ -8,7 +8,7 @@
 ?>
 
 <section>
-    <div class="container">
+    <div class="container container-shift">
         <div class="row">
             <div class="order-form">
                 <img src="<?php echo $base; ?>/img_thirdDesign/doctor.png">

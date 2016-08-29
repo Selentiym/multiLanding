@@ -413,7 +413,7 @@ FIXED NAVIGATION
         -moz-box-shadow: 5px 5px 20px #333;
         -webkit-box-shadow: 5px 5px 20px #333;
         box-shadow: 5px 5px 20px #333;
-         background-color:rgb(96, 199, 243)!important;
+         background-color:rgb(96, 199, 243);
    }
 
 
@@ -433,7 +433,7 @@ NAVIGATION
 	border-radius: 0 0 7px 7px;
 }
 .navigation{
-	left: 10px;
+	left: 4px;
     width: 75px;
     z-index: 200;
 	padding-top:0;
@@ -578,8 +578,16 @@ FIXED REVIEWS
 /*
 REVIEWS
 */
+.container{
+    position: relative;
+}
+.review-section .container{
+    position: relative;
+}
+
 .reviews.default{
 	position:absolute;
+	z-index:10;
 }
 .reviews{
     left: 80%;

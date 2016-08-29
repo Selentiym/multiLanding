@@ -8,7 +8,7 @@
 ?>
 
 <section>
-    <div class="container">
+    <div class="container container-shift">
         <div class="row">
             <div class="order-form">
                 <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/doctor.png">

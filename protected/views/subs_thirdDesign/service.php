@@ -8,7 +8,7 @@
 ?>
 
 <section>
-    <div class="container" id="slujba-info">
+    <div class="container container-shift" id="slujba-info">
         <h1>Бесплатная общегородская служба записи <br>на МРТ и КТ исследования</h1>
         <div class="vrezka">
             <div>

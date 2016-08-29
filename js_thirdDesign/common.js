@@ -71,7 +71,7 @@ $(document).ready(function() {
 	$("#callback").submit(function() {
 		$.ajax({
 			type: "GET",
-			url: baseUrl + "/post_thirdDesign",
+			url: baseUrl + "/post_newDesign",
 			data: $("#callback").serialize()
 		}).done(function() {
 			alert("Спасибо за заявку!");
@@ -85,7 +85,7 @@ $(document).ready(function() {
 	$("#callback-registration").submit(function() {
 		$.ajax({
 			type: "GET",
-			url: baseUrl + "/post_thirdDesign",
+			url: baseUrl + "/post_newDesign",
 			data: $("#callback-registration").serialize()
 		}).done(function() {
 			alert("Спасибо за заявку!");
@@ -99,7 +99,7 @@ $(document).ready(function() {
 	$("#callback-from-page").submit(function() {
 		$.ajax({
 			type: "GET",
-			url: baseUrl + "/post_thirdDesign",
+			url: baseUrl + "/post_newDesign",
 			data: $("#callback-from-page").serialize()
 		}).done(function() {
 			alert("Спасибо за заявку!");
@@ -109,59 +109,46 @@ $(document).ready(function() {
 		});
 		return false;
 	});
-});
-
-
-// Фиксированный блок (навигация по органам)
-
-    $(document).ready(function(){
-        
+	
+	
+// Фиксированный блок (навигация по органам) + фиксированные отзывы
         var $block1 = $("#navigation");
         var $block2 = $("#navigation-mobile");
-		
+        var $reviews = $("#reviews > div.reviews-inner");
            
         $(window).scroll(function(){
-            if (( $(this).scrollTop() > 150 && $(this).scrollTop() <= 4000) &&  $block1.hasClass("default") && $(window).width() >= '1200' ){
-                $block1.fadeOut('fast',function(){
-                    $(this).removeClass("default")
-                           .addClass("fixed transbg")
-                           .fadeIn('fast');
-                });
-            } else if(($(this).scrollTop() <= 150 || $(this).scrollTop() > 4000) && $block1.hasClass("fixed")  && $(window).width() >= '1200') {
+            if (( $(this).scrollTop() > 450) &&  $block1.hasClass("default") && $(window).width() >= '1200' ){
+                $block1.removeClass("default")
+                       .addClass("fixed transbg");
+                $reviews.addClass("fixed")
+						.css({
+							'top': '85px',
+							'bottom':'0',
+							'overflow-y':'scroll',
+							'overflow-x':'hidden',
+							'width':'250px',
+							'left': '77%',
+							'background-color': '#f7f7f7',
+							'padding-top': '40px'
+						});
+            } else if(($(this).scrollTop() <= 450) && $block1.hasClass("fixed")  && $(window).width() >= '1200') {
                 $block1.fadeOut('fast',function(){
                     $(this).removeClass("fixed transbg")
                            .addClass("default")
                            .fadeIn('fast');
                 });
+                $reviews.removeClass("fixed")
+						.css({
+							'overflow-y':'hidden',
+							'padding-top': '0px',
+							'width':'230px'
+						});
             }
-			
-            if ( $(this).scrollTop() > 150 && $(this).scrollTop() <= 4000 &&  $(window).width() < '1200' ){
-                $block2.css('display','block');		
-			 }
+        });//scroll	
 
-        });//scroll
- 
 
- 
-        $block1.hover(
-            function(){
-                if( $(this).hasClass('fixed') ){
-                    $(this).removeClass('transbg');
-                }
-            },
-            function(){
-                if( $(this).hasClass('fixed') ){
-                    $(this).addClass('transbg');
-                }
-            });//hover
-    });//jQuery
 
-	
-	
 	// Появление "Записаться" в верхнем меню при прокрутке вниз
-	
-    $(document).ready(function(){	
-	
 	    var callback = $("#callback-on-fix-menu");
         var logotext = $("#logo-text");
         var orderbutton = $("#order-button");
@@ -190,18 +177,8 @@ $(document).ready(function() {
            }
 
         });//scroll	
-	
-
-	
-    });//jQuery	
-
-
-
 
 // Открыть/Закрыть ответ
-
-$(document).ready(function($) {	
-	
                 $('.question').on('click', '.toggle-answer', function(){
                     $(this).siblings('.answer').toggle(1000);
                 });	
@@ -215,42 +192,33 @@ $(document).ready(function($) {
 						$(this).text("Ответ >>");
 					}
 				});
-				
-});	
-
 
 // Вкладки	
-	
-$(document).ready(function($) {
-    
+				
+				$('#tabs').tabulous({
+					effect: 'scale'
+				});
 
-    $('#tabs').tabulous({
-    	effect: 'scale'
-    });
-
-     $('#tabs2').tabulous({
-    	effect: 'slideLeft'
-    });
-
-
-});	
-
-
+				 $('#tabs2').tabulous({
+					effect: 'slideLeft'
+				});
+				
 //Карта
-        $(document).ready(function(){
 
+				
             $(".map_adres_hide .delete").click(function(){
                 $(this).parents(".map_adres_hide").animate({ opacity: "hide" }, "slow");
             });
-
-        });
-
-			$(document).ready(function(){
+				
 				$('.map_clinic_marker').click(function(){
 					$('.map_clinic_marker').not($(this)).parent().children('.map_clinic_description').hide(1000);
 					$(this).parent().children('.map_clinic_description').toggle(1000);
 				});
-			});
+				
+				
+				
+});
+
 			function changeCursor(){
 				return false;
 			var x = y = 0;

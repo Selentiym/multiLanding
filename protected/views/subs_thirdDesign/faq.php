@@ -6,7 +6,7 @@
 ?>
 
 <section>
-    <div class="container">
+    <div class="container container-shift">
         <div class="row" id="vopros">
             <h1>Вопросы и ответы</h1>
             <div class="question-answer">
