@@ -10,6 +10,16 @@
  * @type Rule $rule
  */
 
+$tel = [];
+//Костыль
+if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
+    $tel['formatted'] = '8 (812) 241-10-52';
+    $tel['raw'] = '88122411052';
+} else {
+    $tel['formatted'] = '8 (812) 313-27-04';
+    $tel['raw'] = '88123132704';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -94,7 +104,7 @@
                         <div class="col-lg-9 logo-text" id="logo-text"><a href="#slujba-info">Бесплатная общегородская служба записи на МРТ и КТ</a></div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-10 col-xs-10 top_contacts">
-                        <div>8 (812) 241-10-52</div>
+                        <div><?php echo $tel['formatted']; ?></div>
                         <a href="#callback" class="order fancybox"><img src="<?php echo $base; ?>/img_thirdDesign/phone-sm.png"><span>Заказать обратный звонок</span></a>
                         <span class="perezvonim">Перезвоним в течение 10 минут!</span>
                     </div>
@@ -396,6 +406,9 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
     }
     $this->renderPartial('//subs_thirdDesign/_section', array('section' => $section, 'rule' => $model, 'base' => $base));
 }
+
+
+
 ?>
 
 
@@ -426,7 +439,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
                 <span>© 2016</span>
             </div>
             <div class="col-md-6">
-                <a class="phone-footer" href="<?php echo $base; ?>/tel:88122411052">8 (812) 241-10-52</a>
+                <a class="phone-footer" href="<?php echo $base; ?>/tel:<?php echo $tel['raw']; ?>"><?php echo $tel['formatted']; ?></a>
             </div>
         </div>
     </div>
