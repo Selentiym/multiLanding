@@ -144,9 +144,9 @@
                     <div class="discount-header">
                         <div class="discount-top"><img src="<?php echo $base; ?>/img_thirdDesign/discount-top.png"></div>
                         <div class="discount-content">
-                            <span class="discount-name">МРТ головного мозга </span>
-                            <span class="discount-old-price">3300р.</span>
-                            <span class="discount-price">2370р.</span>
+                            <span class="discount-name"><?php echo $model -> price -> text; ?></span>
+                            <span class="discount-old-price"><?php echo $model -> price -> price_old;?>р.</span>
+                            <span class="discount-price"><?php echo $model -> price -> price;?>р.</span>
                         </div>
                         <div class="discount-bottom"><img src="<?php echo $base; ?>/img_thirdDesign/discount-bottom.png"></div>
                     </div>
