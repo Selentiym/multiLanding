@@ -20,7 +20,7 @@
                                 <p>Адресс: ул. Чапаева, д.5 лит А</p>
                                 <p>МРТ и КТ: General Electric<br>
                                     Поле магнита: 1,5Тл</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -33,7 +33,7 @@
                                 <p>Адресс: Малый пр. В.О., 54, корп. 3</p>
                                 <p>МРТ и КТ: Siemens<br>
                                     Поле магнита: 1,5Тл</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -46,7 +46,7 @@
                                 <p>Адресс: Рентгена, 5</p>
                                 <p>МРТ и КТ: General Electric<br>
                                     Поле магнита: 0,2Тл (открытый)</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -59,7 +59,7 @@
                                 <p>Адресс: В.О. 16-я линия, 81А</p>
                                 <p>МРТ и КТ: Siemens Symphony<br>
                                     Поле магнита: 1,5Тл</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -72,7 +72,7 @@
                                 <p>Адресс: Северный, 1А</p>
                                 <p>МРТ и КТ: Siemens Magnetom Symphony<br>
                                     Поле магнита: 1,5Тл</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -87,7 +87,7 @@
                                 <p>Адресс: Энгельса, 33, корп. 1</p>
                                 <p>МРТ и КТ: General Electric<br>
                                     Поле магнита: 1,5Тл</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -100,7 +100,7 @@
                                 <p>Адресс:  Марата, 6А</p>
                                 <p>МРТ и КТ: General Electric Signa<br>
                                     Поле магнита: 3,0Тл</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -113,7 +113,7 @@
                                 <p>Адресс: ул. Маяковского, 12</p>
                                 <p>МРТ и КТ: Siemens<br>
                                     Поле магнита: 1,5Тл (закрытый)</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -130,7 +130,7 @@
                                 <p>Адресс: Малая Балканская, 26В</p>
                                 <p>МРТ и КТ: Toshiba<br>
                                     Поле магнита: 1,5Тл (закрытый)</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -143,7 +143,7 @@
                                 <p>Адресс: 6-я Красноармейская, д.7 лит А</p>
                                 <p>МРТ и КТ: Siemens<br>
                                     Поле магнита: 1,5Тл (полуоткрытый)</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -156,7 +156,7 @@
                                 <p>Адресс: пл. Карла Фаберже, 8, корп. 2</p>
                                 <p>МРТ и КТ: Siemens Symphony<br>
                                     Поле магнита: 1,5Тл</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -169,7 +169,7 @@
                                 <p>Адресс: Боровая, д.55</p>
                                 <p>КТ: Toshiba Aquilion<br>
                                     Срезов: 16</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -182,7 +182,7 @@
                                 <p>Адресс: Ленинский, 160 </p>
                                 <p>МРТ и КТ: General Electric<br>
                                     Поле магнита: 1,5Тл</p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
@@ -247,7 +247,7 @@
                                 <p>Адресс: ул. Руставели, д.66 лит.&nbsp;Г</p>
                                 <p>МРТ: Siemens<br>
                                 </p>
-                                <p>Телефон для записи: <?php echo $tel['formatted']; ?></p>
+                                <p>Телефон для записи: 8 (812) 241-10-52</p>
                             </div>
                             <div class="map_clinic_marker">
                             </div>
