@@ -136,9 +136,9 @@ if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
         <div class="prev_button"><i class="fa fa-angle-left"></i></div>
         <div class="carousel">
             <div class="slide_item"><img src="<?php echo $base; ?>/img_thirdDesign/background1.jpg" alt="alt" /></div>
-            <div class="slide_item"><img src="<?php echo $base; ?>/img_thirdDesign/background2.jpg" alt="alt" /></div>
+            <!--<div class="slide_item"><img src="<?php echo $base; ?>/img_thirdDesign/background2.jpg" alt="alt" /></div>
             <div class="slide_item"><img src="<?php echo $base; ?>/img_thirdDesign/background3.jpg" alt="alt" /></div>
-            <div class="slide_item"><img src="<?php echo $base; ?>/img_thirdDesign/background5.jpg" alt="alt" /></div>
+            <div class="slide_item"><img src="<?php echo $base; ?>/img_thirdDesign/background5.jpg" alt="alt" /></div>-->
         </div>
 
     </div>
