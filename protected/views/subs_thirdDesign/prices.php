@@ -28,7 +28,7 @@ $a = 5;
             </ul>
         </div>
         <div class="navigation navigation-mobile" id="navigation-mobile">
-            <p>Цены на<br>МРТ и КТ:</p>
+            <p>Цены на МРТ и КТ:</p>
             <ul>
                 <li><a href="#mrt-head" title="МРТ и КТ головы и шеи"></a></li>
                 <li><a href="#mrt-pozv" title="МРТ и КТ позвоночника"></a></li>

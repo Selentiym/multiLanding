@@ -144,7 +144,9 @@ TOP MENY
 	z-index: 12;
 }
 
-
+.main_mnu_button{
+    color: #0e3675;
+}
 
 /*
 OVER SLIDER
@@ -1296,13 +1298,30 @@ ol li	{
     transition: all .3s ease-out;
 }
 
+#arrow {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    background-color: #002d48;
+    z-index: 100;
+	display:none;
+}
+#arrow a{
+    display:inline-block;
+    padding: 0 10px;
+    cursor: pointer;
+    color: white;
+    font-size: 25px;
+}
 
+#arrow a:hover{
+	background:#00507f;
+}
 
-
-
-
-
-
+section{
+    padding-top: 60px;
+    margin-top: -60px;
+}
 
 .slider_container img {
 	max-width: 100%;
@@ -1604,14 +1623,20 @@ VIDEO
 	.in_main_map{
 		width:100%;
 	}
+	.advantages div{
+		height:auto;
+	}
 	.advantages div img {
 		float:none;
 		display:block;
 		margin:0 auto;
+		width:50px;
 	}
 	.advantages div span {
 		text-align:center;
 		display:block;
+		font-size: 13px;
+		height:auto;
 	}
 	#kartina{
 		width:100%;
@@ -1624,6 +1649,18 @@ VIDEO
 	}
 	.flip-clock-wrapper ul{
 		width:25px;
+	}
+	#tabs li a, #tabs2 li a{
+	    font-size: 13px !important;
+	}
+	#tabs_container img{
+		float:none !important;
+	}
+	.question .question-title{
+		font-size:16px;
+	}
+	h1{
+		font-size: 23px;
 	}
 }
 

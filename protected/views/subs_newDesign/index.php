@@ -147,28 +147,28 @@
                 </div>
             </div>
             <div class="advantages row">
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6" style="margin-top:10px;">
+                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4" style="margin-top:10px;">
                     <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage1.png">
                     <span>МРТ и КТ<br> срочно</span>
                     <p class="adv-comment">Обследование <br>в день обращения</p>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
+                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
                     <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage4.png">
                     <span>Скидки<br> Акции</span>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
+                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
                     <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage6.png">
                     <span>Результат<br> за час</span>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
+                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
                     <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage3.png">
                     <span>Опыт работы<br> 24 года</span>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
+                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
                     <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage5.png">
                     <span>Бесплатная<br> консультация врача </span>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6" style="margin-top:10px;">
+                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4" style="margin-top:10px;">
                     <img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/advantage2.png">
                     <span>МРТ и КТ<br> ночью</span>
                     <p class="adv-comment">Скидка 50%</p>
@@ -182,6 +182,12 @@
 
 <div class="content">
 	<div class="container review-section">
+	
+	<div id="arrow">
+		<a class="previous" title="Перейти к предыдущему блоку"><</a>
+		<a class="next" title="Перейти к следующему блоку">></a>
+	</div>
+	
 	    <div class="reviews default" id="reviews">
 		<div class="reviews-inner">
             <div class="reviews-h1">Отзывы</div>

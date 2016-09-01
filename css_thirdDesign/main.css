@@ -153,6 +153,9 @@ TOP MENY
 	z-index: 12;
 }
 
+.main_mnu_button{
+    color: #0e3675;
+}
 
 
 /*
@@ -1317,10 +1320,30 @@ ol li	{
 }
 
 
+#arrow {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    background-color: #002d48;
+    z-index: 100;
+	display:none;
+}
+#arrow a{
+    display:inline-block;
+    padding: 0 10px;
+    cursor: pointer;
+    color: white;
+    font-size: 25px;
+}
 
+#arrow a:hover{
+	background:#00507f;
+}
 
-
-
+section{
+    padding-top: 60px;
+    margin-top: -60px;
+}
 
 
 
@@ -1636,6 +1659,9 @@ marquee{
 	.in_main_map{
 		width:100%;
 	}
+	.advantages div{
+		height:auto;
+	}
 	.advantages div img {
 		float:none;
 		display:block;
@@ -1644,6 +1670,11 @@ marquee{
 	.advantages div span {
 		text-align:center;
 		display:block;
+		font-size: 13px;
+		height:auto;
+	}
+	.advantages .best-price{
+		font-size: 13px;
 	}
 	#kartina{
 		width:100%;
@@ -1656,6 +1687,18 @@ marquee{
 	}
 	.flip-clock-wrapper ul{
 		width:25px;
+	}
+	#tabs li a, #tabs2 li a{
+	    font-size: 13px !important;
+	}
+	#tabs_container img{
+		float:none !important;
+	}
+	.question .question-title{
+		font-size:16px;
+	}
+	h1{
+		font-size: 23px;
 	}
 }
 

@@ -96,14 +96,10 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-
-<section>
-    <div class="container container-shift">
+		
         <div class="call-me">
             <p><img src="<?php echo Yii::app() -> baseUrl; ?>/img_newDesign/registration.png">Записаться на МРТ и/или КТ можно КРУГЛОСУТОЧНО по телефону: <b><a href="tel:88122411952">8 (812) 241-10-52</a></b></p>
         </div>
+		
     </div>
 </section>

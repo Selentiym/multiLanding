@@ -118,7 +118,8 @@ $(document).ready(function() {
         var $block1 = $("#navigation");
         var $block2 = $("#navigation-mobile");
         var $reviews = $("#reviews > div.reviews-inner");
-           
+        var $scrollblock = $("#arrow");
+          
         $(window).scroll(function(){
             if (( $(this).scrollTop() > 450) &&  $block1.hasClass("default") && $(window).width() >= '1200' ){
                 $block1.removeClass("default")
@@ -147,7 +148,18 @@ $(document).ready(function() {
 							'width':'230px'
 						});
             }
-        });//scroll	
+			if ( $(this).scrollTop() > 450 &&  $(window).width() < '1200' ){
+                $block2.css('display','block');		
+			}
+
+			if ( $(this).scrollTop() > 400){
+				$scrollblock.css('display','block');	
+			 }else if($(this).scrollTop() <= 400){
+				$scrollblock.css('display','none');	
+			 }
+			
+			
+		});//scroll	
 
 
 
@@ -419,4 +431,49 @@ $(document).ready(function() {
 
 
 
+// GO TO NEXT|PREVIOUS SECTION
+		$(function(){
+			
+			var pagePositon = 0,
+				sectionsSeclector = 'section',
+				$scrollItems = $(sectionsSeclector),
+				offsetTolorence = 30,
+				pageMaxPosition = $scrollItems.length - 1;
+			
+			//Map the sections:
+			$scrollItems.each(function(index,ele) { $(ele).attr("debog",index).data("pos",index); });
+
+			// Bind to scroll
+			$(window).bind('scroll',upPos);
+			
+			//Move on click:
+			$('#arrow a').click(function(e){
+				if ($(this).hasClass('next') && pagePositon+1 <= pageMaxPosition) {
+					pagePositon++;
+					$('html, body').stop().animate({ 
+						  scrollTop: $scrollItems.eq(pagePositon).offset().top
+					}, 300);
+				}
+				if ($(this).hasClass('previous') && pagePositon-1 >= 0) {
+					pagePositon--;
+					$('html, body').stop().animate({ 
+						  scrollTop: $scrollItems.eq(pagePositon).offset().top
+					  }, 300);
+					return false;
+				}
+			});
+			
+			//Update position func:
+			function upPos(){
+			   var fromTop = $(this).scrollTop();
+			   var $cur = null;
+				$scrollItems.each(function(index,ele){
+					if ($(ele).offset().top < fromTop + offsetTolorence) $cur = $(ele);
+				});
+			   if ($cur != null && pagePositon != $cur.data('pos')) {
+				   pagePositon = $cur.data('pos');
+			   }                   
+			}
+			
+		});
 

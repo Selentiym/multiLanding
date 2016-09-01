@@ -157,33 +157,33 @@
                 </div>
             </div>
             <div class="advantages row">
-                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6" style="margin-top:10px;pading-left: 5px;">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-3" style="margin-top:10px;pading-left: 5px;">
                     <img src="<?php echo $base; ?>/img_thirdDesign/advantage1.png">
                     <span>МРТ и КТ<br> срочно</span>
                     <p class="adv-comment">Обследование <br>в день обращения</p>
                 </div>
-                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6 narrow">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-3 narrow">
                     <img src="<?php echo $base; ?>/img_thirdDesign/advantage4.png">
                     <span>Скидки<br> Акции</span>
                 </div>
-                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-3">
                     <img src="<?php echo $base; ?>/img_thirdDesign/advantage6.png">
                     <span>Результат<br> за час</span>
                 </div>
-                <div class="col15-lg-3 col-md-4 col-sm-4 col-xs-6">
+                <div class="col15-lg-3 col-md-4 col-sm-4 col-xs-3">
                     <img src="<?php echo $base; ?>/img_thirdDesign/advantage7.png">
                     <span class="best-price">Гарантия лучшей цены</span>
                     <p class="adv-comment" style="color: #d82b3a;padding-left: 40px;border-top: 1px dashed #d82b3a;">Наши услуги <br>абсолютно бесплатны! </p>
                 </div>
-                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6 narrow">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-4 narrow">
                     <img src="<?php echo $base; ?>/img_thirdDesign/advantage3.png">
                     <span>Опыт работы<br> 24 года</span>
                 </div>
-                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-4">
                     <img src="<?php echo $base; ?>/img_thirdDesign/advantage5.png">
                     <span>Бесплатная<br> консультация врача </span>
                 </div>
-                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-6" style="margin-top:10px;">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-4" style="margin-top:10px;">
                     <img src="<?php echo $base; ?>/img_thirdDesign/advantage2.png">
                     <span>МРТ и КТ<br> ночью</span>
                     <p class="adv-comment">Скидка 50%</p>
@@ -197,7 +197,13 @@
 
 <div class="content">
 	<div class="container review-section">
-	    <div class="reviews default" id="reviews">
+	
+	<div id="arrow">
+		<a class="previous" title="Перейти к предыдущему блоку"><</a>
+		<a class="next" title="Перейти к следующему блоку">></a>
+	</div>
+	
+	<div class="reviews default" id="reviews">
 		<div class="reviews-inner">
             <div class="reviews-h1">Отзывы</div>
             <div class="one-review">
@@ -423,7 +429,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <span>© 2016</span>
+                <span>© 2016, Бесплатная общегородская служба записи на МРТ и КТ</span>
             </div>
             <div class="col-md-6">
                 <a class="phone-footer" href="<?php echo $base; ?>/tel:88122411052">8 (812) 241-10-52</a>
