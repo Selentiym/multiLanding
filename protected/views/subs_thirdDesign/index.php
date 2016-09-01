@@ -10,6 +10,16 @@
  * @type Rule $rule
  */
 
+$tel = [];
+//Костыль
+if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
+    $tel['formatted'] = '8 (812) 241-10-52';
+    $tel['raw'] = '88122411052';
+} else {
+    $tel['formatted'] = '8 (812) 313-27-04';
+    $tel['raw'] = '88123132704';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -94,7 +104,7 @@
                         <div class="col-lg-9 logo-text" id="logo-text"><a href="#slujba-info">Бесплатная общегородская служба записи на МРТ и КТ</a></div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-10 col-xs-10 top_contacts">
-                        <div>8 (812) 241-10-52</div>
+                        <div><?php echo $tel['formatted']; ?></div>
                         <a href="#callback" class="order fancybox"><img src="<?php echo $base; ?>/img_thirdDesign/phone-sm.png"><span>Заказать обратный звонок</span></a>
                         <span class="perezvonim">Перезвоним в течение 10 минут!</span>
                     </div>
@@ -144,9 +154,9 @@
                     <div class="discount-header">
                         <div class="discount-top"><img src="<?php echo $base; ?>/img_thirdDesign/discount-top.png"></div>
                         <div class="discount-content">
-                            <span class="discount-name">МРТ головного мозга </span>
-                            <span class="discount-old-price">3300р.</span>
-                            <span class="discount-price">2370р.</span>
+                            <span class="discount-name"><?php echo $model -> price -> text; ?></span>
+                            <span class="discount-old-price"><?php echo $model -> price -> price_old;?>р.</span>
+                            <span class="discount-price"><?php echo $model -> price -> price;?>р.</span>
                         </div>
                         <div class="discount-bottom"><img src="<?php echo $base; ?>/img_thirdDesign/discount-bottom.png"></div>
                     </div>
@@ -392,7 +402,7 @@
 <?php
 $rule = $model;
 if (is_a($rule -> section,'Section')) {
-    $this->renderPartial('//subs_thirdDesign/_section', array('section'=> $rule -> section, 'rule' => $rule,'base' => $base));
+    $this->renderPartial('//subs_thirdDesign/_section', array('section'=> $rule -> section, 'rule' => $rule,'base' => $base, 'tel' => $tel));
 }
 
 
@@ -400,8 +410,11 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
     if ($section -> id == $rule -> section -> id) {
         continue;
     }
-    $this->renderPartial('//subs_thirdDesign/_section', array('section' => $section, 'rule' => $model, 'base' => $base));
+    $this->renderPartial('//subs_thirdDesign/_section', array('section' => $section, 'rule' => $model, 'base' => $base, 'tel' => $tel));
 }
+
+
+
 ?>
 
 
@@ -432,7 +445,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
                 <span>© 2016, Бесплатная общегородская служба записи на МРТ и КТ</span>
             </div>
             <div class="col-md-6">
-                <a class="phone-footer" href="<?php echo $base; ?>/tel:88122411052">8 (812) 241-10-52</a>
+                <a class="phone-footer" href="<?php echo $base; ?>/tel:<?php echo $tel['raw']; ?>"><?php echo $tel['formatted']; ?></a>
             </div>
         </div>
     </div>

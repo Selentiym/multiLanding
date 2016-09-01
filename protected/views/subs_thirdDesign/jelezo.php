@@ -57,7 +57,7 @@
             </div>
             <div class="vrezka">
                 <div>
-                    <p>Проконсультируйтесь по телефону: 8 (812) 241-10-52.</p>
+                    <p>Проконсультируйтесь по телефону: <?php echo $tel['formatted']; ?>.</p>
                     <p>Вы сможете получить подробную консультацию по всем вопросам, связанным с МРТ и КТ исследованием и при желании записаться на обследование в удобное для вас время по лучшей цене!</p>
                 </div>
             </div>
@@ -99,7 +99,7 @@
         </div>
 		
         <div class="call-me">
-            <p><img src="<?php echo $base; ?>/img_thirdDesign/registration.png">Записаться на МРТ и КТ можно КРУГЛОСУТОЧНО по телефону: <b><a href="<?php echo $base; ?>/tel:88122411952">8 (812) 241-10-52</a></b></p>
+            <p><img src="<?php echo $base; ?>/img_thirdDesign/registration.png">Записаться на МРТ и КТ можно КРУГЛОСУТОЧНО по телефону: <b><a href="<?php echo $base; ?>/tel:88122411952"><?php echo $tel['formatted']; ?></a></b></p>
         </div>
 		
     </div>
