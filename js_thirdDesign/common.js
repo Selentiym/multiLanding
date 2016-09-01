@@ -1,4 +1,5 @@
-$(document).ready(function() {
+
+function EvaluateOnPageLoad () {
 
 	$(".main_mnu_button").click(function() {
 		$(".main_menu ul").slideToggle();
@@ -22,7 +23,7 @@ $(document).ready(function() {
 	owl.owlCarousel({
 		items : 1,
 		autoHeight : true,
-		autoPlay : 30000,	
+		autoPlay : 30000,
 		stopOnHover : true,
 	});
 	owl.on("mousewheel", ".owl-wrapper", function (e) {
@@ -40,7 +41,7 @@ $(document).ready(function() {
 		owl.trigger("owl.prev");
 	});
 
-	
+
 	//Каруселька докторов
 	var owl2 = $(".carousel-doctors");
 	owl2.owlCarousel({
@@ -61,11 +62,13 @@ $(document).ready(function() {
 	$(".next_button").click(function() {
 		owl2.trigger("owl.next");
 	});
+	$(".prev_button").off("click");
 	$(".prev_button").click(function() {
 		owl2.trigger("owl.prev");
 	});
-	
-	
+
+
+	$("#callback").off("submit");
 	//Аякс отправка форм
 	//Документация: http://api.jquery.com/jquery.ajax/
 	$("#callback").submit(function() {
@@ -82,7 +85,8 @@ $(document).ready(function() {
 		});
 		return false;
 	});
-	
+
+	$("#callback-registration").off("submit");
 	$("#callback-registration").submit(function() {
 		yaCounter37896725.reachGoal('formSent');
 		$.ajax({
@@ -97,7 +101,7 @@ $(document).ready(function() {
 		});
 		return false;
 	});
-	
+	$("#callback-from-page").off('submit');
 	$("#callback-from-page").submit(function() {
 		yaCounter37896725.reachGoal('formSent');
 		$.ajax({
@@ -112,127 +116,128 @@ $(document).ready(function() {
 		});
 		return false;
 	});
-	
-	
-// Фиксированный блок (навигация по органам) + фиксированные отзывы
-        var $block1 = $("#navigation");
-        var $block2 = $("#navigation-mobile");
-        var $reviews = $("#reviews > div.reviews-inner");
-        var $scrollblock = $("#arrow");
-          
-        $(window).scroll(function(){
-            if (( $(this).scrollTop() > 450) &&  $block1.hasClass("default") && $(window).width() >= '1200' ){
-                $block1.removeClass("default")
-                       .addClass("fixed transbg");
-                $reviews.addClass("fixed")
-						.css({
-							'top': '85px',
-							'bottom':'0',
-							'overflow-y':'scroll',
-							'overflow-x':'hidden',
-							'width':'250px',
-							'left': '77%',
-							'background-color': '#f7f7f7',
-							'padding-top': '40px'
-						});
-            } else if(($(this).scrollTop() <= 450) && $block1.hasClass("fixed")  && $(window).width() >= '1200') {
-                $block1.fadeOut('fast',function(){
-                    $(this).removeClass("fixed transbg")
-                           .addClass("default")
-                           .fadeIn('fast');
-                });
-                $reviews.removeClass("fixed")
-						.css({
-							'overflow-y':'hidden',
-							'padding-top': '0px',
-							'width':'230px'
-						});
-            }
-			if ( $(this).scrollTop() > 450 &&  $(window).width() < '1200' ){
-                $block2.css('display','block');		
-			}
 
-			if ( $(this).scrollTop() > 400){
-				$scrollblock.css('display','block');	
-			 }else if($(this).scrollTop() <= 400){
-				$scrollblock.css('display','none');	
-			 }
-			
-			
-		});//scroll	
+
+// Фиксированный блок (навигация по органам) + фиксированные отзывы
+	var $block1 = $("#navigation");
+	var $block2 = $("#navigation-mobile");
+	var $reviews = $("#reviews > div.reviews-inner");
+	var $scrollblock = $("#arrow");
+
+	$(window).scroll(function(){
+		if (( $(this).scrollTop() > 450) &&  $block1.hasClass("default") && $(window).width() >= '1200' ){
+			$block1.removeClass("default")
+					.addClass("fixed transbg");
+			$reviews.addClass("fixed")
+					.css({
+						'top': '85px',
+						'bottom':'0',
+						'overflow-y':'scroll',
+						'overflow-x':'hidden',
+						'width':'250px',
+						'left': '77%',
+						'background-color': '#f7f7f7',
+						'padding-top': '40px'
+					});
+		} else if(($(this).scrollTop() <= 450) && $block1.hasClass("fixed")  && $(window).width() >= '1200') {
+			$block1.fadeOut('fast',function(){
+				$(this).removeClass("fixed transbg")
+						.addClass("default")
+						.fadeIn('fast');
+			});
+			$reviews.removeClass("fixed")
+					.css({
+						'overflow-y':'hidden',
+						'padding-top': '0px',
+						'width':'230px'
+					});
+		}
+		if ( $(this).scrollTop() > 450 &&  $(window).width() < '1200' ){
+			$block2.css('display','block');
+		}
+
+		if ( $(this).scrollTop() > 400){
+			$scrollblock.css('display','block');
+		}else if($(this).scrollTop() <= 400){
+			$scrollblock.css('display','none');
+		}
+
+
+	});//scroll
 
 
 
 	// Появление "Записаться" в верхнем меню при прокрутке вниз
-	    var callback = $("#callback-on-fix-menu");
-        var logotext = $("#logo-text");
-        var orderbutton = $("#order-button");
-        var logoouter = $("#logo-outer");
+	var callback = $("#callback-on-fix-menu");
+	var logotext = $("#logo-text");
+	var orderbutton = $("#order-button");
+	var logoouter = $("#logo-outer");
 
-        $(window).scroll(function(){
+	$(window).scroll(function(){
 
-            if ( $(this).scrollTop() > 150 ){
-                callback.css('display','block');
-                logotext.css('display','none');
-				logoouter.removeClass("col-lg-3");				
-				logoouter.addClass("col-lg-1");
-				logoouter.find(".logo").removeClass("col-lg-3")
-									   .addClass("col-lg-12");
-            } else if($(this).scrollTop() <= 150) {
-                callback.css('display','none');
-                logotext.css('display','block');
-				logoouter.removeClass("col-lg-1");				
-				logoouter.addClass("col-lg-3");				
-				logoouter.find(".logo").removeClass("col-lg-12")
-									   .addClass("col-lg-3");
-} 
-		   if($(window).width() <= '1200') {
-                logotext.css('display','none');
-                callback.css('display','none');
-           }
+		if ( $(this).scrollTop() > 150 ){
+			callback.css('display','block');
+			logotext.css('display','none');
+			logoouter.removeClass("col-lg-3");
+			logoouter.addClass("col-lg-1");
+			logoouter.find(".logo").removeClass("col-lg-3")
+					.addClass("col-lg-12");
+		} else if($(this).scrollTop() <= 150) {
+			callback.css('display','none');
+			logotext.css('display','block');
+			logoouter.removeClass("col-lg-1");
+			logoouter.addClass("col-lg-3");
+			logoouter.find(".logo").removeClass("col-lg-12")
+					.addClass("col-lg-3");
+		}
+		if($(window).width() <= '1200') {
+			logotext.css('display','none');
+			callback.css('display','none');
+		}
 
-        });//scroll	
+	});//scroll
 
 // Открыть/Закрыть ответ
-                $('.question').on('click', '.toggle-answer', function(){
-                    $(this).siblings('.answer').toggle(1000);
-                });	
-				
-				$('a.toggle-answer').click(function(){
-					var a = $(this).text();
-					if (a == "Ответ >>") {
-						$(this).text("Свернуть ответ >>");
-					}
-					else{
-						$(this).text("Ответ >>");
-					}
-				});
+	$('.question').on('click', '.toggle-answer', function(){
+		$(this).siblings('.answer').toggle(1000);
+	});
 
-// Вкладки	
-				
-				$('#tabs').tabulous({
-					effect: 'scale'
-				});
+	$('a.toggle-answer').click(function(){
+		var a = $(this).text();
+		if (a == "Ответ >>") {
+			$(this).text("Свернуть ответ >>");
+		}
+		else{
+			$(this).text("Ответ >>");
+		}
+	});
 
-				 $('#tabs2').tabulous({
-					effect: 'slideLeft'
-				});
-				
+// Вкладки
+
+	$('#tabs').tabulous({
+		effect: 'scale'
+	});
+
+	$('#tabs2').tabulous({
+		effect: 'slideLeft'
+	});
+
 //Карта
 
-				
-            $(".map_adres_hide .delete").click(function(){
-                $(this).parents(".map_adres_hide").animate({ opacity: "hide" }, "slow");
-            });
-				
-				$('.map_clinic_marker').click(function(){
-					$('.map_clinic_marker').not($(this)).parent().children('.map_clinic_description').hide(1000);
-					$(this).parent().children('.map_clinic_description').toggle(1000);
-				});
-				
-				
-				
-});
+
+	$(".map_adres_hide .delete").click(function(){
+		$(this).parents(".map_adres_hide").animate({ opacity: "hide" }, "slow");
+	});
+
+	$('.map_clinic_marker').click(function(){
+		$('.map_clinic_marker').not($(this)).parent().children('.map_clinic_description').hide(1000);
+		$(this).parent().children('.map_clinic_description').toggle(1000);
+	});
+
+
+
+}
+$(document).ready(EvaluateOnPageLoad);
 
 			function changeCursor(){
 				return false;
@@ -433,36 +438,36 @@ $(document).ready(function() {
 
 // GO TO NEXT|PREVIOUS SECTION
 		$(function(){
-			
+
 			var pagePositon = 0,
 				sectionsSeclector = 'section',
 				$scrollItems = $(sectionsSeclector),
 				offsetTolorence = 30,
 				pageMaxPosition = $scrollItems.length - 1;
-			
+
 			//Map the sections:
 			$scrollItems.each(function(index,ele) { $(ele).attr("debog",index).data("pos",index); });
 
 			// Bind to scroll
 			$(window).bind('scroll',upPos);
-			
+
 			//Move on click:
 			$('#arrow a').click(function(e){
 				if ($(this).hasClass('next') && pagePositon+1 <= pageMaxPosition) {
 					pagePositon++;
-					$('html, body').stop().animate({ 
+					$('html, body').stop().animate({
 						  scrollTop: $scrollItems.eq(pagePositon).offset().top
 					}, 300);
 				}
 				if ($(this).hasClass('previous') && pagePositon-1 >= 0) {
 					pagePositon--;
-					$('html, body').stop().animate({ 
+					$('html, body').stop().animate({
 						  scrollTop: $scrollItems.eq(pagePositon).offset().top
 					  }, 300);
 					return false;
 				}
 			});
-			
+
 			//Update position func:
 			function upPos(){
 			   var fromTop = $(this).scrollTop();
@@ -472,8 +477,8 @@ $(document).ready(function() {
 				});
 			   if ($cur != null && pagePositon != $cur.data('pos')) {
 				   pagePositon = $cur.data('pos');
-			   }                   
+			   }
 			}
-			
+
 		});
 

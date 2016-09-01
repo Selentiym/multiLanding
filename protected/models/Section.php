@@ -8,6 +8,7 @@
  * @property string $name
  * @property string $view
  * @property integer $num
+ * @property bool $ajax
  */
 class Section extends UModel
 {
@@ -105,5 +106,13 @@ class Section extends UModel
 	 */
 	public static function trivialId(){
 		return self::model() -> findByAttributes(array('view' => 'prices')) -> id;
+	}
+	public function CustomFind($arg = ''){
+		switch($this -> getScenario()){
+			case 'ajaxLoad':
+				return $this -> findByAttributes(['view' => $_POST['view']]);
+				break;
+		}
+		return $this -> findByPk($arg);
 	}
 }
