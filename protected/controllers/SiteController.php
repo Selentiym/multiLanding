@@ -36,7 +36,7 @@ class SiteController extends Controller
 					}
 					//пересохраняем сессию
 
-					//$folder = '//subs_thirdDesign/';
+					$folder = '//subs_thirdDesign/';
 					//$folder = '//subs_newDesign/';
 					//$folder = '//subs/';
 					$view = new View();
