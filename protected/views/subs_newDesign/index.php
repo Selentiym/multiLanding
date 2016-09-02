@@ -184,8 +184,7 @@
 	<div class="container review-section">
 	
 	<div id="arrow">
-		<a class="previous" title="Перейти к предыдущему блоку"><</a>
-		<a class="next" title="Перейти к следующему блоку">></a>
+		<a class="previous" title="Перейти к предыдущему блоку"><</a><a class="next" title="Перейти к следующему блоку">></a>
 	</div>
 	
 	    <div class="reviews default" id="reviews">

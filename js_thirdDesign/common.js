@@ -78,7 +78,7 @@ $(document).ready(function() {
 			alert("Спасибо за заявку!");
 			setTimeout(function() {
 				$.fancybox.close();
-			}, 1000);
+			}, 10);
 		});
 		return false;
 	});
@@ -93,7 +93,7 @@ $(document).ready(function() {
 			alert("Спасибо за заявку!");
 			setTimeout(function() {
 				$.fancybox.close();
-			}, 1000);
+			}, 10);
 		});
 		return false;
 	});
@@ -108,7 +108,7 @@ $(document).ready(function() {
 			alert("Спасибо за заявку!");
 			setTimeout(function() {
 				$.fancybox.close();
-			}, 1000);
+			}, 10);
 		});
 		return false;
 	});

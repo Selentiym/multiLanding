@@ -747,6 +747,7 @@ DOCTORS
 .carousel-doctors .zvanie{
 	color:#101011;	
 	font-size: 14px;
+	line-height: 1.4;	
 }
 
 .carousel-doctors 
@@ -763,6 +764,7 @@ DOCTORS
     -webkit-box-shadow: 4px 2px 5px 0px rgba(232, 232, 232, 0.53);
     -moz-box-shadow: 4px 2px 5px 0px rgba(232, 232, 232, 0.53);
     box-shadow: 4px 2px 5px 0px rgba(232, 232, 232, 0.53);
+	height: 220px;
 }
 
 .slide_item{
@@ -1558,6 +1560,20 @@ marquee{
 	.advantages div{
 		margin-top:10px;
 	}
+	#arrow{
+	    top: 59px;
+		bottom: 100%;
+	}
+	#arrow a{
+		font-size:18px;
+		background: #002d48;
+		margin:0;
+		padding: 0 7px;
+	}
+	#arrow a:hover{
+		background:#00507f;
+	}
+	
 }
 
 /* Small Devices, Tablets */
@@ -1615,7 +1631,6 @@ marquee{
 		margin:0 auto;
 		width:50%;
 	}
-
 }
 
 /* Extra Small Devices, Phones */
