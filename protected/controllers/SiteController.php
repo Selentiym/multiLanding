@@ -66,7 +66,6 @@ class SiteController extends Controller
 				'view' => '//subs_thirdDesign/post',
 				'partial' => true
 			),
-
 		);
 	}
 
@@ -107,5 +106,16 @@ class SiteController extends Controller
 			}
 		}
 		echo $count;
+	}
+	public function actionBlock(){
+		if (Yii::app()->request->isAjaxRequest) {
+			$section = Section::model()->findByPk($_POST['section_id']);
+			$rule = Rule::model()->findByPk($_POST["rule_id"]);
+			$base = Yii::app()->baseUrl;
+			$tel = $_POST['tel'];
+			$this->renderPartial(Yii::app() -> session -> get('folder') . $section->view, array('model' => $rule, 'base' => $base, 'tel' => $tel));
+		} else {
+			echo "Ajax use only!";
+		}
 	}
 }
