@@ -8,7 +8,7 @@
 if ($section -> ajax) {
     $id = $section -> view.'_loader';
     $tel = json_encode($tel);
-    echo "<div id='$id' class='sectionLoader'>ajax</div>";
+    echo "<div id='$id' class='sectionLoader'><img src='".$base."/img_thirdDesign/loading.gif' /></div>";
     Yii::app() -> getClientScript() -> registerScript("load".$id,"
         $.post('".Yii::app() -> baseUrl."/site/block',{
             section_id:$section->id,
@@ -16,7 +16,14 @@ if ($section -> ajax) {
             tel:$tel
         },null,'html').done(function(data){
             $('#$id').replaceWith(data);
-            EvaluateOnPageLoad();
+			
+			reNewSectionSet();
+            
+			if (typeof $section->view == 'function') {
+                $section->view();
+            }
+			
+			
         });
     ",CClientScript::POS_READY);
 } else {

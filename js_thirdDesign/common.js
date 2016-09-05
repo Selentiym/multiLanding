@@ -7,66 +7,7 @@ function EvaluateOnPageLoad () {
 
 	//Попап менеджер FancyBox
 	//Документация: http://fancybox.net/howto
-	//<a class="fancybox"><img src="image.jpg" /></a>
-	//<a class="fancybox" data-fancybox-group="group"><img src="image.jpg" /></a>
 	$(".fancybox").fancybox();
-
-	//Навигация по Landing Page
-	//$(".top_mnu") - это верхняя панель со ссылками.
-	//Ссылки вида <a href="#contacts">Контакты</a>
-	$(".top_mnu").navigation();
-
-
-	//Каруселька
-	//Документация: http://owlgraphic.com/owlcarousel/
-	var owl = $(".carousel");
-	owl.owlCarousel({
-		items : 1,
-		autoHeight : true,
-		autoPlay : 30000,
-		stopOnHover : true,
-	});
-	owl.on("mousewheel", ".owl-wrapper", function (e) {
-		if (e.deltaY > 0) {
-			owl.trigger("owl.prev");
-		} else {
-			owl.trigger("owl.next");
-		}
-		e.preventDefault();
-	});
-	$(".next_button").click(function() {
-		owl.trigger("owl.next");
-	});
-	$(".prev_button").click(function() {
-		owl.trigger("owl.prev");
-	});
-
-
-	//Каруселька докторов
-	var owl2 = $(".carousel-doctors");
-	owl2.owlCarousel({
-		items : 4,
-		autoHeight : true,
-		stopOnHover : true,
-		touchDrag : false,
-		autoPlay : true
-	});
-	owl2.on("mousewheel", ".owl-wrapper", function (e) {
-		if (e.deltaY > 0) {
-			owl2.trigger("owl.prev");
-		} else {
-			owl2.trigger("owl.next");
-		}
-		e.preventDefault();
-	});
-	$(".next_button").click(function() {
-		owl2.trigger("owl.next");
-	});
-	$(".prev_button").off("click");
-	$(".prev_button").click(function() {
-		owl2.trigger("owl.prev");
-	});
-
 
 	$("#callback").off("submit");
 	//Аякс отправка форм
@@ -116,18 +57,170 @@ function EvaluateOnPageLoad () {
 		});
 		return false;
 	});
+	
+
+		
+}
 
 
-// Фиксированный блок (навигация по органам) + фиксированные отзывы
-	var $block1 = $("#navigation");
-	var $block2 = $("#navigation-mobile");
-	var $reviews = $("#reviews > div.reviews-inner");
-	var $scrollblock = $("#arrow");
 
-	$(window).scroll(function(){
+//Карта
+function geo(){
+
+	$(".map_adres_hide .delete").click(function(){
+		$(this).parents(".map_adres_hide").animate({ opacity: "hide" }, "slow");
+	});
+
+	$('.map_clinic_marker').click(function(){
+		$('.map_clinic_marker').not($(this)).parent().children('.map_clinic_description').hide(1000);
+		$(this).parent().children('.map_clinic_description').toggle(1000);
+	});
+
+}
+
+
+
+//Каруселька (слайдер на первом экране)
+function carousel(){
+	var owl = $(".carousel");
+	owl.owlCarousel({
+		items : 1,
+		autoHeight : true,
+		autoPlay : 30000,
+		stopOnHover : true,
+	});
+	owl.on("mousewheel", ".owl-wrapper", function (e) {
+		if (e.deltaY > 0) {
+			owl.trigger("owl.prev");
+		} else {
+			owl.trigger("owl.next");
+		}
+		e.preventDefault();
+	});
+	$(".next_button").click(function() {
+		owl.trigger("owl.next");
+	});
+	$(".prev_button").click(function() {
+		owl.trigger("owl.prev");
+	});
+}
+
+
+//Каруселька докторов
+function doctors(){
+
+	var owl2 = $(".carousel-doctors");
+	owl2.owlCarousel({
+		items : 4,
+		autoHeight : true,
+		stopOnHover : true,
+		touchDrag : false,
+		autoPlay : true
+	});
+	owl2.on("mousewheel", ".owl-wrapper", function (e) {
+		if (e.deltaY > 0) {
+			owl2.trigger("owl.prev");
+		} else {
+			owl2.trigger("owl.next");
+		}
+		e.preventDefault();
+	});
+	$(".next_button").click(function() {
+		owl2.trigger("owl.next");
+	});
+	$(".prev_button").off("click");
+	$(".prev_button").click(function() {
+		owl2.trigger("owl.prev");
+	});
+
+}
+
+
+// Открыть/Закрыть ответ
+function faq(){
+		$('.question').on('click', '.toggle-answer', function(){
+			$(this).siblings('.answer').toggle(1000);
+		});
+
+		$('a.toggle-answer').click(function(){
+			var a = $(this).text();
+			if (a == "Ответ >>") {
+				$(this).text("Свернуть ответ >>");
+			}
+			else{
+				$(this).text("Ответ >>");
+			}
+		});
+}
+	
+	
+// Вкладки (блок "Наше оборудование")
+function jelezo(){
+		$('#tabs').tabulous({
+			effect: 'scale'
+		});
+
+		$('#tabs2').tabulous({
+			effect: 'slideLeft'
+		});
+}
+
+
+
+
+// Фиксированный блок (навигация по органам)
+	$(window).scroll(function bodyNav(){
+		var $block1 = $("#navigation");
+		var $block2 = $("#navigation-mobile");
+
 		if (( $(this).scrollTop() > 450) &&  $block1.hasClass("default") && $(window).width() >= '1200' ){
 			$block1.removeClass("default")
 					.addClass("fixed transbg");
+		} else if(($(this).scrollTop() <= 450) && $block1.hasClass("fixed")  && $(window).width() >= '1200') {
+			$block1.fadeOut('fast',function(){
+				$(this).removeClass("fixed transbg")
+						.addClass("default")
+						.fadeIn('fast');
+			});
+		}
+		if ( $(this).scrollTop() > 450 &&  $(window).width() < '1200' ){
+			$block2.css('display','block');
+		}
+	});//scroll
+
+// Подсвечиваем пункты навигации по органам (в зависимости от того, присутствует ли на экране цены мрт,кт этого органа)
+			
+		function check_elem(elem, elem2) {
+		 
+		/*		if ($(document).scrollTop() + $(window).height() - 200 > elem.offset().top && elem.scrollTop() - elem.offset().top < elem.height())
+					{
+						elem2.css("border","1px dashed rgb(0, 90, 197)");
+						elem2.css("border-radius","50%");
+					}
+				else 	elem2.css("border","none");*/
+		}		
+			
+
+		$(window).scroll(function() {
+				check_elem($("li.price-head"),$("#price_head"));
+				check_elem($("li.price-pozv"),$("#price_pozv"));
+				check_elem($("li.price-br"),$("#price_br"));
+				check_elem($("li.price-taz"),$("#price_taz"));
+				check_elem($("li.price-sust"),$("#price_sust"));
+				check_elem($("li.price-org"),$("#price_org"));
+				check_elem($("li.price-heart"),$("#price_heart"));
+				check_elem($("li.price-kon"),$("#price_kon"));
+				check_elem($("li.price-grud"),$("#price_grud"));
+		});
+	
+	
+	
+	
+	
+// Фиксированные отзывы
+	$(window).scroll(function settleReviews(){
+		var $reviews = $("#reviews > div.reviews-inner");
+		if ($(this).scrollTop() > 450){
 			$reviews.addClass("fixed")
 					.css({
 						'top': '85px',
@@ -139,12 +232,7 @@ function EvaluateOnPageLoad () {
 						'background-color': '#f7f7f7',
 						'padding-top': '40px'
 					});
-		} else if(($(this).scrollTop() <= 450) && $block1.hasClass("fixed")  && $(window).width() >= '1200') {
-			$block1.fadeOut('fast',function(){
-				$(this).removeClass("fixed transbg")
-						.addClass("default")
-						.fadeIn('fast');
-			});
+		} else if($(this).scrollTop() <= 450) {
 			$reviews.removeClass("fixed")
 					.css({
 						'overflow-y':'hidden',
@@ -152,28 +240,27 @@ function EvaluateOnPageLoad () {
 						'width':'230px'
 					});
 		}
-		if ( $(this).scrollTop() > 450 &&  $(window).width() < '1200' ){
-			$block2.css('display','block');
-		}
+	});//scroll
 
+
+// Фиксированный блок навигации по секциям
+	$(window).scroll(function sectionsNav(){
+		var $scrollblock = $("#arrow");
 		if ( $(this).scrollTop() > 400){
 			$scrollblock.css('display','block');
 		}else if($(this).scrollTop() <= 400){
 			$scrollblock.css('display','none');
 		}
-
-
 	});//scroll
 
 
-
-	// Появление "Записаться" в верхнем меню при прокрутке вниз
-	var callback = $("#callback-on-fix-menu");
-	var logotext = $("#logo-text");
-	var orderbutton = $("#order-button");
-	var logoouter = $("#logo-outer");
-
-	$(window).scroll(function(){
+	
+// Появление "Записаться" в верхнем меню при прокрутке вниз
+	$(window).scroll(function headFix(){
+		var callback = $("#callback-on-fix-menu");
+		var logotext = $("#logo-text");
+		var orderbutton = $("#order-button");
+		var logoouter = $("#logo-outer");
 
 		if ( $(this).scrollTop() > 150 ){
 			callback.css('display','block');
@@ -196,49 +283,26 @@ function EvaluateOnPageLoad () {
 		}
 
 	});//scroll
-
-// Открыть/Закрыть ответ
-	$('.question').on('click', '.toggle-answer', function(){
-		$(this).siblings('.answer').toggle(1000);
-	});
-
-	$('a.toggle-answer').click(function(){
-		var a = $(this).text();
-		if (a == "Ответ >>") {
-			$(this).text("Свернуть ответ >>");
-		}
-		else{
-			$(this).text("Ответ >>");
-		}
-	});
-
-// Вкладки
-
-	$('#tabs').tabulous({
-		effect: 'scale'
-	});
-
-	$('#tabs2').tabulous({
-		effect: 'slideLeft'
-	});
-
-//Карта
+	
+	
 
 
-	$(".map_adres_hide .delete").click(function(){
-		$(this).parents(".map_adres_hide").animate({ opacity: "hide" }, "slow");
-	});
-
-	$('.map_clinic_marker').click(function(){
-		$('.map_clinic_marker').not($(this)).parent().children('.map_clinic_description').hide(1000);
-		$(this).parent().children('.map_clinic_description').toggle(1000);
-	});
-
-
-
-}
+	
+	
+	
+	
+	
 $(document).ready(EvaluateOnPageLoad);
+$(document).ready(carousel);
+//$(document).ready(gotoPrevNext);
+//$(document).ready(doctors);
+//$(document).ready(faq);
+//$(document).ready(jelezo);
+//$(document).ready(geo);
 
+
+
+// Функции для отображения карты
 			function changeCursor(){
 				return false;
 			var x = y = 0;
@@ -406,64 +470,56 @@ $(document).ready(EvaluateOnPageLoad);
 
 
             }
-
-
-
-// Подсвечиваем пункты навигации по органам (в зависимости от того, присутствует ли на экране цены мрт,кт этого органа)
 			
-		function check_elem(elem, elem2) {
-		 
-				if ($(document).scrollTop() + $(window).height() - 200 > elem.offset().top && elem.scrollTop() - elem.offset().top < elem.height())
-					{
-						elem2.css("border","1px dashed rgb(0, 90, 197)");
-						elem2.css("border-radius","50%");
-					}
-				else 	elem2.css("border","none");
-		}		
-			
-
-		$(window).scroll(function() {
-				check_elem($("li.price-head"),$("#price_head"));
-				check_elem($("li.price-pozv"),$("#price_pozv"));
-				check_elem($("li.price-br"),$("#price_br"));
-				check_elem($("li.price-taz"),$("#price_taz"));
-				check_elem($("li.price-sust"),$("#price_sust"));
-				check_elem($("li.price-org"),$("#price_org"));
-				check_elem($("li.price-heart"),$("#price_heart"));
-				check_elem($("li.price-kon"),$("#price_kon"));
-				check_elem($("li.price-grud"),$("#price_grud"));
-		});
-
-
-
-// GO TO NEXT|PREVIOUS SECTION
-		$(function(){
-
-			var pagePositon = 0,
-				sectionsSeclector = 'section',
-				$scrollItems = $(sectionsSeclector),
+	// Перейти к следующей/предыдущей SECTION
+	
+		var pagePositon = 0,
+				$scrollItems = $('section'),
 				offsetTolorence = 30,
 				pageMaxPosition = $scrollItems.length - 1;
-
+		function reNewSectionSet(){
+			$scrollItems = $('section');
+			offsetTolorence = 30;
+			pageMaxPosition = $scrollItems.length - 1;
+			
 			//Map the sections:
 			$scrollItems.each(function(index,ele) { $(ele).attr("debog",index).data("pos",index); });
+		}
+		function gotoPrevNext(){
+
+			
+
 
 			// Bind to scroll
 			$(window).bind('scroll',upPos);
 
 			//Move on click:
 			$('#arrow a').click(function(e){
-				if ($(this).hasClass('next') && pagePositon+1 <= pageMaxPosition) {
+				console.log(pagePositon, pageMaxPosition);
+				if (!pagePositon) {
+					pagePositon = 0;
+				}
+				if ($(this).hasClass('next')) {
 					pagePositon++;
-					$('html, body').stop().animate({
-						  scrollTop: $scrollItems.eq(pagePositon).offset().top
-					}, 300);
+					if ($scrollItems.eq(pagePositon).offset()) {
+						$('html, body').stop().animate({
+							  scrollTop: $scrollItems.eq(pagePositon).offset().top
+						}, 300);
+					}
+					if (pagePositon > pageMaxPosition) {
+						pagePositon = pageMaxPosition;
+					}
 				}
 				if ($(this).hasClass('previous') && pagePositon-1 >= 0) {
 					pagePositon--;
-					$('html, body').stop().animate({
-						  scrollTop: $scrollItems.eq(pagePositon).offset().top
-					  }, 300);
+					if ($scrollItems.eq(pagePositon).offset()) {
+						$('html, body').stop().animate({
+							  scrollTop: $scrollItems.eq(pagePositon).offset().top
+						  }, 300);
+						  if (pagePositon < 0) {
+							pagePositon = 0;
+						}
+					}
 					return false;
 				}
 			});
@@ -480,5 +536,4 @@ $(document).ready(EvaluateOnPageLoad);
 			   }
 			}
 
-		});
-
+		}	
