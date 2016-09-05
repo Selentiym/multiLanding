@@ -63,6 +63,31 @@ function EvaluateOnPageLoad () {
 }
 
 
+//Skidki!
+
+function skidki(){
+
+	var clock;
+	clock = $('#clock').FlipClock({
+		clockFace: 'DailyCounter',
+		autoStart: false,
+		defaultLanguage: 'rus',
+		callbacks: {
+			stop: function() {
+				$('.message').html('Время вышло!')
+			}
+		}
+	});
+	var toTime = new Date();
+	var toAdd = toTime.getDate() % 3 + 2;
+	toTime.setMinutes(0);
+	toTime.setSeconds(0);
+	toTime.setHours(toAdd*24);
+	var nowTime = new Date();
+	clock.setTime(Math.floor((toTime - nowTime)/1000));
+	clock.setCountdown(true);
+	clock.start();
+}
 
 //Карта
 function geo(){
@@ -294,7 +319,7 @@ function jelezo(){
 	
 $(document).ready(EvaluateOnPageLoad);
 $(document).ready(carousel);
-//$(document).ready(gotoPrevNext);
+$(document).ready(gotoPrevNext);
 //$(document).ready(doctors);
 //$(document).ready(faq);
 //$(document).ready(jelezo);
@@ -485,13 +510,12 @@ $(document).ready(carousel);
 			//Map the sections:
 			$scrollItems.each(function(index,ele) { $(ele).attr("debog",index).data("pos",index); });
 		}
+
 		function gotoPrevNext(){
-
-			
-
-
 			// Bind to scroll
 			$(window).bind('scroll',upPos);
+
+			reNewSectionSet();
 
 			//Move on click:
 			$('#arrow a').click(function(e){

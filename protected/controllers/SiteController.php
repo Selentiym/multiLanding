@@ -113,6 +113,11 @@ class SiteController extends Controller
 			$rule = Rule::model()->findByPk($_POST["rule_id"]);
 			$base = Yii::app()->baseUrl;
 			$tel = $_POST['tel'];
+			$prices_temp = $rule -> prices;
+			$rule -> price = current($prices_temp);
+			if (!(is_a($rule -> price, 'Price'))) {
+				$rule -> price = Price::model() -> findByPk(Price::trivialId());
+			}
 			$this->renderPartial(Yii::app() -> session -> get('folder') . $section->view, array('model' => $rule, 'base' => $base, 'tel' => $tel));
 		} else {
 			echo "Ajax use only!";
