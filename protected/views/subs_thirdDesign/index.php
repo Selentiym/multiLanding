@@ -476,7 +476,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
                 <span>© 2016, Бесплатная общегородская служба записи на МРТ и КТ</span>
             </div>
             <div class="col-md-6">
-                <a class="phone-footer" href="<?php echo $base; ?>/tel:<?php echo $tel['raw']; ?>"><?php echo $tel['formatted']; ?></a>
+                <a class="phone-footer" href="tel:<?php echo $tel['raw']; ?>"><?php echo $tel['formatted']; ?></a>
             </div>
         </div>
     </div>
@@ -638,36 +638,6 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
 <script src="<?php echo Yii::app() -> baseUrl; ?>/js_newDesign/tabulous.min.js"></script>
 <script src="<?php echo $base; ?>/js_thirdDesign/jquery.maskedinput.min.js"></script>
 
-
-
-<script type="text/javascript">
-    /*<![CDATA[*/
-    jQuery(function($) {
-
-        var clock;
-        clock = $('#clock').FlipClock({
-            clockFace: 'DailyCounter',
-            autoStart: false,
-            defaultLanguage: 'rus',
-            callbacks: {
-                stop: function() {
-                    $('.message').html('Время вышло!')
-                }
-            }
-        });
-        var toTime = new Date();
-        var toAdd = toTime.getDate() % 3 + 2;
-        toTime.setMinutes(0);
-        toTime.setSeconds(0);
-        toTime.setHours(toAdd*24);
-        var nowTime = new Date();
-        clock.setTime(Math.floor((toTime - nowTime)/1000));
-        clock.setCountdown(true);
-        clock.start();
-
-    });
-    /*]]>*/
-</script>
 <script>
     jQuery(function($){
         $(".your-phone").mask("+7(999)999-99-99");
