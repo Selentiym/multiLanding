@@ -42,7 +42,10 @@ function EvaluateOnPageLoad () {
 		});
 		return false;
 	});
-	$("#callback-from-page").off('submit');
+}
+
+
+function form () {
 	$("#callback-from-page").submit(function() {
 		yaCounter37896725.reachGoal('formSent');
 		$.ajax({
@@ -57,11 +60,7 @@ function EvaluateOnPageLoad () {
 		});
 		return false;
 	});
-	
-
-		
 }
-
 
 //Skidki!
 
