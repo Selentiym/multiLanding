@@ -191,13 +191,16 @@ function jelezo(){
 // Подсвечиваем пункты навигации по органам (в зависимости от того, присутствует ли на экране цены мрт,кт этого органа)
 			
 		function check_elem(elem, elem2) {
-		 
-		/*		if ($(document).scrollTop() + $(window).height() - 200 > elem.offset().top && elem.scrollTop() - elem.offset().top < elem.height())
-					{
-						elem2.css("border","1px dashed rgb(0, 90, 197)");
-						elem2.css("border-radius","50%");
-					}
-				else 	elem2.css("border","none");*/
+			if(elem.length && elem2.length){
+			 
+					if ($(document).scrollTop() + $(window).height() - 200 > elem.offset().top && elem.scrollTop() - elem.offset().top < elem.height())
+						{
+							elem2.css("border","1px dashed rgb(0, 90, 197)");
+							elem2.css("border-radius","50%");
+						}
+					else 	elem2.css("border","none");
+				 
+			}	
 		}		
 			
 
