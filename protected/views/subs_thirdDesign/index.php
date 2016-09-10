@@ -644,14 +644,44 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
     });
 </script>
 <!-- BEGIN K50 TRACKER CODE-->
-<!--<script>
+<script>
     (function(c,a,p) {
         var s = document.createElement(a); s.src = p; s.type = "text/javascript"; s.async =!0; s.readyState ? s.onreadystatechange = function() { if ( s.readyState === "loaded" || s.readyState === "complete" ) { s.onreadystatechange = null; c();}} : s.onload = function () {c();}; var n = document.getElementsByTagName(a)[0]; n.parentNode.insertBefore(s,n); })(function(){
         k50Tracker.init({
             siteId: 46841313737734
         })
     },"script","https://k50-a.akamaihd.net/k50/k50tracker2.js");
-</script>-->
+</script>
+<!-- END K50 TRACKER CODE-->
+<!-- BEGIN K50 TRACKER CODE-->
+<style>
+    #k50-track-code {
+        margin: 10px;
+        padding: 4px 8px;
+        position: fixed;
+        top: 0;
+        right: 0;
+        display: inline-block;
+        font-family: Arial;
+        font-size: 12px;
+        font-weight: Normal;
+        line-height: 1;
+        color: #ffffff;
+        background: #333333;
+        border: 0px solid #ffffff;
+        border-radius: 4px;
+        z-index: 9999;
+    }
+</style>
+<script>
+    (function(c,a,p) {
+        var s = document.createElement(a); s.src = p; s.type = "text/javascript"; s.async =!0; s.readyState ? s.onreadystatechange = function() { if ( s.readyState === "loaded" || s.readyState === "complete" ) { s.onreadystatechange = null; c();}} : s.onload = function () {c();}; var n = document.getElementsByTagName(a)[0]; n.parentNode.insertBefore(s,n); })(function(){
+        k50Tracker.init({
+            siteId: 75901313737734
+        })
+    },"script","https://k50-a.akamaihd.net/k50/k50tracker2.js");
+</script>
+<div id="k50-track-code"></div>
 <!-- END K50 TRACKER CODE-->
 </body>
 </html>
