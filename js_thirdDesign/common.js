@@ -288,6 +288,8 @@ function jelezo(){
 		var logotext = $("#logo-text");
 		var orderbutton = $("#order-button");
 		var logoouter = $("#logo-outer");
+        var promo = $("span.promokod span");
+        var promohand = $("span.promokod i");
 
 		if ( $(this).scrollTop() > 150 ){
 			callback.css('display','block');
@@ -295,14 +297,18 @@ function jelezo(){
 			logoouter.removeClass("col-lg-3");
 			logoouter.addClass("col-lg-1");
 			logoouter.find(".logo").removeClass("col-lg-3")
-					.addClass("col-lg-12");
+								   .addClass("col-lg-12");
+			promo.addClass("blink");					   
+			promohand.css("display","inline-block");					   
 		} else if($(this).scrollTop() <= 150) {
 			callback.css('display','none');
 			logotext.css('display','block');
 			logoouter.removeClass("col-lg-1");
 			logoouter.addClass("col-lg-3");
 			logoouter.find(".logo").removeClass("col-lg-12")
-					.addClass("col-lg-3");
+								   .addClass("col-lg-3");
+			promo.removeClass("blink");					   
+			promohand.css("display","none");					   
 		}
 		if($(window).width() <= '1200') {
 			logotext.css('display','none');

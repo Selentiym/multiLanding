@@ -1464,6 +1464,57 @@ marquee{
     top: 5px;
 }
 
+/*
+Blinking Promokod
+*/
+
+    #k50-track-code {
+        display: inline-block;
+    }
+
+
+.promokod{
+    display: block;
+    color: #fff;
+    font-weight: normal;
+    font-size: 14px;
+	position:absolute;
+	text-align:center;
+	right:25px;
+	bottom:-17px;
+}
+.pop_form .promokod{
+    position: relative;
+    background: #254a75;
+    padding: 3px 6px;
+    width: 160px;
+    margin: 0 auto;
+    right: 0;
+	top:0;
+}
+.promokod i{
+    font-size: 21px;
+    color: #254a75;
+	display:none;
+}
+.promokod span{
+    background: #254a75;
+    padding: 3px 6px;
+}
+.blink {
+  -webkit-animation: blink 3s linear infinite;
+  animation: blink 3s linear infinite;
+}
+@-webkit-keyframes blink {
+  0% { background: rgba(37, 74, 117, 1); color:rgba(255, 255, 255, 1);   }
+  50% { background: rgba(37, 74, 117, 0); color:rgba(255, 255, 255, 0);}
+  100% { background: rgba(37, 74, 117, 1); color:rgba(255, 255, 255, 1);}
+}
+@keyframes blink {
+  0% { background: rgba(37, 74, 117, 1); color:rgba(255, 255, 255, 1);}
+  50% { background: rgba(37, 74, 117, 0); color:rgba(255, 255, 255, 0);}
+  100% { background: rgba(37, 74, 117, 1); color:rgba(255, 255, 255, 1);}
+}
 
 
 /*==========  Desktop First Method  ==========*/
@@ -1510,6 +1561,12 @@ marquee{
 
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
+	.promokod{ 
+		top: 34px;
+		left: -170px;
+		right: 0;
+		width: 250px;
+	}
 	marquee{
 		position: relative;
 		width:100%;
@@ -1580,6 +1637,15 @@ marquee{
 @media only screen and (max-width : 769px) {
 	footer div:first-child, footer div:last-child{
 		text-align:center;
+	}
+	.promokod{ 
+		top: 66px;
+		left: -150px;
+		right: 0;
+		width: 250px;
+	}
+	.promokod i{
+		display:none !important;
 	}
 	.top_links {
 		background-color: #585d61;

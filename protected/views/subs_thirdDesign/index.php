@@ -141,6 +141,12 @@ if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
                         <span class="perezvonim">Перезвоним в течение 10 минут!</span>
                     </div>
                     <nav class="col-lg-6 col-md-8 col-sm-1 col-xs-1 main_menu clearfix">
+					
+							<span class="promokod">
+								<i class="fa fa-hand-o-right" aria-hidden="true" style="display: none;"></i> 
+								<span class="">Ваш промокод: <b><div id="k50-track-code"></div>&nbsp;</b></span>
+							</span>
+					
                         <button class="main_mnu_button hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
                         <ul>
                             <li><a href="#price">ЦЕНЫ</a></li>
@@ -612,6 +618,9 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
         <input type="text" class="your-name form_field" name="name" placeholder="Ваше имя..." required />
         <input type="text" class="your-phone form_field" name="phone" placeholder="Ваше телефон..." required />
         <button class="order-button" name="your-name" value="" size="40" type="submit"><span class="btn-title">Отправить <br> запрос</span></button>
+		<span class="promokod">
+			Ваш промокод: <b><div id="k50-track-code"></div>&nbsp;</b>
+		</span>
     </form>
 </div>
 <div class="hidden">
@@ -621,6 +630,9 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
         <input type="text" class="your-name form_field" name="name" placeholder="Ваше имя..." required />
         <input type="text" class="your-phone form_field" name="phone" placeholder="Ваше телефон..." required />
         <button class="order-button" name="your-name" value="" size="40" type="submit"><span class="btn-title">Перезвоните <br>мне</span></button>
+		<span class="promokod">
+			Ваш промокод: <b><div id="k50-track-code"></div>&nbsp;</b>
+		</span>
     </form>
 </div>
 <!--[if lt IE 9]>
@@ -654,25 +666,6 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
 </script>
 <!-- END K50 TRACKER CODE-->
 <!-- BEGIN K50 TRACKER CODE-->
-<style>
-    #k50-track-code {
-        margin: 10px;
-        padding: 4px 8px;
-        position: fixed;
-        top: 0;
-        right: 0;
-        display: inline-block;
-        font-family: Arial;
-        font-size: 12px;
-        font-weight: Normal;
-        line-height: 1;
-        color: #ffffff;
-        background: #333333;
-        border: 0px solid #ffffff;
-        border-radius: 4px;
-        z-index: 9999;
-    }
-</style>
 <script>
     (function(c,a,p) {
         var s = document.createElement(a); s.src = p; s.type = "text/javascript"; s.async =!0; s.readyState ? s.onreadystatechange = function() { if ( s.readyState === "loaded" || s.readyState === "complete" ) { s.onreadystatechange = null; c();}} : s.onload = function () {c();}; var n = document.getElementsByTagName(a)[0]; n.parentNode.insertBefore(s,n); })(function(){
@@ -681,7 +674,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
         })
     },"script","https://k50-a.akamaihd.net/k50/k50tracker2.js");
 </script>
-<div id="k50-track-code"></div>
+<!--<div id="k50-track-code"></div>-->
 <!-- END K50 TRACKER CODE-->
 </body>
 </html>
