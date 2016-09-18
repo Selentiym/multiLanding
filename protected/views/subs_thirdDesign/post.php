@@ -59,7 +59,7 @@ $phone = trim($_GET["phone"]);
         'pid' => -2,
         'name' => $name,
         'phone' => $phone,
-        'description' => 'Заявка с мрттого (новый дизайн, вариант 2)'
+        'description' => 'Заявка с мрттого'
     );
     if( $curl = curl_init() ) {
         curl_setopt($curl, CURLOPT_URL, 'http://o.mrimaster.ru/onlineRequest/submit?'.http_build_query($params));
