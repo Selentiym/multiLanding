@@ -437,6 +437,9 @@ if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
 	</div>
 
 <?php
+/**
+ * Временно убираю подмену блоков
+
 $rule = $model;
 if (is_a($rule -> section,'Section')) {
     $this->renderPartial('//subs_thirdDesign/_section', array('section'=> $rule -> section, 'rule' => $rule,'base' => $base, 'tel' => $tel));
@@ -447,6 +450,11 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
     if ($section -> id == $rule -> section -> id) {
         continue;
     }
+    $this->renderPartial('//subs_thirdDesign/_section', array('section' => $section, 'rule' => $model, 'base' => $base, 'tel' => $tel));
+}
+*/
+
+foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section) {
     $this->renderPartial('//subs_thirdDesign/_section', array('section' => $section, 'rule' => $model, 'base' => $base, 'tel' => $tel));
 }
 
