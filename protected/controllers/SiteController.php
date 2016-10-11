@@ -124,7 +124,7 @@ class SiteController extends Controller
 		}
 	}
 	public function actionGiveStatistics(){
-		$a = $_POST;
+		$a = $_GET;
 		$periodMins = $a["periodMins"];
 		$from = $a["from"];
 		$to = $a["to"];
@@ -132,6 +132,8 @@ class SiteController extends Controller
 		$rez = [];
 		if ($key == '123qwerty123jjjjkkkklll') {
 			$sql = "SELECT COUNT(`id`) as `count`, @mins := FLOOR((UNIX_TIMESTAMP(`date`)%(86400))/(60*$periodMins))*$periodMins as `minutesFromDaystart`, FLOOR(@mins/60) as `hours`, @mins%60 as `minutes` FROM `tbl_views` WHERE `robot`='0' AND `date` > FROM_UNIXTIME($from) AND `date` < FROM_UNIXTIME($to) GROUP BY FLOOR((UNIX_TIMESTAMP(`date`)%(86400))/(60*$periodMins)) ORDER BY @mins ASC";
+			echo $sql;
+			return;
 			$q = mysqli_query(MysqlConnect::getConnection(), $sql);
 
 

@@ -61,6 +61,10 @@ $phone = trim($_GET["phone"]);
         'phone' => $phone,
         'description' => 'Заявка с мрттого'
     );
+    $toSave = new FormSubmit();
+    $toSave -> name = $name;
+    $toSave -> phone = $phone;
+    $toSave -> save();
     if( $curl = curl_init() ) {
         curl_setopt($curl, CURLOPT_URL, 'http://o.mrimaster.ru/onlineRequest/submit?'.http_build_query($params));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
