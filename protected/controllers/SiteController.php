@@ -123,4 +123,33 @@ class SiteController extends Controller
 			echo "Ajax use only!";
 		}
 	}
+	public function actionGiveStatistics(){
+		$a = $_POST;
+		$periodMins = $a["periodMins"];
+		$from = $a["from"];
+		$to = $a["to"];
+		$key = $a["key"];
+		$rez = [];
+		if ($key == '123qwerty123jjjjkkkklll') {
+			$sql = "SELECT COUNT(`id`) as `count`, @mins := FLOOR((UNIX_TIMESTAMP(`date`)%(86400))/(60*$periodMins))*$periodMins as `minutesFromDaystart`, FLOOR(@mins/60) as `hours`, @mins%60 as `minutes` FROM `tbl_views` WHERE `robot`='0' AND `date` > FROM_UNIXTIME($from) AND `date` < FROM_UNIXTIME($to) GROUP BY FLOOR((UNIX_TIMESTAMP(`date`)%(86400))/(60*$periodMins)) ORDER BY @mins ASC";
+			$q = mysqli_query(MysqlConnect::getConnection(), $sql);
+
+
+			while ($arr = mysqli_fetch_array($q, MYSQLI_ASSOC)) {
+				//var_dump($arr);
+				$key = date('G:i', $arr['minutesFromDaystart'] * 60);
+				$count = (int)$arr['count'];
+				if ($count > 0) {
+					$rez[$key] = $count;
+					//$cc ++;
+				}
+			}
+			//echo $cc;
+			//var_dump($rez);
+
+		} else {
+			$rez['error'] = 'Ключ неверный.';
+		}
+		echo json_encode($rez, JSON_PRETTY_PRINT);
+	}
 }
