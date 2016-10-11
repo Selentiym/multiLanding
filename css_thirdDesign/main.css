@@ -1088,6 +1088,10 @@ MAP
 	margin:0;
 }
 
+	#tabs-1 ol{
+	    width: 100%;
+		overflow: hidden;
+	}
 
 /*
 QUESTIONS AND ANSWERS
@@ -1519,6 +1523,29 @@ Blinking Promokod
 
 /*==========  Desktop First Method  ==========*/
 
+@media only screen and (max-width : 1250px) {
+	.over-slider-container{
+		position: relative;
+		top:0;
+	}
+	.discount-header{
+		margin-top: 10px;
+		position:relative;
+	}
+	.discount-content{
+		width: 250px;	
+	}
+	.advantages {
+		margin-top:0;
+		padding-top:0;
+		text-align:center;
+	}
+	.advantages div{
+		margin-top:10px;
+	}
+}
+
+
 /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px) {
 	.logo-text{
@@ -1557,6 +1584,7 @@ Blinking Promokod
 	.call-me p b {
 		display:block;
 	}
+
 }
 
 /* Medium Devices, Desktops */
@@ -1721,6 +1749,7 @@ Blinking Promokod
 	.price-content table{
 		font-size:15px;
 	}
+	
 	#tabs li a{
 	    padding: 10px;
 		font-size: 15px;
