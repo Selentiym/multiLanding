@@ -144,7 +144,7 @@ if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
 					
 							<span class="promokod">
 								<i class="fa fa-hand-o-right" aria-hidden="true" style="display: none;"></i> 
-								<span class="">Ваш промокод: <b><div id="k50-track-code"></div>&nbsp;</b></span>
+								<!--<span class="">Ваш промокод: <b><div id="k50-track-code"></div>&nbsp;</b></span>-->
 							</span>
 					
                         <button class="main_mnu_button hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
@@ -626,9 +626,9 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section) {
         <input type="text" class="your-name form_field" name="name" placeholder="Ваше имя..." required />
         <input type="text" class="your-phone form_field" name="phone" placeholder="Ваше телефон..." required />
         <button class="order-button" name="your-name" value="" size="40" type="submit"><span class="btn-title">Отправить <br> запрос</span></button>
-		<span class="promokod">
+		<!--<span class="promokod">
 			Ваш промокод: <b><div id="k50-track-code"></div>&nbsp;</b>
-		</span>
+		</span>-->
     </form>
 </div>
 <div class="hidden">
@@ -638,9 +638,9 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section) {
         <input type="text" class="your-name form_field" name="name" placeholder="Ваше имя..." required />
         <input type="text" class="your-phone form_field" name="phone" placeholder="Ваше телефон..." required />
         <button class="order-button" name="your-name" value="" size="40" type="submit"><span class="btn-title">Перезвоните <br>мне</span></button>
-		<span class="promokod">
+		<!--<span class="promokod">
 			Ваш промокод: <b><div id="k50-track-code"></div>&nbsp;</b>
-		</span>
+		</span>-->
     </form>
 </div>
 <!--[if lt IE 9]>
