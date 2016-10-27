@@ -248,7 +248,7 @@ $fromHours = 23.99;
 $toHours = 7;
 $fromHoursGreenvich = $fromHours - 3;
 $toHoursGreenvich = $toHours - 3;
-$sinceDaystart = 0;
+//$sinceDaystart = 0;
 if (($sinceDaystart / 3600 > $fromHoursGreenvich) || ($sinceDaystart / 3600 < $toHoursGreenvich)) : ?>
 <section>
     <div class="container">
