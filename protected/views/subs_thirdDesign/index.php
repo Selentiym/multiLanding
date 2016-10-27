@@ -242,14 +242,50 @@ if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
         </div>
     </div>
 </header>
-
+<?php
+$sinceDaystart = time() % (24*60*60);
+$fromHours = 23.99;
+$toHours = 7;
+$fromHoursGreenvich = $fromHours - 3;
+$toHoursGreenvich = $toHours - 3;
+$sinceDaystart = 0;
+if (($sinceDaystart / 3600 > $fromHoursGreenvich) || ($sinceDaystart / 3600 < $toHoursGreenvich)) : ?>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="order-form night-form">
+                <img class="doctor-img" src="<?=$base?>/img_thirdDesign/doctor.png">
+                <img class="discount-img" src="<?=$base?>/img_thirdDesign/night.png">
+                <div class="row">
+                    <p>Получить промокод на скидку 50%! </p>
+                </div>
+                <form id="callback-from-page">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <p>Ваше имя</p>
+                            <input type="text" name="name" class="your-name form_field" value="" required>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <p>Ваш телефон</p>
+                            <input type="text" name="phone" class="your-phone form_field" value="" required>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <button class="order-button" name="your-name" value="" size="40" type="submit"><span class="btn-title">Получить <br> промокод</span></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
 <div class="content">
 	<div class="container review-section">
 	
 	<div id="arrow">
 		<a class="previous" title="Перейти к предыдущему блоку"><</a><a class="next" title="Перейти к следующему блоку">></a>
 	</div>
-	
+
 	<div class="reviews default" id="reviews">
 		<div class="reviews-inner">
             <div class="reviews-h1">Отзывы</div>
@@ -436,7 +472,7 @@ if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
 		</div>
 	</div>
 
-<?php
+    <?php
 /**
  * Временно убираю подмену блоков
 

@@ -47,7 +47,7 @@ function EvaluateOnPageLoad () {
 		$.ajax({
 			type: "GET",
 			url: baseUrl + "/post_thirdDesign",
-			data: $("#callback-registration").serialize()
+			data: $(this).serialize()
 		}).done(function() {
 			alert("Спасибо за заявку!");
 			setTimeout(function() {
@@ -60,24 +60,28 @@ function EvaluateOnPageLoad () {
 
 
 function form () {
-	$("#callback-from-page").submit(function() {
-		if (yaCounter37896725) {
+	$("#callback-from-page, #callback-from-page").submit(function() {
+		if (typeof yaCounter37896725 != "undefined") {
 			yaCounter37896725.reachGoal('formSent');
 		}
 		var button = $(this).find(".order-button");
 		var loader = $("<img/>",{
 			src:baseUrl+"/img_thirdDesign/loading.gif"
 		});
-		button.replaceWith(loader);
+		//var newObj = button.replaceWith(loader);
+		button.after(loader);
+		button.hide();
 		$.ajax({
 			type: "GET",
 			url: baseUrl + "/post_thirdDesign",
-			data: $("#callback-from-page").serialize()
+			data: $(this).serialize()
 		}).done(function() {
 			alert("Спасибо за заявку!");
 			setTimeout(function() {
 				$.fancybox.close();
 			}, 10);
+			loader.remove();
+			button.show();
 		});
 		return false;
 	});

@@ -1851,3 +1851,81 @@ Blinking Promokod
 @media only screen and (min-width : 1200px) {
 
 }
+
+
+.night-form{
+    max-width:99%;
+    padding-left:370px;
+    margin-bottom: 45px;
+    padding-top: 40px;
+    text-align:left
+}
+.night-form p{
+    margin: 0 0 0 15px;
+    text-transform: uppercase;
+    font-family: "PTSans_bold", arial, sans-serif;
+    font-size: 29px;
+}
+.night-form.order-form  form div p{
+    margin: 40px 0 0 0
+}
+.night-form button.order-button{
+    margin:60px 0 10px 0;
+}
+.night-form button.order-button:hover{
+    opacity:0.85;
+}
+.night-form button.order-button span{
+    background: #d6585c;
+    padding: 2px 35px;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: "PTSans_bold", arial, sans-serif;
+    font-size: 19px;
+}
+
+.night-form .form_field[type="text"]{
+    width:100%;
+}
+
+.night-form.order-form  img.doctor-img{
+    left: 50px;
+}
+.night-form.order-form  img.discount-img{
+    top:0;
+    margin-left: 88.5%;
+}
+.night-form.order-form #callback-from-page{
+    margin-bottom:20px;
+}
+
+
+@media only screen and (max-width:1200px) {
+    .night-form{
+        width:95%;
+        margin:0 auto;
+        padding:20px;
+        padding-left:20px;
+        background: #105e80 url(../img_thirdDesign/night_mob.png) 100% 0 no-repeat;
+    }
+    .night-form p{
+        text-align:left;
+        padding-right:100px;
+    }
+    .night-form.order-form img{
+        display:none
+    }
+
+}
+
+@media only screen and (max-width:992px) {
+    .night-form button.order-button{
+        margin:10px auto;
+    }
+    .night-form p{
+        font-size:24px
+    }
+    .night-form.order-form  form div p{
+        margin-top:20px;
+    }
+}
