@@ -214,8 +214,15 @@ function jelezo(){
 		});
 }
 
-
-
+//Цены
+function prices() {
+	//Заново активируем якорь
+	if (window.location.hash) {
+		var toAss = window.location.hash.replace("#","");
+		window.location.hash = '';
+		window.location.hash = toAss;
+	}
+}
 
 // Фиксированный блок (навигация по органам)
 	$(window).scroll(function bodyNav(){

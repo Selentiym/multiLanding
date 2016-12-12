@@ -10,8 +10,9 @@
  * @type bool $active
  */
 ?>
-<tr id="price<?php echo $price->id; ?>" <?php if ($active) { echo 'class="selected"'; } ?>>
-    <td class="price-name"><span><?php echo $price->text; echo $active ? '<img src="'.Yii::app() -> baseUrl.'/img_thirdDesign/superprice.png" alt="superPrice"/>' : '';?></span></td>
+
+<tr <?php if ($active) { echo 'class="selected"'; } ?>>
+    <td class="price-name"><span id="price<?php echo $price->id; ?>" style="position:relative; display:inline-block; top:-100px;"></span><span><?php echo $price->text; echo $active ? '<img src="'.Yii::app() -> baseUrl.'/img_thirdDesign/superprice.png" alt="superPrice"/>' : '';?></span></td>
     <td class="price-new">от <?php echo $price -> price; ?>p.</td>
     <td class="price-old"><?php echo $price -> price_old; ?>p.</td>
 </tr>
