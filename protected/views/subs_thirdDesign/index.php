@@ -13,8 +13,17 @@
 $tel = [];
 //Костыль
 if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
-    $tel['formatted'] = '8 (812) 241-10-52';
-    $tel['raw'] = '88122411052';
+    $cmp = $_GET["utm_campaign"];
+    if (strpos($cmp, '20273758') !== false) {
+        $tel['formatted'] = '8 (812) 241-10-63';
+        $tel['raw'] = '88122411063';
+    } elseif (strpos($cmp, '20273759') !== false) {
+        $tel['formatted'] = '8 (812) 241-10-56';
+        $tel['raw'] = '88122411056';
+    } else {
+        $tel['formatted'] = '8 (812) 241-10-52';
+        $tel['raw'] = '88122411052';
+    }
 } else {
     $tel['formatted'] = '8 (812) 313-27-04';
     $tel['raw'] = '88123132704';
