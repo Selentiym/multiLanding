@@ -17,6 +17,7 @@ return array(
 		'application.components.CHtml',
 		'application.models.*',
 		'application.components.*',
+		'application.sites.common.controllers.*',
 	),
 
 	'modules'=>array(

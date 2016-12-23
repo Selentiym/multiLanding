@@ -5,12 +5,17 @@ ini_set('zlib.output_compression_level', '1');
 
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/../yii/framework/yii.php';
-$config=dirname(__FILE__).'/protected/config/main.php';
+require dirname(__FILE__).'/protected/components/SiteDispatcher.php';
+$config=dirname(__FILE__).'/'.SiteDispatcher::getConfigPath();
+//$config=dirname(__FILE__).'/protected/config/main.php';
 
 // remove the following lines when in production mode
-defined('YII_DEBUG') or define('YII_DEBUG',true);
+if (file_exists('debug.pss.php')) {
+    defined('YII_DEBUG') or define('YII_DEBUG', true);
+}
 // specify how many levels of call stack should be shown in each log message
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
 require_once($yii);
+//$arr = require($config);
 Yii::createWebApplication($config)->run();

@@ -16,7 +16,7 @@ $renderBlockCategoryHeading |= (!is_a($prev,'PriceBlock'));
 $renderBlockCategoryHeading |= ($prev -> category_name != $block -> category_name);
 
 if ($renderBlockCategoryHeading) {
-    $this -> renderPartial(Yii::app() -> session -> get('folder').'_category_heading', array('name' => $block -> category_name));
+    $this -> renderPartial('//subs/_category_heading', array('name' => $block -> category_name));
 }
 
 $prices_initial = $block -> prices;
@@ -32,7 +32,7 @@ foreach ($prices_initial as $price) {
 /**
  * Конец обще части, теперь рендерим частности
  */
-$this -> renderPartial(Yii::app() -> session -> get('folder').'/_price_block',[
+$this -> renderPartial('//subs/_price_block',[
     'block' => $block,
     'prices' => $prices,
     'opened' => $opened,

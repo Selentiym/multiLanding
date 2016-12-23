@@ -1,29 +1,36 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: user
+ * Date: 15.08.2016
+ * Time: 16:41
+ */
+/**
+ * @type PriceBlock $block
+ * @type Price[] $prices
+ * @type bool $opened
+ * @type Price $highlight
+ */
 $count = 0;
-$max = count ($prices);
-
-echo "<h2>---" . $block->name . "---</h2>";
-//$block -> renderHeading();
-
-
-for ($i = 0; $i < 3; $i ++) {
-$price = $prices[$i];
-if (!$price) {
-break;
+$blockName = preg_replace('/([а-я]+)/ui','<b>$1</b>',$block -> name, 1, $count);
+if ($count == 0) {
+    $blockName = "<b>$blockName</b>";
 }
-$this -> renderPartial('//subs/_single_price',array('price' => $price, 'active' => in_array($price -> id, $highlight)));
-}
+$type = $block -> category_name == 'mrt' ? 'mrt' : 'kt';
 ?>
-
-<div>
-	<div class="nav-submenu" <?php if ($opened) { echo "style='display:block;'"; } ?>>
-		<?php
-		$i = 3;
-		while($price = $prices[$i]){
-			$i++;
-			$this -> renderPartial('//subs/_single_price',array('price' => $price, 'active' => false));
-		}
-		?>
-	</div>
-	<?php if ((!$opened)&&($prices[3])) : ?><h2 class="all_price nav-click" ><a>ВСЕ ЦЕНЫ</a></h2><?php endif; ?>
-</div>
+<li class="<?php echo $type; ?> <?php echo 'price-'.$block -> className; ?>">
+    <div class="h1" id="<?php echo $type.'-'.$block -> className; ?>"><?php echo $blockName; ?></div>
+    <div class="price-content">
+        <table>
+            <?php
+            foreach($prices as $price){
+                $this -> renderPartial('//subs/_single_price',[
+                    'price' => $price,
+                    'active' => in_array($price -> id, $highlight)
+                ]);
+            }
+            ?>
+            
+        </table>
+    </div>
+</li>

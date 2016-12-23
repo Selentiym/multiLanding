@@ -30,8 +30,6 @@ class View extends UModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('folder', 'required'),
-			array('folder', 'length', 'max'=>100),
 			array('date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -57,7 +55,6 @@ class View extends UModel
 	{
 		return array(
 			'id' => 'ID',
-			'folder' => 'Folder',
 			'date' => 'Date',
 		);
 	}
@@ -81,7 +78,6 @@ class View extends UModel
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('folder',$this->folder,true);
 		$criteria->compare('date',$this->date,true);
 
 		return new CActiveDataProvider($this, array(

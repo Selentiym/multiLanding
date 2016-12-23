@@ -1,714 +1,669 @@
 <?php
 /**
- * @var Rule $model a Rule that worked now.
- * @var Rule $rule - the same, just alias.
+ * Created by PhpStorm.
+ * User: user
+ * Date: 15.08.2016
+ * Time: 14:54
  */
-$rule = $model;
-/*$prices_temp = $rule -> prices;
-$rule -> price = current($prices_temp);
-if (!(is_a($rule -> price, 'Price'))) {
-    $rule -> price = Price::model() -> findByPk(Price::trivialId());
-}
-//Временно!
-foreach(Tel::model() -> findAll(array('order' => 'prior DESC')) as $tel) {
-    if (!$tel -> word) {break;}
-    if (strpos($_SERVER['REQUEST_URI'], $tel -> word) !== false) {
-        break;
+/**
+ * @type Rule $model
+ * @type Rule $rule
+ */
+
+$tel = [];
+//Костыль
+if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
+    $cmp = $_GET["utm_campaign"];
+    if (strpos($cmp, '20273758') !== false) {
+        $tel['formatted'] = '8 (812) 241-10-63';
+        $tel['raw'] = '88122411063';
+    } elseif (strpos($cmp, '20273759') !== false) {
+        $tel['formatted'] = '8 (812) 241-10-56';
+        $tel['raw'] = '88122411056';
+    } else {
+        $tel['formatted'] = '8 (812) 241-10-52';
+        $tel['raw'] = '88122411052';
     }
+} else {
+    $tel['formatted'] = '8 (812) 313-27-04';
+    $tel['raw'] = '88123132704';
 }
-$rule -> tel = $tel;*/
+
 ?>
+
 <!DOCTYPE html>
-<html lang="ru" >
+<!--[if lt IE 7]><html lang="ru" class="lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html lang="ru" class="lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html lang="ru" class="lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!-->
+<?php $base = Yii::app() -> baseUrl; ?>
+<html lang="ru">
+<!--<![endif]-->
 <head>
-    <meta charset="UTF-8">
-    <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
-    <meta content="telephone=no" name="format-detection">
-    <title>МРТ</title>
-	
-	<link rel="icon" href="<?php echo Yii::app() -> baseUrl; ?>/favicon.ico" type="image/x-icon" />
-	<link rel="shortcut icon" href="<?php echo Yii::app() -> baseUrl; ?>/favicon.ico" type="image/x-icon" />
-	
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css/simple.css">
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app() -> baseUrl; ?>/css/demo.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app() -> baseUrl; ?>/css/elastislide.css" />
-    <!-- arcticModal -->
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css/styles2.css">
-    <!-- jQuery -->
-    <script src="js/jquery-1.8.2.min.js"></script>
-
-    <script src="js/jquery.arcticmodal-0.2.min.js"></script>
-    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css/jquery.arcticmodal-0.2.css">
-
-     <script>
-		$(document).ready(function(){
-			$('.dropdown').click(function(){
-				$(this).children().each(function(ind, element){
-					if ($(element).children('.pointer').length == 0) {
-						$(element).toggle();
-					}
-				});
-			});
-		});
-		
-        (function($) {
-
-            // DOM ready
-            $(function() {
+    <meta charset="utf-8" />
+    <title>МРТ и КТ ЦЕНТРЫ ВО ВСЕХ РАЙОНАХ САНКТ-ПЕТЕРБУРГА</title>
+    <meta name="description" content="МРТ и КТ ЦЕНТРЫ ВО ВСЕХ РАЙОНАХ САНКТ-ПЕТЕРБУРГА" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="<?php echo $base; ?>/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="shortcut icon" href="<?php echo $base; ?>/favicon.png" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs/bootstrap/bootstrap-grid-3.3.1.min.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs/bootstrap/bootstrap_col_5.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs/font-awesome-4.2.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs/fancybox/jquery.fancybox.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs/owl-carousel/owl.carousel.css" />
+<!--    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css/fonts.css" />-->
+	<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=cyrillic,cyrillic-ext" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo $base; ?>/css/main.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css/flipclock.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css/tabulous.css" />
 
 
-
-
-                $('.in_main-content-left').on('click', '.nav-click', function(){
-
-                  
-                    $(this).siblings('.nav-submenu').toggle(1000);
-                });
-               
-
-
-            });
-
-        })(jQuery);
-
-</script>
     <script>
-        $(document).ready(function(){
-
-            $(".map_adres_hide .delete").click(function(){
-                $(this).parents(".map_adres_hide").animate({ opacity: "hide" }, "slow");
-            });
-
-        });
+        baseUrl = '<?php echo Yii::app() -> baseUrl; ?>';
     </script>
-    <!-- arcticModal -->
 
-    <!--[if lt IE 9]>
-    <script>
-        document.createElement('figure');
-        document.createElement('figcaption');
-    </script>
-    <![endif]-->
-    <link href="<?php echo Yii::app() -> baseUrl; ?>/css/timeTo.css" type="text/css" rel="stylesheet"/>
-    <script src="js/modernizr.custom.17475.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery-1.8.min.js">\x3C/script>')</script>
-    <!-- Скрипт от Сергея -->
-    <script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=ZoWPAij/XsvmYwpBVp*mHyjxYFmtRk9FQyha6GkvAtetr588U5wbF5MZJj/ib6UydXHnWNMMtMP7Z8WtwIkSkH8cdWpm3HrI1QN5riGW/XLGtfE3*v7iSfoAoNxRKWe6XZ0BbseP2AqkhvDT8d**YI2Z7hHOYfH/YO7YrxfuUPw-';</script>
 
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function (d, w, c) {
-            (w[c] = w[c] || []).push(function() {
-                try {
-                    w.yaCounter37896725 = new Ya.Metrika({
-                        id:37896725,
-                        clickmap:true,
-                        trackLinks:true,
-                        accurateTrackBounce:true,
-                        webvisor:true,
-                        params:{
-                            design:"old"
-                        }
-                    });
-                } catch(e) { }
-            });
 
-            var n = d.getElementsByTagName("script")[0],
-                s = d.createElement("script"),
-                f = function () { n.parentNode.insertBefore(s, n); };
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = "https://mc.yandex.ru/metrika/watch.js";
 
-            if (w.opera == "[object Opera]") {
-                d.addEventListener("DOMContentLoaded", f, false);
-            } else { f(); }
-        })(document, window, "yandex_metrika_callbacks");
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/37896725" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
 </head>
-<body >
-<div class="wrapper">
-<div class="l-container">
-    <ul>
+<body>
+<?php echo Yii::t('scripts', 'yandexCounter'); ?>
+<?php echo Yii::t('scripts', 'GA'); ?>
+<header class="top_header">
+    <div class="header_topline default" id="topline">
+        <div class="container">
+            <div class="col-md-12">
+                <div class="row">
 
-        <li>
-
-            <div class="g-hidden">
-                <div class="box-modal" id="exampleModal1">
-                    <div class="box-modal_close arcticmodal-close">закрыть</div>
+                    <div class="col-lg-3 col-md-1 col-sm-1 col-xs-1 logo-outer" id="logo-outer">
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 logo"><a href="#"><img src="<?php echo $base; ?>/img/logo.png"></a></div>
+                        <div class="col-lg-9 logo-text" id="logo-text"><a href="#slujba-info">Бесплатная общегородская служба записи на МРТ и КТ</a></div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-10 col-xs-10 top_contacts">
+                        <div><?php echo $tel['formatted']; ?></div>
+                        <a href="#callback" class="order fancybox"><img src="<?php echo $base; ?>/img/phone-sm.png"><span>Заказать обратный звонок</span></a>
+                        <span class="perezvonim">Перезвоним в течение 10 минут!</span>
+                    </div>
+                    <nav class="col-lg-6 col-md-8 col-sm-1 col-xs-1 main_menu clearfix">
 					
-                    <div class="form">
+							<span class="promokod">
+								<i class="fa fa-hand-o-right" aria-hidden="true" style="display: none;"></i> 
+								<!--<span class="">Ваш промокод: <b><div id="k50-track-code"></div>&nbsp;</b></span>-->
+							</span>
 					
-                        <form id="form1" action="<?php echo Yii::app() -> baseUrl;?>/post" method="POST">
-							
-                            <img src="<?php echo Yii::app() -> baseUrl; ?>/img/fio.png" class="form_fio" alt="fio"><input type="text" name="name" required placeholder="Ваше ФИО"><br>
-                            <img class="form_mobile" src="<?php echo Yii::app() -> baseUrl; ?>/img/mobile.png" alt="mobile"><input type="text" name="name2" required placeholder="Ваш телефон"><br>
-                            <span style="font-size:9px;color:red;display:block;padding-left:10px;text-align:center;width:50%;float:left;padding-top:14px;margin-left:-10px;">    Вам перезвонят в течении 15 минут!</span><button id="submitForm1" type="submit" class="pointer"><img src="<?php echo Yii::app() -> baseUrl; ?>/img/submit.png" alt="submit"></button>
-                        </form>
+                        <button class="main_mnu_button hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
+                        <ul>
+                            <li><a href="#price">ЦЕНЫ</a></li>
+                            <li><a href="#share">АКЦИИ</a></li>
+                            <li><a href="#oborud">ОБОРУДОВАНИЕ</a></li>
+                            <li><a href="#doctora">ВРАЧИ</a></li>
+                            <li><a href="#centru">ЦЕНТРЫ</a></li>
+                            <li><a href="#vopros">ОТВЕТЫ И ВОПРОСЫ</a></li>
+                        </ul>
+                    </nav>
+                    <div class="col-md-2" id="callback-on-fix-menu">
+                        <a href="#callback-registration" class="fancybox" id="order-button"> <span class="btn-title">Записаться <br> на МРТ и КТ</span><span class="day-and-night">Круглосуточно!</span> </a>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="slider_container container">
+
+        <div class="next_button"><i class="fa fa-angle-right"></i></div>
+        <div class="prev_button"><i class="fa fa-angle-left"></i></div>
+        <div class="carousel">
+            <div class="slide_item"><img src="<?php echo $base; ?>/img/background1.jpg" alt="alt" /></div>
+            <div class="slide_item"><img src="<?php echo $base; ?>/img/background2.jpg" alt="alt" /></div>
+            <div class="slide_item"><img src="<?php echo $base; ?>/img/background3.jpg" alt="alt" /></div>
+            <div class="slide_item"><img src="<?php echo $base; ?>/img/background5.jpg" alt="alt" /></div>
+        </div>
+
+    </div>
+
+
+    <div class="over-slider-container">
+        <marquee behavior="scroll" direction="left" scrollamount="5">
+            Запись на приём через Общегородскую службу записи на МРТ и КТ теперь не только удобнее, но и <b>дешевле, чем напрямую</b>!
+        </marquee>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-8">
+                    <div class="discount-header">
+                        <div class="discount-top"><img src="<?php echo $base; ?>/img/discount-top.png"></div>
+                        <div class="discount-content">
+                            <span class="discount-name"><?php echo $model -> price -> text; ?></span>
+                            <span class="discount-old-price"><?php echo $model -> price -> price_old;?>р.</span>
+                            <span class="discount-price"><?php echo $model -> price -> price;?>р.</span>
+                        </div>
+                        <div class="discount-bottom"><img src="<?php echo $base; ?>/img/discount-bottom.png"></div>
                     </div>
                 </div>
+                <div class="col-md-6 col-sm-4">
+
+                    <a href="#callback-registration" class="fancybox" id="order-button"> <span class="btn-title">Записаться <br> на МРТ и КТ</span> <span class="day-and-night">Круглосуточно!</span></a>
+                </div>
             </div>
-        </li>
+            <div class="advantages row">
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-3" style="margin-top:10px;pading-left: 5px;">
+                    <img src="<?php echo $base; ?>/img/advantage1.png">
+                    <span>МРТ и КТ<br> срочно</span>
+                    <p class="adv-comment">Обследование <br>в день обращения</p>
+                </div>
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-3 narrow">
+                    <img src="<?php echo $base; ?>/img/advantage4.png">
+                    <span>Скидки<br> Акции</span>
+                </div>
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-3">
+                    <img src="<?php echo $base; ?>/img/advantage6.png">
+                    <span>Результат<br> за час</span>
+                </div>
+                <div class="col15-lg-3 col-md-4 col-sm-4 col-xs-3">
+                    <img src="<?php echo $base; ?>/img/advantage7.png">
+                    <span class="best-price">Гарантия лучшей цены</span>
+                    <p class="adv-comment" style="color: #d82b3a;padding-left: 40px;border-top: 1px dashed #d82b3a;">Наши услуги <br>абсолютно бесплатны! </p>
+                </div>
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-4 narrow">
+                    <img src="<?php echo $base; ?>/img/advantage3.png">
+                    <span>Опыт работы<br> 24 года</span>
+                </div>
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-4">
+                    <img src="<?php echo $base; ?>/img/advantage5.png">
+                    <span>Бесплатная<br> консультация врача </span>
+                </div>
+                <div class="col15-lg-2 col-md-4 col-sm-4 col-xs-4" style="margin-top:10px;">
+                    <img src="<?php echo $base; ?>/img/advantage2.png">
+                    <span>МРТ и КТ<br> ночью</span>
+                    <p class="adv-comment">Скидка 50%</p>
+                </div>
+            </div>
 
-    </ul>
-</div>
-    <script>
-        $("#submitForm1").click(function(e){
-            yaCounter37896725.reachGoal('formSent');
-            $("form1").submit();
-        });
-    </script>
-<div class="l-container">
-    <ul>
 
-        <li>
-
-            <div class="g-hidden">
-                <div class="box-modal" id="exampleModal2">
-                    <div class="box-modal_close arcticmodal-close">закрыть</div>
-                    <div class="form">
-                        <form id="form2" action="<?php echo Yii::app() -> baseUrl;?>/post" method="POST">
-                            <img src="<?php echo Yii::app() -> baseUrl; ?>/img/fio.png" class="form_fio" alt="fio"><input type="text" name="name" required placeholder="Ваше ФИО"><br>
-                            <img class="form_mobile" src="<?php echo Yii::app() -> baseUrl; ?>/img/mobile.png" alt="mobile"><input type="text" name="name2" required placeholder="Ваш телефон"><br>
-                             <span style="font-size:9px;color:red;display:block;padding-left:10px;text-align:center;width:50%;float:left;padding-top:14px;margin-left:-10px;">    Вам перезвонят в течении 15 минут!</span><button id="submitForm2" type="submit" class="pointer"><img src="<?php echo Yii::app() -> baseUrl; ?>/img/submit.png" alt="submit"></button>
-                        </form>
+        </div>
+    </div>
+</header>
+<?php
+$sinceDaystart = time() % (24*60*60);
+$fromHours = 23.99;
+$toHours = 7;
+$fromHoursGreenvich = $fromHours - 3;
+$toHoursGreenvich = $toHours - 3;
+//$sinceDaystart = 0;
+if (($sinceDaystart / 3600 > $fromHoursGreenvich) || ($sinceDaystart / 3600 < $toHoursGreenvich)) : ?>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="order-form night-form">
+                <img class="doctor-img" src="<?=$base?>/img/doctor.png">
+                <img class="discount-img" src="<?=$base?>/img/night.png">
+                <div class="row">
+                    <p>Получить промокод на скидку 50%! </p>
+                </div>
+                <form id="callback-from-page">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <p>Ваше имя</p>
+                            <input type="text" name="name" class="your-name form_field" value="" required>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <p>Ваш телефон</p>
+                            <input type="text" name="phone" class="your-phone form_field" value="" required>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <button class="order-button" name="your-name" value="" size="40" type="submit"><span class="btn-title">Получить <br> промокод</span></button>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </li>
-
-    </ul>
-</div>
-    <script>
-        $("#submitForm2").click(function(e){
-            yaCounter37896725.reachGoal('formSent');
-            $("#form2").submit();
-        });
-    </script>
-        <header id="block">
-        <div class="in_header">
-
-            <div class="menu">
-                <ul>
-
-					
-                    <li><a href="#price" >Цены</a></li>
-                    <li><a href="#oborud">Оборудование</a></li>
-                    <li><a href="#doctora">Врачи</a></li>
-                    <li><a href="#centru" >Центры</a></li>
-                    <li><a href="#vopros">Ответы и вопросы</a></li>
-					<li class="zapis_modal" id="#example1" onclick="$('#exampleModal1').arcticmodal()"><span class="m-dotted" ></span></li>
-
-                </ul>
-                <a href="#" id="pull"></a>
-
-            </div>
-            </div>
-
-        </header>
-        <div class="clear"></div>
-        <div class="obchestvo" >
-
-            <div class="logo_left">
-
-
-                <div class="phone">
-                    <h2>МРТ <span style="text-transform:none;">и</span> КТ ЦЕНТРЫ ВО ВСЕХ РАЙОНАХ САНКТ-ПЕТЕРБУРГА</h2>
-
-                    <div class="number" id="#example2" onclick="$('#exampleModal2').arcticmodal()">
-                        <p ><?php echo $model -> tel -> tel; ?></p>
-                        <a  class="pointer" style="text-decoration: none">Заказать обратный звонок</a>
-                        <p>Перезвоним в течение 15 минут!</p>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="logo_right">
-                <img src="<?php echo Yii::app() -> baseUrl; ?>/img/slugba.png" alt="slugba" class="slugba" >
-                <div class="akciy">
-                    <p><?php echo $model -> price -> text.' '. $model -> price -> price.'р'; ?></p>
-
-                </div>
-                <h1 class="zagolovok">МРТ в Санкт-Петербурге от 1700р.</h1>
-
-            </div>
-
-        </div>
-        <div class="clear"></div>
-        <div class="srochno">
-            <div class="in_srochno">
-                <ul>
-                    <li><a >МРТ СРОЧНО</a></li>
-                    <li><a >МРТ НОЧЬЮ</a></li>
-                    <li><a >ОПЫТ РАБОТЫ 24года</a></li>
-                    <li><a href="#akcii">СКИДКИ АКЦИИ</a></li>
-                    <li><a >БЕСПЛАТНАЯ КОНСУЛЬТАЦИЯ ВРАЧА</a></li>
-                </ul>
+                </form>
             </div>
         </div>
-
-        <div class="clear"></div>
-
-        <div class="main-content">
-            <div class="main-content-left">
-                <div class="in_main-content-left">
-                    <?php
-                        if (is_a($rule -> section,'Section')) {
-                            $this->renderPartial('//subs/_section', array('section'=> $rule -> section, 'rule' => $rule));
-                        }
-
-
-                        foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
-                            if ($section -> id == $rule -> section -> id) {
-                                continue;
-                            }
-                            $this->renderPartial('//subs/_section', array('section' => $section, 'rule' => $rule));
-                        }
-                    ?>
-                 </div>
-            </div>
-
-            <div class="main-content-right">
-                <h2>ОТЗЫВЫ ЗНАМЕНИТЫХ ГОСТЕЙ</h2>
-                <div class="avtor">
-                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img/kazankina.jpg" alt="avtor" width="100">
-                    <p>
-					<span style="font-style: italic;font-family:arial;font-weight:bold;">ТАТЬЯНА КАЗАНКИНА, советская легкоатлетка, трехкратная Олимпийская чемпионка, рекордсменка мира и Олимпийских игр.</span><br>
-					"Самые замечательные впечатления от посещения клиники. Здесь работают внимательные, добрые, грамотные специалисты. С ними хочется поделиться своими проблемами, рассказать о своих бедах.
-
-					Большое спасибо Елене Юрьевне Карабан, с таким человеком хочется беседовать и делиться всем, она все расскажет доступно для пациента, посоветует что и как нужно сделать лучшим образом. Большое спасибо всему персоналу. Ведь очень приятно, когда к тебе внимательны и доброжелательны."
-                    </p>
-                </div>
-                <div class="avtor">
-                     <img src="<?php echo Yii::app() -> baseUrl; ?>/img/tihomir.jpg" alt="avtor" width="100">
-                    <p>
-					<span style="font-style: italic;font-family:arial;font-weight:bold;">ВИКТОР ТИХОМИРОВ, художник известной группы "Митьки", кинорежиссер, писатель, сценарист</span><br>
-					"Приятное впечатление от посещения вашего центра, как этическое, так и эстетическое.
-					Особливо обаятельное впечатление от терапевта Елены Юрьевны Карабан. Привет ей.
-
-					Успехов в деле и исцеления болящих."
-                    </p>
-                </div>
-                <div class="avtor">
-                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img/svetlana.jpg" alt="avtor" width="100">
-                    <p>
-					<span style="font-style: italic;font-family:arial;font-weight:bold;">СВЕТЛАНА ПИСЬМИЧЕНКО, российская актриса кино и театра, заслуженная артистка Российской Федерации</span><br>
-					"Я очень благодарна сотрудникам центра, за предоставленную мне возможность узнать о состоянии своего здоровья. В нашей актерской профессии мы подвергаем себя бесконечным стрессам, переездам, гастролям, съемкам и иногда не задумываемся, а что же завтра... Здесь очень приятный персонал, внимательные и доброжелательные врачи и высокого уровня диагностика.
-
-					В бесконечной суете дней особенно люди творческих профессий забывают - что здоровье и прекрасное самочувствие - это залог успеха, удачи и долгой, трудоспособной жизни. И наступает час пик - когда нужно сказать - стоп - и пойти на обследование. Я пришла сюда, привела своих детей - и буду рекомендовать Вас друзьям. Спасибо Всем и будьте здоровы!"
-                    </p>
-                </div>
-                <div class="avtor">
-                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img/okorokov.jpg" alt="avtor" width="100">
-                    <p>
-					<span style="font-style: italic;font-family:arial;font-weight:bold;">ОКОРОКОВ ВАСИЛИЙ РОМАНОВИЧ, Профессор СПбГПУ, доктор экономических наук заведующий кафедрой "Международных экономических отношений"</span><br>
-					Первое впечатление, которое создалось - попали в настоящий медицинский рай! Такое впечатление ещё более усилилось, познакомившись с современным оборудованием центра и крайне внимательным отношением врачей и сотрудников центра. 
-  
-					Желаю вам, дорогие коллеги, доброго здоровья и создания медицинского благополучия для всех людей нашей страны. 
-					С благодарностью и искренним уважением В.Р. и Л.Г. Окороковы, профессора СПБГПУ.
-                    </p>
-                </div>
-                
-				<h2>ОТЗЫВЫ</h2>
-                <div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Аксиновская Светлана Сергеевна<br>27/10/2015</span></p>
-                    <p><br>Спасибо Вашей клинике за высокий уровень профессионализма, желание помочь и неравнодушие! Особая благодарность Рузановой Ирине Николаевне. Своим друзьям и близким могу рекомендовать только Вашу клинику.  
-                    </p>
-                </div>
-                <div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Григорьева Екатерина Николаевна
-					<br>21/10/2015</span></p>
-                    <p><br>Великолепный медицинский центр! Попала случайно, страховая направила сделать мрт.  Все быстро, качественно, комфортно, без утомительных очередей в регистратуру и поисков карточки. После первого знакомства стала ходить к вам, хотя раньше лечилась в клинике РАМН. Пока всем очень довольна. Хочу отметить профессионализм лора Дежневой Е.В., такого целостного подхода к проблеме я давно не встречала. Очень профессиональный и доброжелательный мануальный терапевт Канкулов В.Ж., замечательная массажист Зарезина С.В.
-					Отдельное спасибо за детскую комнату, это очень выручает. Рекомендую вашу клинику всем своим знакомым. 
-                    </p>
-                </div>
-				
-				<div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Добавил  Жуды
-					<br>07/10/2015</span></p>
-                    <p><br>Специально прилетаю из Казахстана делать МРТ лично у профессора Холина. Знаю, так многие у нас делают, Доверяют только ему. Встречала на его приеме пациентов и из других бывших республик,а также из дальнего зарубежья. Авторитет его очень высокий. Многие наши специалисты его ученики.
-                    </p>
-                </div>
-                <div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Иванова Александра
-					<br>03/09/2015</span></p>
-                    <p><br>Внимательный, сочувствующий и, главное, профессиональный и не равнодушный доктор Ольга Кротова - это главное, что привлекает в вашу клинику.
-					Ее помощница - доброжелательная, симпатичная и грамотная Ирина Климовцева дополняет достоинства доктора. Отличные специалисты.
-					Девушек на ресепшне, вполне вежливых и терпеливых стоит, может быть, обучить подробностям подготовки в зависимости от ситуации. В целом клиника хорошего уровня. Буду обращаться снова.
-                    </p>
-                </div>
-                <div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Пьянкова Галина Николаевна
-					<br>10/09/2015</span></p>
-                    <p><br>Был очень приятно удивлен прекрасной организацией сопровождения пациентов и широким спектром комплексных диагностических программ. Особую благодарность выражаю старшему администратору reception Татьяне Ляшок, благодаря которой я прошел индивидуальное обследование и лечение в Вашей Клинике в максимально сжатые сроки, в очень удобном для меня графике и комфортной обстановке, как в эмоциональном, так и в физическом плане. Несмотря на то, что постоянно живу в другой европейской стране, за обследованием и лечением я буду обращаться только в Вашу Клинику и буду рекомендовать Вас своим знакомым и друзьям.
-                    </p>
-                </div>
-                <div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Разина Я.В.
-					<br>01/09/2015</span></p>
-                    <p><br>Я, Разина Яна Владимировна, хочу выразить огромную благодарность всем докторам которые в короткий срок смогли обнаружить мою проблему со здоровьем! Персонал очень отзывчивый и дружелюбный, Особую благодарность хотела передать врачу (лечащему) Осташкову А.В., мануальной т. Юсупжанову В.И., эндокринологу Надеждиной Э.А., психотерапевту Алесе Викторовне и всем врачам ЛОР. Спасибо вам огромное!!! За ваш нелегкий  руд!!! 
-                    </p>
-                </div>
-				<div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Волохова С.В.
-					<br>21/08/2015</span></p>
-                    <p><br>Приношу вам сердечную, человеческую благодарность! Благодаря вашему профессионализму, чуткому пониманию проблемы пациента, внимательному отношению и терпению, я спокойна за свое здоровье. Отдельно хотела бы поблагодарить кардиолога Хихелову Елену Олеговну. Записавшись на прием, получила подробную консультацию по своей проблеме, сразу же сделали КT и назначили своевременное лечение. Самочувствие мое улучшилось, а через неделю, на повторном приеме была отмечена положительная динамика моего состояния. 
-					Так же хочется отметить внимательное отношение сотрудников колл-центра и ресепшн — всегда напомнят о приеме, встретят, проводят до кабинета, готовы помочь, очень вежливы и обходительны. 
-                    </p>
-                </div>
-				<div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Румянцев О. С.
-					<br>11/08/2015</span></p>
-                    <p><br>Хочется оставить положительный отзыв о докторе И.И. Гелетее (гастроэнтеролог). Первый раз встречаю доктора, который в высшей степени внимателен ко всем жалобам, отзывам пациента. Всегда откликается на любое пожелание. Всегда находится в хорошем настроении и подбадривает пациента. Впредь буду посещать ТОЛЬКО Гелетея И.И. и советовать его всем знакомым.
-                    </p>
-                </div>
-				<div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Полякова М.И
-					<br>07/08/2015</span></p>
-                    <p><br>Пожелания: оставайтесь на той же волне, волне позитива и понимания пациента, продолжайте разговаривать с нами (пациентами) на понятном нам языке, в этом Вам нет пока равных. 10 из 10. Желаю я и моя семья Вам процветания, теперь я буду Вас рекомендовать всем моим знакомым и родственникам. Да, у Вас дорого, но оно того стоит, я ни о чем не жалею. Теперь я на ногах и полон сил. Сердечно благодарен всем врачам и мед персоналу. Спасибо большое.
-                    </p>
-                </div>
-				<div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Нижегородова Ольга Викторовна
-					<br>23/07/2015</span></p>
-                    <p><br>Мои близкие родственники являются постоянными пациентами Вашей Клиники. Я хотел бы выразить благодарность доктору Капитоновой Н.В. за четкий и оперативный диагноз, доктору Клочко Р.В. за заботу и внимание, а так же сотрудникам контактного центра, за оперативную работу и предоставление четкой информации по всем моим вопросам.
-                    </p>
-                </div>
-				<div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Котович О.И. Ген. дир. ООО «Завод Северная Венеция»
-					<br>27/07/2015</span></p>
-                    <p><br>Хочу выразить благодарность сотрудникам отдела ресепшн за внимательное, доброе отношение к пациентам, организованность, особенно Кристине Соболевой. Особая благодарность доктору Ирине Леонидовне за высокий профессионализм, отзывчивость и чуткость.
-                    </p>
-                </div>
-				<div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Колпакова Людмила Ивановна
-					<br>25/07/2015</span></p>
-                    <p><br>Хочу выразить огромную благодарность и сказать большое спасибо сотруднику контактного центра Мурскому Дмитрию за быструю организацию записи и предоставление всех необходимых услуг моей матери. Всё было сделано молниеносно, несмотря на то, что мы были очень сжаты в сроках. Отдельно хочется отметить высокопрофессиональных врачей Маковскую А.И. и Капитонову Н.В. Весь процесс, начиная со звонка, записи на прием, и заканчивая получением необходимой помощи, прошел очень гладко и профессионально. Все просто молодцы!
-                    </p>
-                </div>
-				<div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Добавил  Наталья
-
-					<br>17/07/2015</span></p>
-                    <p><br>Обследовалась у профессора по совету своего лечащего врача. И не пожалела. Можно было рядом с домом, но это совсем не то. Профессор знает, что надо моему доктору. Сравнивает с предыдущими снимками. Видит многое, что другим неясно. Не акцентирует на несущественном. Заключение понятно.
-                    </p>
-                </div>
-				<div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Б. В.А.
-
-					<br>12/07/2015</span></p>
-                    <p><br>Атмосфера в клинике, начиная с встречи на ресепшен и заканчивая приемом врача, напоминает клиники Германии. Это очень приятно, и вызывает неосознанное чувство доверия. Была удивлена этому островку европейской медицины.
-                    </p>
-                </div>
-				<!--<div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">А. Ольга Викторовна
-
-					<br>03/07/2015</span></p>
-                    <p><br>Администраторам Рите и Надежде выражаю Огромную благодарность за терпение при общении с больными клиентами. Спасибо им большое!
-                    </p>
-                </div>-->
-				<!--<div class="avtor">
-                    <p style="text-align:center;"><span style="font-style: italic;font-family:arial;font-weight:bold;text-align:center;">Семья О.
-
-					<br>03/07/2015</span></p>
-                    <p><br>Пациент и его супруга благодарят администраторов reception (Ляшок Татьяну и Кудрину Надежду) за внимание, оперативное решение всех вопросов и позитивное общение. Встречаемся с ними не первый раз и всегда получаем ответы на все наши просьбы и вопросы с улыбкой и радушием.
-                    </p>
-                </div>-->
-            </div>
-        </div>
-
-
-
-
-		<footer>
-        <div class="in_footer">
-            
-            <div class="menu_footer">
-                <ul>
-                    <li>
-                        <a href="#vopros">Ответы и вопросы</a>
-                    </li>
-					<li>
-                        <a href="#centru" >Центры</a>
-                    </li>
-					<li>
-                        <a href="#doctora">Врачи</a>
-                    </li>
-					<li>
-                        <a href="#oborud">Оборудование</a>
-                    </li>
-                    <li>
-                        <a href="#price" >Цены</a>
-                    </li>
-                </ul>
-               
-            </div>
-
-        </div>
-        </footer>
-</div>
-        <script>
-			$(document).ready(function(){
-				$('.map_clinic_marker').click(function(){
-					$('.map_clinic_marker').not($(this)).parent().children('.map_clinic_description').hide(1000);
-					$(this).parent().children('.map_clinic_description').toggle(1000);
-				});
-			});
-			function changeCursor(){
-				return false;
-			var x = y = 0;
-                var event = event || window.event;
-
-                // Получаем координаты клика по странице, то есть абсолютные координаты клика.
-
-                if (document.attachEvent != null) { // Internet Explorer & Opera
-                    x = window.event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
-                    y = window.event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-                } else if (!document.attachEvent && document.addEventListener) { // Gecko
-                    x = event.clientX + window.scrollX;
-                    y = event.clientY + window.scrollY;
-                }
-
-                //Определяем границы объекта, в нашем случае картинки.
-
-                y0=document.getElementById("kartina").offsetTop;
-                x0=document.getElementById("kartina").offsetLeft;
-
-                // Пересчитываем координаты и выводим их алертом.
-
-                x = x-x0;
-                y = y-y0;
-				
-				//alert(x+'|'+y);
-				
-				if(x > 220 && x < 250){
-                   document.body.style.cursor = 'pointer';
-					//alert(x+'|'+y);
-                        
-                }else
-                    if (x > 270 && x < 300 && y > 130 && y < 160){
-                     document.body.style.cursor = 'pointer';
-                 }else
-                    if (x > 120 && x < 155 && y > 360 && y < 400){
-                        document.body.style.cursor = 'pointer';
-                 }else
-                    if (x > 200 && x < 225 && y > 62 && y < 90){
-                       document.body.style.cursor = 'pointer';
-                 }else
-                    if (x > 180 && x < 205 && y > 250 && y < 275){
-                        document.body.style.cursor = 'pointer';
-                 }else
-                    if (x > 146 && x < 170 && y > 224 && y < 250){
-                        document.body.style.cursor = 'pointer';
-				}else
-                    if (x > 105 && x < 130 && y > 165 && y < 190){
-                       document.body.style.cursor = 'pointer';
-				}else
-                    if (x > 95 && x < 120 && y > 155 && y < 180){
-                       document.body.style.cursor = 'pointer';
-				}else
-                    if (x > 160 && x < 185 && y > 130 && y < 155){
-                        document.body.style.cursor = 'pointer';
-				}else {document.body.style.cursor = 'default';}
-
-				
-			};
-			 </script>
-			 <script>
-            function defPosition(event) {
-				return false;
-                var x = y = 0;
-                var event = event || window.event;
-
-                // Получаем координаты клика по странице, то есть абсолютные координаты клика.
-
-                if (document.attachEvent != null) { // Internet Explorer & Opera
-                    x = window.event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
-                    y = window.event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-                } else if (!document.attachEvent && document.addEventListener) { // Gecko
-                    x = event.clientX + window.scrollX;
-                    y = event.clientY + window.scrollY;
-                }
-
-                //Определяем границы объекта, в нашем случае картинки.
-
-                y0=document.getElementById("kartina").offsetTop;
-                x0=document.getElementById("kartina").offsetLeft;
-
-                // Пересчитываем координаты и выводим их алертом.
-
-                x = x-x0;
-                y = y-y0;
-
-               //alert(x+'|'+y);
-
-                var t = document.getElementById('map_adres1');
-                var g = document.getElementById('map_adres2');
-                var u = document.getElementById('map_adres3');
-                var p = document.getElementById('map_adres6');
-                var l = document.getElementById('map_adres5');
-                var w = document.getElementById('map_adres4');
-				var yi = document.getElementById('map_adres7');
-				var map8 = document.getElementById('map_adres8');
-				var map9 = document.getElementById('map_adres9');
-				var map10 = document.getElementById('map_adres10');
-				var map10_2 = document.getElementById('map_adres10_2');
-				var map11 = document.getElementById('map_adres11');
-                if(x > 220 && x < 250 && y > 154 && y < 210){
-                    if(t.style.display =='block')
-                        {t.style.display = 'none'}
-                            else{t.style.display ='block'}
-                }/*else
-                    if (x > 140 && x < 170 && y > 50 && y < 80){
-                        if(g.style.display =='block')
-                        {g.style.display = 'none'}
-                        else{g.style.display ='block'}
-                 } */else
-                    if (x > 270 && x < 300 && y > 130 && y < 160){
-                      /* document.body.style.cursor = 'pointer';*/
-					   if(u.style.display =='block')
-                        {u.style.display = 'none'}
-                        else{u.style.display ='block'}
-                 }else
-                    if (x > 120 && x < 155 && y > 360 && y < 400){
-                        if(p.style.display =='block')
-                        {p.style.display = 'none'}
-                        else{p.style.display ='block'}
-                 }/*else
-                    if (x > 45 && x < 75 && y > 330 && y < 360){
-                        if(l.style.display =='block')
-                        {l.style.display = 'none'}
-                        else{l.style.display ='block'}}*/
-				/*else
-                    if (x > 250 && x < 280 && y > 300 && y < 340){
-                        if(w.style.display =='block')
-                        {w.style.display = 'none'}
-                        else{w.style.display ='block'}
-                 }*/else
-                    if (x > 200 && x < 225 && y > 62 && y < 90){
-                        if(yi.style.display =='block')
-                        {yi.style.display = 'none'}
-                        else{yi.style.display ='block'}
-                 }else
-                    if (x > 180 && x < 205 && y > 250 && y < 275){
-                        if(map8.style.display =='block')
-                        {map8.style.display = 'none'}
-                        else{map8.style.display ='block'}
-                 }else
-                    if (x > 146 && x < 170 && y > 224 && y < 250){
-                        if(map9.style.display =='block')
-                        {map9.style.display = 'none'}
-                        else{map9.style.display ='block'}
-				}else
-                    if (x > 105 && x < 130 && y > 165 && y < 190){
-                        if(map10_2.style.display =='block')
-                        {map10_2.style.display = 'none'}
-                        else{map10_2.style.display ='block'}
-				}else
-                    if (x > 95 && x < 120 && y > 155 && y < 180){
-                        if(map10.style.display =='block')
-                        {map10.style.display = 'none'}
-                        else{map10.style.display ='block'}
-				}else
-                    if (x > 160 && x < 185 && y > 130 && y < 155){
-                        if(map11.style.display =='block')
-                        {map11.style.display = 'none'}
-                        else{map11.style.display ='block'}
-				}
-
-
-               /*if (x > 250 && x < 280 && y > 300 && y < 340){
-                    alert('da6!');
-                }*/
-
-
-            }
-        </script>
-
-
-        <script type="text/javascript" src="js/jquerypp.custom.js"></script>
-        <script type="text/javascript" src="js/jquery.elastislide.js"></script>
-        <script type="text/javascript">
-
-            $( '#carousel' ).elastislide();
-
-        </script>
-        <script>
-        //Адаптация меню
-        $(function() {
-            var pull 		= $('#pull');
-            menu 		= $('.menu ul');
-            menuHeight	= menu.height();
-
-            $(pull).on('click', function(e) {
-                e.preventDefault();
-                menu.slideToggle();
-            });
-
-            $(window).resize(function(){
-                var w = $(window).width();
-                if(w > 320 && menu.is(':hidden')) {
-                    menu.removeAttr('style');
-                }
-            });
-        });
-    </script>
-        <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
-
-
-<script>
-
-    var s = document.getElementById('read_more_child')
-    function formShow(){
-        if(s.style.display =='block'){s.style.display = 'none'} else{s.style.display ='block'}
-    }
-</script>
-<script>
-
-    var z = document.getElementById('more_child1')
-    function formShow2(){
-        if(z.style.display =='block'){z.style.display = 'none'} else{z.style.display ='block'}
-    }
-
-	 var sh = document.getElementById('more_child1')
-    function formShow2(){
-        if(sh.style.display =='block'){sh.style.display = 'none'} else{sh.style.display ='block'}
-    }
+    </div>
+</section>
+<?php endif; ?>
+<div class="content">
+	<div class="container review-section">
 	
-    var r = document.getElementById('more_child2')
-    function formShow3(){
-        if(r.style.display =='block'){r.style.display = 'none'} else{r.style.display ='block'}
+	<div id="arrow">
+		<a class="previous" title="Перейти к предыдущему блоку"><</a><a class="next" title="Перейти к следующему блоку">></a>
+	</div>
+
+	<div class="reviews default" id="reviews">
+		<div class="reviews-inner">
+            <div class="reviews-h1">Отзывы</div>
+            <div class="one-review">
+                <div class="review-author">
+                    ТАТЬЯНА КАЗАНКИНА,
+                    советская легкоатлетка,
+                    трехкратная Олимпийская
+                    чемпионка, рекордсменка
+                    мира и Олимпийских игр
+                </div>
+                <div class="review-text">
+                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img/kazankina.jpg">
+                    Самые замечательные
+                    впечатления от посещения
+                    клиники. Здесь работают
+                    внимательные, добрые,
+                    грамотные специалисты.
+                    С ними хочется поделиться своими
+                    проблемами, рассказать о своих бедах.
+                    Большое спасибо Елене Юрьевне Карабан,
+                    с таким человеком хочется беседовать и
+                    делиться всем, она все расскажет доступно
+                    для пациента, посоветует что и как нужно
+                    сделать лучшим образом. Большое спасибо
+                    всему персоналу. Ведь очень приятно, когда
+                    к тебе внимательны и доброжелательны
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    ВИКТОР ТИХОМИРОВ, художник известной группы "Митьки", кинорежиссер, писатель, сценарист
+                </div>
+                <div class="review-text">
+                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img/tihomir.jpg">
+                    Приятное впечатление от посещения вашего центра, как этическое, так и эстетическое. Особливо обаятельное впечатление от терапевта Елены Юрьевны Карабан. Привет ей. Успехов в деле и исцеления болящих.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    СВЕТЛАНА ПИСЬМИЧЕНКО, российская актриса кино и театра, заслуженная артистка Российской Федерации
+                </div>
+                <div class="review-text">
+                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img/svetlana.jpg">
+                    Я очень благодарна сотрудникам центра, за предоставленную мне возможность узнать о состоянии своего здоровья. В нашей актерской профессии мы подвергаем себя бесконечным стрессам, переездам, гастролям, съемкам и иногда не задумываемся, а что же завтра... Здесь очень приятный персонал, внимательные и доброжелательные врачи и высокого уровня диагностика. В бесконечной суете дней особенно люди творческих профессий забывают - что здоровье и прекрасное самочувствие - это залог успеха, удачи и долгой, трудоспособной жизни. И наступает час пик - когда нужно сказать - стоп - и пойти на обследование. Я пришла сюда, привела своих детей - и буду рекомендовать Вас друзьям. Спасибо Всем и будьте здоровы!
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    ОКОРОКОВ ВАСИЛИЙ РОМАНОВИЧ, Профессор СПбГПУ, доктор экономических наук заведующий кафедрой "Международных экономических отношений"
+                </div>
+                <div class="review-text">
+                    <img src="<?php echo Yii::app() -> baseUrl; ?>/img/okorokov.jpg">
+                    Первое впечатление, которое создалось - попали в настоящий медицинский рай! Такое впечатление ещё более усилилось, познакомившись с современным оборудованием центра и крайне внимательным отношением врачей и сотрудников центра. Желаю вам, дорогие коллеги, доброго здоровья и создания медицинского благополучия для всех людей нашей страны. С благодарностью и искренним уважением В.Р. и Л.Г. Окороковы, профессора СПБГПУ.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Аксиновская Светлана Сергеевна
+                    27/10/2015
+                </div>
+                <div class="review-text">
+                    Спасибо Вашей клинике за высокий уровень профессионализма, желание помочь и неравнодушие! Особая благодарность Рузановой Ирине Николаевне. Своим друзьям и близким могу рекомендовать только Вашу клинику.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Григорьева Екатерина Николаевна
+                    21/10/2015
+                </div>
+                <div class="review-text">
+                    Великолепный медицинский центр! Попала случайно, страховая направила сделать мрт. Все быстро, качественно, комфортно, без утомительных очередей в регистратуру и поисков карточки. После первого знакомства стала ходить к вам, хотя раньше лечилась в клинике РАМН. Пока всем очень довольна. Хочу отметить профессионализм лора Дежневой Е.В., такого целостного подхода к проблеме я давно не встречала. Очень профессиональный и доброжелательный мануальный терапевт Канкулов В.Ж., замечательная массажист Зарезина С.В. Отдельное спасибо за детскую комнату, это очень выручает. Рекомендую вашу клинику всем своим знакомым.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Добавил Жуды
+                    07/10/2015
+                </div>
+                <div class="review-text">
+                    Специально прилетаю из Казахстана делать МРТ лично у профессора Холина. Знаю, так многие у нас делают, Доверяют только ему. Встречала на его приеме пациентов и из других бывших республик,а также из дальнего зарубежья. Авторитет его очень высокий. Многие наши специалисты его ученики.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Иванова Александра
+                    03/09/2015
+                </div>
+                <div class="review-text">
+                    Внимательный, сочувствующий и, главное, профессиональный и не равнодушный доктор Ольга Кротова - это главное, что привлекает в вашу клинику. Ее помощница - доброжелательная, симпатичная и грамотная Ирина Климовцева дополняет достоинства доктора. Отличные специалисты. Девушек на ресепшне, вполне вежливых и терпеливых стоит, может быть, обучить подробностям подготовки в зависимости от ситуации. В целом клиника хорошего уровня. Буду обращаться снова.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Пьянкова Галина Николаевна
+                    10/09/2015
+                </div>
+                <div class="review-text">
+                    Был очень приятно удивлен прекрасной организацией сопровождения пациентов и широким спектром комплексных диагностических программ. Особую благодарность выражаю старшему администратору reception Татьяне Ляшок, благодаря которой я прошел индивидуальное обследование и лечение в Вашей Клинике в максимально сжатые сроки, в очень удобном для меня графике и комфортной обстановке, как в эмоциональном, так и в физическом плане. Несмотря на то, что постоянно живу в другой европейской стране, за обследованием и лечением я буду обращаться только в Вашу Клинику и буду рекомендовать Вас своим знакомым и друзьям.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Разина Я.В.
+                    01/09/2015
+                </div>
+                <div class="review-text">
+                    Я, Разина Яна Владимировна, хочу выразить огромную благодарность всем докторам которые в короткий срок смогли обнаружить мою проблему со здоровьем! Персонал очень отзывчивый и дружелюбный, Особую благодарность хотела передать врачу (лечащему) Осташкову А.В., мануальной т. Юсупжанову В.И., эндокринологу Надеждиной Э.А., психотерапевту Алесе Викторовне и всем врачам ЛОР. Спасибо вам огромное!!! За ваш нелегкий руд!!!
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Волохова С.В.
+                    21/08/2015
+                </div>
+                <div class="review-text">
+                    Приношу вам сердечную, человеческую благодарность! Благодаря вашему профессионализму, чуткому пониманию проблемы пациента, внимательному отношению и терпению, я спокойна за свое здоровье. Отдельно хотела бы поблагодарить кардиолога Хихелову Елену Олеговну. Записавшись на прием, получила подробную консультацию по своей проблеме, сразу же сделали КT и назначили своевременное лечение. Самочувствие мое улучшилось, а через неделю, на повторном приеме была отмечена положительная динамика моего состояния. Так же хочется отметить внимательное отношение сотрудников колл-центра и ресепшн — всегда напомнят о приеме, встретят, проводят до кабинета, готовы помочь, очень вежливы и обходительны.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Румянцев О. С.
+                    11/08/2015
+                </div>
+                <div class="review-text">
+                    Хочется оставить положительный отзыв о докторе И.И. Гелетее (гастроэнтеролог). Первый раз встречаю доктора, который в высшей степени внимателен ко всем жалобам, отзывам пациента. Всегда откликается на любое пожелание. Всегда находится в хорошем настроении и подбадривает пациента. Впредь буду посещать ТОЛЬКО Гелетея И.И. и советовать его всем знакомым.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Полякова М.И
+                    07/08/2015
+                </div>
+                <div class="review-text">
+                    Пожелания: оставайтесь на той же волне, волне позитива и понимания пациента, продолжайте разговаривать с нами (пациентами) на понятном нам языке, в этом Вам нет пока равных. 10 из 10. Желаю я и моя семья Вам процветания, теперь я буду Вас рекомендовать всем моим знакомым и родственникам. Да, у Вас дорого, но оно того стоит, я ни о чем не жалею. Теперь я на ногах и полон сил. Сердечно благодарен всем врачам и мед персоналу. Спасибо большое.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Нижегородова Ольга Викторовна
+                    23/07/2015
+                </div>
+                <div class="review-text">
+                    Мои близкие родственники являются постоянными пациентами Вашей Клиники. Я хотел бы выразить благодарность доктору Капитоновой Н.В. за четкий и оперативный диагноз, доктору Клочко Р.В. за заботу и внимание, а так же сотрудникам контактного центра, за оперативную работу и предоставление четкой информации по всем моим вопросам.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Котович О.И. Ген. дир. ООО «Завод Северная Венеция»
+                    27/07/2015
+                </div>
+                <div class="review-text">
+                    Хочу выразить благодарность сотрудникам отдела ресепшн за внимательное, доброе отношение к пациентам, организованность, особенно Кристине Соболевой. Особая благодарность доктору Ирине Леонидовне за высокий профессионализм, отзывчивость и чуткость.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Колпакова Людмила Ивановна
+                    25/07/2015
+                </div>
+                <div class="review-text">
+                    Хочу выразить огромную благодарность и сказать большое спасибо сотруднику контактного центра Мурскому Дмитрию за быструю организацию записи и предоставление всех необходимых услуг моей матери. Всё было сделано молниеносно, несмотря на то, что мы были очень сжаты в сроках. Отдельно хочется отметить высокопрофессиональных врачей Маковскую А.И. и Капитонову Н.В. Весь процесс, начиная со звонка, записи на прием, и заканчивая получением необходимой помощи, прошел очень гладко и профессионально. Все просто молодцы!
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Добавил Наталья
+                    17/07/2015
+                </div>
+                <div class="review-text">
+                    Обследовалась у профессора по совету своего лечащего врача. И не пожалела. Можно было рядом с домом, но это совсем не то. Профессор знает, что надо моему доктору. Сравнивает с предыдущими снимками. Видит многое, что другим неясно. Не акцентирует на несущественном. Заключение понятно.
+                </div>
+            </div>
+            <div class="one-review">
+                <div class="review-author">
+                    Б. В.А.
+                    12/07/2015
+                </div>
+                <div class="review-text">
+                    Атмосфера в клинике, начиная с встречи на ресепшен и заканчивая приемом врача, напоминает клиники Германии. Это очень приятно, и вызывает неосознанное чувство доверия. Была удивлена этому островку европейской медицины.
+                </div>
+            </div>
+        </div>
+		</div>
+	</div>
+
+    <?php
+/**
+ * Временно убираю подмену блоков
+
+$rule = $model;
+if (is_a($rule -> section,'Section')) {
+    $this->renderPartial('//subs/_section', array('section'=> $rule -> section, 'rule' => $rule,'base' => $base, 'tel' => $tel));
+}
+
+
+foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section){
+    if ($section -> id == $rule -> section -> id) {
+        continue;
     }
-</script>
+    $this->renderPartial('//subs/_section', array('section' => $section, 'rule' => $model, 'base' => $base, 'tel' => $tel));
+}
+*/
+
+foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section) {
+    $this->renderPartial('//subs/_section', array('section' => $section, 'rule' => $model, 'base' => $base, 'tel' => $tel));
+}
+
+
+
+?>
+
+
+<?php /* $this -> renderPartial('//subs/prices', [
+    'model'=>$model
+]);  $this -> renderPartial('//subs/skidki', [
+    'model'=>$model
+]);  $this -> renderPartial('//subs/doctors', [
+    'model'=>$model
+]);  $this -> renderPartial('//subs/jelezo', [
+    'model'=>$model
+]);  $this -> renderPartial('//subs/geo', [
+    'model'=>$model
+]); $this -> renderPartial('//subs/raznica', [
+    'model'=>$model
+]); $this -> renderPartial('//subs/faq', [
+    'model'=>$model
+]); $this -> renderPartial('//subs/form', [
+    'model'=>$model
+]); //*/ ?>
+
+
+</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <span>© 2016, Бесплатная общегородская служба записи на МРТ и КТ</span>
+            </div>
+            <div class="col-md-6">
+                <a class="phone-footer" href="tel:<?php echo $tel['raw']; ?>"><?php echo $tel['formatted']; ?></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<div id="info1" style="display:none">
+    <p>Информация про доктора</p>
+
+</div>
+
+<div id="info2" style="display:none">
+    <h2>Ананьева Наталия Исаевна</h2><img src="<?php echo $base; ?>/img/1.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <p>Более 25 лет работает в Научно-исследовательском психоневрологическом институте имени В. М. Бехтерева, в настоящее время – руководитель отдела неврологии и клинико-диагностических методов исследования психоневрологических больных.
+    </p>
+    <p>Профессор научно-клинического и образовательного центра «Лучевая диагностика и ядерная медицина» Института высоких медицинских технологий СПбГУ. Ученый секретарь Санкт-Петербургского радиологического общества. Член Европейского общества радиологов (ESR), Европейского общества нейрорадиологов (ESNR), Европейского общества магнитного резонанса в биологии и медицине (ESMRMB).
+    </p>
+    <p>Кандидатская диссертация «Сравнительная информативность методов лучевого обследования у больных с эпилептическими припадками».
+    </p>
+    <p>Докторская диссертация «Комплексная лучевая диагностика нарушений мозгового кровообращения».
+    </p>
+    <p>Автор более 150 научных работ, в том числе монографий «КТ и МРТ диагностика ишемических инсультов», «Лучевая анатомия человека», «Нейрорадиология», «Лучевая диагностика заболеваний головы и шеи».
+    </p>
+    <p><b>Приоритетная направление научной и клинической деятельности:</b>
+    </p>
+    <ul>
+        <li>лучевая диагностика эпилепсии, сосудистых заболеваний ЦНС, нейродегенеративных заболеваний, деменций.</li>
+    </ul>
+</div>
+
+<div id="info3" style="display:none"><img src="<?php echo $base; ?>/img/2.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <h2>Голимбиевская Тамара Анатольевна</h2>
+    <p>Научно-педагогический, рентгенологический стаж более 38 лет.</p>
+    <p>С 1999 года – доцент кафедры рентгенологии СПб МАПО, в настоящий момент доцент кафедры лучевой диагностики и лучевой терапии Северо-Западного медицинского университета имени И. И. Мечникова. Является членом СПб радиологического общества. Член Европейского общества радиологов (ESR).</p>
+    <p>Как клиницист работала в сфере неврологии, торакальной хирургии.</p>
+    <p>Автор 75 научных работ, в числе которых учебные пособия и главы в 3-х монографиях: «Лучевая анатомия человека», «Национальное руководство “Лучевая диагностика заболеваний головы и шеи”», «ВИЧ-медицина», «Лучевая и возрастная анатомия человека».</p>
+    <p>Разрабатывает ряд методик КТ-диагностики, в том числе такие как виртуальная колонография, энтерография, виртуальная бронхография и др.</p>
+    <p><b>Приоритетное направление научной и клинической деятельности:</b></p>
+    <ul>
+        <li>пульмонология, виртуальная колоноскопия.</li>
+    </ul>
+</div>
+
+<div id="info4" style="display:none">
+    <h2>Холин А.В.</h2><img src="<?php echo $base; ?>/img/9.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <p>Заведующий кафедрой лучевой диагностики СПб МАПО, профессор, член Европейского научного общества нейрорадиологов, член Европейского Конгресса Радиологов, член редакционного совета Британского журнала радиологии (British Journal of Radiology), член Европейского общества Академических радиологов.</p>
+    <p>С 1996 по 2002, зам. главного врача по диагностике ГМПБ №2.</p>
+    <p>С 2002 по 2009 руководитель отделения лучевой диагностики и адаптационных процессов Российского НИИ травматологии и ортопедии им. Р.Р.Вредена.  </p>
+    <p>Кандидат медицинских наук - защита по специальностям онкология, рентгенология и радиология.</p>
+    <p>Доктор медицинских наук - защита по специальностям лучевая диагностика и лучевая терапия, нервные болезни.</p>
+    <p>Более 160 публикаций, включая 6 монографии.  </p>
+    <p>Стажировки за рубежом: Великобритания, Швеция. </p>
+</div>
+
+<div id="info5" style="display:none"><img src="<?php echo $base; ?>/img/3.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <h2>Савельева Татьяна Вячеславовна</h2>
+    <p>Стаж работы врачом- рентгенологом на КТ - 12 лет, на МРТ - 9 лет.</p>
+    <p>Доцент кафедры рентгенологии Санкт-Петербургского Государственного медицинского университета. Доцент научно-клинического и образовательного центра «Лучевая диагностика и ядерная медицина» Института высоких медицинских технологий СПбГУ. В 2009 г защитила диссертацию «Возможности МСКТ в выявлении опухолевого поражения поджелудочной железы и желчевыводящих протоков». Много лет работает в области компьютерной и магнитно-резонансной томографии, специалист широкого профиля. В настоящее время заведует кабинетами МРТ клинической больницы № 122 имени Л. Г. Соколова ФМБА России.</p>
+    <p>Диссертационная работа посвящена диагностике опухолей поджелудочной железы и желчевыводящих протоков методом многослойной спиральной компьютерной томографии.</p>
+    <p>Автор 12 научных публикаций.</p>
+    <p>С 2013 года врач рентгенолог МРТ и КТ в МДЦ Рэмси Диагностика.</p>
+    <p><b>Приоритетное направление научной и клинической деятельности:</b></p>
+    <ul>
+        <li>диагностика патологии органов брюшной полости и забрюшинного пространства.</li>
+    </ul>
+</div>
+
+<div id="info6" style="display:none">
+    <h2>Макогонова Марина Евгеньевна</h2><img src="<?php echo $base; ?>/img/4.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <p>Работает врачом-рентгенологом с 2005 года после окончания клинической ординатуры в СПбМАПО. Работала врачом-рентгенологом в кабинетах компьютерной томографии клиники СПб МАПО, МЦ «Адмиралтейские верфи».</p>
+    <p>В настоящее время заведует кабинетом магнитно-резонансной томографии НИИ фтизиопульмонологии и работает врачом кабинета МРТ в международной клинике «МЕДЕМ».</p>
+    <p>Готовит кандидатскую диссертацию на тему «Диагностические возможности магнитно-резонансной томографии (МРТ) в оценке состояния спинного мозга и позвоночника при спондилитах».</p>
+    <p>Автор более 30 научных работ.</p>
+    <p>С 2013 года врач рентгенолог МРТ и КТ в МДЦ Рэмси Диагностика</p>
+    <p><b>Приоритетное направление научной и клинической деятельности:</b></p>
+    <ul>
+        <li>лучевая диагностика в вертебрологии и ортопедической стоматологии.</li>
+    </ul>
+</div>
+
+<div id="info7" style="display:none">
+    <h2>Гарапач Ирина Анатольевна</h2><img src="<?php echo $base; ?>/img/6.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <p>Работает врачом-рентгенологом с 2000 года после окончания клинической ординатуры в СПбМАПО.</p>
+    <p>Доцент кафедры рентгенологии Санкт-Петербургского Государственного медицинского университета. В 2006 г защитила диссертацию о возможностях лучевой диагностики в стоматологии. Член Санкт-Петербургского радиологического общества, Европейской ассоциации радиологов. Много лет работает в области компьютерной и магнитно-резонансной томографии, специалист широкого профиля. Работала в кабинете компьютерной томографии ГБ №2, в течении четырех лет работала заведующей отделением лучевой диагностики ДГБ № 2 «Святой Марии Магдалины».</p>
+    <p>С 2015 года врач-рентгенолог МРТ и КТ в МДЦ Рэмси Диагностика</p>
+    <p>Автор более 20 научных публикаций, в том числе двух монографий.</p>
+    <p><b>Приоритетное направление научной и клинической деятельности:</b></p>
+    <ul>
+        <li>лучевая диагностика в педиатрии, лучевая диагностика в стоматологии.</li>
+    </ul>
+</div>
+
+<div id="info8" style="display:none">
+    <h2>Меньков Игорь Анатольевич</h2><img src="<?php echo $base; ?>/img/5.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <p>С ноября 2014 года по настоящее время – заведующий отделениями компьютерной томографии и неотложной диагностики кафедры рентгенологии и радиологии (с курсом ультразвуковой диагностики) Военно-медицинской академии им. С.М. Кирова.</p>
+    <p>С 2011 года по ноябрь 2014 года – врач-рентгенолог рентгеновского отделения (компьютерной томографии) кафедры рентгенологии и радиологии (с курсом ультразвуковой диагностики) Военно-медицинской академии им. С.М.Кирова.</p>
+    <p>С 2012 года по настоящее время – врач-рентгенолог отделения лучевой диагностики СПБ ГУЗ «Городская Александровская больница».</p>
+    <p>В 2013 году защитил диссертацию на тему «Рентгеновская компьютерная томография в оценке состояния коронарных шунтов в отдаленном послеоперационном периоде».</p>
+    <p>Член Санкт-Петербургского радиологического общества, Европейской ассоциации радиологов (ESR), Европейского общества кардиорадиологии (ESCR).</p>
+    <p>С 2014 года врач рентгенолог МРТ и КТ в МДЦ “Рэмси Диагностика” г.Санкт-Петербург</p>
+    <p>Автор более 25 научных публикаций, 2 практикумов.</p>
+    <p><b>Приоритетное направление научной и клинической деятельности:</b></p>
+    <ul>
+        <li>лучевая диагностика в педиатрии, лучевая диагностика в стоматологии.</li>
+    </ul>
+</div>
+
+<div id="info9" style="display:none">
+    <h2>Марченко Наталья Викторовна</h2><img src="<?php echo $base; ?>/img/8.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <p>Врач-рентгенолог (МРТ), заведующий кабинетом МРТ</p>
+    <p>Высшая квалификационная категория, кандидат медицинских наук</p>
+    <p>Врачебный стаж: 18 лет		</p>
+    <p>В 2004 г. защитила кандидатскую диссертацию на тему «Возможности использования цифровой флюорографической камеры для проведения проверочных и диагностических исследований органов грудной полости».</p>
+    <p>Более 80 печатных работ, в том числе монографии и учебные пособия.</p>
+    <p>Член Российской ассоциации радиологов, Санкт-Петербургского радиологического общества, Европейского общества радиологов (ESR), Европейского общества магнитного резонанса в биологии и медицине (ESMRMB).</p>
+</div>
+
+<div id="info10" style="display:none">
+    <h2>Силина Галина Ивановна</h2><img src="<?php echo $base; ?>/img/7.jpg" alt="alt" style="float: left;margin-right: 20px;">
+    <p>	Врач-рентгенолог (МРТ)</p>
+    <p>Врачебный стаж: 12 лет</p>
+    <p> Образование: СПБГМА им И.И. Мечникова 2001-2007 г.</p>
+    <p> Работала врачом-рентгенологом в Санкт-Петербургском клиническом научно-практическом центре специализированных видов медицинской помощи (онкологический). С 2012 г. по настоящее время работаю врачом-рентгенологом в ФГБУЗ Клиническая больница №122 им. Л.Г. Соколова. С 2013 г. работаю врачом-рентгенологом кабинета МРТ медицинского центра МАРТ.</p>
+</div>
+
+
+
+<div class="hidden">
+    <form id="callback-registration" class="pop_form">
+        <h3>Записаться на МРТ и КТ</h3>
+        <p>Врач-консультант перезвонит вам в течение 10 минут!</p>
+        <p>Вы сможете получить подробную консультацию по всем вопросам, связанным с МРТ и КТ исследованием и при желании записаться на обследование в удобное для вас время по лучшей цене!</p>
+        <input type="text" class="your-name form_field" name="name" placeholder="Ваше имя..." required />
+        <input type="text" class="your-phone form_field" name="phone" placeholder="Ваше телефон..." required />
+        <button class="order-button" name="your-name" value="" size="40" type="submit"><span class="btn-title">Отправить <br> запрос</span></button>
+		<!--<span class="promokod">
+			Ваш промокод: <b><div id="k50-track-code"></div>&nbsp;</b>
+		</span>-->
+    </form>
+</div>
+<div class="hidden">
+    <form id="callback" class="pop_form">
+        <h3>Врач-консультант перезвонит вам в течение 10 минут!</h3>
+        <p>Вы сможете получить подробную консультацию по всем вопросам, связанным с МРТ и КТ исследованием и при желании записаться на обследование в удобное для вас время по лучшей цене!</p>
+        <input type="text" class="your-name form_field" name="name" placeholder="Ваше имя..." required />
+        <input type="text" class="your-phone form_field" name="phone" placeholder="Ваше телефон..." required />
+        <button class="order-button" name="your-name" value="" size="40" type="submit"><span class="btn-title">Перезвоните <br>мне</span></button>
+		<!--<span class="promokod">
+			Ваш промокод: <b><div id="k50-track-code"></div>&nbsp;</b>
+		</span>-->
+    </form>
+</div>
+<!--[if lt IE 9]>
+<script src="<?php echo $base; ?>/libs/html5shiv/es5-shim.min.js"></script>
+<script src="<?php echo $base; ?>/libs/html5shiv/html5shiv.min.js"></script>
+<script src="<?php echo $base; ?>/libs/html5shiv/html5shiv-printshiv.min.js"></script>
+<script src="<?php echo $base; ?>/libs/respond/respond.min.js"></script>
+<![endif]-->
+<script src="<?php echo $base; ?>/libs/jquery/jquery-1.11.1.min.js"></script>
+<script src="<?php echo $base; ?>/libs/fancybox/jquery.fancybox.pack.js"></script>
+<script src="<?php echo $base; ?>/libs/owl-carousel/owl.carousel.min.js"></script>
+<script src="<?php echo $base; ?>/libs/landing-nav/navigation.js"></script>
+<script src="<?php echo $base; ?>/js/common.js"></script>
+<script src="<?php echo Yii::app() -> baseUrl; ?>/js/flipclock.min.js"></script>
+<script src="<?php echo Yii::app() -> baseUrl; ?>/js/tabulous.min.js"></script>
+<script src="<?php echo $base; ?>/js/jquery.maskedinput.min.js"></script>
 
 <script>
-
-
-
-    window.onscroll = function(){
-
-        var html = document.documentElement, body = document.body;
-
-        var BlkStyle = document.getElementById('block').style;
-
-        if(html.scrollTop>100||body.scrollTop>100) { //alert()
-
-            BlkStyle.position="fixed";
-
-
-
-        } else BlkStyle.position="relative";
-
-    }
-
+    jQuery(function($){
+        $(".your-phone").mask("+7(999)999-99-99");
+    });
 </script>
-
-
+<!-- BEGIN K50 TRACKER CODE-->
+<!--<script>
+    (function(c,a,p) {
+        var s = document.createElement(a); s.src = p; s.type = "text/javascript"; s.async =!0; s.readyState ? s.onreadystatechange = function() { if ( s.readyState === "loaded" || s.readyState === "complete" ) { s.onreadystatechange = null; c();}} : s.onload = function () {c();}; var n = document.getElementsByTagName(a)[0]; n.parentNode.insertBefore(s,n); })(function(){
+        k50Tracker.init({
+            siteId: 46841313737734
+        })
+    },"script","https://k50-a.akamaihd.net/k50/k50tracker2.js");
+</script>-->
+<!-- END K50 TRACKER CODE-->
+<!-- BEGIN K50 TRACKER CODE-->
+<!--<script>
+    (function(c,a,p) {
+        var s = document.createElement(a); s.src = p; s.type = "text/javascript"; s.async =!0; s.readyState ? s.onreadystatechange = function() { if ( s.readyState === "loaded" || s.readyState === "complete" ) { s.onreadystatechange = null; c();}} : s.onload = function () {c();}; var n = document.getElementsByTagName(a)[0]; n.parentNode.insertBefore(s,n); })(function(){
+        k50Tracker.init({
+            siteId: 75901313737734
+        })
+    },"script","https://k50-a.akamaihd.net/k50/k50tracker2.js");
+</script>-->
+<!--<div id="k50-track-code"></div>-->
+<!-- END K50 TRACKER CODE-->
 </body>
 </html>

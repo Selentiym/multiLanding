@@ -89,7 +89,7 @@ class PriceBlock extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return PriceBlocks the static model class
+	 * @return PriceBlock the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -101,16 +101,6 @@ class PriceBlock extends CActiveRecord
 	 * @return string
 	 */
 	public function renderHeading($show = true){
-		if (Yii::app() -> session -> get('folder') == '//subs/') {
-			$text = "<h2>---" . $this->name . "---</h2>";
-		} else {
-			$text = "<h2>---" . $this->name . "---</h2>";
-		}
-		if ($show) {
-			echo $text;
-		} else {
-			return $text;
-		}
-		return $text;
+		return "<h2>---" . $this->name . "---</h2>";
 	}
 }

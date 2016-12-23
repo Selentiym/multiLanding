@@ -17,36 +17,36 @@ class AdminController extends CController{
     public function actions(){
         return array(
             'createRule' => array(
-                'class' => 'application.controllers.site.ModelCreateAction',
+                'class' => 'application.sites.common.controllers.site.ModelCreateAction',
                 'modelClass' => 'Rule',
                 'view' => '//rules/create',
                 'scenario' => 'create'
             ),
             'updateRule' => array(
-                'class' => 'application.controllers.site.ModelUpdateAction',
+                'class' => 'application.sites.common.controllers.site.ModelUpdateAction',
                 'modelClass' => 'Rule',
                 'view' => '//rules/update',
                 'scenario' => 'update'
             ),
             'rules' => array(
-                'class' => 'application.controllers.site.FileViewAction',
+                'class' => 'application.sites.common.controllers.site.FileViewAction',
                 'view' => '//rules/list',
                 'access' => Yii::app()->user->getState('logged',false)
             ),
             'tel' => array(
-                'class' => 'application.controllers.site.FileViewAction',
+                'class' => 'application.sites.common.controllers.site.FileViewAction',
                 'view' => '//tel/list',
                 'access' => Yii::app()->user->getState('logged',false)
             ),
             'createTel' => array(
-                'class' => 'application.controllers.site.ModelCreateAction',
+                'class' => 'application.sites.common.controllers.site.ModelCreateAction',
                 'modelClass' => 'Tel',
                 'view' => '//tel/create',
                 'scenario' => 'create',
                 'redirectUrl' => Yii::app() -> baseUrl.'/admin/tel'
             ),
             'updateTel' => array(
-                'class' => 'application.controllers.site.ModelUpdateAction',
+                'class' => 'application.sites.common.controllers.site.ModelUpdateAction',
                 'modelClass' => 'Tel',
                 'view' => '//tel/update',
                 'scenario' => 'update',

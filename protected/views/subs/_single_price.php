@@ -1,8 +1,18 @@
-<div class="left-center">
-	<p class="solid" <?php if($active) {echo "style=color:#e96447;";} ?>><?php echo $price -> text; ?>
+<?php
+/**
+ * Created by PhpStorm.
+ * User: user
+ * Date: 15.08.2016
+ * Time: 17:26
+ */
+/**
+ * @type Price $price
+ * @type bool $active
+ */
+?>
 
-	</p>
-	<span class="blue_border"><?php echo $price -> price; ?>p</span>
-	<span class="grey_border"><?php echo $price -> price_old; ?>p</span>
-
-</div>
+<tr <?php if ($active) { echo 'class="selected"'; } ?>>
+    <td class="price-name"><span id="price<?php echo $price->id; ?>" style="position:relative; display:inline-block; top:-100px;"></span><span><?php echo $price->text; echo $active ? '<img src="'.Yii::app() -> baseUrl.'/img/superprice.png" alt="superPrice"/>' : '';?></span></td>
+    <td class="price-new">от <?php echo $price -> price; ?>p.</td>
+    <td class="price-old"><?php echo $price -> price_old; ?>p.</td>
+</tr>
