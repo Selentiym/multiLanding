@@ -6,7 +6,15 @@ ini_set('zlib.output_compression_level', '1');
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/../yii/framework/yii.php';
 require dirname(__FILE__).'/protected/components/SiteDispatcher.php';
-$config=dirname(__FILE__).'/'.SiteDispatcher::getConfigPath();
+$defConfig = dirname(__FILE__) . '/protected/config/main.php';
+try {
+    $config = dirname(__FILE__) . '/' . SiteDispatcher::getConfigPath();
+} catch (Exception $e) {
+    $config = $defConfig;
+}
+if (!$config) {
+    $config = $defConfig;
+}
 //$config=dirname(__FILE__).'/protected/config/main.php';
 
 // remove the following lines when in production mode

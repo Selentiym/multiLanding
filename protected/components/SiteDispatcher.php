@@ -83,7 +83,8 @@ class SiteDispatcher
                 'host' => $_SERVER['HTTP_HOST'],
                 'userAgent' => $_SERVER['HTTP_HOST'],
             ), 1));
-        throw new Exception('Can\'t determine config to site');
+        //throw new Exception('Can\'t determine config to site');
+        return false;
     }
 
     public static function getLocalConfigName($arSite){
