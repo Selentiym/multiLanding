@@ -47,6 +47,7 @@ return array (
             d.addEventListener("DOMContentLoaded", f, false);
         } else { f(); }
     })(document, window, "yandex_metrika_callbacks");
+    yaCounter = yaCounter41750944;
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/41750944" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->

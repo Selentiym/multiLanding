@@ -6,6 +6,7 @@
  * Time: 20:28
  */
 return CMap::mergeArray(
+    require_once(dirname(__FILE__).'/main.php'),
     array(
         'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
         'name' => 'МРТ и КТ диагностика в СПб',
@@ -31,6 +32,9 @@ return CMap::mergeArray(
         ),
 
         'components'=>array(
+            'phone' => [
+                'number' => '8 (812) 241-10-56'
+            ],
             'urlManager'=>array(
                 'urlFormat'=>'path',
                 'showScriptName' => false,
@@ -46,9 +50,9 @@ return CMap::mergeArray(
             ),*/
 
         ),
+
         'params'=>array(
             'siteId' => 'spbDiagnostRF'
         ),
-    ),
-    require_once(dirname(__FILE__).'/main.php')
+    )
 );

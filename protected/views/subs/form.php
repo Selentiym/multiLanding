@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </form>
-                <p>или по телефону <a href="<?php echo $base; ?>/tel:<?php echo $tel['raw']; ?>"><?php echo $tel['formatted']; ?></a></p>
+                <p>или по телефону <a href="<?php echo $base; ?>/tel:<?php echo '8812'.Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></p>
             </div>
         </div>
     </div>

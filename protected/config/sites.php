@@ -25,4 +25,13 @@ return array(
         ),
         'userAgent' => false,
     ),
+    'spbDiagnostRF' => [
+        'host' => [
+            'спб-диагност.рф',
+            'www.спб-диагност.рф',
+            'xn----8sbbkdy1bibtjm.xn--p1ai',
+            'www.xn----8sbbkdy1bibtjm.xn--p1ai',
+        ],
+        'userAgent' => false
+    ]
 );

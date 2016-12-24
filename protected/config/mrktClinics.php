@@ -31,6 +31,9 @@ return CMap::mergeArray(
         ),
 
         'components'=>array(
+            'phone' => [
+                'number' => '8(812)313-27-04'
+            ],
             'urlManager'=>array(
                 'urlFormat'=>'path',
                 'showScriptName' => false,

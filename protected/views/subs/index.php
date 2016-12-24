@@ -12,22 +12,22 @@
 
 $tel = [];
 //Костыль
-if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
+/*if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
     $cmp = $_GET["utm_campaign"];
     if (strpos($cmp, '20273758') !== false) {
-        $tel['formatted'] = '8 (812) 241-10-63';
-        $tel['raw'] = '88122411063';
+        Yii::app() -> phone -> getFormatted() = '8 (812) 241-10-63';
+        '8812'.Yii::app() -> phone -> getShort() = '88122411063';
     } elseif (strpos($cmp, '20273759') !== false) {
-        $tel['formatted'] = '8 (812) 241-10-56';
-        $tel['raw'] = '88122411056';
+        Yii::app() -> phone -> getFormatted() = '8 (812) 241-10-56';
+        '8812'.Yii::app() -> phone -> getShort() = '88122411056';
     } else {
-        $tel['formatted'] = '8 (812) 241-10-52';
-        $tel['raw'] = '88122411052';
+        Yii::app() -> phone -> getFormatted() = '8 (812) 241-10-52';
+        '8812'.Yii::app() -> phone -> getShort() = '88122411052';
     }
 } else {
-    $tel['formatted'] = '8 (812) 313-27-04';
-    $tel['raw'] = '88123132704';
-}
+    Yii::app() -> phone -> getFormatted() = '8 (812) 313-27-04';
+    '8812'.Yii::app() -> phone -> getShort() = '88123132704';
+}*/
 
 ?>
 
@@ -81,7 +81,7 @@ if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
                         <div class="col-lg-9 logo-text" id="logo-text"><a href="#slujba-info">Бесплатная общегородская служба записи на МРТ и КТ</a></div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-10 col-xs-10 top_contacts">
-                        <div><?php echo $tel['formatted']; ?></div>
+                        <div><?php echo Yii::app() -> phone -> getFormatted(); ?></div>
                         <a href="#callback" class="order fancybox"><img src="<?php echo $base; ?>/img/phone-sm.png"><span>Заказать обратный звонок</span></a>
                         <span class="perezvonim">Перезвоним в течение 10 минут!</span>
                     </div>
@@ -471,7 +471,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section) {
                 <span>© 2016, Бесплатная общегородская служба записи на МРТ и КТ</span>
             </div>
             <div class="col-md-6">
-                <a class="phone-footer" href="tel:<?php echo $tel['raw']; ?>"><?php echo $tel['formatted']; ?></a>
+                <a class="phone-footer" href="tel:<?php echo '8812'.Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a>
             </div>
         </div>
     </div>

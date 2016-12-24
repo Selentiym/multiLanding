@@ -13,8 +13,8 @@ function EvaluateOnPageLoad () {
 	//Аякс отправка форм
 	//Документация: http://api.jquery.com/jquery.ajax/
 	$("#callback").submit(function() {
-		if (yaCounter37896725) {
-			yaCounter37896725.reachGoal('formSent');
+		if (typeof yaCounter != 'undefined') {
+			yaCounter.reachGoal('formSent');
 		}
 		var button = $(this).find(".order-button");
 		var loader = $("<img/>",{
@@ -36,8 +36,8 @@ function EvaluateOnPageLoad () {
 
 	$("#callback-registration").off("submit");
 	$("#callback-registration").submit(function() {
-		if (yaCounter37896725) {
-			yaCounter37896725.reachGoal('formSent');
+		if (typeof yaCounter != 'undefined') {
+			yaCounter.reachGoal('formSent');
 		}
 		var button = $(this).find(".order-button");
 		var loader = $("<img/>",{
@@ -61,8 +61,8 @@ function EvaluateOnPageLoad () {
 
 function form () {
 	$("#callback-from-page, #callback-from-page").submit(function() {
-		if (typeof yaCounter37896725 != "undefined") {
-			yaCounter37896725.reachGoal('formSent');
+		if (typeof yaCounter != 'undefined') {
+			yaCounter.reachGoal('formSent');
 		}
 		var button = $(this).find(".order-button");
 		var loader = $("<img/>",{

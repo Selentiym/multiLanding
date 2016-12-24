@@ -62,6 +62,10 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
+		'phone' => [
+			'class' => 'application.components.constantPhoneComponent',
+			'number' => '7(812)123-45-67'
+		],
 		//*/
 		'db'=>array(
             'connectionString' => 'mysql:host=localhost;dbname=cq97848_landing',
