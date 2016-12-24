@@ -6,6 +6,7 @@
  * Time: 20:28
  */
 return CMap::mergeArray(
+    require_once(dirname(__FILE__).'/main.php'),
     array(
         'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
         'name'=>'Общество добросовестных докторов',
@@ -31,6 +32,9 @@ return CMap::mergeArray(
         ),
 
         'components'=>array(
+            'phone' => [
+                'number' => '8 (812) 241-10-63'
+            ],
             'urlManager'=>array(
                 'urlFormat'=>'path',
                 'showScriptName' => false,
@@ -49,6 +53,5 @@ return CMap::mergeArray(
         'params'=>array(
             'siteId' => 'goodDoctors'
         ),
-    ),
-    require_once(dirname(__FILE__).'/main.php')
+    )
 );

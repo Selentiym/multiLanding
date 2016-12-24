@@ -6,6 +6,7 @@
  * Time: 20:28
  */
 return CMap::mergeArray(
+    require_once(dirname(__FILE__).'/main.php'),
     array(
         'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
         'name' => 'Лучшие МРТ и КТ клиники в СПб',
@@ -52,6 +53,5 @@ return CMap::mergeArray(
         'params'=>array(
             'siteId' => 'mrktClinics'
         ),
-    ),
-    require_once(dirname(__FILE__).'/main.php')
+    )
 );
