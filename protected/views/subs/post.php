@@ -56,10 +56,10 @@ $phone = trim($_GET["phone"]);
         //echo "sent!";
     }
     $params = array(
-        'pid' => -2,
+        'pid' => Yii::app() -> params['formLine'],
         'name' => $name,
         'phone' => $phone,
-        'description' => 'Заявка с мрттого'
+        'description' => 'Заявка с '.Yii::app() -> name
     );
     $toSave = new FormSubmit();
     $toSave -> name = $name;

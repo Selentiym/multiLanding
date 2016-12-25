@@ -51,7 +51,7 @@ return CMap::mergeArray(
 
         ),
         'params'=>array(
-            'siteId' => 'goodDoctors'
+            'siteId' => 'goodDoctors',
         ),
     )
 );

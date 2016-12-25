@@ -19,6 +19,7 @@ return [
                     accurateTrackBounce:true,
                     webvisor:true
                 });
+                w.yaCounter = w.yaCounter41789619;
             } catch(e) { }
         });
 
@@ -33,7 +34,6 @@ return [
             d.addEventListener("DOMContentLoaded", f, false);
         } else { f(); }
     })(document, window, "yandex_metrika_callbacks");
-    yaCounter = yaCounter41789619;
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/41789619" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->

@@ -13,6 +13,7 @@ function EvaluateOnPageLoad () {
 	//Аякс отправка форм
 	//Документация: http://api.jquery.com/jquery.ajax/
 	$("#callback").submit(function() {
+		console.log(yaCounter);
 		if (typeof yaCounter != 'undefined') {
 			yaCounter.reachGoal('formSent');
 		}
