@@ -10,15 +10,24 @@
 Yii::app() -> end();*/
 $adminemail="shubinsa1@gmail.com";  // e-mail админа
 //$adminemail="bondartsev.nikita@gmail.com";  // e-mail админа
-$theme="Заказ с сайта MRT (новый дизайн, вариант 2)";
-
+@$theme="Заказ с сайта MRT (".Yii::app() -> name.")";
+if (!$theme) {
+    $theme = 'Заказ с сайта MRT, ошибка при получении имени лендинга';
+}
 $date=date("d.m.y"); // число.месяц.год
 
 $time=date("H:i"); // часы:минуты:секунды
 
 $name = trim($_GET["name"]);
 $phone = trim($_GET["phone"]);
+try {
+    $toSave = new FormSubmit();
+    $toSave->name = $name;
+    $toSave->phone = $phone;
+    $toSave->save();
+} catch (Exception $e) {
 
+}
 
     $headers = "From: mrt-to-go@mail.ru\r\n";
     $headers .= "MIME-Version: 1.0\r\n";
@@ -28,32 +37,35 @@ $phone = trim($_GET["phone"]);
     $text .= "Имя: <strong>{$name}</strong><br/>";
     $text .= "Телефон: <strong>{$phone}</strong><br/>";
 
+    try {
+        require_once(Yii::getPathOfAlias('webroot.vendor') . DIRECTORY_SEPARATOR . 'autoload.php');
+        $mail = new PHPMailer(true);
+        $mail = new PHPMailer(true);
+        $mail->IsSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 465;
+        $mail->SMTPSecure = 'ssl';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'mrimaster.msk@gmail.com';
+        $mail->Password = include(Yii::getpathOfAlias('application.components') . '/mrimaster.pss.php');
+        $mail->Mailer = "smtp";
 
-    require_once(Yii::getPathOfAlias('webroot.vendor') . DIRECTORY_SEPARATOR . 'autoload.php');
-    $mail = new PHPMailer(true);
-    $mail = new PHPMailer(true);
-    $mail->IsSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->Port = 465;
-    $mail->SMTPSecure = 'ssl';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'mrimaster.msk@gmail.com';
-    $mail->Password = include(Yii::getpathOfAlias('application.components') . '/mrimaster.pss.php');
-    $mail->Mailer = "smtp";
+        $mail->From = 'directors@mrimaster.ru';
+        $mail->FromName = 'mrt-to-go.ru';
+        $mail->Sender = 'directors@mrimaster.ru';
+        $mail->CharSet = "UTF-8";
+        $mail->addAddress($adminemail);
+        $mail->addAddress('lg.operator.2@gmail.com');
+        $mail->addAddress('olga.seadorova@gmail.com');
 
-    $mail->From = 'directors@mrimaster.ru';
-    $mail->FromName = 'mrt-to-go.ru';
-    $mail->Sender = 'directors@mrimaster.ru';
-    $mail->CharSet = "UTF-8";
-    $mail->addAddress($adminemail);
-    $mail->addAddress('lg.operator.2@gmail.com');
-    $mail->addAddress('olga.seadorova@gmail.com');
+        $mail->Subject = $theme;
+        $mail->isHtml(true);
+        $mail->Body = $text;
+        if (!$mail->Send()) {
+            //echo "sent!";
+        }
+    } catch (Exception $e) {
 
-    $mail->Subject = $theme;
-    $mail->isHtml(true);
-    $mail->Body = $text;
-    if (!$mail->Send()) {
-        //echo "sent!";
     }
     $params = array(
         'pid' => Yii::app() -> params['formLine'],
@@ -61,17 +73,17 @@ $phone = trim($_GET["phone"]);
         'phone' => $phone,
         'description' => 'Заявка с '.Yii::app() -> name
     );
-    $toSave = new FormSubmit();
-    $toSave -> name = $name;
-    $toSave -> phone = $phone;
-    $toSave -> save();
-    if( $curl = curl_init() ) {
-        curl_setopt($curl, CURLOPT_URL, 'http://o.mrimaster.ru/onlineRequest/submit?'.http_build_query($params));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+try {
+    if ($curl = curl_init()) {
+        curl_setopt($curl, CURLOPT_URL, 'http://o.mrimaster.ru/onlineRequest/submit?' . http_build_query($params));
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $out = curl_exec($curl);
         //echo $out;
         curl_close($curl);
     }
+} catch (Exception $e) {
+
+}
 //посылаем заявку на новую систему тоже
 if( $curl = curl_init() ) {
     try {
