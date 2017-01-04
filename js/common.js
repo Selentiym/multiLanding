@@ -15,7 +15,7 @@ function onFormSubmit() {
 	$.ajax({
 		type: "GET",
 		url: baseUrl + "/post",
-		data: $("#callback").serialize()
+		data: $(this).serialize()
 	}).done(function() {
 		alert("Спасибо за заявку!");
 		setTimeout(function() {
