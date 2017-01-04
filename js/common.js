@@ -1,4 +1,33 @@
-
+function onFormSubmit() {
+	try {
+		if (typeof yaCounter != 'undefined') {
+			yaCounter.reachGoal('formSent');
+		}
+	} catch (err) {
+		console.log(err);
+	}
+	var button = $(this).find(".order-button");
+	var loader = $("<img/>",{
+		src:baseUrl+"/img/loading.gif"
+	});
+	button.after(loader);
+	button.hide();
+	$.ajax({
+		type: "GET",
+		url: baseUrl + "/post",
+		data: $("#callback").serialize()
+	}).done(function() {
+		alert("Спасибо за заявку!");
+		setTimeout(function() {
+			$.fancybox.close();
+		}, 10);
+		loader.remove();
+		button.show();
+	}).fail(function () {
+		alert('Ошибка при отправке заявки. Пожалуйста, попробуйте еще раз или воспользуйтесь номером телефона со страницы.');
+	});
+	return false;
+}
 function EvaluateOnPageLoad () {
 
 	$(".main_mnu_button").click(function() {
@@ -12,80 +41,15 @@ function EvaluateOnPageLoad () {
 	$("#callback").off("submit");
 	//Аякс отправка форм
 	//Документация: http://api.jquery.com/jquery.ajax/
-	$("#callback").submit(function() {
-		console.log(yaCounter);
-		if (typeof yaCounter != 'undefined') {
-			yaCounter.reachGoal('formSent');
-		}
-		var button = $(this).find(".order-button");
-		var loader = $("<img/>",{
-			src:baseUrl+"/img/loading.gif"
-		});
-		button.replaceWith(loader);
-		$.ajax({
-			type: "GET",
-			url: baseUrl + "/post",
-			data: $("#callback").serialize()
-		}).done(function() {
-			alert("Спасибо за заявку!");
-			setTimeout(function() {
-				$.fancybox.close();
-			}, 10);
-		});
-		return false;
-	});
+	$("#callback").submit(onFormSubmit);
 
 	$("#callback-registration").off("submit");
-	$("#callback-registration").submit(function() {
-		if (typeof yaCounter != 'undefined') {
-			yaCounter.reachGoal('formSent');
-		}
-		var button = $(this).find(".order-button");
-		var loader = $("<img/>",{
-			src:baseUrl+"/img/loading.gif"
-		});
-		button.replaceWith(loader);
-		$.ajax({
-			type: "GET",
-			url: baseUrl + "/post",
-			data: $(this).serialize()
-		}).done(function() {
-			alert("Спасибо за заявку!");
-			setTimeout(function() {
-				$.fancybox.close();
-			}, 10);
-		});
-		return false;
-	});
+	$("#callback-registration").submit(onFormSubmit);
 }
 
 
 function form () {
-	$("#callback-from-page, #callback-from-page").submit(function() {
-		if (typeof yaCounter != 'undefined') {
-			yaCounter.reachGoal('formSent');
-		}
-		var button = $(this).find(".order-button");
-		var loader = $("<img/>",{
-			src:baseUrl+"/img/loading.gif"
-		});
-		//var newObj = button.replaceWith(loader);
-		button.after(loader);
-		button.hide();
-		$.ajax({
-			type: "GET",
-			url: baseUrl + "/post",
-			data: $(this).serialize()
-		}).done(function() {
-			alert("Спасибо за заявку!");
-			setTimeout(function() {
-				$.fancybox.close();
-			}, 10);
-			loader.remove();
-			button.show();
-		});
-		return false;
-	});
+	$("#callback-from-page, #callback-from-page").submit(onFormSubmit);
 }
 
 //Skidki!
