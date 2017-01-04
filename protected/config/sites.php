@@ -33,5 +33,14 @@ return array(
             'www.xn----8sbbkdy1bibtjm.xn--p1ai',
         ],
         'userAgent' => false
+    ],
+    'allMrtKtClinicsRF' => [
+        'host' => [
+            'все-мрт-и-кт-клиники-спб.рф',
+            'www.все-мрт-и-кт-клиники-спб.рф',
+            'xn--------fweby3acaawbcnk0a6bgrrje.xn--p1ai',
+            'www.xn--------fweby3acaawbcnk0a6bgrrje.xn--p1ai',
+        ],
+        'userAgent' => false
     ]
 );
