@@ -26,6 +26,19 @@
                             </div>
                         </div>
 
+                        <div class="map_clinic_block" id="dmg">
+                            <div class="map_clinic_description map_adres_hide" style="display:none">
+                                <span class="delete"><a>x</a></span>
+                                <p>Название центра: <br>МДЦ "DMG-clinic"</p>
+                                <p>Адресс: ул. Ленина, д.5</p>
+                                <p>МРТ и КТ: <br>
+                                    Поле магнита: 1,5Тл</p>
+                                <p>Телефон для записи: <?php echo Yii::app() -> phone -> getFormatted(); ?></p>
+                            </div>
+                            <div class="map_clinic_marker">
+                            </div>
+                        </div>
+
                         <div class="map_clinic_block" id="mart">
                             <div class="map_clinic_description map_adres_hide" style="display:none">
                                 <span class="delete"><a>x</a></span>
@@ -120,8 +133,18 @@
                         </div>
 
 
-
-
+                        <div class="map_clinic_block" id="ona_vet">
+                            <div class="map_clinic_description map_adres_hide" style="display:none">
+                                <span class="delete"><a>x</a></span>
+                                <p>Название центра: <br>ОНА</p>
+                                <p>Адресс: Ветеранов, 56 </p>
+                                <p>МРТ и КТ: <br>
+                                    Поле магнита: 0,2Тл (открытый)</p>
+                                <p>Телефон для записи: <?php echo Yii::app() -> phone -> getFormatted(); ?></p>
+                            </div>
+                            <div class="map_clinic_marker">
+                            </div>
+                        </div>
 
                         <div class="map_clinic_block" id="kup">
                             <div class="map_clinic_description map_adres_hide" style="display:none">
@@ -220,6 +243,21 @@
                                 <p>Название центра: <br>НДЦ Испытателей</p>
                                 <p>Адресс: пр. Испытателей, д. 39</p>
                                 <p>МРТ: Siemens<br>
+                                    Поле магнита: 1,5Тл (закрытый)</p>
+                                <p>Телефон для записи: <?php echo Yii::app() -> phone -> getFormatted(); ?></p>
+                            </div>
+                            <div class="map_clinic_marker">
+                            </div>
+                        </div>
+
+
+
+                        <div class="map_clinic_block" id="ona_sereb">
+                            <div class="map_clinic_description map_adres_hide" style="display:none">
+                                <span class="delete"><a>x</a></span>
+                                <p>Название центра: <br>ОНА</p>
+                                <p>Адресс: Серебристый бульвар, 20А</p>
+                                <p>МРТ:<br>
                                     Поле магнита: 1,5Тл (закрытый)</p>
                                 <p>Телефон для записи: <?php echo Yii::app() -> phone -> getFormatted(); ?></p>
                             </div>
