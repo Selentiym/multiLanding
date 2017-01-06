@@ -18,13 +18,13 @@ class AdminController extends CController{
         return array(
             'createRule' => array(
                 'class' => 'application.sites.common.controllers.site.ModelCreateAction',
-                'modelClass' => 'Rule',
+                'modelClass' => 'CommonRule',
                 'view' => '//rules/create',
                 'scenario' => 'create'
             ),
             'updateRule' => array(
                 'class' => 'application.sites.common.controllers.site.ModelUpdateAction',
-                'modelClass' => 'Rule',
+                'modelClass' => 'CommonRule',
                 'view' => '//rules/update',
                 'scenario' => 'update'
             ),

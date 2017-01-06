@@ -1,5 +1,4 @@
 <?php
-
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
@@ -16,7 +15,10 @@ return array(
 	'import'=>array(
 		'application.components.CHtml',
 		'application.models.*',
+		'application.models.Section',
 		'application.components.*',
+		'application.components.traits.*',
+		'application.components.forThemes.*',
 		'application.sites.common.controllers.*',
 	),
 
@@ -29,7 +31,14 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
-		
+		'prices' => [
+				'class' => 'application.modules.prices.PricesModule',
+				'dbConfig' => 'dbPrices'
+		],
+	),
+
+	'controllerMap'=>array(
+		'form' => 'application.sites.common.controllers.FormController'
 	),
 
 	// application components
@@ -54,7 +63,7 @@ return array(
 
 				'admin' => 'admin',
 				'login' => 'login',
-				'admin/<action:(create|update|delete)><modelClass:(Rule|Tel)>/<arg:\w*>' => 'admin/<action><modelClass>',
+				'admin/<action:(create|update|delete)><modelClass:(CommonRule|Tel)>/<arg:\w*>' => 'admin/<action><modelClass>',
 				
 				'<action:\w+>' => 'site/<action>',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
@@ -62,6 +71,11 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
+
+		'themeManager' => [
+			'class' => 'application.components.forThemes.UThemeManager',
+			'themeClass' => 'application.components.forThemes.UTheme'
+		],
 		'phone' => [
 			'class' => 'application.components.constantPhoneComponent',
 			'number' => '7(812)123-45-67'
@@ -75,6 +89,15 @@ return array(
             'password' => 'kicker',
             'charset' => 'utf8',
         ),
+		'dbPrices'=>array(
+				'class' => 'CDbConnection',
+				'connectionString' => 'mysql:host=localhost;dbname=cq97848_clinicsl',
+				'tablePrefix' => 'tbl_',
+				'emulatePrepare' => true,
+				'username' => 'cq97848_clinicsl',
+				'password' => 'kicker1995',
+				'charset' => 'utf8',
+		),
 		// uncomment the following to use a MySQL database
 		/*
 		'db'=>array(
@@ -85,6 +108,39 @@ return array(
 			'charset' => 'utf8',
 		),
 		*/
+		'clientScript' => array(
+				'defaultScriptPosition' => CClientScript::POS_END,
+				'defaultScriptFilePosition' => CClientScript::POS_END,
+				'coreScriptPosition' => CClientScript::POS_HEAD,
+				'packages' => [
+						'jquery' => [
+							'baseUrl' => '',
+							'js' => ['libs/jquery/jquery.min.js']
+						],
+						'simplePopup' => [
+								'baseUrl' => 'libs/simplePopup/',
+								'js' => [
+										'script.js'
+								],
+								'css' => [
+										'styles.css'
+								]
+						],
+						'smoothDivScroll' => [
+								'baseUrl' => 'libs/smoothDivScroll/',
+								'js' => [
+										'js/jquery.kinetic.min.js',
+										'js/jquery.mousewheel.min.js',
+										'js/jquery-ui-1.10.3.custom.min.js',
+										'js/jquery.smoothdivscroll-1.3-min.js',
+								],
+								'css' => [
+										'css/smoothDivScroll.css'
+								],
+								'depends' => ['jquery']
+						]
+				]
+		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',

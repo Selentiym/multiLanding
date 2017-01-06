@@ -11,7 +11,7 @@ return CMap::mergeArray(
         'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
         'name' => 'Лучшие МРТ и КТ клиники в СПб',
         //Тема стандартная
-        'theme' => 'mrktClinics',
+        'theme' => 'mainMrtToGo/mrktClinics',
         'sourceLanguage' => 'en_US',
         'language' => 'mrktClinics',
 

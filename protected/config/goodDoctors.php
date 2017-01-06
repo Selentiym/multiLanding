@@ -11,7 +11,7 @@ return CMap::mergeArray(
         'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
         'name'=>'Общество добросовестных докторов',
         //Тема стандартная
-        'theme' => null,
+        'theme' => 'mainMrtToGo/goodDoctors',
         'sourceLanguage' => 'en_US',
         'language' => 'goodDoctors',
 
@@ -19,7 +19,8 @@ return CMap::mergeArray(
         ),
 
         'controllerMap'=>array(
-            'site' => 'application.sites.common.controllers.SiteController'
+            'site' => 'application.sites.common.controllers.SiteController',
+            'form' => 'application.sites.common.controllers.FormController'
             /*'site'=>'application.sites.common.controllers.SiteController',
             'promo'=>array(
                 'class' => 'application.sites.mywebsite-ru.controllers.PromoController',

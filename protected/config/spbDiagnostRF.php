@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: user
@@ -10,8 +11,8 @@ return CMap::mergeArray(
     array(
         'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
         'name' => 'МРТ и КТ диагностика в СПб',
-        //Тема стандартная
-        'theme' => 'spbDiagnostRF',
+        'theme' => 'mainMrtToGo/spbDiagnostRF',
+        //'theme' => 'mainMrtToGo/testTheme',
         'sourceLanguage' => 'en_US',
         'language' => 'spbDiagnostRF',
 

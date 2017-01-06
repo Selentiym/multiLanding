@@ -6,24 +6,27 @@
  * Time: 17:30
  */
 $base = Yii::app() -> baseUrl;
+$baseTheme = Yii::app() -> theme -> baseUrl;
 
-$clinics_to_map = $this -> giveClinics();
+//$clinics_to_map = $this -> giveClinics(); //@TODO asd
+$clinics_to_map = [];
 
 $utm = $_REQUEST['utm_term'];
-$selectedClinic = ClinicRule::selectClinic($utm);
+//$selectedClinic = ClinicRule::selectClinic($utm); //@TODO asd
+$selectedClinic = null;
 
 Yii::app() -> getClientScript() -> registerScript('defineBase','
     baseUrl="'.$base.'";
 ',CClientScript::POS_BEGIN);
-Yii::app() -> getClientScript() -> registerScriptFile($base.'/jsLandingLike/jquery-1.11.1.min.js',CClientScript::POS_BEGIN);
-Yii::app() -> getClientScript() -> registerScriptFile($base."/jsLandingLike/jquery.maskedinput.min.js",CClientScript::POS_END);
+Yii::app() -> getClientScript() -> registerScriptFile($base.'/js/jquery-1.11.1.min.js',CClientScript::POS_BEGIN);
+Yii::app() -> getClientScript() -> registerScriptFile($base."/js/jquery.maskedinput.min.js",CClientScript::POS_END);
 //Yii::app() -> getClientScript() -> registerScriptFile($base."/fancybox/jquery.fancybox.pack.js",CClientScript::POS_END);
-Yii::app() -> getClientScript() -> registerScriptFile($base."/jsLandingLike/common.js",CClientScript::POS_END);
-Yii::app() -> getClientScript() -> registerScriptFile($base."/jsLandingLike/flipclock.js",CClientScript::POS_END);
+Yii::app() -> getClientScript() -> registerScriptFile($base."/js/common.js",CClientScript::POS_END);
+Yii::app() -> getClientScript() -> registerScriptFile($base."/js/flipclock.js",CClientScript::POS_END);
 //header scroll scripts
-Yii::app() -> getClientScript() -> registerScriptFile($base."/jsLandingLike/script.js",CClientScript::POS_END);
+Yii::app() -> getClientScript() -> registerScriptFile($base."/js/script.js",CClientScript::POS_END);
 
-Yii::app() -> getClientScript() -> registerScriptFile($base."/jsLandingLike/bigMapClinicSelect.js",CClientScript::POS_END);
+Yii::app() -> getClientScript() -> registerScriptFile($base."/js/bigMapClinicSelect.js",CClientScript::POS_END);
 
 //doctors slider
 Yii::app() -> getClientScript() -> registerScriptFile($base."/libsLandingLike/owl-carousel/owl.carousel.min.js",CClientScript::POS_END);
@@ -180,12 +183,12 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="viewport" content="width=device-width; initial-scale=0.85; maximum-scale=0.85; user-scalable=0;" />
     <link rel="shortcut icon" href="<?php echo $base; ?>/img/favicon.png" />
-    <link rel="stylesheet" href="<?php echo $base; ?>/cssLandingLike/bootstrap.min.css" />
-    <link rel="stylesheet" href="<?php echo $base; ?>/cssLandingLike/font-awesome.min.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css/font-awesome.min.css" />
     <!--<link rel="stylesheet" href="<?php echo $base; ?>/fancybox/jquery.fancybox.css" />-->
-    <link rel="stylesheet" href="<?php echo $base; ?>/cssLandingLike/main.css" />
-    <link rel="stylesheet" href="<?php echo $base; ?>/cssLandingLike/flipclock.css" />
-    <link rel="stylesheet" href="<?php echo $base; ?>/cssLandingLike/media.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css/main.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css/flipclock.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/css/media.css" />
 </head>
 <body>
 <!-- Yandex.Metrika counter -->
@@ -225,22 +228,22 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
         <div class="row">
             <div class="col-md-4 col-xs-9">
                 <a class="logo" href="#">
-                    <img alt="" src="<?php echo $base; ?>/imgLandingLike/logo.png">
+                    <img alt="" src="<?php echo $base; ?>/img/logo.png">
                     <span>Самая крупная сеть <span>МРТ</span> и <span>КТ</span><br /> диагностических центров в СПб</span>
                 </a>
             </div>
             <nav class="col-md-8 col-xs-3 main_menu clearfix">
                 <button class="main_mnu_button hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
                 <ul>
-                    <li class="discount-sale top-phone formable"><a class="fancybox" href="#callback-registration" target="_blank"><img alt="Записаться" src="<?php echo $base; ?>/imgLandingLike/top-phone.png">Запись <br /> на МРТ и КТ
+                    <li class="discount-sale top-phone formable"><a class="fancybox" href="#callback-registration" target="_blank"><img alt="Записаться" src="<?php echo $base; ?>/img/top-phone.png">Запись <br /> на МРТ и КТ
                             <span class="menu-desc">24 часа!</span>
                         </a>
                     </li>
-                    <li class="discount-sale"><a href="#hot-offers"><span class="menu-title"><i class="fa fa-percent" aria-hidden="true"></i><img alt="" src="<?php echo $base; ?>/imgLandingLike/percent.png">Самые горячие<br /> предложения по СПб</span><span class="menu-desc">Скидки и Акции</span></a></li>
+                    <li class="discount-sale"><a href="#hot-offers"><span class="menu-title"><i class="fa fa-percent" aria-hidden="true"></i><img alt="" src="<?php echo $base; ?>/img/percent.png">Самые горячие<br /> предложения по СПб</span><span class="menu-desc">Скидки и Акции</span></a></li>
                     <li class="our-centers"><a href="#centers"><span class="menu-title">Наши <br />Центры</span></a></li>
                     <li class="our-prices"><a href="#prices"><span class="menu-title">Наши<br /> Цены</span></a></li>
                     <li class="our-phone"><a href="#callback-registration" id="form-button" class="order fancybox"><span class="menu-title"><?php echo CallTrackerModule::getFormattedNumber();?></span>
-                            <img src="<?php echo $base; ?>/imgLandingLike/phone-sm.png" alt="" /><span class="menu-desc formable">Заказать обратный звонок</span></a>
+                            <img src="<?php echo $base; ?>/img/phone-sm.png" alt="" /><span class="menu-desc formable">Заказать обратный звонок</span></a>
                     </li>
                 </ul>
             </nav>
@@ -365,19 +368,19 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                 <div class="line"></div>
                 <div class="row advantages">
                     <div class="col-md-3 formable" data-form-text="<p>Результат в течение суток. Подберем удобную Вам клинику, которая готова провести обследование уже сегодня!</p><p>Наш специалист-диагност позвонит Вам в течение 5 минут. Он готов как сразу записать Вас на подходящую Вам процедуру, так и ответить на все интересующие Вас вопросы.</p>">
-                        <img src="<?php echo $base; ?>/imgLandingLike/advantage1.png" alt="" />
+                        <img src="<?php echo $base; ?>/img/advantage1.png" alt="" />
                         <span>МРТ и КТ<br /> срочно</span>
                     </div>
                     <div class="col-md-3 formable" data-form-func="nightTextPopup">
-                        <img src="<?php echo $base; ?>/imgLandingLike/advantage2.png" alt="" />
+                        <img src="<?php echo $base; ?>/img/advantage2.png" alt="" />
                         <span>мрт и кт ночью<br /> скидка 50%</span>
                     </div>
                     <div class="col-md-3 formable" data-form-text="<p>Вам не придется возвращаться за результатом обследования - достаточно немного задержаться после прохождения процедуры: выпить кофе или обсудить свои вопросы с высококвалифицированным специалистом - уже через час Вы получите результаты обследования на руки.</p><p>Наш консультант перезвонит Вам в течение пяти минут, чтобы подобрать самое выгодное для Вас предложение, а также чтобы ответить на все возникшие у Вас вопросы.</p>">
-                        <img src="<?php echo $base; ?>/imgLandingLike/advantage3.png" alt="" />
+                        <img src="<?php echo $base; ?>/img/advantage3.png" alt="" />
                         <span>Результат<br /> за час</span>
                     </div>
                     <div class="col-md-3 formable" data-form-func="consultTextPopup">
-                        <img src="<?php echo $base; ?>/imgLandingLike/advantage5.png" alt="" />
+                        <img src="<?php echo $base; ?>/img/advantage5.png" alt="" />
                         <span>бесплатная консультация<br /> невролога и травмотолога</span>
                     </div>
                 </div>
@@ -385,7 +388,7 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                 <div class="line"></div>
 
                 <?php
-                $this -> renderPartial('//landingLike/prices', ['base' => $base]);
+                $this -> renderPartial('//prices', ['base' => $base]);
                 ?>
 
                 <!--Счетчик-->
