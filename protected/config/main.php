@@ -109,8 +109,8 @@ return array(
 		),
 		*/
 		'clientScript' => array(
-				'defaultScriptPosition' => CClientScript::POS_END,
-				'defaultScriptFilePosition' => CClientScript::POS_END,
+				'defaultScriptPosition' => CClientScript::POS_READY,
+				'defaultScriptFilePosition' => CClientScript::POS_BEGIN,
 				'coreScriptPosition' => CClientScript::POS_HEAD,
 				'packages' => [
 						'jquery' => [

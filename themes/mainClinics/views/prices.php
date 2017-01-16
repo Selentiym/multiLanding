@@ -13,7 +13,7 @@
                     <table>
                         <?php
                             $module = Yii::app() -> getModule('prices');
-                            $mrtPrices = $module -> getPositionedBlocksArray(\PriceModule\PriceBlock::model() -> findAllByAttributes(['category_name' => 'mrt']));
+                            $mrtPrices = $module -> getPositionedBlocksArray(PriceBlock::model() -> findAllByAttributes(['category_name' => 'mrt']));
                             foreach($mrtPrices as $block) {
                                 $this -> renderPartial('//_price_block',['block' => $block]);
                             }
@@ -31,11 +31,11 @@
                         $ktPrices = $module -> getPositionedBlocksArray(PriceBlock::model() -> findAllByAttributes(['category_name' => 'kt_']));
                         //$ktPrices = PriceBlock::model() -> findAllByAttributes(['category_name' => 'kt_']);
                         foreach($ktPrices as $block) {
-                            $this -> renderPartial('//landingLike/_price_block',['block' => $block]);
+                            $this -> renderPartial('//_price_block',['block' => $block]);
                         }
                         $selPrices = $module -> getPositionedBlocksArray(PriceBlock::model() -> findAllByAttributes(['category_name' => 'sel']));
                         foreach($selPrices as $block) {
-                            $this -> renderPartial('//landingLike/_price_block',['block' => $block]);
+                            $this -> renderPartial('//_price_block',['block' => $block]);
                         }
                         ?>
                     </table>

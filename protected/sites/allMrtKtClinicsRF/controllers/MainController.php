@@ -44,4 +44,12 @@ class MainController extends Controller {
         //Сохранили результат выбора темы
         Yii::app() -> request -> cookies ['theme'] = new CHttpCookie('theme',$theme);*/
     }
+    public function actionClinicsCarouselData(){
+        if (Yii::app() -> getRequest() -> isAjaxRequest) {
+            echo "<div>ok</div>";
+            //$this->renderPartial('//landingLike/clinicsCarouselData');
+        } else {
+            echo "ajax only";
+        }
+    }
 }

@@ -6,6 +6,7 @@
  * Time: 9:45
  */
 class UTheme extends CTheme {
+    private $_themeManager;
     private $_parentString = '';
     /**
      * @var CTheme $_parentTheme
@@ -44,6 +45,7 @@ class UTheme extends CTheme {
      */
     public function getViewFile($controller, $viewName) {
         $file = parent::getViewFile($controller, $viewName);
+        $this -> setLastRenderedTheme($this);
         if (!$file) {
             $parent = $this -> getParentTheme();
             if ($parent instanceof CTheme) {
@@ -51,5 +53,23 @@ class UTheme extends CTheme {
             }
         }
         return $file;
+    }
+
+    private function setLastRenderedTheme(CTheme $theme) {
+        if ($man = $this -> getThemeManager()) {
+            $man -> setLastRenderedTheme($theme);
+        }
+    }
+
+    private function getThemeManager() {
+        if (!isset($this -> _themeManager)) {
+            $man = Yii::app()->themeManager;
+            if ($man instanceof UThemeManager) {
+                $this -> _themeManager = $man;
+            } else {
+                $this -> _themeManager = false;
+            }
+        }
+        return $this -> _themeManager;
     }
 }

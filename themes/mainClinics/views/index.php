@@ -6,7 +6,10 @@
  * Time: 17:30
  */
 $base = Yii::app() -> baseUrl;
+
 $baseTheme = Yii::app() -> theme -> baseUrl;
+
+$baseRenderedTheme = Yii::app() -> themeManager -> getBaseUrl('__last');
 
 //$clinics_to_map = $this -> giveClinics(); //@TODO asd
 $clinics_to_map = [];
@@ -18,29 +21,29 @@ $selectedClinic = null;
 Yii::app() -> getClientScript() -> registerScript('defineBase','
     baseUrl="'.$base.'";
 ',CClientScript::POS_BEGIN);
-Yii::app() -> getClientScript() -> registerScriptFile($base.'/js/jquery-1.11.1.min.js',CClientScript::POS_BEGIN);
-Yii::app() -> getClientScript() -> registerScriptFile($base."/js/jquery.maskedinput.min.js",CClientScript::POS_END);
-//Yii::app() -> getClientScript() -> registerScriptFile($base."/fancybox/jquery.fancybox.pack.js",CClientScript::POS_END);
-Yii::app() -> getClientScript() -> registerScriptFile($base."/js/common.js",CClientScript::POS_END);
-Yii::app() -> getClientScript() -> registerScriptFile($base."/js/flipclock.js",CClientScript::POS_END);
+Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme.'/js/jquery-1.11.1.min.js',CClientScript::POS_BEGIN);
+Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme."/js/jquery.maskedinput.min.js",CClientScript::POS_END);
+//Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme."/fancybox/jquery.fancybox.pack.js",CClientScript::POS_END);
+Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme."/js/common.js",CClientScript::POS_END);
+Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme."/js/flipclock.js",CClientScript::POS_END);
 //header scroll scripts
-Yii::app() -> getClientScript() -> registerScriptFile($base."/js/script.js",CClientScript::POS_END);
+Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme."/js/script.js",CClientScript::POS_END);
 
-Yii::app() -> getClientScript() -> registerScriptFile($base."/js/bigMapClinicSelect.js",CClientScript::POS_END);
+Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme."/js/bigMapClinicSelect.js",CClientScript::POS_END);
 
 //doctors slider
-Yii::app() -> getClientScript() -> registerScriptFile($base."/libsLandingLike/owl-carousel/owl.carousel.min.js",CClientScript::POS_END);
+Yii::app() -> getClientScript() -> registerScriptFile($base."/libs/owl-carousel/owl.carousel.min.js",CClientScript::POS_END);
 
 
-Yii::app() -> getClientScript() -> registerCssFile($base."/libsLandingLike/owl-carousel/owl.carousel.css");
+Yii::app() -> getClientScript() -> registerCssFile($base."/libs/owl-carousel/owl.carousel.css");
 
 Yii::app() -> getClientScript() -> registerScriptFile("http://vk.com/js/api/openapi.js",CClientScript::POS_BEGIN);
 
 
 //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->baseUrl.'/js/map.js');
-Yii::app()->getClientScript()->registerCssFile(Yii::app()->baseUrl.'/css/widget_comments.css');
-Yii::app()->getClientScript()->registerCssFile(Yii::app()->baseUrl.'/css/vk_lite.css');
-Yii::app()->getClientScript()->registerCssFile(Yii::app()->baseUrl.'/css/vk_page.css');
+Yii::app()->getClientScript()->registerCssFile($baseRenderedTheme.'/css/widget_comments.css');
+Yii::app()->getClientScript()->registerCssFile($baseRenderedTheme.'/css/vk_lite.css');
+Yii::app()->getClientScript()->registerCssFile($baseRenderedTheme.'/css/vk_page.css');
 
 //smoothClinicsCarousel
 Yii::app() -> getClientScript() -> registerPackage('smoothDivScroll');
@@ -68,8 +71,8 @@ clock.setCountdown(true);
 clock.start();
 ",CClientScript::POS_READY);
 
-Yii::app() -> getClientScript() -> registerScriptFile(Yii::app() -> baseUrl.'/js/clinicsCarousel.js', CClientScript::POS_BEGIN);
-
+Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme.'/js/clinicsCarousel.js', CClientScript::POS_BEGIN);
+//TODO return the carousel
 Yii::app() -> getClientScript() -> registerScript('clinicsCarousel',"
 startClinicsCarousel(window, '".($selectedClinic instanceof clinics ? $selectedClinic -> id : '')."');
 ",CClientScript::POS_READY);
@@ -182,13 +185,13 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="viewport" content="width=device-width; initial-scale=0.85; maximum-scale=0.85; user-scalable=0;" />
-    <link rel="shortcut icon" href="<?php echo $base; ?>/img/favicon.png" />
-    <link rel="stylesheet" href="<?php echo $base; ?>/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="<?php echo $base; ?>/css/font-awesome.min.css" />
-    <!--<link rel="stylesheet" href="<?php echo $base; ?>/fancybox/jquery.fancybox.css" />-->
-    <link rel="stylesheet" href="<?php echo $base; ?>/css/main.css" />
-    <link rel="stylesheet" href="<?php echo $base; ?>/css/flipclock.css" />
-    <link rel="stylesheet" href="<?php echo $base; ?>/css/media.css" />
+    <link rel="shortcut icon" href="<?php echo $baseRenderedTheme; ?>/img/favicon.png" />
+    <link rel="stylesheet" href="<?php echo $baseRenderedTheme; ?>/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<?php echo $baseRenderedTheme; ?>/css/font-awesome.min.css" />
+    <!--<link rel="stylesheet" href="<?php echo $baseRenderedTheme; ?>/fancybox/jquery.fancybox.css" />-->
+    <link rel="stylesheet" href="<?php echo $baseRenderedTheme; ?>/css/main.css" />
+    <link rel="stylesheet" href="<?php echo $baseRenderedTheme; ?>/css/flipclock.css" />
+    <link rel="stylesheet" href="<?php echo $baseRenderedTheme; ?>/css/media.css" />
 </head>
 <body>
 <!-- Yandex.Metrika counter -->
@@ -228,22 +231,22 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
         <div class="row">
             <div class="col-md-4 col-xs-9">
                 <a class="logo" href="#">
-                    <img alt="" src="<?php echo $base; ?>/img/logo.png">
+                    <img alt="" src="<?php echo $baseRenderedTheme; ?>/img/logo.png">
                     <span>Самая крупная сеть <span>МРТ</span> и <span>КТ</span><br /> диагностических центров в СПб</span>
                 </a>
             </div>
             <nav class="col-md-8 col-xs-3 main_menu clearfix">
                 <button class="main_mnu_button hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
                 <ul>
-                    <li class="discount-sale top-phone formable"><a class="fancybox" href="#callback-registration" target="_blank"><img alt="Записаться" src="<?php echo $base; ?>/img/top-phone.png">Запись <br /> на МРТ и КТ
+                    <li class="discount-sale top-phone formable"><a class="fancybox" href="#callback-registration" target="_blank"><img alt="Записаться" src="<?php echo $baseRenderedTheme; ?>/img/top-phone.png">Запись <br /> на МРТ и КТ
                             <span class="menu-desc">24 часа!</span>
                         </a>
                     </li>
-                    <li class="discount-sale"><a href="#hot-offers"><span class="menu-title"><i class="fa fa-percent" aria-hidden="true"></i><img alt="" src="<?php echo $base; ?>/img/percent.png">Самые горячие<br /> предложения по СПб</span><span class="menu-desc">Скидки и Акции</span></a></li>
+                    <li class="discount-sale"><a href="#hot-offers"><span class="menu-title"><i class="fa fa-percent" aria-hidden="true"></i><img alt="" src="<?php echo $baseRenderedTheme; ?>/img/percent.png">Самые горячие<br /> предложения по СПб</span><span class="menu-desc">Скидки и Акции</span></a></li>
                     <li class="our-centers"><a href="#centers"><span class="menu-title">Наши <br />Центры</span></a></li>
                     <li class="our-prices"><a href="#prices"><span class="menu-title">Наши<br /> Цены</span></a></li>
                     <li class="our-phone"><a href="#callback-registration" id="form-button" class="order fancybox"><span class="menu-title"><?php echo CallTrackerModule::getFormattedNumber();?></span>
-                            <img src="<?php echo $base; ?>/img/phone-sm.png" alt="" /><span class="menu-desc formable">Заказать обратный звонок</span></a>
+                            <img src="<?php echo $baseRenderedTheme; ?>/img/phone-sm.png" alt="" /><span class="menu-desc formable">Заказать обратный звонок</span></a>
                     </li>
                 </ul>
             </nav>
@@ -368,19 +371,19 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                 <div class="line"></div>
                 <div class="row advantages">
                     <div class="col-md-3 formable" data-form-text="<p>Результат в течение суток. Подберем удобную Вам клинику, которая готова провести обследование уже сегодня!</p><p>Наш специалист-диагност позвонит Вам в течение 5 минут. Он готов как сразу записать Вас на подходящую Вам процедуру, так и ответить на все интересующие Вас вопросы.</p>">
-                        <img src="<?php echo $base; ?>/img/advantage1.png" alt="" />
+                        <img src="<?php echo $baseRenderedTheme; ?>/img/advantage1.png" alt="" />
                         <span>МРТ и КТ<br /> срочно</span>
                     </div>
                     <div class="col-md-3 formable" data-form-func="nightTextPopup">
-                        <img src="<?php echo $base; ?>/img/advantage2.png" alt="" />
+                        <img src="<?php echo $baseRenderedTheme; ?>/img/advantage2.png" alt="" />
                         <span>мрт и кт ночью<br /> скидка 50%</span>
                     </div>
                     <div class="col-md-3 formable" data-form-text="<p>Вам не придется возвращаться за результатом обследования - достаточно немного задержаться после прохождения процедуры: выпить кофе или обсудить свои вопросы с высококвалифицированным специалистом - уже через час Вы получите результаты обследования на руки.</p><p>Наш консультант перезвонит Вам в течение пяти минут, чтобы подобрать самое выгодное для Вас предложение, а также чтобы ответить на все возникшие у Вас вопросы.</p>">
-                        <img src="<?php echo $base; ?>/img/advantage3.png" alt="" />
+                        <img src="<?php echo $baseRenderedTheme; ?>/img/advantage3.png" alt="" />
                         <span>Результат<br /> за час</span>
                     </div>
                     <div class="col-md-3 formable" data-form-func="consultTextPopup">
-                        <img src="<?php echo $base; ?>/img/advantage5.png" alt="" />
+                        <img src="<?php echo $baseRenderedTheme; ?>/img/advantage5.png" alt="" />
                         <span>бесплатная консультация<br /> невролога и травмотолога</span>
                     </div>
                 </div>
@@ -388,7 +391,7 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                 <div class="line"></div>
 
                 <?php
-                $this -> renderPartial('//prices', ['base' => $base]);
+                $this -> renderPartial('//prices');
                 ?>
 
                 <!--Счетчик-->
@@ -399,7 +402,7 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                             <p>на МРТ или КТ исследование</p>
                             <p>до конца акции осталось:</p>
                             <div class="container_countdown">
-                                <div id="clock" class="flip-clock-wrapper"><span class="flip-clock-divider days"><span class="flip-clock-label">Days</span></span><ul class="flip "><li class="flip-clock-before"><a href="<?php echo $base; ?>/<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">9</div></div><div class="down"><div class="shadow"></div><div class="inn">9</div></div></a></li><li class="flip-clock-active"><a href="<?php echo $base; ?>/<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">0</div></div><div class="down"><div class="shadow"></div><div class="inn">0</div></div></a></li></ul><ul class="flip "><li class="flip-clock-before"><a href="<?php echo $base; ?>/<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">0</div></div><div class="down"><div class="shadow"></div><div class="inn">0</div></div></a></li><li class="flip-clock-active"><a href="<?php echo $base; ?>/<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li></ul><span class="flip-clock-divider hours"><span class="flip-clock-label">Hours</span><span class="flip-clock-dot top"></span><span class="flip-clock-dot bottom"></span></span><ul class="flip "><li class="flip-clock-before"><a href="<?php echo $base; ?>/<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">0</div></div><div class="down"><div class="shadow"></div><div class="inn">0</div></div></a></li><li class="flip-clock-active"><a href="<?php echo $base; ?>/<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li></ul><ul class="flip  play"><li class="flip-clock-before"><a href="<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li><li class="flip-clock-active"><a href="<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li></ul><span class="flip-clock-divider minutes"><span class="flip-clock-label">Minutes</span><span class="flip-clock-dot top"></span><span class="flip-clock-dot bottom"></span></span><ul class="flip  play"><li class="flip-clock-before"><a href="<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">3</div></div><div class="down"><div class="shadow"></div><div class="inn">3</div></div></a></li><li class="flip-clock-active"><a href="<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li></ul><ul class="flip  play"><li class="flip-clock-before"><a href="<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">6</div></div><div class="down"><div class="shadow"></div><div class="inn">6</div></div></a></li><li class="flip-clock-active"><a href="<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">5</div></div><div class="down"><div class="shadow"></div><div class="inn">5</div></div></a></li></ul><span class="flip-clock-divider seconds"><span class="flip-clock-label">Seconds</span><span class="flip-clock-dot top"></span><span class="flip-clock-dot bottom"></span></span><ul class="flip  play"><li class="flip-clock-before"><a href="<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">4</div></div><div class="down"><div class="shadow"></div><div class="inn">4</div></div></a></li><li class="flip-clock-active"><a href="<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">3</div></div><div class="down"><div class="shadow"></div><div class="inn">3</div></div></a></li></ul><ul class="flip  play"><li class="flip-clock-before"><a href="<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">3</div></div><div class="down"><div class="shadow"></div><div class="inn">3</div></div></a></li><li class="flip-clock-active"><a href="<?php echo $base; ?>/http://mrt-to-go.ru/#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li></ul></div>
+                                <div id="clock" class="flip-clock-wrapper"><span class="flip-clock-divider days"><span class="flip-clock-label">Days</span></span><ul class="flip "><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">9</div></div><div class="down"><div class="shadow"></div><div class="inn">9</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">0</div></div><div class="down"><div class="shadow"></div><div class="inn">0</div></div></a></li></ul><ul class="flip "><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">0</div></div><div class="down"><div class="shadow"></div><div class="inn">0</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li></ul><span class="flip-clock-divider hours"><span class="flip-clock-label">Hours</span><span class="flip-clock-dot top"></span><span class="flip-clock-dot bottom"></span></span><ul class="flip "><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">0</div></div><div class="down"><div class="shadow"></div><div class="inn">0</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li></ul><ul class="flip  play"><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">1</div></div><div class="down"><div class="shadow"></div><div class="inn">1</div></div></a></li></ul><span class="flip-clock-divider minutes"><span class="flip-clock-label">Minutes</span><span class="flip-clock-dot top"></span><span class="flip-clock-dot bottom"></span></span><ul class="flip  play"><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">3</div></div><div class="down"><div class="shadow"></div><div class="inn">3</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li></ul><ul class="flip  play"><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">6</div></div><div class="down"><div class="shadow"></div><div class="inn">6</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">5</div></div><div class="down"><div class="shadow"></div><div class="inn">5</div></div></a></li></ul><span class="flip-clock-divider seconds"><span class="flip-clock-label">Seconds</span><span class="flip-clock-dot top"></span><span class="flip-clock-dot bottom"></span></span><ul class="flip  play"><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">4</div></div><div class="down"><div class="shadow"></div><div class="inn">4</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">3</div></div><div class="down"><div class="shadow"></div><div class="inn">3</div></div></a></li></ul><ul class="flip  play"><li class="flip-clock-before"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">3</div></div><div class="down"><div class="shadow"></div><div class="inn">3</div></div></a></li><li class="flip-clock-active"><a href="#"><div class="up"><div class="shadow"></div><div class="inn">2</div></div><div class="down"><div class="shadow"></div><div class="inn">2</div></div></a></li></ul></div>
                             </div>
                         </div>
                         <div class="promocode">
@@ -581,7 +584,7 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                     <?php
                     //  $c = new Controller();
                     //$c -> renderPartial()
-                    $this -> renderPartial('//landingLike/clinicsBottom',['showAll' => 1, 'model' => clinics::model() -> find()]);
+                    //$this -> renderPartial('//clinicsBottom',['showAll' => 1, 'model' => clinics::model() -> find()]);
                     ?>
                 </section>
                 <section id="doctora">
@@ -593,7 +596,9 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                         <div class="prev_button"><i class="fa fa-angle-left"></i></div>
                         <div class="carousel-doctors">
                             <?php
-                            foreach (doctors::model() -> findAll() as $doctor) {
+                            //TODO repair doctors!
+                            //foreach (doctors::model() -> findAll() as $doctor) {
+                            foreach ([] as $doctor) {
                                 ?>
                                 <div class="slide_item">
                                     <div class="doctor">

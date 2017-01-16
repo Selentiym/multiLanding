@@ -13,6 +13,10 @@ class UThemeManager extends CThemeManager {
     public $parentDelimiter = '/';
 
     public static $createdThemes = [];
+    /**
+     * @var CTheme
+     */
+    private $_lastRenderedTheme;
     public function getTheme($name) {
         if (!isset(self::$createdThemes[$name])) {
             $parents = explode($this -> parentDelimiter, $name);
@@ -33,7 +37,23 @@ class UThemeManager extends CThemeManager {
         }
         return self::$createdThemes[$name];
     }
-    public function setTheme() {
-
+    public function getBaseUrl($param = null) {
+        if ($param === '__last') {
+            return $this -> _lastRenderedTheme -> getBaseUrl();
+        }
+        if ($param) {
+            foreach (self::$createdThemes as $key => $theme) {
+                if (preg_match('/'.$param.'$/', $key)) {
+                    return $theme -> getBaseUrl;
+                }
+            }
+        }
+        return parent::getBaseUrl();
     }
+    public function setLastRenderedTheme(CTheme $theme) {
+        $this -> _lastRenderedTheme = $theme;
+    }
+    /*public function setTheme() {
+
+    }*/
 }
