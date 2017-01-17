@@ -145,14 +145,26 @@ class CallTrackerModule extends UWebModule
 			//echo "<script src='$url'></script>";
 			//Передали на страницу идентификатор захода пользователя
 			$trace = $this -> enter -> called ? 'false' : 'true';
-			Yii::app() -> getClientScript() -> registerScript($this -> getBaseScriptName().'defineConstants','
+			$cs = Yii::app() -> getClientScript();
+			$cs -> registerScript($this -> getBaseScriptName().'defineConstants','
 				window.callTrackerJS = {};
 				callTrackerJS.id_enter = '.$this -> enter -> id.';
 				callTrackerJS.delay = '.self::requestDelay.';
 				callTrackerJS.traceGoal = '.$trace.';
 				callTrackerJS.price = '.self::targetPrice.';
 			',CClientScript::POS_BEGIN);
-			Yii::app() -> getClientScript() -> registerScriptFile($url, CClientScript::POS_END);
+			$cs -> registerScriptFile($url, CClientScript::POS_END);
+			$params = $this -> getExperimentNonStatic() -> getParams();
+			$cs -> registerScript('sendParams',"
+			setTimeout(function(){
+			try {
+				var counter = window.getYaCounter();
+				var yaParams = ". json_encode($params) .";
+				console.log(counter);
+				counter.params(yaParams);
+			} catch(err){}
+			},5000);
+			",CClientScript::POS_READY);
 		}
 	}
 
