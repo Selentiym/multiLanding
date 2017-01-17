@@ -225,4 +225,8 @@ class TCall extends aApiCall
 		}
 		return parent::beforeSave();
 	}
+
+	public function getDbConnection() {
+		return CallTrackerModule::$lastInstance -> getDbConnection();
+	}
 }
