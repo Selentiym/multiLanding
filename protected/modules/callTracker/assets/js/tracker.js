@@ -64,15 +64,19 @@ $(document).ready(function(){
             price = 250;
         }
         if (callTrackerJS.traceGoal) {
-            if (yaCounter40204894) {
-                yaCounter40204894.reachGoal('phoneCall', {
-                    order_price: price,
-                    currency: "RUB"
-                });
-            } else {
-                $.post(baseUrl + '/home/couldNotReachGoal',{type:'call'});
+            try {
+                var counter = window.getYaCounter();
+                console.log(counter);
+                if (counter) {
+                    counter.reachGoal('phoneCall', {
+                        order_price: price,
+                        currency: "RUB"
+                    });
+                    callTrackerJS.traceGoal = false;
+                }
+            } catch (err) {
+                $.post(baseUrl + '/home/couldNotReachGoal', {type: 'call'});
             }
-            callTrackerJS.traceGoal = false;
         }
     }
     (function($, window){

@@ -11,7 +11,7 @@ class CustomEnter extends Enter {
      */
     public function tableName()
     {
-        return 'ct_enter';
+        return '{{ct_enter}}';
     }
     /**
      * //В общем случае будет self::NUMBER_CLASS

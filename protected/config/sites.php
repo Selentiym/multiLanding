@@ -5,6 +5,7 @@
  * Date: 20.12.2016
  * Time: 19:52
  */
+$_SERVER['effectiveHost'] = str_replace('debug.','',$_SERVER['HTTP_HOST']);
 return array(
     'mrktClinics' => array(
     'host' => array(

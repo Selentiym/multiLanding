@@ -5,7 +5,7 @@
  * Date: 06.01.2017
  * Time: 15:59
  */
-return CMap::mergeArray(
+return SiteDispatcher::mergeArray(
     require_once(dirname(__FILE__).'/main.php'),
     array(
         'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',

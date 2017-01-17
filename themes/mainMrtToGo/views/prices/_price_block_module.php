@@ -15,6 +15,13 @@ if ($count == 0) {
     $blockName = "<b>$blockName</b>";
 }
 $type = $block -> category_name == 'mrt' ? 'mrt' : 'kt';
+CallTrackerModule::useTracker();
+$experiment = CallTrackerModule::getExperiment();
+/**
+ * @type iExperiment $experiment
+ */
+$coeff = $experiment -> getProperty('price');
+$cl = $block -> className;
 ?>
 <li class="<?php echo $type; ?> <?php echo 'price-'.$block -> className; ?>">
     <div class="h1" id="<?php echo $type.'-'.$block -> className; ?>"><?php echo $blockName; ?></div>
@@ -24,7 +31,8 @@ $type = $block -> category_name == 'mrt' ? 'mrt' : 'kt';
             foreach($prices as $price){
                 $this -> renderPartial('//subs/_single_price',[
                     'price' => $price,
-                    'active' => $price -> getHighlight()
+                    'active' => $price -> getHighlight(),
+                    'coeff' => $coeff
                 ]);
             }
             ?>

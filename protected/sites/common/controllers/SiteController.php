@@ -111,7 +111,8 @@ class SiteController extends AController
 			//Делаем доступными модели модуля
 			//Yii::app() -> getModule('prices');
 			$section = Section::model()->findByPk($_POST['section_id']);
-			$rule = CommonRule::model()->findByPk($_POST["rule_id"]);
+			$rule = CommonRule::model() -> customFind($_POST['rule_id'],$_POST,'');
+			//$rule = CommonRule::model()->findByPk($_POST["rule_id"]);
 			$_GET['utm_term'] = $_POST['utm_term'];
 			$base = Yii::app()->baseUrl;
 			$tel = $_POST['tel'];

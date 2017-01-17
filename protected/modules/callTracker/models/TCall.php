@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "ct_tCall".
+ * This is the model class for table "{{ct_tCall}}".
  *
- * The followings are the available columns in table 'ct_tCall':
+ * The followings are the available columns in table '{{ct_tCall}}':
  * @property integer $id
  * @property string $number
  * @property integer $id_num
@@ -29,7 +29,7 @@ class TCall extends aApiCall
 	 */
 	public function tableName()
 	{
-		return 'ct_tCall';
+		return '{{ct_tCall}}';
 	}
 
 	/**

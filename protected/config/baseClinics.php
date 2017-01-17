@@ -5,7 +5,7 @@
  * Date: 06.01.2017
  * Time: 16:12
  */
-return CMap::mergeArray(
+return SiteDispatcher::mergeArray(
     require_once(dirname(__FILE__).'/main.php'),
     array(
         'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
@@ -24,6 +24,7 @@ return CMap::mergeArray(
             'tracker' =>[
                 'class' => 'application.modules.callTracker.CallTrackerModule',
                 'blocked' => true,
+                'numberWhenBlocked' => 'number',
                 'formatNumber' => function($number){
                     //asd;
                     $number = preg_replace('/[^\d]/','',$number);

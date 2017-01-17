@@ -23,9 +23,14 @@ class CallTrackerModule extends UWebModule
 	 */
 	private $_enterFactory;
 	/**
-	 * @var string $_assetsUrl
+	 * @var string
 	 */
 	private $_assetsUrl;
+	/**
+	 * What will be shown if the carousel is switched off
+	 * @var string
+	 */
+	public $numberWhenBlocked;
 	/**
 	 * @var aEnter объект захода
 	 */
@@ -81,8 +86,8 @@ class CallTrackerModule extends UWebModule
 			 */
 			$num = new phNumber();
 			$num->id = -1;
-			$num->number = 78122411058;
-			$num->short_number = 2411058;
+			$num->number = $this -> numberWhenBlocked;
+			$num->short_number = substr(preg_replace('/[^\d]/ui','',$num -> number),-7);
 			$enter -> setNumber($num);
 			/**
 			 * end of temporary block
@@ -228,27 +233,46 @@ class CallTrackerModule extends UWebModule
 	 * @return string
 	 */
 	public static function getNumber() {
-		return self::$lastInstance -> enter -> getNumber() -> getNumberString();
+		return self::$lastInstance -> getNumberNonStatic();
+	}
+	/**
+	 * @return string
+	 */
+	public function getNumberNonStatic() {
+		return $this -> enter -> getNumber() -> getNumberString();
 	}
 	/**
 	 * @return string
 	 */
 	public static function getFormattedNumber() {
-		$inst = self::$lastInstance;
-		$seed = self::getNumber();
-		if (is_callable($inst -> formatNumber)) {
-			$seed = call_user_func($inst -> formatNumber, $seed);
+		return self::$lastInstance -> getFormattedNumberNonStatic();
+	}
+	/**
+	 * @return string
+	 */
+	public function getFormattedNumberNonStatic(){
+		$seed = $this -> getNumber();
+		if (is_callable($this -> formatNumber)) {
+			$seed = call_user_func($this -> formatNumber, $seed);
 		}
 		return $seed;
 	}
-
 	/**
 	 * @return string
 	 */
 	public static function getShortNumber() {
-		return self::$lastInstance -> enter -> getNumber() -> getShortNumberString();
+		return self::$lastInstance -> getShortNumberNonStatic();
+	}
+	/**
+	 * @return string
+	 */
+	public function getShortNumberNonStatic() {
+		return $this -> enter -> getNumber() -> getShortNumberString();
 	}
 	public static function getExperiment() {
-		return self::$lastInstance -> enter -> getExperiment();
+		return self::$lastInstance -> getExperimentNonStatic();
+	}
+	public function getExperimentNonStatic() {
+		return $this -> enter -> getExperiment();
 	}
 }

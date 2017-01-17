@@ -7,12 +7,13 @@
  */
 class SiteDispatcher
 {
+    const KEY = 'effectiveHost';
     // сохраняем найденный конфиг в сессию
     public static function setCurrentSiteConfig( $configName )
     {
         @session_start();
         $_SESSION['CURRENT_SITE_CONFIG'] = array(
-            'host' => $_SERVER['HTTP_HOST'],
+            'host' => $_SERVER[self::KEY],
             'configName' => $configName
         );
         @session_write_close();
@@ -43,7 +44,7 @@ class SiteDispatcher
         Если локалка, то хотим удобную смену между сайтами
         */
         if ( ($arCurrent = self::getCurrentSiteConfig())
-            && (($arCurrent['host'] == $_SERVER['HTTP_HOST'])||($isLocal)) //На локалке проверка не по хосту
+            && (($arCurrent['host'] == $_SERVER[self::KEY])||($isLocal)) //На локалке проверка не по хосту
             && isset($arSites[$arCurrent['configName']])
             && ((!$_GET["configName"])||(!$isLocal))
         )
@@ -61,7 +62,7 @@ class SiteDispatcher
         foreach ( $arSites as $configName => $arSiteConfig )
         {
             $res = true;
-            $res &= in_array( $_SERVER['HTTP_HOST'], $arSiteConfig['host'] );
+            $res &= in_array( $_SERVER[self::KEY], $arSiteConfig['host'] );
             if ( $res && $arSiteConfig['userAgent'] && isset( $_SERVER['HTTP_USER_AGENT'] ) )
             {
                 $m = false;
@@ -80,8 +81,8 @@ class SiteDispatcher
         }
 
         error_log('Can\'t determine config to site: ' . var_export( array(
-                'host' => $_SERVER['HTTP_HOST'],
-                'userAgent' => $_SERVER['HTTP_HOST'],
+                'host' => $_SERVER[self::KEY],
+                'userAgent' => $_SERVER[self::KEY],
             ), 1));
         //throw new Exception('Can\'t determine config to site');
         return false;
@@ -116,4 +117,34 @@ class SiteDispatcher
         return 'protected/config/' . $configName . '.php';
     }
 
+    /**
+     * Copy of CMap::mergeArray, which removes a value from resulting array
+     * if the latest key corresponds to null
+     * @param $a
+     * @param $b
+     * @return array|mixed
+     */
+    public static function mergeArray($a,$b)
+    {
+        $args=func_get_args();
+        $res=array_shift($args);
+        while(!empty($args))
+        {
+            $next=array_shift($args);
+            foreach($next as $k => $v)
+            {
+                if ($v !== null) {
+                    if (is_integer($k))
+                        isset($res[$k]) ? $res[] = $v : $res[$k] = $v;
+                    elseif (is_array($v) && isset($res[$k]) && is_array($res[$k]))
+                        $res[$k] = self::mergeArray($res[$k], $v);
+                    else
+                        $res[$k] = $v;
+                } else {
+                    unset($res[$k]);
+                }
+            }
+        }
+        return $res;
+    }
 }

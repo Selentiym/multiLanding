@@ -5,7 +5,7 @@
  * Date: 20.12.2016
  * Time: 20:28
  */
-return CMap::mergeArray(
+return SiteDispatcher::mergeArray(
     require_once(dirname(__FILE__).'/baseClinics.php'),
     array(
         'name' => 'Самая крупная сеть МРТ и КТ диагностических центров в СПб',

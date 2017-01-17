@@ -1,6 +1,6 @@
 <?php
 
-return CMap::mergeArray(
+return SiteDispatcher::mergeArray(
 	require(dirname(__FILE__).'/main.php'),
 	array(
 		'components'=>array(

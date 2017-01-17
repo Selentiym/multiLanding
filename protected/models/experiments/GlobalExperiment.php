@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "exp_experiments".
+ * This is the model class for table "{{exp_experiments}}".
  *
- * The followings are the available columns in table 'exp_experiments':
+ * The followings are the available columns in table '{{exp_experiments}}':
  * @property integer $id
  * @property integer $id_enter
  * @property double $price
@@ -18,7 +18,7 @@ class GlobalExperiment extends CActiveRecord implements iExperiment {
 	 */
 	public function tableName()
 	{
-		return 'exp_experiments';
+		return '{{exp_experiments}}';
 	}
 
 	/**
@@ -108,8 +108,8 @@ class GlobalExperiment extends CActiveRecord implements iExperiment {
 	 */
 	public function initialize(aEnter $enter = null) {
 		if ($this -> getIsNewRecord()) {
-			//$prices = [0.8, 0.9, 1.0];
-			$prices = [1.0];
+			$prices = [0.8, 0.9, 1.0];
+			//$prices = [1.0];
 			$themes = ['mobile', ''];
 			$res = browserInfoHolder::getInstance();
 			$isMobile = 0;

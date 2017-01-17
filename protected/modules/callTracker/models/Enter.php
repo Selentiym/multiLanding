@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "ct_enter".
+ * This is the model class for table "{{ct_enter}}".
  *
- * The followings are the available columns in table 'ct_enter':
+ * The followings are the available columns in table '{{ct_enter}}':
  * @property integer $id
  * @property integer $id_num
  * @property string $utm_term
@@ -29,7 +29,7 @@ class Enter extends aEnter
 	 */
 	public function tableName()
 	{
-		return 'ct_enter';
+		return '{{ct_enter}}';
 	}
 
 	/**

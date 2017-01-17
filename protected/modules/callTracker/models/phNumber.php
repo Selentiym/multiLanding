@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "ct_number".
+ * This is the model class for table "{{ct_number}}".
  *
- * The followings are the available columns in table 'ct_number':
+ * The followings are the available columns in table '{{ct_number}}':
  * @property integer $id
  * @property string $number
  * @property string $short_number
@@ -22,7 +22,7 @@ class phNumber extends aNumber
 	 */
 	public function tableName()
 	{
-		return 'ct_number';
+		return '{{ct_number}}';
 	}
 
 	/**
@@ -121,12 +121,12 @@ class phNumber extends aNumber
 				SELECT
 					`id`
 				FROM
-					`ct_number` as `n`
+					`{{ct_number}}` as `n`
 				WHERE
 					(SELECT
 						`id`
 					FROM
-						`ct_enter` as `e`
+						`{{ct_enter}}` as `e`
 					WHERE
 						`e`.`id_num`=`n`.`id`
 						AND `e`.`active` = '1'
@@ -135,7 +135,7 @@ class phNumber extends aNumber
 					AND `n`.`reserved` = '0'
 					AND `n`.`noCarousel` = '0'
 				";
-		$ids = Yii::app() -> db -> createCommand($freestSql) -> queryColumn();
+		$ids = self::model() -> getDbConnection() -> createCommand($freestSql) -> queryColumn();
 		if (count($ids) == 0) {
 			//Пришлось сделать вот так вот криво, потому что как ни крути, а придется в mysql
 			//два раза эту таблицу получать. Но ведь возможны изменения, поэтому чтобы их два раза
@@ -145,8 +145,8 @@ class phNumber extends aNumber
 				`n`.`id` AS `id`,
 				COUNT(`e`.`id`) AS `c`
 			FROM
-				`ct_number` AS `n`,
-				`ct_enter` AS `e`
+				`{{ct_number}}` AS `n`,
+				`{{ct_enter}}` AS `e`
 			WHERE
 				`e`.`id_num` = `n`.`id`
 				AND `e`.`active` = 1
@@ -169,7 +169,7 @@ class phNumber extends aNumber
 				)
 				OR `ct`.`c` IS NULL
 			";
-			$rez = Yii::app()->db->createCommand($sql)->queryColumn();
+			$rez = self::model() -> getDbConnection()->createCommand($sql)->queryColumn();
 			$ids = array_map(function ($r) {
 				return $r[0];
 			}, $rez);
