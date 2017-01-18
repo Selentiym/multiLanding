@@ -6,6 +6,11 @@ function onFormSubmit() {
 	} catch (err) {
 		console.log(err);
 	}
+	try {
+		window.sendParams({formSent:1});
+	} catch (err) {
+		console.log(err);
+	}
 	var button = $(this).find(".order-button");
 	var loader = $("<img/>",{
 		src:baseUrl+"/img/loading.gif"

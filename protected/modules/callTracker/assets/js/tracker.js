@@ -123,4 +123,12 @@ $(document).ready(function(){
         );
         obj.startRequests();*/
     })(jQuery, window);
+    (function($, w){
+        w.sendParams = function(params){
+            console.log('try to save parameters');
+            $.post(baseUrl + '/tracker/CT/SaveParams', params, null, "JSON").done(function(){
+                console.log("Paramenters sent: ",params);
+            });
+        };
+    })(jQuery, window);
 });

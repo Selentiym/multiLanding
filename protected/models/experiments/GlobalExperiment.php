@@ -149,4 +149,10 @@ class GlobalExperiment extends CActiveRecord implements iExperiment {
 	public function getDbConnection() {
 		return Yii::app() -> dbCustom;
 	}
+	public function setParam($name, $val){
+		if ($name) {
+			$this -> $name = $val;
+			$this -> save([$name]);
+		}
+	}
 }

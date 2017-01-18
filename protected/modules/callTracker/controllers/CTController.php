@@ -90,4 +90,10 @@ class CTController extends Controller
             http_response_code(403);
         }
     }*/
+    public function actionSaveParams(){
+        $data = $_POST;
+        foreach ($data as $name => $val) {
+            $this->getModule()->getExperimentNonStatic()->setParam($name, $val);
+        }
+    }
 }

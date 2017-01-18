@@ -61,6 +61,8 @@ return array(
 				'gii/<controller:\w+>'=>'gii/<controller>',
 				'gii/<controller:\w+>/<action:\w+>'=>'gii/<controller>/<action>',
 
+				'post' => 'form/submit',
+
 				'admin' => 'admin',
 				'login' => 'login',
 				'admin/<action:(create|update|delete)><modelClass:(CommonRule|Tel)>/<arg:\w*>' => 'admin/<action><modelClass>',
