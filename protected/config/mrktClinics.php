@@ -52,6 +52,13 @@ return SiteDispatcher::mergeArray(
                 'password' => 'kicker',
                 'charset' => 'utf8',
             ),
+            'urlManager' => [
+                'rules' => [
+                    '<action:\w+>' => null,
+                    'tracker' => 'tracker',
+                    //'<action:\w+>' => 'site/<action>',
+                ]
+            ]
         ),
 
 
