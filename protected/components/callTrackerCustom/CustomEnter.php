@@ -40,7 +40,8 @@ class CustomEnter extends Enter {
      * @return bool
      */
     public function fromDirect() {
-        return ($_GET["utm_medium"]=="cpc");
+        return true;
+        //return ($_GET["utm_medium"]=="cpc");
     }
     /**
      * Returns the static model of the specified AR class.
