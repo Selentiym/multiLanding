@@ -194,37 +194,8 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
     <link rel="stylesheet" href="<?php echo $baseRenderedTheme; ?>/css/media.css" />
 </head>
 <body>
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function (d, w, c) {
-        (w[c] = w[c] || []).push(function() {
-            try {
-                var yaParams = <?php $params = CallTrackerModule::getExperiment() -> getParams(); $params['design'] = 'desktop'; echo json_encode($params); ?>;
-                w.yaCounter40204894 = new Ya.Metrika({
-                    id:40204894,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true,
-                    webvisor:true,
-                    params: yaParams || {}
-                });
-            } catch(e) { }
-        });
-
-        var n = d.getElementsByTagName("script")[0],
-            s = d.createElement("script"),
-            f = function () { n.parentNode.insertBefore(s, n); };
-        s.type = "text/javascript";
-        s.async = true;
-        s.src = "https://mc.yandex.ru/metrika/watch.js";
-
-        if (w.opera == "[object Opera]") {
-            d.addEventListener("DOMContentLoaded", f, false);
-        } else { f(); }
-    })(document, window, "yandex_metrika_callbacks");
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/40204894" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+<?php echo Yii::t('scripts', 'yandexCounter'); ?>
+<?php echo Yii::t('scripts', 'GA'); ?>
 <header class="header_topline">
 
     <div class="container ">
