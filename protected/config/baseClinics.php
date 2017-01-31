@@ -70,8 +70,6 @@ return SiteDispatcher::mergeArray(
                 'urlSuffix' => '/',
                 'rules' => array(
                     '' => 'main',
-                    'clinics' => 'clinics/default/index',
-                    'clinics/default/index' => 'clinics/default/index',
                 ),
             ),
             'errorHandler'=>array(

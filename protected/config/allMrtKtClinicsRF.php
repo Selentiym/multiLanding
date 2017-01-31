@@ -12,6 +12,9 @@ return SiteDispatcher::mergeArray(
         'theme' => 'mainClinics/allMrtKtClinicsRF',
         'language' => 'allMrtKtClinicsRF',
         'modules'=>array(
+            'clinics' => [
+                'class' => 'application.modules.clinics.clinicsModule'
+            ]
         ),
         'components'=>array(
             'phone' => [
@@ -19,6 +22,17 @@ return SiteDispatcher::mergeArray(
                 'moduleId' => 'tracker',
                 'number' => null
             ],
+            'bootstrap'=>array(
+                'class'=>'application.components.Bootstrap'
+            ),
+            'urlManager'=>array(
+                'urlFormat'=>'path',
+                'showScriptName' => false,
+                'urlSuffix' => '/',
+                'rules' => array(
+                    '<module:(clinics)>/admin' => '<module>/admin/index',
+                ),
+            ),
         ),
         'params'=>array(
             'siteId' => 'allMrtKtClinicsRF',
