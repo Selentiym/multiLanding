@@ -21,7 +21,6 @@ $selectedClinic = null;
 Yii::app() -> getClientScript() -> registerScript('defineBase','
     baseUrl="'.$base.'";
 ',CClientScript::POS_BEGIN);
-Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme.'/js/jquery-1.11.1.min.js',CClientScript::POS_BEGIN);
 Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme."/js/jquery.maskedinput.min.js",CClientScript::POS_END);
 //Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme."/fancybox/jquery.fancybox.pack.js",CClientScript::POS_END);
 Yii::app() -> getClientScript() -> registerScriptFile($baseRenderedTheme."/js/common.js",CClientScript::POS_END);
@@ -216,7 +215,7 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                     <li class="discount-sale"><a href="#hot-offers"><span class="menu-title"><i class="fa fa-percent" aria-hidden="true"></i><img alt="" src="<?php echo $baseRenderedTheme; ?>/img/percent.png">Самые горячие<br /> предложения по СПб</span><span class="menu-desc">Скидки и Акции</span></a></li>
                     <li class="our-centers"><a href="#centers"><span class="menu-title">Наши <br />Центры</span></a></li>
                     <li class="our-prices"><a href="#prices"><span class="menu-title">Наши<br /> Цены</span></a></li>
-                    <li class="our-phone"><a href="#callback-registration" id="form-button" class="order fancybox"><span class="menu-title"><?php echo CallTrackerModule::getFormattedNumber();?></span>
+                    <li class="our-phone"><a href="#callback-registration" id="form-button" class="order fancybox"><span class="menu-title"><?php echo Yii::app() -> phone -> getFormatted();?></span>
                             <img src="<?php echo $baseRenderedTheme; ?>/img/phone-sm.png" alt="" /><span class="menu-desc formable">Заказать обратный звонок</span></a>
                     </li>
                 </ul>
@@ -250,7 +249,7 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                         </form>
                     </div>
                     <p class="left-images-block-header"> Многоканальный телефон для записи на МРТ или КТ исследование: </p>
-                    <p style="text-indent: 10%"><a class="callcenter-phone" href="tel:8812<?=CallTrackerModule::getShortNumber();?>"><?php echo CallTrackerModule::getFormattedNumber();?></a></p>
+                    <p style="text-indent: 10%"><a class="callcenter-phone" href="tel:8812<?=Yii::app() -> phone -> getShort();?>"><?php echo Yii::app() -> phone -> getFormatted();?></a></p>
                     <ul class="red-label">
                         <li>Специалист-диагност подберет Вам <b>подходящую клинику</b> и <b>наилучшую цену</b>, а также запишет на обследование в удобное для Вас время.</li>
                         <li>Ответит на все вопросы, связанные с МРТ и КТ диагностикой.</li>
@@ -327,7 +326,7 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                         </form>
                     </div>
                     <p class="left-images-block-header"> Многоканальный телефон для записи на МРТ или КТ исследование: </p>
-                    <p style="text-indent: 10%"><a class="callcenter-phone" href="tel:8812<?=CallTrackerModule::getShortNumber();?>"><?php echo CallTrackerModule::getFormattedNumber();?></a></p>
+                    <p style="text-indent: 10%"><a class="callcenter-phone" href="tel:8812<?=Yii::app() -> phone -> getShort();?>"><?php echo Yii::app() -> phone -> getFormatted();?></a></p>
                     <ul class="red-label">
                         <li>Специалист-диагност подберет Вам <b>подходящую клинику</b> и <b>наилучшую цену</b>, а также запишет на обследование в удобное для Вас время.</li>
                         <li>Ответит на все вопросы, связанные с МРТ и КТ диагностикой.</li>
@@ -391,7 +390,7 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                         <div class="call-us">
                             <p>Для получения скидки и записи на прием к специалисту
                                 необходимо оставить заявку или позвонить по тел: </p>
-                            <h2 style="text-align:center; margin-top:20px"><a class="callcenter-phone" href="tel:8812<?=CallTrackerModule::getShortNumber();?>"><?php echo CallTrackerModule::getFormattedNumber();?></a></h2>
+                            <h2 style="text-align:center; margin-top:20px"><a class="callcenter-phone" href="tel:8812<?=Yii::app() -> phone -> getShort();?>"><?php echo Yii::app() -> phone -> getFormatted();?></a></h2>
                         </div>
 
                         <div class="line" id="nevr"></div>
@@ -722,7 +721,7 @@ Yii::app() -> getClientScript() -> registerScript('defaultPositions','
                         </form>
                     </div>
                     <p class="left-images-block-header"> Многоканальный телефон для записи на МРТ или КТ исследование: </p>
-                    <p><a class="callcenter-phone" href="tel:8812<?=CallTrackerModule::getShortNumber();?>"><?php echo CallTrackerModule::getFormattedNumber();?></a></p>
+                    <p><a class="callcenter-phone" href="tel:8812<?=Yii::app() -> phone -> getShort();?>"><?php echo Yii::app() -> phone -> getFormatted();?></a></p>
                 </div>
 
             </div>

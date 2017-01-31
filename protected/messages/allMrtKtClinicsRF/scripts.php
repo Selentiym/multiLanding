@@ -25,14 +25,13 @@ return array (
     (function (d, w, c) {
         (w[c] = w[c] || []).push(function() {
             try {
-                var yaParams = <?php $params = CallTrackerModule::getExperiment() -> getParams(); $params[\'design\'] = \'desktop\'; echo json_encode($params); ?>;
+
                 w.yaCounter40204894 = new Ya.Metrika({
                     id:40204894,
                     clickmap:true,
                     trackLinks:true,
                     accurateTrackBounce:true,
-                    webvisor:true,
-                    params: yaParams || {}
+                    webvisor:true
                 });
             } catch(e) { }
         });

@@ -108,7 +108,7 @@ class GlobalExperiment extends CActiveRecord implements iExperiment {
 	 */
 	public function initialize(aEnter $enter = null) {
 		if ($this -> getIsNewRecord()) {
-			$prices = [0.8, 0.9, 1.0];
+			$prices = [1.0];
 			//$prices = [1.0];
 			$themes = ['mobile', ''];
 			$res = browserInfoHolder::getInstance();
@@ -147,7 +147,7 @@ class GlobalExperiment extends CActiveRecord implements iExperiment {
 		return parent::beforeSave();
 	}
 	public function getDbConnection() {
-		return Yii::app() -> dbCustom;
+		return CallTrackerModule::$lastInstance -> getDbConnection();
 	}
 	public function setParam($name, $val){
 		if ($name) {

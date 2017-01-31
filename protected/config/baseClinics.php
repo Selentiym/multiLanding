@@ -23,7 +23,7 @@ return SiteDispatcher::mergeArray(
         'modules'=>array(
             'tracker' =>[
                 'class' => 'application.modules.callTracker.CallTrackerModule',
-                'blocked' => true,
+                'blocked' => false,
                 'numberWhenBlocked' => 'number',
                 'formatNumber' => function($number){
                     //asd;
@@ -38,7 +38,7 @@ return SiteDispatcher::mergeArray(
                 'afterImport' => function($module){
                     aEnterFactory::setEnterFactory(new CustomEnterFactory($module));
                 },
-                'dbConfig' => 'dbCustom',
+                'dbConfig' => 'dbTracker',
             ],
             'prices' => [
                 'class' => 'application.modules.prices.PricesModule',
@@ -82,6 +82,16 @@ return SiteDispatcher::mergeArray(
                 'class' => 'CDbConnection',
                 'connectionString' => 'mysql:host=localhost;dbname=cq97848_clinicsl',
                 'tablePrefix' => 'tbl_',
+                'emulatePrepare' => true,
+                'username' => 'cq97848_clinicsl',
+                'password' => 'kicker1995',
+                'charset' => 'utf8',
+            ),
+
+            'dbTracker'=>array(
+                'class' => 'CDbConnection',
+                'connectionString' => 'mysql:host=localhost;dbname=cq97848_landing',
+                'tablePrefix' => 'allmrt_',
                 'emulatePrepare' => true,
                 'username' => 'cq97848_clinicsl',
                 'password' => 'kicker1995',
