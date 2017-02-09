@@ -34,7 +34,8 @@ class EnterFactory extends aEnterFactory {
         return $enter;
     }
     public function buildNew() {
-        return new Enter();
+        $enter = new Enter();
+        return $enter;
     }
 
     /**

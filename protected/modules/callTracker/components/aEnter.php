@@ -16,6 +16,8 @@ abstract class aEnter extends CActiveRecord {
         $data = $_GET;
         if (($data['utm_term'] != $temp -> utm_term)&&(isset($data['utm_term']))) {
             $temp = aEnterFactory::getFactory() -> buildNew();
+            $temp -> utm_content = $_GET["utm_content"];
+            $temp -> link = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         }
         return $temp;
     }
