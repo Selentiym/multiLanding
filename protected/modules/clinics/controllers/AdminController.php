@@ -3,7 +3,7 @@
 class AdminController extends Controller
 {
 	public $defaultAction = 'login';
-	public $layout='//layouts/admin';
+	public $layout='/layouts/admin';
     public $pageTitle;
 	//list of prices to export
 	public $clinicsPrices = array(
@@ -148,7 +148,9 @@ class AdminController extends Controller
         {
             $model->attributes=$_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
-            if($model->validate() && $model->login()) {           
+            $val = $model->validate();
+            $log = $model->login();
+            if( $val && $log ) {
                 if ($this->isSuperAdmin())
                     $this->redirectHome();
 
@@ -223,7 +225,7 @@ class AdminController extends Controller
     public function actionLogout()
     {
         Yii::app()->user->logout();
-        $this->redirect(Yii::app()->createUrl('admin'));
+        $this->redirect($this->createUrl('admin'));
     }
 	public function actionSettings(){
 		$model = Setting::model() -> find();
@@ -235,13 +237,10 @@ class AdminController extends Controller
 		}
 		$crit = new CDbCriteria();
 		$crit -> order = 'position ASC';
-		$texts = RightText::model() -> findAll($crit);
-		$horTexts = HorizontalText::model() -> findAll($crit);
+
 		
 		$this -> render('settings', array(
-			'model' => $model,
-			'texts' => CHtml::listData($texts, 'id', function ($text) { return $text -> giveShortDescr(); }),
-			'horTexts' => CHtml::listData($horTexts, 'id', function ($text) { return $text -> giveShortDescr(); })
+			'model' => $model
 		));
 	}
 	
@@ -464,7 +463,7 @@ class AdminController extends Controller
         if(isset($_GET[ucfirst(strtolower($modelName))]))
             $model->attributes = $_GET[ucfirst(strtolower($modelName))];
 
-        $this->render($modelName.'_list',array(
+        $this->render('/'.$modelName.'/_list',array(
             'model'=>$model,
         ));
 	}
@@ -542,7 +541,7 @@ class AdminController extends Controller
 
         $this->objectInit($model);
 
-        $this->render($modelName.'_create',array(
+        $this->render('/'.$modelName.'/_create',array(
             'model'=>$model
         ));
     }
@@ -562,7 +561,7 @@ class AdminController extends Controller
 
         $this->objectInit($model);
 
-        $this->render('doctors_update',array(
+        $this->render('/doctors/_update',array(
             'model'=>$model,
         ));
     }
@@ -581,7 +580,7 @@ class AdminController extends Controller
 
         $this->objectInit($model);
 
-        $this->render('clinics_update',array(
+        $this->render('/clinics/_update',array(
             'model'=>$model,
         ));
     }
@@ -1887,4 +1886,7 @@ class AdminController extends Controller
         }
         echo "downloaded: $d, not downloaded: $nd";
     }*/
+    public function redirectHome(){
+        $this -> redirect('');
+    }
 }

@@ -12,8 +12,9 @@ return SiteDispatcher::mergeArray(
         'name' => 'clinics',
         'theme' => 'mainClinics',
         'sourceLanguage' => 'en_US',
-
         'import' => [
+            'application.components.modified.Html',
+            'application.components.modified.CHtml',
             'application.components.callTrackerCustom.*',
             'application.models.experiments.*',
             'application.modules.callTracker.*',
@@ -70,6 +71,16 @@ return SiteDispatcher::mergeArray(
                 'urlSuffix' => '/',
                 'rules' => array(
                     '' => 'main',
+                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>' => '<module>/admin/Models',
+                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>Filters' => '<module>/admin/Filters',
+                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>FilterCreate' => '<module>/admin/FilterCreate',
+                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>Create' => '<module>/admin/ObjectCreate',
+                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>ExportCsv' => '<module>/admin/ExportCsv',
+                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>ImportCsv' => '<module>/admin/ImportCsv',
+                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>FieldsGlobal' => '<module>/admin/FieldsGlobal',
+                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>FieldCreateGlobal' => '<module>/admin/FieldCreateGlobal',
+                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>FieldUpdateGlobal/<id:\d+>' => '<module>/admin/FieldUpdateGlobal',
+                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>Delete/<id:\d+>' => '<module>/admin/ObjectDelete',
                 ),
             ),
             'errorHandler'=>array(

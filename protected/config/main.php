@@ -38,7 +38,8 @@ return array(
 	),
 
 	'controllerMap'=>array(
-		'form' => 'application.sites.common.controllers.FormController'
+		'form' => 'application.sites.common.controllers.FormController',
+		'error' => 'application.sites.common.controllers.ErrorController'
 	),
 
 	// application components

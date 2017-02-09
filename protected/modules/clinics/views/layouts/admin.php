@@ -1,4 +1,10 @@
-<?php /* @var $this Controller */ ?>
+<?php
+/* @var $this Controller */
+/**
+* @type ClinicsModule $mod
+*/
+$mod = $this -> getModule();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -6,15 +12,15 @@
 	<meta name="language" content="en" />
 
     <!-- custom CSS -->
-    <?php Yii::app()->bootstrap->register(); ?>
-    <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->baseUrl.'/css/styles.css'); ?>
-    <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->baseUrl.'/css/clinics.css'); ?>
-    <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->baseUrl.'/css/jquery-ui.css'); ?>
-    <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->baseUrl.'/css/chosen.min.css'); ?>
+    <?php //Yii::app()->bootstrap->register(); ?>
+    <?php $mod -> registerCSSFile('/css/styles.css'); ?>
+    <?php $mod -> registerCSSFile('/css/clinics.css'); ?>
+    <?php $mod -> registerCSSFile('/css/jquery-ui.css'); ?>
+    <?php $mod -> registerCSSFile('/css/chosen.min.css'); ?>
 
     <?php Yii::app()->getClientScript()->registerCoreScript('jquery.ui'); ?>
-    <?php Yii::app()->getClientScript()->registerScriptFile(Yii::app()->baseUrl.'/js/functions.js'); ?>
-    <?php Yii::app()->getClientScript()->registerScriptFile(Yii::app()->baseUrl.'/js/chosen.jquery.min.js'); ?>
+    <?php $mod -> registerJSFile('/js/functions.js'); ?>
+    <?php $mod -> registerJSFile('/js/chosen.jquery.min.js'); ?>
 
     <title><?php echo CHtml::encode(Yii::app()->name . ' - Админка'); ?></title>
 </head> 
@@ -22,7 +28,7 @@
 <body>
 
 <div id="container" class="container-fluid">
-        <?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl.'/images/logout_small.png', CHtml::encode('Выйти')), Yii::app()->baseUrl.'/admin/logout/', array('class' => 'pull-right')); ?>
+        <?php echo CHtml::link(CHtml::image($mod -> getAssetsPath() . '/images/logout_small.png', CHtml::encode('Выйти')), $this -> createUrl('admin/logout'), array('class' => 'pull-right')); ?>
 
     <div class="row-fluid">
         <?php if ($this->isSuperAdmin()): ?>
@@ -31,8 +37,8 @@
                     <?php
                         $this->widget('zii.widgets.CMenu', array(
                             'items'=>array(
-                                array('label'=> CHtml::encode('Общие настройки'), 'url'=>array('admin/settings'), 'itemOptions' => array('class' => 'page_item')),
-                                array('label'=> CHtml::encode('Пункты меню'), 'url'=>array('admin/MenuButtons'), 'itemOptions' => array('class' => 'page_item')),
+                                //array('label'=> CHtml::encode('Общие настройки'), 'url'=>array('admin/settings'), 'itemOptions' => array('class' => 'page_item')),
+                                //array('label'=> CHtml::encode('Пункты меню'), 'url'=>array('admin/MenuButtons'), 'itemOptions' => array('class' => 'page_item')),
                                 array('label'=> CHtml::encode('Клиники'), 'url'=>array('admin/clinics'), 'itemOptions' => array('class' => 'page_item')),
                                 array('label'=> CHtml::encode('Доктора'), 'url'=>array('admin/doctors'), 'itemOptions' => array('class' => 'page_item')),
                                 array('label'=> CHtml::encode('Статьи'), 'url'=>array('admin/articles'), 'itemOptions' => array('class' => 'page_item')),
@@ -63,7 +69,7 @@
 		
     </div>
 
-<?php Yii::app()->controller->renderPartial('//layouts/_footer'); ?>
+<?php $this->renderPartial('/layouts/_footer'); ?>
 
 </div> <!-- container -->
 

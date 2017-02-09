@@ -1,4 +1,5 @@
 <?php
+$mod = $this -> getModule();
 ?>
 <?php /* @var $this Controller */ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -8,13 +9,11 @@
 	<meta name="language" content="en" />
 
     <!-- custom CSS -->
-    <?php Yii::app()->bootstrap->register(); ?>
-    <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->baseUrl.'/css/styles.css'); ?>
-    <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->baseUrl.'/css/clinics.css'); ?>
-    <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->baseUrl.'/css/jquery-ui.css'); ?>
+    <?php $mod -> registerCSSFile('/css/styles.css'); ?>
+    <?php $mod -> registerCSSFile('/css/clinics.css'); ?>
+    <?php $mod -> registerCSSFile('/css/jquery-ui.css'); ?>
 
-    <?php Yii::app()->getClientScript()->registerScriptFile(Yii::app()->baseUrl.'/js/functions.js'); ?>
-    <?php Yii::app()->getClientScript()->registerScriptFile(Yii::app()->baseUrl.'/js/common.js'); ?>
+    <?php $mod -> registerJSFile('/js/functions.js'); ?>
     <?php Yii::app()->getClientScript()->registerCoreScript('jquery.ui'); ?>
 
     <title><?php echo $this->pageTitle; ?></title>
@@ -27,7 +26,7 @@
             <?php echo $content; ?>
     </div>
     
-<?php Yii::app()->controller->renderPartial('//layouts/_footer'); ?>
+<?php $this->renderPartial('/layouts/_footer'); ?>
     
 </div> <!-- container -->
 

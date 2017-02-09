@@ -23,7 +23,7 @@ return SiteDispatcher::mergeArray(
                 'number' => null
             ],
             'bootstrap'=>array(
-                'class'=>'application.components.Bootstrap'
+                'class'=>'application.extensions.bootstrap.components.Bootstrap'
             ),
             'urlManager'=>array(
                 'urlFormat'=>'path',
