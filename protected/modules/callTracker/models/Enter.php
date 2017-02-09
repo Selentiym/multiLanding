@@ -12,6 +12,8 @@
  * @property integer $active
  * @property integer $called
  * @property integer $linked
+ * @property bool $formed
+ * @property integer $id_submit
  *
  * The followings are the available model relations:
  * @property phNumber $number

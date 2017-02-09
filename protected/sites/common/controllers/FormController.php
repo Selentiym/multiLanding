@@ -30,14 +30,24 @@ class FormController extends AController
 			try {
 				curl_setopt($curl, CURLOPT_URL, 'http://p.mrimaster.ru/stat/FormAssign?' . http_build_query($params));
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-				$out = curl_exec($curl);
+				$id_submit = curl_exec($curl);
 				//echo $out;
 				curl_close($curl);
 			} catch (Exception $e) {
 
 			}
 		}
+		try {
+			$mod = Yii::app() -> getModule('tracker');
+			$enter = $mod -> enter;
+			if ($enter instanceof aEnter) {
+				$enter -> formed = 1;
+				$enter -> id_submit = (($id_submit) && ($id_submit != 'none')) ? $id_submit : null;
+				$enter -> save();
+			}
+		} catch (Exception $e) {
 
+		}
 
 //посылаем заявку на новую систему тоже
 		if( $curl = curl_init() ) {
