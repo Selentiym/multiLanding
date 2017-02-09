@@ -63,7 +63,7 @@ class CallTrackerModule extends UWebModule
 		//Если не нужно выдвать номер
 		if ($_GET['nonumber'] != 'off') {
 			if (($_GET['nonumber']) || (Yii::app()->request->cookies['nonumber']->value)) {
-				$this->enter = new Enter();
+				$this->enter = aEnterFactory::getFactory() -> buildNew();
 				$fake = new phNumber();
 				$fake->number = 'debugMode!';
 				$this->enter->setNumber($fake);
