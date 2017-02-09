@@ -200,8 +200,6 @@ class Enter extends aEnter
 		if ($term) {
 			$temp->utm_term = $term;
 		}
-		$temp -> utm_content = $_GET["utm_content"];
-		$temp -> link = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 		//Можно даже так
 		//$temp -> attributes = $_GET;
 		return $temp;

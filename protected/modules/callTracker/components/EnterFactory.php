@@ -30,6 +30,8 @@ class EnterFactory extends aEnterFactory {
         //Если не найден заход, то создаем его заново
         if (!is_a($enter, 'aEnter')) {
             $enter = $this -> buildNew();
+            $enter -> utm_content = $_GET["utm_content"];
+            $enter -> link = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         }
         return $enter;
     }
