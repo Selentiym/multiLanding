@@ -54,8 +54,8 @@ return SiteDispatcher::mergeArray(
             ),
             'urlManager' => [
                 'rules' => [
-                    '<action:\w+>' => null,
                     'tracker' => 'tracker',
+                    '<action:\w+>' => null,
                     //'<action:\w+>' => 'site/<action>',
                 ]
             ]

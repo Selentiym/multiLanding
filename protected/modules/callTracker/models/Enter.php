@@ -12,6 +12,8 @@
  * @property integer $active
  * @property integer $called
  * @property integer $linked
+ * @property bool $formed
+ * @property integer $id_submit
  *
  * The followings are the available model relations:
  * @property phNumber $number
@@ -200,9 +202,12 @@ class Enter extends aEnter
 		if ($term) {
 			$temp->utm_term = $term;
 		}
-		$temp -> utm_content = $_GET['utm_content'];
-		//Перезаписываем ссылку
-		$temp -> link = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		if (!$temp -> link) {
+			$temp -> link = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		}
+		if (!$temp -> utm_content) {
+			$temp->utm_content = $_GET["utm_content"];
+		}
 		//Можно даже так
 		//$temp -> attributes = $_GET;
 		return $temp;

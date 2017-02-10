@@ -43,5 +43,12 @@ return array(
             'www.xn--------fweby3acaawbcnk0a6bgrrje.xn--p1ai',
         ],
         'userAgent' => false
+    ],
+    'spbTomograf' => [
+        'host' => [
+            'spb-tomograf.ru',
+            'www.spb-tomograf.ru',
+        ],
+        'userAgent' => false
     ]
 );
