@@ -60,6 +60,8 @@ class CallTrackerModule extends UWebModule
 			call_user_func($this -> afterImport, $this);
 		}
 
+		aEnterFactory::setModule($this);
+
 		//Если не нужно выдвать номер
 		if ($_GET['nonumber'] != 'off') {
 			if (($_GET['nonumber']) || (Yii::app()->request->cookies['nonumber']->value)) {
@@ -74,7 +76,7 @@ class CallTrackerModule extends UWebModule
 			//Сбрасываем всю информацию
 			unset(Yii::app()->request->cookies['id_enter']);
 		}
-		aEnterFactory::setModule($this);
+
 
 		//Пытаемся найти заход
 		$enter = $this -> lookForEnter();
