@@ -8,6 +8,7 @@
 return SiteDispatcher::mergeArray(
     require(dirname(__FILE__).'/mrktClinics.php'),
     [
+        'language' => 'spbTomograf',
         'components' => [
 
             'dbCustom'=>array(
