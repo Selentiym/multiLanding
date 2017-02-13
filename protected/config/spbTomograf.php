@@ -9,6 +9,12 @@ return SiteDispatcher::mergeArray(
     require(dirname(__FILE__).'/mrktClinics.php'),
     [
         'language' => 'spbTomograf',
+        'modules' => [
+            'prices' => [
+                'class' => 'application.modules.prices.PricesModule',
+                'dbConfig' => 'db'
+            ],
+        ],
         'components' => [
 
             'dbCustom'=>array(
@@ -20,6 +26,8 @@ return SiteDispatcher::mergeArray(
                 'password' => 'kicker',
                 'charset' => 'utf8',
             ),
+
+            'dbPrices'=>null,
         ],
 
 
