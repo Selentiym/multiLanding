@@ -13,7 +13,7 @@ return SiteDispatcher::mergeArray(
         'language' => 'goodDoctors',
         'modules'=>array(
             'clinics' => [
-                'class' => 'application.modules.clinics.clinicsModule',
+                'class' => 'application.modules.clinics.ClinicsModule',
                 'dbConfig' => 'dbClinics'
             ]
         ),
