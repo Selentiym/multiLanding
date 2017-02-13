@@ -32,6 +32,7 @@ return array (
                     accurateTrackBounce:true,
                     webvisor:true
                 });
+                w.yaCounter = w.yaCounter42718159;
             } catch(e) { }
         });
 
