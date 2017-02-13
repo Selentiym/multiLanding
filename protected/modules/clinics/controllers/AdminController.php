@@ -52,7 +52,72 @@ class AdminController extends Controller
 	);
 	
 	private $_model;
-     
+
+    public function actions(){
+        return [
+
+            'PriceBlockList'=>array(
+                'class'=>'application.controllers.actions.FileViewAction',
+                //'access' => function () {return $this -> isSuperAdmin();},
+                'view' => '/prices/blocks/_list',
+                'access' => $this -> isSuperAdmin()
+            ),
+            'PriceBlockCreate' => array(
+                'class' => 'application.controllers.actions.ModelCreateAction',
+                'modelClass' => 'ObjectPriceBlock',
+                'view' => '/prices/blocks/create',
+                'redirectUrl' => $this -> createUrl('admin/PriceBlockList'),
+                'scenario' => 'create'
+            ),
+            'PriceBlockUpdate' => array(
+                'class' => 'application.controllers.actions.ModelUpdateAction',
+                'modelClass' => 'ObjectPriceBlock',
+                'view' => '/prices/blocks/update',
+                'redirectUrl' => function($data){
+                    return $this -> createUrl('admin/PriceBlockList');
+                },
+                'scenario' => 'update'
+            ),
+            'PriceBlockDelete' => array(
+                'class' => 'application.controllers.actions.ModelDeleteAction',
+                'modelClass' => 'ObjectPriceBlock'
+            ),
+
+            'PriceList'=>array(
+                'class'=>'application.controllers.actions.ModelViewAction',
+                'modelClass' => $_GET['modelName'],
+                'scenario' => 'model',
+                //'access' => function () {return $this -> isSuperAdmin();},
+                'view' => '/prices/_list'
+            ),
+            'PriceCreate' => array(
+                'class' => 'application.controllers.actions.ModelCreateAction',
+                'modelClass' => 'ObjectPrice',
+                'view' => '/prices/create',
+                'redirectUrl' => $this -> createUrl('admin/PriceList',['modelName' => $_GET['modelName']]),
+                'scenario' => 'create'
+            ),
+            'PriceUpdate' => array(
+                'class' => 'application.controllers.actions.ModelUpdateAction',
+                'modelClass' => 'ObjectPrice',
+                'view' => '/prices/update',
+                'redirectUrl' => function($data){
+                    return $this -> createUrl('admin/PriceList',['modelName' => Objects::getName($data -> object_type)]);
+                },
+                'scenario' => 'update'
+            ),
+            'PriceDelete' => array(
+                'class' => 'application.controllers.actions.ModelDeleteAction',
+                'modelClass' => 'ObjectPrice'
+            ),
+            'cabinet' => array(
+                'class' => 'application.controllers.actions.ModelViewAction',
+                'modelClass' => 'User',
+                'view' => '//LK'
+            ),
+        ];
+    }
+
 	/**
 	 * @return array action filters
 	 */
@@ -225,7 +290,7 @@ class AdminController extends Controller
     public function actionLogout()
     {
         Yii::app()->user->logout();
-        $this->redirect($this->createUrl('admin'));
+        $this->redirect($this->createUrl('login'));
     }
 	public function actionSettings(){
 		$model = Setting::model() -> find();
@@ -243,78 +308,7 @@ class AdminController extends Controller
 			'model' => $model
 		));
 	}
-	
-	/**
-	 * RightText Block. action to create, update and delete RightText Objects.
-	 */
-	 
-	public function actionRightTextsCreate()
-	{
-		$this -> TextsCreate('RightText');
-	}
-	public function actionHorizontalTextsCreate()
-	{
-		$this -> TextsCreate('HorizontalText');
-	}
-	public function TextsCreate($modelName)
-	{
-		$model=new $modelName('search');
-		//print_r($_FILES);
-		if(isset($_POST[$modelName]))
-		{
-			$model->attributes=$_POST[$modelName];
-			//Обрабатываем картинку.
-			$model -> FileOperations($model, $_FILES);
-			
-			if($model->validate())
-			{
-				$model -> save();
-				$this->redirect(array('/admin/settings'));
-			}
-		}
-		$this->render('//admin/Texts/_form',array('model'=>$model));
-	}
-	public function actionRightTextsUpdate($id)
-	{
-		$this -> TextsUpdate($id, 'RightText');
-	}
-	public function actionHorizontalTextsUpdate($id)
-	{
-		$this -> TextsUpdate($id, 'HorizontalText');
-	}
-	public function TextsUpdate($id, $modelName)
-	{
-		$model=$modelName::model() -> findByPk($id);
 
-		if(isset($_POST[$modelName]))
-		{
-			$model->attributes=$_POST[$modelName];
-			//print_r($_FILES);
-			$model -> FileOperations($model, $_FILES);
-			if($model->validate())
-			{
-				$model -> save();
-				$this->redirect(array('/admin/settings'));
-			}
-		}
-		$this->render('//admin/Texts/_form',array('model'=>$model));
-	}
-	public function actionRightTextsDelete($id)
-	{
-		$this -> TextsDelete($id, 'RightText');
-	}
-	public function actionHorizontalTextsDelete($id)
-	{
-		$this -> TextsDelete($id, 'HorizontalText');
-	}
-	public function TextsDelete($id, $modelName)
-	{
-		$model=$modelName::model() -> findByPk($id);
-		$model -> delete();
-        if(!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin/settings'));
-		$this->render('//admin/Texts/_form',array('model'=>$model));
-	}
     /**
      * Displays a particular model.
      */
@@ -545,46 +539,25 @@ class AdminController extends Controller
             'model'=>$model
         ));
     }
-
-    public function actionDoctorUpdate($id)
+    public function actionObjectUpdate($id, $modelName)
     {
         if (!$this->isSuperAdmin())
             if ((int)$id != (int)$this->isDoctor()) {
                 new CustomFlash('warning','Admin','AccessDenied','У вас недостаточно прав для просмотра данной страницы. Скорее всего, Вы опечатались при наборе своего id в базе.',true);
                 return false;
-			}
+            }
 
-        $model = doctors::model()->findByPk($id);
-
-        if($model===null)
-            throw new CHttpException(404, СHtml::encode('Запрошенная страница не существует'));
-
-        $this->objectInit($model);
-
-        $this->render('/doctors/_update',array(
-            'model'=>$model,
-        ));
-    }
-	public function actionClinicUpdate($id)
-    {
-        if (!$this->isSuperAdmin())
-            if ((int)$id != (int)$this->isClinicAdmin()) {
-                new CustomFlash('warning','Admin','AccessDenied','У вас недостаточно прав для просмотра данной страницы. Скорее всего, Вы опечатались при наборе id своей клиинки в базе.',true);
-                return false;
-			}
-
-        $model = clinics::model()->findByPk($id);
+        $model = $modelName::model()->findByPk($id);
 
         if($model===null)
             throw new CHttpException(404, СHtml::encode('Запрошенная страница не существует'));
 
         $this->objectInit($model);
 
-        $this->render('/clinics/_update',array(
+        $this->render("/$modelName/_update",array(
             'model'=>$model,
         ));
     }
-
     //public function actionclinicDelete($id)
     public function actionObjectDelete($id, $modelName)
     {
@@ -647,42 +620,57 @@ class AdminController extends Controller
     /**
      * Displays a particular Pricelist.
      */
-    public function actionClinicsPricelists($id)
-	{
-		$this -> Pricelists($id, 'clinics');
-	}
-	public function actionDoctorsPricelists($id)
-	{
-		$this -> Pricelists($id, 'doctors');
-	}
-    public function Pricelists($id, $modelName)
+//    public function actionPricelists($id, $modelName)
+//    {
+//
+//        $model = new PriceList('search'); //Pricelist::model()->findAllByAttributes(array('clinic_id' => $id ));
+//        $model->object_id = $id;
+//        $model->object_type = Objects::model()->getNumber($modelName);
+//        $object = $modelName::model()->findByPk($id);
+//
+//        $this->render('/pricelist/admin',array(
+//            'model'=>$model,
+//            'object_id'=>$id,
+//            'object'=>$object
+//        ));
+//    }
+    /**
+     * Displays a particular Pricelist.
+     */
+    public function actionPricelists($id, $modelName)
     {
 
         $model = new PriceList('search'); //Pricelist::model()->findAllByAttributes(array('clinic_id' => $id ));
         $model->object_id = $id;
-        $model->object_type = Objects::model()->getNumber($modelName);
+        /**
+         * @type clinics|doctors $object
+         */
         $object = $modelName::model()->findByPk($id);
-
-        $this->render('//pricelist/admin',array(
+        $data = $_POST['prices'];
+        if ($data) {
+            foreach ($data as $id => $val) {
+                if ($val > 0) {
+                    $obj = new ObjectPriceValue();
+                    $obj->id_object = $object->id;
+                    $obj->id_price = $id;
+                    $obj->value = $val;
+                    if (!$obj -> save()) {
+                        $err = $obj -> getErrors();
+                    }
+                } else {
+                    if ($obj = $object -> getPriceValue($id)) {
+                        $obj -> delete();
+                    }
+                }
+            }
+        }
+        $this->render('/pricelist/adminVector',array(
             'model'=>$model,
-            'object_id'=>$id,
             'object'=>$object
         ));
     }
 
-    /**
-     * Creates a new model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     */
-    public function actionClinicsPricelistsCreate($id)
-	{
-		$this -> PricelistCreate($id, 'clinics');
-	}
-	public function actionDoctorsPricelistsCreate($id)
-	{
-		$this -> PricelistCreate($id, 'doctors');
-	}
-	public function PricelistCreate($id, $modelName)
+	public function actionPricelistCreate($id, $modelName)
 	{
 		$model = new PriceList;
 		$model->object_type = Objects::model() -> getNumber($modelName);
@@ -694,10 +682,11 @@ class AdminController extends Controller
 			$model->attributes=$_POST['PriceList'];
 			$model->object_id = $object_id;
 			if($model->save())
-				$this->redirect(array('/admin/'.$modelName.'Pricelists', 'id' => $object_id));
+				$this->redirect($this -> createUrl('admin/Pricelists',['modelName' => $modelName, 'id' => $object_id]));
+				//$this->redirect(array('/admin/'.$modelName.'Pricelists', 'id' => $object_id));
 		}
 		
-		$this->render('//pricelist/create',array(
+		$this->render('/pricelist/create',array(
 			'model'=>$model,
 			'object' => $object,
 			'object_id' => $id
@@ -713,10 +702,13 @@ class AdminController extends Controller
 		if(isset($_POST['PriceList']))
 		{
 			$model->attributes=$_POST['PriceList'];
-			if($model->save())
-				$this->redirect(array('/admin/'.Objects::model() -> getName($model -> object_type)));
+			if($model->save()) {
+                $modelName = Objects::model() -> getName($model -> object_type);
+                $this->redirect($this->createUrl("admin/Pricelists",['id' => $model -> object_id,'modelName' => $modelName]));
+                //$this->redirect(array('/admin/' . Objects::model()->getName($model->object_type)));
+            }
 		}
-		$this->render('//pricelist/update',array(
+		$this->render('/pricelist/update',array(
 			'model'=>$model,
 		));
 	}
@@ -822,52 +814,57 @@ class AdminController extends Controller
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
-    /**
-     * Displays a particular Service.
-     */
-	public function actionClinicsFields($id)
+
+	public function actionFields($id, $modelName)
 	{
 
 		$model = new FieldsValue('search'); //Pricelist::model()->findAllByAttributes(array('clinic_id' => $id ));
-		$model->attributes=array('object_id'=>$id,'object_type' => Objects::model() -> getNumber('clinics'));        
-		$clinic = clinics::model()->findByPk($id);
+		$model->attributes=array('object_id'=>$id,'object_type' => Objects::model() -> getNumber($modelName));
+		$clinic = $modelName::model()->findByPk($id);
 
-		$this->render('//clinicsfields/admin',array(
+		$this->render('/fields/object/admin',array(
 			'model'=>$model,
-			'clinic_id'=>$id,
-			'clinic'=>$clinic
+			'object_id'=>$id,
+			'object'=>$clinic
 		));
 			
 	}
-	public function actionDoctorsFields($id)
-	{
-
-		$model = new FieldsValue('search'); //Pricelist::model()->findAllByAttributes(array('clinic_id' => $id ));
-		$model->attributes=array('object_id'=>$id,'field.object_type' => Objects::model() -> getNumber('doctors'));        
-		$doctor = doctors::model()->findByPk($id);
-
-		$this->render('//doctorsfields/admin',array(
-			'model'=>$model,
-			'doctor_id'=>$id,
-			'doctor'=>$doctor
-		));
-			
-	}
+//
+//	public function actionClinicsFields($id)
+//	{
+//
+//		$model = new FieldsValue('search'); //Pricelist::model()->findAllByAttributes(array('clinic_id' => $id ));
+//		$model->attributes=array('object_id'=>$id,'object_type' => Objects::model() -> getNumber('clinics'));
+//		$clinic = clinics::model()->findByPk($id);
+//
+//		$this->render('//clinicsfields/admin',array(
+//			'model'=>$model,
+//			'clinic_id'=>$id,
+//			'clinic'=>$clinic
+//		));
+//
+//	}
+//	public function actionDoctorsFields($id)
+//	{
+//
+//		$model = new FieldsValue('search'); //Pricelist::model()->findAllByAttributes(array('clinic_id' => $id ));
+//		$model->attributes=array('object_id'=>$id,'field.object_type' => Objects::model() -> getNumber('doctors'));
+//		$doctor = doctors::model()->findByPk($id);
+//
+//		$this->render('//doctorsfields/admin',array(
+//			'model'=>$model,
+//			'doctor_id'=>$id,
+//			'doctor'=>$doctor
+//		));
+//
+//	}
 
 
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-	public function actionClinicsfieldsCreate($id)
-	{
-		$this -> FieldsCreate($id, 'clinics');
-	}
-	public function actionDoctorsfieldsCreate($id)
-	{
-		$this -> FieldsCreate($id, 'doctors');
-	}
-    public function FieldsCreate($id, $modelName)
+    public function actionFieldsCreate($id, $modelName)
     {
         $model = new FieldsValue;
         $object = $modelName::model()->findByPk($id);
@@ -878,25 +875,17 @@ class AdminController extends Controller
             $model->attributes=$_POST['FieldsValue'];
 			//$model->object_type = Objects::model() -> getNumber($modelName);
             if($model->save())
-                $this->redirect(array('admin/'.$modelName.'Fields', 'id'=>$id));
+                $this->redirect($this -> createUrl('admin/Fields', ['id'=>$id, 'modelName' => $modelName]));
         }
 
-        $this->render('//'.$modelName.'fields/create',array(
+        $this->render('/fields/object/create',array(
             'model'=>$model,
 			'object' => $object,
             'id' => $id
         ));
     }
 
-    public function actionClinicsFieldsUpdate($id)
-	{
-		$this -> FieldsUpdate($id, 'clinics');
-	}
-	public function actionDoctorsFieldsUpdate($id)
-	{
-		$this -> FieldsUpdate($id, 'doctors');
-	}
-    public function FieldsUpdate($id, $modelName)
+    public function actionFieldsUpdate($id, $modelName)
     {
         $model = FieldsValue::model()->findByPk($id);
 
@@ -909,203 +898,34 @@ class AdminController extends Controller
             //$model->attributes=$_POST[ucfirst(strtolower($modelName)).'Fields'];
             $model->attributes=$_POST['FieldsValue'];
             if($model->save())
-                $this->redirect(array('admin/'.$modelName.'Fields', 'id'=>$model->object_id));
+                $this->redirect($this -> createUrl('admin/Fields', ['id'=>$model->object_id, "modelName" => $modelName]));
 			else
 				print_r($model->getErrors());
         }
-        $this->render('//'.$modelName.'fields/update',array(
+        $this->render('/fields/object/update',array(
             'model'=>$model,
         ));
     }
-    
-    public function actionClinicsFieldsDelete($id)
-	{
-		$this -> FieldsDelete($id);
-	}
-    public function actionDoctorsFieldsDelete($id)
-	{
-		$this -> FieldsDelete($id);
-	}
-    public function FieldsDelete($id)
+
+    public function actionFieldsDelete($id)
     {
+        /**
+         * @type FieldsValue $model
+         */
         $model = FieldsValue::model()->findByPk($id);
+        //$modelName = Objects::model() -> getName();
+        //$id = $model -> object_id;
         $model->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if(!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-    }
-	
-	/**
-     * Displays a list of all menuButtons
-     */
-	public function actionMenuButtons()
-	{
-		
-		$model = new MenuButtons('search');
-		$model->unsetAttributes();
-        if(isset($_GET['MenuButtons']))
-            $model->attributes = $_GET['MenuButtons'];
-        $this->render('//admin/menuButtons/buttonsList',array(
-            'model'=>$model
-        ));
-	}
-	public function actionMenuButtonsUpdate($id)
-    {
-        $model = MenuButtons::model()->findByPk($id);
-
-        if($model===null)
-            throw new CHttpException(404, СHtml::encode('Запрошенная страница не существует'));
-
-        //if(isset($_POST[ucfirst(strtolower($modelName)).'Fields']))
-			//print_r($_POST['MenuButtons']);
-        if(isset($_POST['MenuButtons']))
-        {
-            //$model->attributes=$_POST[ucfirst(strtolower($modelName)).'Fields'];
-            $model->attributes=$_POST['MenuButtons'];
-            if($model->save())
-                $this->redirect(array('admin/MenuButtons'));
-			else
-				print_r($model->getErrors());
+        if (!isset($_GET['ajax'])) {
+            if (isset($_POST['returnUrl'])) {
+                $this->redirect($_POST['returnUrl']);
+            } else {
+                $this->redirect('admin/index');
+            }
         }
-        $this->render('//admin/menuButtons/update',array(
-            'model'=>$model,
-        ));
     }
-	public function actionMenuButtonsCreate()
-    {
-        $model = new MenuButtons;
-        if(isset($_POST['MenuButtons']))
-        {
-            //$model->attributes=$_POST[ucfirst(strtolower($modelName)).'Fields'];
-            $model->attributes=$_POST['MenuButtons'];
-			//$model->object_type = Objects::model() -> getNumber($modelName);
-            if($model->save())
-                $this->redirect(array('admin/MenuButtons'));
-        }
-
-        $this->render('//admin/menuButtons/create',array(
-            'model'=>$model,
-        ));
-    }
-	/**
-	 * Delete the menu item
-	 * @arg integer id - id of the item to be deleted
-	 */
-	public function actionMenuButtonsDelete($id)
-    {
-        $model = MenuButtons::model()->findByPk($id);
-        $model->delete();
-
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if(!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-    }
-    /**
-     * Displays a list of all articles
-     */
-    public function actionArticles()
-    {
-        $model = new Articles('search');
-		//$model->attributes = $_POST['Articles'];
-		$model->unsetAttributes();
-        if(isset($_GET['Articles']))
-            $model->attributes = $_GET['Articles'];
-        $this->render('//articles/admin',array(
-            'model'=>$model
-        ));
-    }
-
-    /**
-     * Creates a new model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     */
-    public function actionarticleCreate()
-    {
-        $model = new Articles;
-        $menuLevel = 0;
-        
-        if(isset($_POST['Articles']))
-        {   
-            $model->attributes = $_POST['Articles'];
-			if ((!isset($_POST["Articles"]["parent_id"]))&&($_POST["level"]==0))
-			{
-				$model -> parent_id = 0;
-			}
-			if (isset($_POST["triggers_array"]))
-			{
-				$model -> trigger_value_id = implode(';',$_POST["triggers_array"]);
-			} else {
-				$model -> trigger_value_id = 0;
-			}
-			//print_r($_POST["triggers_array"]);
-			//print_r($_POST);
-			//echo "<br/>asda";
-			//print_r($_POST["Articles"]);
-            /*if (isset($_POST['menuLevel'])) {
-                if ((int)$_POST['menuLevel'] == 0)
-                    $model->category = 0;
-                $menuLevel = $_POST['menuLevel'];       
-            }*/
-            if($model->save()) {
-                new CustomFlash('success','Article','save','Изменения успешно сохранены!', true);
-				$this->redirect(array('//admin/articles'));
-			} else {
-				new CustomFlash('error','Article','save','Ошибка при сохранении. Список ошибок ниже указан в массиве.', true);
-				print_r($model -> getErrors());
-			}
-        }
-
-        $this->render('//articles/create',array(
-            'model'=>$model,
-            'menuLevel'=>$menuLevel
-        ));
-    }
-    public function actionarticleUpdate($id)
-    {
-        $model=Articles::model()->findByPk($id);
-        
-        if ($model->category == 0) 
-            $menuLevel = 0;
-        else
-            $menuLevel = 1;    
-        
-        if($model===null)
-            throw new CHttpException(404, СHtml::encode('Запрошенная страница не существует'));
-
-        if(isset($_POST['Articles']))
-        {
-            $model->attributes=$_POST['Articles'];
-            /*if (isset($_POST['menuLevel'])) {
-                if ((int)$_POST['menuLevel'] == 0)
-                    $model->category = 0;
-                $menuLevel = $_POST['menuLevel'];       
-            }*/
-			if (isset($_POST['triggers_array']))
-			{
-				$model -> trigger_value_id = implode(';',$_POST['triggers_array']);
-			} else {
-				$model -> trigger_value_id = 0;
-			}
-            if($model->save())
-                $this->redirect(array('//admin/articles'));
-        }
-        $this->render('//articles/update',array(
-            'model'=>$model,
-            'menuLevel'=>$menuLevel
-        ));
-    }
-
-    public function actionarticleDelete($id)
-    {
-        $model = Articles::model()->findByPk($id);
-        $model->delete();
-
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if(!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-    }
-
     /**
      * Displays Trigger list
      */
@@ -1221,7 +1041,7 @@ class AdminController extends Controller
         $model->attributes=array('trigger_id'=>$id);
         $trigger = Triggers::model()->findByPk($id);
 
-        $this->render('//triggervalues/admin',array(
+        $this->render('/triggervalues/admin',array(
             'model' => $model,
             'trigger_id' => $id,
             'trigger' => $trigger
@@ -1245,7 +1065,7 @@ class AdminController extends Controller
 				$this->redirect(array('admin/triggerValues', 'id'=>$trigger_id));
 		}
 
-		$this->render('//triggervalues/create',array(
+		$this->render('/triggervalues/create',array(
 			'model'=>$model,
 			'trigger_id' => $id
 		));
@@ -1264,7 +1084,7 @@ class AdminController extends Controller
 			if($model->save())
 				$this->redirect(array('admin/triggerValues', 'id'=>$model->trigger_id));
 		}
-		$this->render('//triggervalues/update',array(
+		$this->render('/triggervalues/update',array(
 			'model'=>$model,
 
 		));
@@ -1471,7 +1291,7 @@ class AdminController extends Controller
             $model->attributes = $_GET['Fields'];
 		}
 		
-        $this->render('fields_list',array(
+        $this->render('/fields/_list',array(
             'model'=>$model,
         ));
     }
@@ -1489,10 +1309,10 @@ class AdminController extends Controller
             $model->attributes=$_POST['Fields'];
 			$model->object_type = Objects::model() -> getNumber($modelName);
             if($model->save())
-                $this->redirect(array('/admin/'.$modelName.'FieldsGlobal'));//,'id'=>$model->id));
+                $this->redirect($this -> createUrl('admin/FieldsGlobal',['modelName' => $modelName]));//,'id'=>$model->id));
         }
 
-        $this->render('//fields/create',array(
+        $this->render('/fields/create',array(
             'model'=>$model
         ));
     }
@@ -1508,9 +1328,9 @@ class AdminController extends Controller
         {
             $model->attributes = $_POST['Fields'];
             if($model->save())
-                $this->redirect(array('/admin/'.Objects::model() -> getName($model -> object_type).'FieldsGlobal'));//,'id'=>$model->id));
+                $this->redirect($this -> createUrl('admin/FieldsGlobal',['modelName' => Objects::model() -> getName($model -> object_type)]));//,'id'=>$model->id));
         }
-        $this->render('//fields/update',array(
+        $this->render('/fields/update',array(
             'model'=>$model,
         ));
     }
@@ -1518,99 +1338,17 @@ class AdminController extends Controller
     public function actionFieldDeleteGlobal($id)
     {
         $model = Fields::model()->findByPk($id);
+        $modelName = Objects::model() -> getName($model -> object_type);
         $model->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if(!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-    }
-
-    /**
-     * Displays Users list
-     */
-    public function actionFilters($modelName)
-    {
-        $model = new Filters('search');
-        $model->unsetAttributes();
-		$model->object_type = Objects::model() -> getNumber($modelName);
-        if(isset($_GET['Filters']))
-            $model->attributes = $_GET['Fields'];
-
-        $this->render('filters_list',array(
-            'model'=>$model,
-        ));
-    }
-    
-    /**
-     * Creates a Speciality.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     */
-    public function actionFilterCreate($modelName)
-    {
-        $model = new Filters;
-		$model -> object_type = Objects::model() -> getNumber($modelName);
-        if(isset($_POST['Filters']))
-        { 
-            $model->attributes=$_POST['Filters'];
-
-            //triggers-fields
-            if (!empty($_POST['triggers_array'])) {
-                $triggers = implode(';', $_POST['triggers_array']);
-                $model->fields = $triggers;
+        if(!isset($_GET['ajax'])) {
+            if (isset($_POST['returnUrl'])) {
+                $this->redirect($_POST['returnUrl']);
+            } else {
+                $this -> redirect('admin/FieldsGlobal',['modelName' => $modelName]);
             }
-            
-            if($model->save())
-                $this->redirect(array('/admin/'.$modelName.'Filters'));
         }
-
-        $this->render('//filters/create',array(
-            'model'=>$model
-        ));
-    }
-
-    public function actionfilterUpdate($id)
-    {
-        $model = Filters::model()->findByPk($id);
-		$modelName = Objects::model() -> getName($model->object_type);
-        if($model===null)
-            throw new CHttpException(404, СHtml::encode('Запрошенная страница не существует'));
-        
-        if(isset($_POST['Filters']))
-        {
-            $model->attributes = $_POST['Filters'];
-            //triggers-fields
-            if (!empty($_POST['triggers_array'])) {
-                $triggers = implode(';', $_POST['triggers_array']);
-                $model->fields = $triggers;
-            }            
-            if($model->save())
-                $this->redirect(array('/admin/'.$modelName.'Filters'));
-        }
-        $this->render('//filters/update',array(
-            'model'=>$model,
-
-        ));
-    }
-
-	public function actionAjaxGetParents() 
-	{
-		$level = (int) $_POST['Articles']['level'];
-		echo Articles::model() -> GenerateParentList($level - 1);
-	}
-	public function actionAjaxGetParentsMenuButtons() 
-	{
-		$level = (int) $_POST['MenuButtons']['level'];
-		print_r(MenuButtons::model() -> GenerateParentList($level - 1));
-		//echo MenuButtons::model() -> GenerateParentList($level - 1);
-	}
-    public function actionfilterDelete($id)
-    {
-        $model = Filters::model()->findByPk($id);
-        $model->delete();
-
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if(!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
     /* DEFAULT ACTIONS */
@@ -1887,6 +1625,6 @@ class AdminController extends Controller
         echo "downloaded: $d, not downloaded: $nd";
     }*/
     public function redirectHome(){
-        $this -> redirect('');
+        $this -> redirect('admin/index');
     }
 }

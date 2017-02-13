@@ -1,6 +1,6 @@
 <?php
 
-class ClinicsModule extends CWebModule
+class ClinicsModule extends UWebModule
 {
 	private $_assetsPath;
 	private static $_lastInstance;
@@ -16,6 +16,7 @@ class ClinicsModule extends CWebModule
 			'clinics.models.*',
 			'clinics.components.*',
 		));
+		require_once(self::getBasePath().'/components/Helpers.php');
 		$this -> setComponents($config['components']);
 		$this -> _assetsPath = Yii::app() -> getAssetManager() -> publish($this -> getBasePath() . '/assets');
 		self::$_lastInstance = $this;
@@ -28,13 +29,6 @@ class ClinicsModule extends CWebModule
 		return self::$_lastInstance;
 	}
 
-	/**
-	 * @return CDbConnection
-	 */
-	public static function getConnection(){
-		$db = self::getLastInstance() -> db;
-		return $db;
-	}
 	public function beforeControllerAction($controller, $action)
 	{
 		if(parent::beforeControllerAction($controller, $action))

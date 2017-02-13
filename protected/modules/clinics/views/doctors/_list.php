@@ -59,7 +59,7 @@ Yii::app()->clientScript->registerScript('search', "
 <h1><?php echo CHtml::encode('Перечень докторов'); ?></h1>
 
 <p class="pull-right">
-    <?php echo CHtml::link('Добавить нового' , Yii::app()->baseUrl.'/admin/doctorsCreate', array('class' => 'btn')); ?>
+    <?php echo CHtml::link('Добавить нового' , $this -> createUrl('admin/doctorsCreate'), array('class' => 'btn')); ?>
 </p>
 
 
@@ -87,8 +87,11 @@ Yii::app()->clientScript->registerScript('search', "
         array(
             'class'=>'CLinkColumn',
             'header'=>CHtml::encode('Цены'),
-            'labelExpression'=>'CHtml::button("Редактировать",array("onclick"=>"document.location.href=\'".Yii::app()->createUrl("admin/doctorsPricelists", array("id"=>$data->id))."\'"))',
-            'urlExpression'=>'Yii::app()->createUrl("admin/doctorsPricelists", array("id"=>$data->id))',
+            'labelExpression'=>'CHtml::button("Редактировать")',
+            //'urlExpression'=>'Yii::app()->createUrl("admin/doctorsPricelists", array("id"=>$data->id))',
+            'urlExpression'=>function($data){
+                return $this -> createUrl('admin/Pricelists',['id' => $data -> id, 'modelName' => 'doctors']);
+            },
         ),
         /*array(
             'class'=>'CLinkColumn',
@@ -98,29 +101,38 @@ Yii::app()->clientScript->registerScript('search', "
 
         ),*/
 
-        array(
+        /*array(
             'class'=>'CLinkColumn',
             'header'=>CHtml::encode('Поля'),
-            'labelExpression'=>'CHtml::button("Редактировать",array("onclick"=>"document.location.href=\'".Yii::app()->createUrl("admin/doctorsFields", array("id"=>$data->id))."\'"))',
-            'urlExpression'=>'Yii::app()->createUrl("admin/doctorsFields", array("id"=>$data->id))',
+            'labelExpression'=>'CHtml::button("Редактировать")',
+            //'urlExpression'=>'Yii::app()->createUrl("admin/doctorsFields", array("id"=>$data->id))',
+            'urlExpression'=>function($data){
+                return $this -> createUrl('admin/Fields',['id'=>$data->id,'modelName' => 'doctors']);
+            },
 
-        ),
+        ),//*/
 
       array(
             'class'=>'CButtonColumn',
             'template'=>'{update}&nbsp;{delete}',
-            'deleteConfirmation'=>"js:'Вы действительно хотите удалить клинику <'+$(this).parent().parent().children(':nth-child(2)').text()+'>?'",
+            'deleteConfirmation'=>"js:'Вы действительно хотите удалить доктора <'+$(this).parent().parent().children(':nth-child(2)').text()+'>?'",
             'buttons'=>array
             (
                 'update' => array
                 (
                     'label'=> CHtml::encode('Редактировать'),
-                    'url'=>'Yii::app()->createUrl("admin/doctorUpdate", array("id"=>$data->id))',
+                    'url'=>function($data){
+                        return $this -> createUrl('admin/ObjectUpdate',['id'=>$data->id,'modelName'=>'doctors']);
+                    },
+                    //'url'=>'Yii::app()->createUrl("admin/doctorUpdate", array("id"=>$data->id))',
                 ),
                 'delete' => array
                 (
                     'label'=> CHtml::encode('Удалить'),
-                    'url'=>'Yii::app()->createUrl("admin/doctorsDelete", array("id"=>$data->id))',
+                    //'url'=>'Yii::app()->createUrl("admin/doctorsDelete", array("id"=>$data->id))',
+                    'url'=>function($data){
+                        return $this -> createUrl('admin/ObjectDelete',['id'=>$data->id,'modelName'=>'doctors']);
+                    },
                 ),
             ),
         ),

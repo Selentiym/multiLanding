@@ -1,20 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "{{objects}}".
+ * This is the model class for table "{{pricelist}}".
  *
- * The followings are the available columns in table '{{objects}}':
+ * The followings are the available columns in table '{{pricelist}}':
  * @property integer $id
+ * @property integer $object_id
+ * @property integer $object_type
  * @property string $name
+ * @property integer $price
  */
-class Objects extends CTModel
+class PriceList extends CTModel
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{objects}}';
+		return '{{pricelist}}';
 	}
 
 	/**
@@ -25,10 +28,25 @@ class Objects extends CTModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, name', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
+			array('name, price, object_type, object_id', 'required'),
+			array('object_id, object_type, price', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('id, object_id, name, price, object_type', 'safe', 'on'=>'search'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+            'clinic' => array(self::BELONGS_TO, 'clinics', array('object_id' => 'id'), 'select' => '*'),
+            'doctor' => array(self::BELONGS_TO, 'doctors', array('object_id' => 'id'), 'select' => '*'),
 		);
 	}
 
@@ -38,8 +56,10 @@ class Objects extends CTModel
 	public function attributeLabels()
 	{
 		return array(
-			'id' => CHtml::encode('Тип объекта'),
-			'name' => CHtml::encode('Название объекта'),
+			'id' => 'ID',
+			'object_id' => 'Клиника/Врач',
+			'name' => 'Название услуги',
+			'price' => 'Цена',
 		);
 	}
 
@@ -60,49 +80,28 @@ class Objects extends CTModel
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+        //$criteria->with = array('сlinics');
+        //$criteria->compare('сlinic.id', $this->object_id, true);
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name);
+		$criteria->compare('object_id',$this->object_id);
+		$criteria->compare('object_type',$this->object_type);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('price',$this->price);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+            'pagination'=>array(
+                'pageSize'=>20,
+            ),
 		));
 	}
-	/**
-	 * Returnes the number corresponding to the given modelName
-	 * @arg string modelName - class name of a model which interests us
-	 * @return integer
-	 */
-	public static function getNumber($modelName)
-	{
-		$criteria = new CDbCriteria;
-		$criteria -> compare('name', strtolower($modelName));
-		if ($obj = Objects::model() -> find($criteria)) {
-			return $obj -> id;
-		} else {
-			return false;
-		}
-	}
-	/**
-	 * Returnes the name corresponding to the given id of the object type
-	 * @arg integer number - id of an object type
-	 * @return string - corresponding modelName
-	 */
-	public static function getName($number)
-	{
-		$criteria = new CDbCriteria;
-		$criteria -> compare('id', $number);
-		if ($obj = Objects::model() -> find($criteria)) {
-			return $obj -> name;
-		} else {
-			return false;
-		}
-	}
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return TriggerValues the static model class
+	 * @return Pricelist the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

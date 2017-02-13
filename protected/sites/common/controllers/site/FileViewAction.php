@@ -36,7 +36,7 @@
 						$this->controller->renderPartial($this->view, array('get' => $_GET));
 					}
 				} else {
-					$this -> controller -> render('//accessDenied');
+					$this -> controller -> render('/accessDenied');
 				}
 				//}
 			} else {

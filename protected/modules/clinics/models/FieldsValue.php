@@ -81,7 +81,7 @@ class FieldsValue extends CTModel
     public function search2($modelName)
 	{
 		$criteria = new CDbCriteria;
-		$critetia -> with = 'field';
+		$criteria -> with = 'field';
 		$criteria->compare('id',$this->id);
 		$criteria->compare('object_id',$this->object_id);
 		$criteria->compare('field_id',$this->field_id);

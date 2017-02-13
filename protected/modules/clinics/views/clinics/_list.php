@@ -65,7 +65,9 @@
 </p>
 
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php
+$model -> attributes = $_GET['clinics'];
+$this->widget('zii.widgets.grid.CGridView', array(
     'id'=>'clinics-grid',
     'dataProvider'=>$model->search(),
     'filter'=>$model,
@@ -91,7 +93,7 @@
             'header'=>CHtml::encode('Цены'),
             'label' => CHtml::button("Редактировать"),
             'urlExpression'=>function($data){
-                return $this -> createUrl("admin/ClinicsPricelists",["id" => $data -> id]);
+                return $this -> createUrl("admin/Pricelists",["id" => $data -> id,'modelName' => 'clinics']);
             },
         ),
 
@@ -99,7 +101,7 @@
             'class'=>'CLinkColumn',
             'header'=>CHtml::encode('Поля'),
             'label'=>CHtml::button("Редактировать"),
-            'urlExpression'=>function($data) {return $this -> createUrl("admin/ClinicsFields", array("id"=>$data->id));},
+            'urlExpression'=>function($data) {return $this -> createUrl("admin/Fields", array("id"=>$data->id,'modelName' => 'clinics'));},
 
         ),
 
@@ -113,14 +115,14 @@
                 (
                     'label'=> CHtml::encode('Редактировать'),
                     'url'=>function ($data) {
-                        return $this -> createUrl("admin/clinicUpdate",['id' => $data -> id]);
+                        return $this -> createUrl("admin/ObjectUpdate",['id' => $data -> id,'modelName' => 'clinics']);
                     },
                 ),
                 'delete' => array
                 (
                     'label'=> CHtml::encode('Удалить'),
                     'url'=>function ($data) {
-                        return $this -> createUrl("admin/clinicsDelete",['id' => $data -> id]);
+                        return $this -> createUrl("admin/ObjectDelete",['id' => $data -> id,'modelName'=>'clinics']);
                     },
                 ),
             ),

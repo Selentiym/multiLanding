@@ -13,7 +13,8 @@ return SiteDispatcher::mergeArray(
         'language' => 'allMrtKtClinicsRF',
         'modules'=>array(
             'clinics' => [
-                'class' => 'application.modules.clinics.clinicsModule'
+                'class' => 'application.modules.clinics.clinicsModule',
+                'dbConfig' => 'dbClinics'
             ]
         ),
         'components'=>array(
@@ -26,12 +27,18 @@ return SiteDispatcher::mergeArray(
                 'class'=>'application.extensions.bootstrap.components.Bootstrap'
             ),
             'urlManager'=>array(
-                'urlFormat'=>'path',
-                'showScriptName' => false,
-                'urlSuffix' => '/',
                 'rules' => array(
                     '<module:(clinics)>/admin' => '<module>/admin/index',
                 ),
+            ),
+            'dbClinics'=>array(
+                'class' => 'CDbConnection',
+                'connectionString' => 'mysql:host=localhost;dbname=cq97848_cl_mod',
+                'tablePrefix' => 'tbl_',
+                'emulatePrepare' => true,
+                'username' => 'cq97848_cl_mod',
+                'password' => 'kicker1995',
+                'charset' => 'utf8',
             ),
         ),
         'params'=>array(

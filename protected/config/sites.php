@@ -8,15 +8,15 @@
 $_SERVER['effectiveHost'] = str_replace('debug.','',$_SERVER['HTTP_HOST']);
 return array(
     'mrktClinics' => array(
-    'host' => array(
-        'мр-кт-клиники-спб.рф',
-        'www.мр-кт-клиники-спб.рф',
-        'xn------ddd7aaambciht6ad1ah.xn--p1ai',
-        'www.xn------ddd7aaambciht6ad1ah.xn--p1ai'
+        'host' => array(
+            'мр-кт-клиники-спб.рф',
+            'www.мр-кт-клиники-спб.рф',
+            'xn------ddd7aaambciht6ad1ah.xn--p1ai',
+            'www.xn------ddd7aaambciht6ad1ah.xn--p1ai'
 
+        ),
+        'userAgent' => false,
     ),
-    'userAgent' => false,
-),
     'goodDoctors' => array(
         'host' => array(
             'общество-добросовестных-докторов.рф',

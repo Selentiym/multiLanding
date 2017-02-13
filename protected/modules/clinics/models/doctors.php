@@ -91,7 +91,7 @@ class doctors extends BaseModel
      
     public function relations()
     {
-        return array(
+        return parent::relations() + array(
             //'services' => array(self::HAS_MANY, 'Services', 'object_id'),
             'services' => array(self::HAS_MANY, 'Services', 'object_id', 'condition' => 'services.object_type = '.Objects::model() -> getNumber(get_class($this))),
             'comments' => array(self::HAS_MANY, 'Comments', 'object_id', 'condition' => 'comments.object_type = '.Objects::model() -> getNumber(get_class($this))),

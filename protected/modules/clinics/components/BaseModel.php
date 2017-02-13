@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Class BaseModel
+ * @property ObjectPriceValue[] $priceValues
+ */
 class BaseModel extends CTModel
 {
 	/**
@@ -13,11 +18,16 @@ class BaseModel extends CTModel
 	 * @var integer type. Stores id of the object's type.
 	 */
 	public $type = 1;
+
+	/**
+	 * @var ObjectPriceValue[]
+	 */
+	private $_priceValues;
 	
 	/** лишняя функция.
 	 * @arg array search a search array that specifies what is being searched
 	 * @arg array objects an array of object which are to be filtered according to search options
-	 * @return an array of model object that fit the search options 
+	 * @return array of model object that fit the search options
 	 * (unlike search function this one is overriden in every doughter class and contains options that are specific)
 	 */
 	public function init()
@@ -27,6 +37,9 @@ class BaseModel extends CTModel
 		if ($num) {
 			$this -> type = $num;
 		}
+	}
+	public function relations() {
+		return [];
 	}
 	/**
 	 * @arg array search a search array that specifies which filterform will be displayed
@@ -698,6 +711,7 @@ class BaseModel extends CTModel
 			} catch (Exception $e) {}
 			//Пытаемся найти ближайшее метро.
 			try {
+				//throw new Exception('no way to find nearest metro');
 				if (($this -> map_coordinates)&&(!$this -> metro_station)) {
 					list($shir, $dolg) = explode(', ',$this -> map_coordinates);
 					$metros = giveMetroNamesArrayByCoords($shir, $dolg);
@@ -815,6 +829,52 @@ class BaseModel extends CTModel
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * @param string|null $arg
+	 * @return static
+	 */
+	public function customFind($arg = null){
+		switch($this -> getScenario()){
+			case 'model' :
+				return static::model();
+				break;
+			default:
+				return static::model();
+				break;
+		}
+	}
+
+	/**
+	 * @param integer $id of the price whose value is returned
+	 * @return ObjectPriceValue|null
+	 */
+	public function getPriceValue ($id) {
+		return $this -> getPriceValuesArray()[$id];
+	}
+
+	/**
+	 * @return ObjectPriceValue[]
+	 */
+	public function getPriceValues() {
+		$criteria = new CDbCriteria();
+		$criteria -> addInCondition('id_price', CHtml::giveAttributeArray(ObjectPrice::model() -> findAllByAttributes(['object_type' => Objects::getNumber(get_class($this))]),'id'));
+		$criteria -> compare('id_object', $this -> id);
+		return ObjectPriceValue::model() -> findAll($criteria);
+	}
+
+	/**
+	 * @return ObjectPriceValue[]
+	 */
+	public function getPriceValuesArray(){
+		if (!isset($this -> _priceValues)) {
+			$this -> _priceValues = [];
+			foreach($this -> getPriceValues() as $val){
+				$this -> _priceValues[$val -> id_price] = $val;
+			}
+		}
+		return $this -> _priceValues;
 	}
 }
 ?>

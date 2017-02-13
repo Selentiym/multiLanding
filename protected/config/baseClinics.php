@@ -7,6 +7,7 @@
  */
 return SiteDispatcher::mergeArray(
     require_once(dirname(__FILE__).'/main.php'),
+    //require_once(dirname(__FILE__).'/clearRules.php'),
     array(
         'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
         'name' => 'clinics',
@@ -71,16 +72,34 @@ return SiteDispatcher::mergeArray(
                 'urlSuffix' => '/',
                 'rules' => array(
                     '' => 'main',
-                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>' => '<module>/admin/Models',
-                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>Filters' => '<module>/admin/Filters',
-                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>FilterCreate' => '<module>/admin/FilterCreate',
-                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>Create' => '<module>/admin/ObjectCreate',
-                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>ExportCsv' => '<module>/admin/ExportCsv',
-                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>ImportCsv' => '<module>/admin/ImportCsv',
-                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>FieldsGlobal' => '<module>/admin/FieldsGlobal',
-                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>FieldCreateGlobal' => '<module>/admin/FieldCreateGlobal',
-                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>FieldUpdateGlobal/<id:\d+>' => '<module>/admin/FieldUpdateGlobal',
-                    '<module:(clinics)>/admin/<modelName:(clinics|doctors)>Delete/<id:\d+>' => '<module>/admin/ObjectDelete',
+                    '<moduleClinics:(clinics)>' => '<moduleClinics>/admin/index',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>PricelistCreate/<id:\d+>' => '<moduleClinics>/admin/PricelistCreate',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>Pricelists/<id:\d+>' => '<moduleClinics>/admin/Pricelists',
+                    '<moduleClinics:(clinics)>/admin/PricelistDelete/<id:\d+>' => '<moduleClinics>/admin/PricelistDelete',
+                    '<moduleClinics:(clinics)>/admin/PricelistUpdate/<id:\d+>' => '<moduleClinics>/admin/PricelistUpdate',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>' => '<moduleClinics>/admin/Models',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>Filters' => '<moduleClinics>/admin/Filters',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>FilterCreate' => '<moduleClinics>/admin/FilterCreate',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>Create' => '<moduleClinics>/admin/ObjectCreate',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>ExportCsv' => '<moduleClinics>/admin/ExportCsv',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>ImportCsv' => '<moduleClinics>/admin/ImportCsv',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>FieldsGlobal' => '<moduleClinics>/admin/FieldsGlobal',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>FieldCreateGlobal' => '<moduleClinics>/admin/FieldCreateGlobal',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>Fields/<id:\d+>' => '<moduleClinics>/admin/Fields',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>FieldsCreate/<id:\d+>' => '<moduleClinics>/admin/FieldsCreate',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>FieldsUpdate/<id:\d+>' => '<moduleClinics>/admin/FieldsUpdate',
+                    '<moduleClinics:(clinics)>/admin/FieldUpdateGlobal/<id:\d+>' => '<moduleClinics>/admin/FieldUpdateGlobal',
+                    '<moduleClinics:(clinics)>/admin/FieldDeleteGlobal/<id:\d+>' => '<moduleClinics>/admin/FieldDeleteGlobal',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>Delete/<id:\d+>' => '<moduleClinics>/admin/ObjectDelete',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>Update/<id:\d+>' => '<moduleClinics>/admin/ObjectUpdate',
+
+
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)><modelClass:(Price)><act:(Update|Delete|Create)>/<id:\d+>' => '<moduleClinics>/admin/<modelClass><act>',
+                    '<moduleClinics:(clinics)>/admin/<modelClass:(Price|PriceBlock)><act:(Update|Delete|Create)>/<id:\d+>' => '<moduleClinics>/admin/<modelClass><act>',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)><modelClass:(Price)><act:(Create)>' => '<moduleClinics>/admin/<modelClass><act>',
+                    '<moduleClinics:(clinics)>/admin/<modelClass:(Price|PriceBlock)><act:(Create)>' => '<moduleClinics>/admin/<modelClass><act>',
+                    '<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)><modelClass:(Price)>List' => '<moduleClinics>/admin/<modelClass>List',
+
                 ),
             ),
             'errorHandler'=>array(

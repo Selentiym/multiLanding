@@ -1,20 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "{{objects}}".
+ * This is the model class for table "{{employments}}".
  *
- * The followings are the available columns in table '{{objects}}':
+ * The followings are the available columns in table '{{employments}}':
  * @property integer $id
- * @property string $name
+ * @property integer $id_clinic
+ * @property integer $id_doctor
+ *
  */
-class Objects extends CTModel
+class Employment extends CTModel
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{objects}}';
+		return '{{employments}}';
 	}
 
 	/**
@@ -25,23 +27,34 @@ class Objects extends CTModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, name', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>255),
-			// The following rule is used by search().
+			
 		);
 	}
 
 	/**
+	 * @return array relational rules.
+	 */
+	/*public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+			'idUser' => array(self::BELONGS_TO, 'User', 'id_user'),
+			'idAddress' => array(self::BELONGS_TO, 'Address', 'id_address'),
+		);
+	}*/
+
+	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
-	public function attributeLabels()
+	/*public function attributeLabels()
 	{
 		return array(
-			'id' => CHtml::encode('Тип объекта'),
-			'name' => CHtml::encode('Название объекта'),
+			'id' => 'ID',
+			'id_address' => 'Id Address',
+			'id_user' => 'Id User',
 		);
-	}
+	}*/
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -55,54 +68,26 @@ class Objects extends CTModel
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
+	/*public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name);
+		$criteria->compare('id_address',$this->id_address);
+		$criteria->compare('id_user',$this->id_user);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
-	}
-	/**
-	 * Returnes the number corresponding to the given modelName
-	 * @arg string modelName - class name of a model which interests us
-	 * @return integer
-	 */
-	public static function getNumber($modelName)
-	{
-		$criteria = new CDbCriteria;
-		$criteria -> compare('name', strtolower($modelName));
-		if ($obj = Objects::model() -> find($criteria)) {
-			return $obj -> id;
-		} else {
-			return false;
-		}
-	}
-	/**
-	 * Returnes the name corresponding to the given id of the object type
-	 * @arg integer number - id of an object type
-	 * @return string - corresponding modelName
-	 */
-	public static function getName($number)
-	{
-		$criteria = new CDbCriteria;
-		$criteria -> compare('id', $number);
-		if ($obj = Objects::model() -> find($criteria)) {
-			return $obj -> name;
-		} else {
-			return false;
-		}
-	}
+	}*/
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return TriggerValues the static model class
+	 * @return UserAddressAssignments the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
