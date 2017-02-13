@@ -40,6 +40,17 @@ return SiteDispatcher::mergeArray(
                 'password' => 'kicker1995',
                 'charset' => 'utf8',
             ),
+
+
+            'dbTracker'=>array(
+                'class' => 'CDbConnection',
+                'connectionString' => 'mysql:host=localhost;dbname=cq97848_gdoc',
+                'tablePrefix' => 'gdoc_',
+                'emulatePrepare' => true,
+                'username' => 'cq97848_gdoc',
+                'password' => 'kicker1995',
+                'charset' => 'utf8',
+            ),
         ),
         'params'=>array(
             'siteId' => 'goodDoctors',

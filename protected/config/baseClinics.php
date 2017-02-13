@@ -121,7 +121,7 @@ return SiteDispatcher::mergeArray(
                 'connectionString' => 'mysql:host=localhost;dbname=cq97848_landing',
                 'tablePrefix' => 'allmrt_',
                 'emulatePrepare' => true,
-                'username' => 'cq97848_clinicsl',
+                'username' => 'cq97848_landing',
                 'password' => 'kicker1995',
                 'charset' => 'utf8',
             ),
