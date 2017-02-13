@@ -99,7 +99,7 @@
         </div>
 		
         <div class="call-me">
-            <p><img src="<?php echo $base; ?>/img/registration.png">Записаться на МРТ и КТ можно КРУГЛОСУТОЧНО по телефону: <b><a href="<?php echo $base; ?>/tel:88122411952"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></b></p>
+            <p><img src="<?php echo $base; ?>/img/registration.png">Записаться на МРТ и КТ можно КРУГЛОСУТОЧНО по телефону: <b><a href="tel:88122411952"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></b></p>
         </div>
 		
     </div>

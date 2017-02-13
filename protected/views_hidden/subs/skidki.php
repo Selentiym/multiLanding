@@ -48,7 +48,7 @@ $a=5;
         </div>
 		
         <div class="call-me">
-            <p><img src="<?php echo $base; ?>/img/registration.png">Записаться на МРТ и КТ можно КРУГЛОСУТОЧНО по телефону: <b><a href="<?php echo $base; ?>/tel:<?php echo '8812'.Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></b></p>
+            <p><img src="<?php echo $base; ?>/img/registration.png">Записаться на МРТ и КТ можно КРУГЛОСУТОЧНО по телефону: <b><a href="tel:<?php echo '8812'.Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></b></p>
         </div>
 		
     </div>
