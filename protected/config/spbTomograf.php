@@ -14,6 +14,7 @@ return SiteDispatcher::mergeArray(
                 'class' => 'application.modules.prices.PricesModule',
                 'dbConfig' => 'db'
             ],
+
         ],
         'components' => [
 
