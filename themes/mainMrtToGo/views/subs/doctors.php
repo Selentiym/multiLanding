@@ -21,22 +21,22 @@
                 <div class="carousel-doctors">
                     <a href="#info2" class="slide_item fancybox">
                         <img src="<?php echo $base; ?>/img/1.jpg" alt="alt" />
-                        <span class="fio"><span>Ананьева</span> Наталия Исаевна</span>
+                        <span class="fio"><span>Ананьева</span> Наталия Исаевна (прием ведется в МДЦ «Рэмси Диагностика»)</span>
                         <span class="zvanie">Врач-рентгенолог Доктор медицинских наук, Профессор </span>
                     </a>
                     <a href="#info3" class="slide_item fancybox">
                         <img src="<?php echo $base; ?>/img/2.jpg" alt="alt" />
-                        <span class="fio"><span>Голимбиевская</span> Тамара Анатольевна</span>
+                        <span class="fio"><span>Голимбиевская</span> Тамара Анатольевна (прием ведется в МДЦ «Рэмси Диагностика»)</span>
                         <span class="zvanie">Врач-рентгенолог Кандидат медицинских наук, доцент</span>
                     </a>
                     <a href="#info5" class="slide_item fancybox">
                         <img src="<?php echo $base; ?>/img/3.jpg" alt="alt" />
-                        <span class="fio"><span>Савельева</span> Татьяна Вячеславовна</span>
+                        <span class="fio"><span>Савельева</span> Татьяна Вячеславовна (прием ведется в МДЦ «Рэмси Диагностика»)</span>
                         <span class="zvanie"> Врач-рентгенолог Кандидат медицинских наук</span>
                     </a>
                     <a href="#info6" class="slide_item fancybox">
                         <img src="<?php echo $base; ?>/img/4.jpg" alt="alt" />
-                        <span class="fio"><span>Макогонова</span> Марина Евгеньевна</span>
+                        <span class="fio"><span>Макогонова</span> Марина Евгеньевна (прием ведется в МДЦ «Рэмси Диагностика»)</span>
                         <span class="zvanie">Врач-рентгенолог высшей квалификационной категории</span>
                     </a>
                     <a href="#info8" class="slide_item fancybox">
