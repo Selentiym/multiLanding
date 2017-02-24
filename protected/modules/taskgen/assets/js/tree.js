@@ -1,0 +1,633 @@
+/**
+ * Created by user on 20.02.2017.
+ */
+if (typeof TaskGenModule == 'undefined') {
+    TaskGenModule = {};
+}
+var loadingImage = $('<img>', {
+    src: TaskGenModule.baseAssets + '/images/loading.gif',
+    css:{
+        width:"20px",
+        height:"20px"
+    }
+});
+//var loadingImage = $('<span>', {
+//    src: TaskGenModule.baseAssets + '/images/loading.gif',
+//    css:{
+//        display:"inline-block",
+//        width:"20px",
+//        height:"20px"
+//    }
+//}).append('img');
+function TreeBranch(parent, param){
+    var me = {};
+    if (!(param instanceof Object)) { return; }
+    //console.log(param);
+    //Сохраняем свой id, иначе не будет детей
+    me.id = param.id;
+    //Понадобится где-нибудь
+    me.name = param.name;
+    //Хранится специфичная информация, изменяемая в зависимости от типа отображаемого объекта.
+    me.extra = param.extra;
+    //console.log(me);
+    if (!me.extra) {
+        me.extra = {};
+        //alert('no extra');
+    }
+    //Сохраняем родителя, иначе не будет отображения на странице
+    //Родителя полностью рекурсивно копируем, потом понадобится
+    me.parent = $.extend({},parent);
+    //Детей пока нет до первого нажатия
+    me.children = [];
+    //Детей пока не искали
+    me.searched = false;
+
+    //Таким образом сохраняем всевозможные атрибуты, передаваемые от родителя к детям
+    //Среди них url, method и тд
+    //При этом все новые методы/атрибуты должны замениться на дочерние
+    //me = $.extend(parent, me);
+    me.tree = parent.tree;
+    me.url = parent.url;
+    me.toHref = parent.toHref;
+    me.childFunc = parent.childFunc;
+    me.generateButtons = parent.generateButtons;
+    me.method = parent.method;
+    me.clickHandler = parent.clickHandler;
+
+    /**
+     *@todo вынести как-то в отдельную функцию, передаваемую в качестве параметров в будущем
+     */
+        //Элемент, отображающий ветку дерева
+    me.element = $('<li>',{
+        "class":"treeBranch"
+    });
+    me.expandEl = $('<span>',{
+        "class":"expand"
+    });
+    if (me.extra.hasChildren) {
+        me.expandEl.addClass('hasChildren');
+        me.expandEl.click(function(){
+            me.toggle();
+        });
+    }
+    me.element.append(me.expandEl);
+    //В нем содержится название ветки (этот же элемент будет отвечать за выделение)
+    me.textEl = $('<div>',{
+        "class":"branchName"
+    });
+    me.link = $('<span>',{href: me.toHref()});
+    //toEdit(me.link,TaskGenModule.baseUrl + '/task/rename/'+me.id);
+    me.textEl.html(me.link.append(param.name));
+    me.textEl.click(function(e){
+        //Если нажат shift
+        if ((e.shiftKey)&&(TreeBranch.prototype.lastSelected)) {
+            var indLast = me.parent.children.indexOf(TreeBranch.prototype.lastSelected);
+            if (indLast == -1) {
+                return;
+            }
+            var indCur = me.parent.children.indexOf(me);
+            if (indCur > indLast) {
+                var sv = indLast;
+                indLast = indCur;
+                indCur = sv;
+            }
+            for (var i = indCur; i <= indLast; i++) {
+                me.parent.children[i].setSelected(true);
+            }
+            e.preventDefault();
+            return;
+        }
+        if (!e.ctrlKey) {
+            me.tree.unselectAll();
+        }
+        me.toggleSelected();
+    });
+    /*me.textEl.click(function(e){
+     if (me.clickHandler(e)){
+     me.toggle();
+     }
+     });*/
+    //И элемент с детьми
+    me.element.append(me.textEl);
+    me.buttonContainer = $('<span>',{'class':'buttonContainer'});
+    if (typeof me.generateButtons == 'function') {
+        me.generateButtons(me);
+    }
+    me.element.append(me.buttonContainer);
+    me.childrenContainer = $('<ul>',{
+        "class":"branchChildren",
+        css:{
+            display:"none"
+        }
+    });
+    me.element.append(me.childrenContainer);
+
+    //Присваиваем элемент контейнеру
+    me.parent.childrenContainer.append(me.element);
+    me.iterateOverChildren = function(callback, obtainChildren){
+        if (typeof callback == 'function') {
+            if (me.children.length) {
+                _.each(me.children, callback);
+            } else {
+                if ((obtainChildren)&&(!me.searched)&&(me.extra.hasChildren)) {
+                    me.getChildren(null, callback);
+                }
+            }
+        }
+    };
+    me.iterateOverDescendants = function (callback, obtainChildren) {
+        if (typeof callback == 'function') {
+            me.iterateOverChildren(function (a) {
+                callback(a);
+                //console.log(a);
+                //console.log(obtainChildren);
+                a.iterateOverDescendants(callback, obtainChildren);
+            }, obtainChildren);
+        }
+    };
+    /*
+     me.iterateOverDescendants = function(callback, obtainChildren){
+     if ((typeof callback == 'function')&&(me.children)) {
+     _.each(me.children, function(a, b, c){
+     callback(a, b, c);
+     a.iterateOverDescendants(callback);
+     });
+     }
+     };*/
+    me.iterateOverSelfAndDescendants = function(callback, obtainChildren){
+        if (typeof callback == 'function') {
+            callback(me);
+            me.iterateOverDescendants(callback);
+        }
+    };
+    /**
+     * Отвечает за создание детей. Обращается на сервер и получает своих потомков,
+     * затем инициализирует их
+     */
+        //Вынесено для использования в дальнейшем
+        //вне рамок массового обращения на сервер.
+    me.createChild = function(el){
+        var child = me.childFunc(me, el);
+        me.children.push(child);
+        if (me.tree.expandedIdsInitial.indexOf(child.id) != -1) {
+            child.toggle();
+        }
+        if (typeof callback == 'function') {
+            callback(child);
+        }
+        return child;
+    };
+    me.getChildren = function(noExpandedChange, callback){
+        me.childrenContainer.toggle(noExpandedChange);
+        me.childrenContainer.html(loadingImage.clone());
+        $.ajax({
+            url: me.url,
+            //method:"POST",
+            dataType:"json",
+            //method:me.method,
+            data:{
+                id: me.id,
+                param: param
+            }
+        }).done(function (data) {
+            me.childrenContainer.html('');
+            _.each(data, function(el){
+                var child = me.createChild(el);
+                //console.log(el);
+            });
+            /*if (data.length == 0) {
+             me.childrenContainer.append('Низший уровень вложенности');
+             }*/
+            me.searched = true;
+
+        });
+    };
+    /**
+     * Функция, отвечающая за раскрывание списка дочерних элементов
+     */
+    me.opened = false;
+    me.toggle = function(noExpandedChange){
+        me.opened = !me.opened;
+        if (me.searched) {
+            me.childrenContainer.toggle(500);
+        } else {
+            me.getChildren();
+        }
+        /*if (!noExpandedChange) {
+         me.tree.toggleExpanded(me.id);
+         }*/
+        me.expandEl.toggleClass('opened');
+        me.tree.setExpanded(me.id,me.expandEl.hasClass('opened'));
+    };
+    me.setOpened = function(val){
+        me.opened = val;
+        if (me.opened) {
+            if (me.searched) {
+                me.childrenContainer.show(500);
+            } else {
+                me.getChildren();
+            }
+            me.expandEl.addClass('opened');
+            me.tree.setExpanded(me.id,true);
+        } else {
+            me.childrenContainer.hide(500);
+        }
+    };
+    me.setSelected = function(val){
+        if (val) {
+            me.selected = true;
+            me.tree.setExpanded(me.parent.id, true);
+            TreeBranch.prototype.lastSelected = me;
+            me.element.addClass('selected');
+        } else {
+            me.selected = false;
+            TreeBranch.prototype.lastSelected = null;
+            me.element.removeClass('selected');
+        }
+    };
+    me.setSelected(false);
+    me.toggleSelected = function(){
+        me.selected = !me.selected;
+        me.element.toggleClass('selected');
+        if (me.selected) {
+            TreeBranch.prototype.lastSelected = me;
+        } else {
+            TreeBranch.prototype.lastSelected = null;
+        }
+    };
+    return me;
+}
+ControlButton.prototype.actionForOneCountChecks = function(collection){
+    if (ControlButton.prototype.hasAnythingCheck(collection)) {
+        return ControlButton.prototype.tooManyCheck(collection);
+    } else {
+        return false;
+    }
+};
+function ControlButton(value, className, callback, tree, param, preValidator){
+    var me = {};
+    //Сохраняем дерево, тк именно оно даст элементы
+    me.tree = tree;
+    if (!className) {className = '';}
+    if (!param) {param = '';}
+
+    if (typeof preValidator != 'function') {
+        me.preValidator = ControlButton.prototype.hasAnythingCheck;
+    } else if (preValidator === true) {
+        me.preValidator = function(){return true};
+    } else{
+        me.preValidator = preValidator;
+    }
+    var tag;
+    if (!param.tag) {
+        tag = 'span';
+    } else {
+        tag = param.tag;
+    }
+    //Создаем элемент кнопки. Все стили накладываются внешне.
+    me.element = $('<' + tag + '>', $.extend({
+        "class":"button " + className
+    },param)).append(value);
+    //Вешаем действие кнопки.
+    me.element.click(function(event){
+        //Если нет элементов, то и делать нечего
+        if (me.tree) {
+            //Ищем все элементы
+            var elems = me.tree.getSelected();
+            if (me.preValidator(elems)) {
+                //Не всегда действие можно применить ко всем элементам.
+                var stop = false;
+                _.each(elems, function (el) {
+                    if (!stop) {
+                        stop = callback(el, event, elems);
+                    }
+                });
+            }
+        } else {
+            alert('no tree');
+        }
+    });
+    me.tree.addButton(me);
+    return me;
+}
+function TreeStructure(url, param){
+    var me = {};
+
+    me.url = url;
+    if (!param) {
+        param = {};
+    }
+    param = $.extend({
+        method: "post",
+        id: 0,
+        name: '',
+        childFunc: TreeBranch,
+        clickHandler: function(e) {return true;},
+        toHref: function(){
+            if (this.id) {
+                return '#';
+            }
+        },
+        extra:{
+            hasChildren: 1
+        },
+        elementId: "TreeContainer"
+    },param);
+    me.childrenContainer = $('<ul>',{
+        "class":"treeRoot"
+    });
+    me.childFunc = param.childFunc;
+    me.clickHandler = param.clickHandler;
+    me.toHref = param.toHref;
+    me.generateButtons = param.generateButtons;
+    me.tree = me;
+    me.element = $("#"+param.elementId);
+    me.element.html(me.childrenContainer);
+
+    //Задаем имя, в котором хранить информацию
+    me.cookieName = 'TreeExpandedIds'+me.element.attr('id');
+    //Получаем айдишники развернутых пунктов
+    var cookie;
+    me.expandedIds = [];
+    if (cookie = $.cookie(me.cookieName)) {
+        me.expandedIdsInitial = JSON.parse(cookie);
+    }
+
+    if (!(me.expandedIdsInitial instanceof Array)) {
+        me.expandedIdsInitial = [];
+    }
+
+    me.expandedIdsInitial = _.unique(me.expandedIdsInitial);
+    me.toggleExpanded = function(id){
+        var ind = me.expandedIds.indexOf(id);
+        if (ind != -1) {
+            me.expandedIds.splice(ind, 1);
+        } else {
+            me.expandedIds.push(id);
+        }
+        //Сохраняем результат
+        $.cookie(me.cookieName, JSON.stringify(me.expandedIds));
+        //console.log(me.expandedIds);
+    };
+    me.setExpanded = function(id, val){
+        var state = me.expandedIds.indexOf(id) != -1;
+
+        if (state != val) {
+            me.toggleExpanded(id);
+        }
+    };
+
+    //Важно, чтобы первый элемент создавался именно здесь, иначе в его параметры
+    // попадут лишние функции - будет illigal invokation
+    me.firstEl = me.childFunc(me, param);
+    me.firstEl.toggle();
+    if (!param.container) {
+        param.container = $("body");
+    }
+
+    me.buttonContainer = $("<div>",{
+        "class":"controls"
+    });
+    me.addButton = function(button){
+        me.buttonContainer.append(button.element);
+    };
+    if (typeof param.generatePanel == 'function') {
+        console.log(me);
+        param.generatePanel(me);
+    }
+    //me.element.prepend(me.buttonContainer);//todo временно, потом раскомментить
+
+    me.unselectAll = function(){
+        //alert('implement unselectAll');
+        me.firstEl.iterateOverSelfAndDescendants(function(el){
+            el.setSelected(false);
+        });
+    };
+
+    me.getSelected = function(){
+        console.log('getselected');
+        var toGive = [];
+        me.firstEl.iterateOverSelfAndDescendants(function(elem){
+            if (elem.selected) {
+                toGive.push(elem);
+            }
+        });
+        //console.log(toGive);
+        return toGive;
+    };
+
+    return me;
+}
+function createStatuses(branch) {
+    var status = branch.extra;
+    var imageName = '';
+    var imageAlt = '';
+    //console.log(branch.extra);
+    if (status.accepted == 1) {
+        imageName = 'tick_small.png';
+        imageAlt = 'Принято';
+    } else if (status.handedIn == 1) {
+        imageName = 'handedIn.png';
+        imageAlt = 'Задание сдано';
+        branch.element.addClass('handedIn');
+    } else if (status.QHandedIn == 1) {
+        imageName = 'QHandedIn.png';
+        imageAlt = 'Просьба рассмотреть';
+        branch.element.addClass('QHandedIn');
+    } else if (status.notEmpty == 1){
+        imageName = 'writing.png';
+        imageAlt = 'Текст в разработке';
+    } else if (status.keysGenerated > 0) {
+        imageName = 'empty.png';
+        imageAlt = 'Ожидает начала работы автора';
+    } else if (status.hasKeys > 0) {
+        imageName = 'keys_loaded.png';
+        imageAlt = 'Ключи загружены';
+    } else {
+        imageName = 'new.png';
+        imageAlt = 'Задание пустое';
+    }
+    branch.buttonContainer.append($('<img>',{
+        src:TaskGenModule.baseAssets+'/images/'+imageName,
+        alt: imageAlt,
+        title: imageAlt,
+        css:{
+            height:'20px'
+        }
+    }));
+}
+function addButtons(branch){
+    if (!branch) {return;}
+    if (!branch.parent.parent) {return;}
+    branch.dragButton = $("<span>",{
+        "class":"dragButton button"
+    });
+    branch.element.draggable({
+        handle: branch.dragButton,
+        helper:function(){ return branch.textEl.clone(); },
+        cursorAt:{left:10},
+        scope:'task'
+    });
+    branch.element.attr('data-id',branch.id);
+    branch.textEl.droppable({
+        hoverClass:'over',
+        scope:'task',
+        drop:function(event, ui){
+            location.href = TaskGenModule.baseUrl + '/task/move/'+ ui.draggable.attr('data-id') +'/to/'+ branch.id;
+        }
+    });
+    branch.buttonContainer.append(branch.dragButton);
+    createStatuses(branch);
+    if (!status.authorName) {
+        branch.buttonContainer.append($('<img>',{
+            src:TaskGenModule.baseUrl + '/images/missing.png',
+            alt: 'Нет автора',
+            title: 'Нет автора',
+            css:{
+                height:'20px'
+            }
+        }));
+        branch.element.addClass('noAuthor');
+    } else {
+        branch.buttonContainer.append($('<span>',{
+            "class":"author"+status.author,
+        }).html(status.authorName));
+    }
+    branch.buttonContainer.append($('<a>',{
+        href: TaskGenModule.baseUrl + '/task/' + branch.id,
+        css:{
+            width:'20px',
+            height:'20px',
+            "background": "url('" + TaskGenModule.baseUrl + '/images/view_small.png'+"')"
+        }
+    }));
+    var comment;
+    if (status.comment) {
+        comment = status.comment;
+    } else {
+        comment = 'Введите комментарий'
+    }
+    var visClass = 'hidden';
+    if (window.showComments) {
+        visClass = '';
+    }
+    var commentSpan = $('<span>',{
+        "class":"comment " + visClass
+    }).append(comment);
+    //commentSpan = toEdit(commentSpan, TaskGenModule.baseUrl + '/task/editComment/' + branch.id);
+    branch.buttonContainer.append(commentSpan);
+}
+function genControlPanel (tree) {
+    if (!tree) {return;}
+
+    //Добавляем список авторов.
+    var authorList = $("#authorsList").detach();
+    if (!authorList.length) {
+        authorList = false;
+    }
+
+    console.log(authorList);
+
+    new ControlButton("","edit",function(el, event){$(event.target).attr("href", TaskGenModule.baseUrl + "/task/edit/" + el.id); return true;},tree, {tag:"a", title:"Редактировать задание"},ControlButton.prototype.actionForOneCountChecks);
+    new ControlButton("","keys",function(el, event){$(event.target).attr("href", TaskGenModule.baseUrl + "/cabinet/loadKeywords/" + el.id); return true;},tree, {tag:"a", title:"Загрузить слова"},ControlButton.prototype.actionForOneCountChecks);
+    new ControlButton("","look",function(el, event){$(event.target).attr("href", TaskGenModule.baseUrl + "/task/" + el.id); return true;},tree, {tag:"a", title:"Смотреть текст"},ControlButton.prototype.actionForOneCountChecks);
+    var authorSelector = $("#authorForAssignSelect");
+    new ControlButton("","assign_author",function(el){
+        $.post(TaskGenModule.baseUrl + "/Task/assignAuthor/" + el.id, {
+            author: authorList.val()
+        },null, "JSON");
+    },tree,{title:"Назначить автора"}, function(coll){ if (!coll) {return false;} else if (coll.length > 0) {return confirm("Вы собираетесь присвоить "+coll.length+" заданий автору "+$(authorList).select2('data')[0].text)+". Ok?"; } else {return false;} });
+
+    //new ControlButton("","plus",function(el){location.href = TaskGenModule.baseUrl + "/TaskCreate/parent/" + el.id; return true;},tree);
+    new ControlButton("","plus",function(el){$.post(
+        TaskGenModule.baseUrl + "/Task/createFast/" + el.id,
+        {name:"Новая статья"}, null,"json"
+    ).done(function(data){
+        if (data.success) {
+            el.createChild(data.dump);
+        } else {
+            alert("Ошибка при создании!");
+        }
+    }); return true;},tree,{title:"Добавить потомка"});
+    new ControlButton("&#9745;","font20",function(el){el.iterateOverDescendants(function(child){child.setSelected(true);
+        child.parent.childrenContainer.show(500);
+
+    },true);},tree,{title:"Выделить потомков"}, true);
+    new ControlButton("&#9746;","font20",function(el){el.iterateOverSelfAndDescendants(function(child){child.setSelected(false);});},tree,{title:"Снять выделение с потомков"}, true);
+    new ControlButton("","delete",function(el, event, collection){
+        var toDel = [];
+        var yesToAll;
+        if (collection.length > 1) {
+            yesToAll = !confirm("Вы собираетесь удалить "+collection.length+" заданий. Перечислить их по очреди?");
+            _.map(collection, function(elem){
+                var toDelFlag = yesToAll;
+                if (!toDelFlag) {
+                    toDelFlag = confirm("Удалить задание: "+elem.name+"?");
+                }
+                if (toDelFlag) {
+                    toDel.push(elem.id);
+                }
+            });
+        } else {
+            if (confirm("Удалить задание: "+el.name+"?")) {
+                toDel = [el.id];
+            }
+        }
+        function sendDeleteRequest(toDel, forced){
+            if (forced) {
+                forced = 1;
+            } else {
+                forced = 0;
+            }
+            $.post(TaskGenModule.baseUrl+"/task/deleteGroup",{ids:toDel, forced: forced},function(){},"JSON").done(function(data){
+                alert(data.commonMess);
+                console.log(data);
+                var toDelSecond = [];
+                if (data.forcedDel) {
+                    _.each(data.forcedDel, function(elem){
+                        if (confirm(elem.mes)) {
+                            toDelSecond.push(elem.id);
+                        }
+                    });
+                }
+                if (toDelSecond.length) {
+                    sendDeleteRequest(toDelSecond, true);
+                }
+                if (data.reload) {
+                    location.reload();
+                }
+            });
+        }
+        sendDeleteRequest(toDel);
+        //Не продолжаем потом прбегать по элементам
+        return true;
+    },tree,{title:"Удалить"}, true);
+    new ControlButton("","delete_keys",function(el){$.post(TaskGenModule.baseUrl+"/Task/deleteKeys/"+el.id).done(function(){location.reload();});},tree,{},
+        function (coll) {if (coll.length) {return confirm("Вы собираетесь удалить поисковые фразы и ключевые слова у " + coll.length + " заданий. Это действие необратимо. Продолжить все равно?");} else {return false;}});
+
+    new ControlButton("","copy_to_author",
+        function(el){$.post(TaskGenModule.baseUrl+"/Task/copyToAuthor/"+el.id, {author:authorList.val()}).done(function(){location.reload();});},
+        tree,
+        {title:"Скопировать задания автору"},
+        function (coll) {if (coll.length) {return confirm("Вы собираетесь скопировать " + coll.length + " заданий автору "+$(authorList).select2('data')[0].text+".");} else {return false;}});
+    if (authorList) {
+        tree.buttonContainer.append(authorList);
+        authorList.select2();
+    }
+
+    window.showComments = false;
+    var commentCheckbox = $('<input>',{
+        type:'checkbox',
+        title: 'Показать комментарии'
+    }).click(function(){
+        var comments = $('.comment');
+        var newStatus = $(this).prop('checked');
+        window.showComments = newStatus;
+        if (newStatus) {
+            comments.removeClass('hidden');
+        } else {
+            comments.addClass('hidden');
+        }
+    });
+    tree.buttonContainer.append(commentCheckbox);
+}

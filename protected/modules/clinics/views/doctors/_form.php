@@ -250,43 +250,54 @@
         <div>
             <?php echo $form->labelEx($model,'text'); ?>
             <div class="controls">
-                <?php $this->widget('application.extensions.tinymce.TinyMce',
+                    <?php //$this->widget('application.extensions.tinymce.TinyMce',
+//                    array(
+//                        'model'=>$model,
+//                        'attribute'=>'text',
+//                        //'editorTemplate'=>'full',
+//                        'skin'=>'cirkuit',
+//
+//                        //'useCompression'=>false,
+//                        'settings'=> array(
+//                            'mode' =>"textareas",
+//                            'theme' => 'advanced',
+//                            'skin' => 'cirkuit',
+//                            'theme_advanced_toolbar_location'=>'top',
+//                            'plugins' => 'advimage,spellchecker,safari,pagebreak,style,layer,save,advlink,advlist,iespell,inlinepopups,insertdatetime,contextmenu,directionality,noneditable,nonbreaking,xhtmlxtras,template',
+//                            'theme_advanced_buttons1' => 'formatselect,forecolor,|,bold,italic,strikethrough,|,bullist,numlist,|,fontselect fontsizeselect,|,justifyleft,justifycenter,justifyright,justifyfull,|,link,unlink,image',
+//                            'theme_advanced_buttons2' => '',
+//                            'theme_advanced_buttons3' => '',
+//                            'theme_advanced_toolbar_location' => 'top',
+//                            'theme_advanced_toolbar_align' => 'left',
+//                            'theme_advanced_statusbar_location' => 'bottom',
+//                            'theme_advanced_resizing_min_height' => 30,
+//                            'height' => 300,
+//                            'width' => 100,
+//                            //'file_browser_callback' => 'openmanager',
+//                            //'open_manager_upload_path' => CHtml::encode(Yii::app()->basePath) . '/../images/uploads/',
+//                            //'relative_urls' => false,
+//
+//                        ),
+//
+//                        'fileManager' => array(
+//                                    'class' => 'application.extensions.elFinder.TinyMceElFinder',
+//                                    'popupConnectorRoute' => 'elfinder/elfinderTinyMce', // relative route for TinyMCE popup action
+//                                    'popupTitle' => "Files",
+//                             ),
+//                        'htmlOptions'=>array('rows'=>5, 'cols'=>15, 'class'=>'tinymce'),
+//                    )); ?>
+
+                <?php
+                $this->widget('application.extensions.tinymce.TinyMce',
                     array(
                         'model'=>$model,
                         'attribute'=>'text',
-                        //'editorTemplate'=>'full',
-                        'skin'=>'cirkuit',
-                        
-                        //'useCompression'=>false,
-                        'settings'=> array(
-                            'mode' =>"textareas",
-                            'theme' => 'advanced',
-                            'skin' => 'cirkuit',
-                            'theme_advanced_toolbar_location'=>'top',
-                            'plugins' => 'advimage,spellchecker,safari,pagebreak,style,layer,save,advlink,advlist,iespell,inlinepopups,insertdatetime,contextmenu,directionality,noneditable,nonbreaking,xhtmlxtras,template',
-                            'theme_advanced_buttons1' => 'formatselect,forecolor,|,bold,italic,strikethrough,|,bullist,numlist,|,fontselect fontsizeselect,|,justifyleft,justifycenter,justifyright,justifyfull,|,link,unlink,image',
-                            'theme_advanced_buttons2' => '',
-                            'theme_advanced_buttons3' => '',
-                            'theme_advanced_toolbar_location' => 'top',
-                            'theme_advanced_toolbar_align' => 'left',
-                            'theme_advanced_statusbar_location' => 'bottom',
-                            'theme_advanced_resizing_min_height' => 30,
-                            'height' => 300,
-                            'width' => 100,
-                            //'file_browser_callback' => 'openmanager',
-                            //'open_manager_upload_path' => CHtml::encode(Yii::app()->basePath) . '/../images/uploads/',
-                            //'relative_urls' => false,
-                            
-                        ),
-                        
-                        'fileManager' => array(
-                                    'class' => 'application.extensions.elFinder.TinyMceElFinder',
-                                    'popupConnectorRoute' => 'elfinder/elfinderTinyMce', // relative route for TinyMCE popup action
-                                    'popupTitle' => "Files",
-                             ), 
-                        'htmlOptions'=>array('rows'=>5, 'cols'=>15, 'class'=>'tinymce'),
-                    )); ?>
-
+                        'htmlOptions' => ['style' => 'height:300px;witdh:80%'],
+                        'settings' => array(
+                            'entity_encoding' => 'raw',
+                        )
+                    ));
+                ?>
                         
             </div>
             <?php echo $form->error($model,'text'); ?>

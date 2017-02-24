@@ -1,0 +1,295 @@
+#personal_object_cont {
+	
+	padding-bottom:0;
+	margin-bottom:0;
+	border-color:#ccdfeb;
+}
+.main_part {
+	margin-top:20px;
+}
+.main_part .left_side {
+	display:inline-block;
+	vertical-align:top;
+	margin-right:5px;
+}
+.main_part .center {
+	display:inline-block;
+	vertical-align:top;
+	width:490px;
+	margin-right:5px;
+}
+.main_part .right_side {
+	display:inline-block;
+	vertical-align:top;
+}
+.image_cont {
+	display:inline-block;
+	max-width:150px;
+}
+.object_name {
+	color:#00713d;
+	font-family:OpenSans;
+	font-size:18px;
+	margin:2px;
+	display:inline-block;
+	border-bottom:1px solid #00713d;
+	padding-bottom:0;
+}
+.object_text {
+	font-size:12px;
+	font-family:OpenSans;
+	color:#090909;
+	
+}
+.small_info {
+	width:380px;
+	background:#e2f5ec;
+	padding:5px 10px;
+}
+.small_info > div {
+	/*margin:0px 0;*/
+}
+.time {
+	margin-bottom:5px;
+}
+.small_info .text {
+	display:inline-block;
+	vertical-align:middle;
+	font-size:14px;
+	font-family:Arial;
+}
+.small_info .time_img {
+	background:url('../images/time_icon.png') no-repeat;
+	width:16px;
+	height:16px;
+	display:inline-block;
+	vertical-align:middle;
+	margin-right:5px;
+}
+.small_info .address_img {
+	background:url('../images/address_icon.png') no-repeat;
+	width:14px;
+	height:19px;
+	display:inline-block;
+	vertical-align:middle;
+	margin-right:5px;
+}
+.assign_cont {
+	margin:10px 0;
+}
+.assign_cont .number {
+	float:right;
+	display:inline-block;
+	vertical-align:middle;
+}
+.assign_cont .number .tel_img{
+	background:url(../images/tel_icon.png) no-repeat;
+	width:13px;
+	height:25px;
+	margin-right:5px;
+	display:inline-block;
+	vertical-align:middle;
+}
+.assign_cont .number .tel_number {
+	color:#00713d;
+	width:170px;
+	vertical-align:middle;
+	display:inline-block;
+	vertical-align:middle;
+	font-family:Arial;
+	font-style:italic;
+	line-height:20px;
+}
+.assign_cont .assign{
+	display:inline-block;
+}
+.assign_cont .assign span{
+	background:#ef9271;
+	color:#fefefe;
+	font-size:16px;
+	font-family:Arial;
+	border-radius:5px;
+	padding:10px 25px;
+	display:inline-block;
+	cursor:pointer;
+}
+#map {
+	width:240px;
+	height:300px;
+	float:right;
+	
+}
+#personal_object_cont .menu  {
+	margin-top:10px;
+	margin-bottom:-2px;
+	background:transparent;
+}
+#personal_object_cont .menu  .item{
+	padding:7px;
+	font-size:14px;
+	font-family:Arial;
+	display:inline-block;
+	/*margin:0 10px;*/
+	padding:10px 0;
+	width:100px;
+	text-align:center;
+	cursor:pointer;
+}
+#personal_object_cont .menu  .item span.amount{
+	color:#ef9271;
+}
+#personal_object_cont .menu  .active{
+	background:#e2f5ec;
+}
+/*prices*/
+#prices {
+	padding:20px 40px;
+}
+#price_heading {
+	color:black;
+	font-family:Arial;
+	font-size:16px;
+	text-align:left;
+	font-weight:normal;
+}
+#price_cont {
+	width:450px;
+	display:inline-block;
+}
+#small_clinic_info {
+	width:390px;
+	padding:10px;
+	display:inline-block;
+	vertical-align:top;
+	margin-left:20px;
+	background:#e2f5ec;
+}
+#small_clinic_info div:first_child{
+	font-size:12px;
+	font-family:Arial;
+}
+#price_cont .single_price {
+	font-size:14px;
+	font-family:Arial;
+	padding:10px;
+}
+#price_cont .single_price:nth-child(2n+1){
+	background:#e2f5ec;
+}
+#price_cont .single_price span{
+	display:inline-block;
+	vertical-align:middle;
+}
+#price_cont .price_value {
+	text-decoration:underline;
+	width:70px;
+	margin-left:10px;
+}
+#price_cont .price_name {
+	width:350px;
+}
+/*reviews*/
+#reviews {
+	padding:20px 40px;
+}
+#reviews > div {
+	display:inline-block;
+	vertical-align:top;
+}
+
+
+#review_list {
+	width:430px;
+}
+#add_review {
+	width:400px;
+	margin-left:40px;
+	text-align:center;
+}
+#review_list h2, #add_review h2 {
+	color:black;
+	font-family:Arial;
+	font-size:16px;
+	text-align:left;
+	font-weight:normal;
+}
+#review_list .single_review {
+	font-family:Arial;
+	font-size:12px;
+	text-align:justify;
+	width:380px;
+	padding:10px;
+	background:#beedd7;
+	max-height:150px;
+	margin-top:10px;
+	border:1px solid #99cecd;
+}
+#review_list .single_review .name{
+	font-size:14px;
+	display:block;
+	margin-bottom:5px;
+}
+
+#review_list .single_review .show, #review_list .single_review .hide{
+	font-family:OpenSans;
+	font-style:italic;
+	font-size:12px;
+	color:#7eb6c5;
+	display:inline-block;
+	text-decoration:underline;
+	cursor:pointer;
+}
+#review_list .single_review .show:before{
+	content:'Читать полностью';
+}
+#review_list .single_review .hide:before {
+	content:'Скрыть';
+}
+/*#review_submit {
+	width:auto;
+}*/
+
+#textarea_cont {
+	width:400px;
+}
+#textarea_cont .note {
+	font-size:11px;
+	font-style:italic;
+	font-family:Arial;
+	text-align:left;
+	padding-bottom:3px;
+}
+#textarea_cont textarea {
+	border-radius:10px;
+	background:#beedd7;
+	color:#8a8a8a;
+	padding:15px;
+	resize:none;
+	outline:none;
+	width:370px;
+	height:100px;
+	font-style:italic;
+	font-size:14px;
+	font-family:Arial;
+}
+#first_name_input_cont {
+	margin-top:20px;
+	margin-bottom:10px;
+}
+#first_name_input_cont input {
+	border-radius:10px;
+	border: 1px solid #9bd0ce;
+	background:#beedd7;
+	color:#8a8a8a;
+	padding:8px 15px;
+	outline:none;
+	width:370px;
+	font-style:italic;
+	font-size:14px;
+	font-family:Arial;
+}
+/* Clinic info */
+#info #slider {
+	margin-top:0;
+	margin-bottom:50px;
+}

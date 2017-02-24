@@ -44,10 +44,22 @@ return array(
         ],
         'userAgent' => false
     ],
+    'newDesign' => [
+        'host' => [
+            'domain',
+        ],
+        'userAgent' => false
+    ],
     'spbTomograf' => [
         'host' => [
             'spb-tomograf.ru',
             'www.spb-tomograf.ru',
+        ],
+        'userAgent' => false
+    ],
+    'libraryLanding' => [
+        'host' => [
+            'abc',
         ],
         'userAgent' => false
     ]

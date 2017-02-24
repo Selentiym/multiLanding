@@ -31,7 +31,7 @@ class LoginController extends CController {
             }
         }
         // display the login form
-        $this->renderPartial('//login/loginform', array('model' => $model));
+        $this->renderPartial('/login/loginform', array('model' => $model));
     }
     /**
      * This is the action to handle external exceptions.

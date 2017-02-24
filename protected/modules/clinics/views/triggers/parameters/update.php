@@ -1,0 +1,2 @@
+<h1><?php echo CHtml::encode('Редактировать параметр <'.$model -> name.'> триггера <'.$model -> trigger -> name.'>'); ?></h1>
+<?php $this->renderPartial('/triggers/parameters/_form', array('model'=>$model)); ?>

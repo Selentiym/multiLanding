@@ -36,6 +36,16 @@
             <div class="buttons">
                 <?php echo CHtml::submitButton($model->isNewRecord ? CHtml::encode('Создать') : CHtml::encode('Сохранить')); ?>
             </div>
+            <table>
+                <tr>
+                    <td>Имя</td><td>Verbiage</td><td>Значение</td>
+                </tr>
+            <?php
+                foreach ($model -> trigger -> parameters as $param) {
+                    $this -> renderPartial('/triggers/parameters/_parameterForm', ['param' => $param, 'model' => $model]);
+                }
+            ?>
+            </table>
 
         <?php $this->endWidget(); ?>
        </div>

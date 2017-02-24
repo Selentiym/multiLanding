@@ -55,7 +55,6 @@ class AdminController extends Controller
 
     public function actions(){
         return [
-
             'PriceBlockList'=>array(
                 'class'=>'application.controllers.actions.FileViewAction',
                 //'access' => function () {return $this -> isSuperAdmin();},
@@ -114,6 +113,68 @@ class AdminController extends Controller
                 'class' => 'application.controllers.actions.ModelViewAction',
                 'modelClass' => 'User',
                 'view' => '//LK'
+            ),
+            'ArticleList' => [
+                'class'=>'application.controllers.actions.ModelViewAction',
+                'modelClass' => 'Article',
+                'scenario' => 'list',
+                //'access' => function () {return $this -> isSuperAdmin();},
+                'view' => '/article/admin'
+            ],
+            'ArticleCreate' => [
+                'class' => 'application.controllers.actions.ModelCreateAction',
+                'modelClass' => 'Article',
+                'view' => '/article/create',
+                'redirectUrl' => $this -> createUrl('admin/ArticleList'),
+                'scenario' => 'create'
+            ],
+            'ArticleUpdate' => array(
+                'class' => 'application.controllers.actions.ModelUpdateAction',
+                'modelClass' => 'Article',
+                'view' => '/article/update',
+                'redirectUrl' => function($data){
+                    return $this -> createUrl('admin/ArticleList');
+                },
+                'scenario' => 'update'
+            ),
+            'ArticleDelete' => array(
+                'class' => 'application.controllers.actions.ModelDeleteAction',
+                'modelClass' => 'Article'
+            ),
+            'TriggerParameterList' => [
+                'class'=>'application.controllers.actions.ModelViewAction',
+                'modelClass' => 'TriggerParameter',
+                'scenario' => 'list',
+                //'access' => function () {return $this -> isSuperAdmin();},
+                'view' => '/triggers/parameters/_list'
+            ],
+            'TriggerParameterCreate' => [
+                'class' => 'application.controllers.actions.ModelCreateAction',
+                'modelClass' => 'TriggerParameter',
+                'view' => '/triggers/parameters/create',
+                'redirectUrl' => function($model){return $this -> createUrl('admin/TriggerParameterList',['id' => $model -> id_trigger]);},
+                'scenario' => 'create'
+            ],
+            'TriggerParameterUpdate' => array(
+                'class' => 'application.controllers.actions.ModelUpdateAction',
+                'modelClass' => 'TriggerParameter',
+                'view' => '/triggers/parameters/update',
+                'redirectUrl' => function($model){return $this -> createUrl('admin/TriggerParameterList',['id' => $model -> id_trigger]);},
+                'scenario' => 'update'
+            ),
+            'TriggerParameterDelete' => array(
+                'class' => 'application.controllers.actions.ModelDeleteAction',
+                'modelClass' => 'TriggerParameter'
+            ),
+
+            'createArticleFast' => array(
+                'class' => 'application.controllers.actions.ClassMethodAction',
+                'method' => 'createDescendantFast',
+                'ajax' => true,
+                'ignore' => true,
+                'modelClass' => 'Article',
+                'scenario' => 'createDescendant',
+                'access' => true
             ),
         ];
     }
@@ -937,7 +998,7 @@ class AdminController extends Controller
         if(isset($_GET['Triggers']))
             $model->attributes = $_GET['Triggers'];
 
-        $this->render('triggers_list',array(
+        $this->render('/triggers/_list',array(
             'model'=>$model,
         ));
     }
@@ -980,7 +1041,7 @@ class AdminController extends Controller
             } 
         }
 
-        $this->render('//triggers/create',array(
+        $this->render('/triggers/create',array(
             'model'=>$model
         ));
     }
@@ -1018,9 +1079,9 @@ class AdminController extends Controller
             }    
                       
             if($model->save())
-                $this->redirect(array('/admin/triggers','id'=>$model->id));
+                $this->redirect($this -> createUrl('admin/triggers'));
         }
-        $this->render('//triggers/update',array(
+        $this->render('/triggers/update',array(
             'model'=>$model,
         ));
     }
@@ -1355,6 +1416,9 @@ class AdminController extends Controller
     public function actionIndex()
     {
         $this->render('view');
+//        $a = Article::model() -> findByPk(3);
+//        //$a -> text = "<search:nameOne>";
+//        echo $a -> prepareText(['search' => 2]);
     }
 
     public function actionfileUpload()
@@ -1626,5 +1690,27 @@ class AdminController extends Controller
     }*/
     public function redirectHome(){
         $this -> redirect('admin/index');
+    }
+    public function actionAjaxGetParents() {
+        $level = (int) $_POST['Article']['level'];
+        echo Article::model() -> GenerateParentList($level - 1);
+    }
+    /**
+     * Ajax action that returns children info by the given task id
+     */
+    public function actionGiveArticleChildren(){
+        $data = $_GET;
+        if ($data['id']) {
+            $model = Article::model()->findByPk($data['id']);
+            $models = $model -> giveChildren();
+        } else {
+            $models = array_merge(Article::model() -> root() -> findAll(), Article::model() -> uncategorized() -> findAll());
+        }
+        echo json_encode(UHtml::giveArrayFromModels($models,function($el){
+            /**
+             * @type Task $el
+             */
+            return $el -> dumpForProject();
+        }), JSON_PRETTY_PRINT);
     }
 }

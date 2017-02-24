@@ -9,8 +9,8 @@
  * @property string $verbiage
  * @property string $value
  */
-class TriggerValues extends CTModel
-{
+class TriggerValues extends CTModel {
+	private $_triggerParameterValues;
 	/**
 	 * @return string delimeter the delimeter in searchId string
 	 */
@@ -158,5 +158,48 @@ class TriggerValues extends CTModel
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	/**
+	 * @param integer $id of the TriggerParameter for which the value is needed
+	 * @return TriggerParameterValue|null
+	 */
+	public function getParameterValue($id) {
+		return $this -> getTriggerParameterValuesArray() [$id];
+	}
+	/**
+	 * @return TriggerParameterValue[]
+	 */
+	public function getTriggerParameterValuesArray(){
+		if (!isset($this -> _triggerParameterValues)) {
+			$temp = [];
+			foreach ($this->getTriggerParameterValues() as $val) {
+				$temp[$val->id_trigger_parameter] = $val;
+			}
+			$this -> _triggerParameterValues = $temp;
+		}
+		return $this -> _triggerParameterValues;
+	}
+	/**
+	 * @return TriggerParameterValue[]
+	 */
+	public function getTriggerParameterValues() {
+		return TriggerParameterValue::model() -> findAllByAttributes(['id_trigger_value' => $this -> id]);
+	}
+	public function afterSave() {
+		$data = $_POST["parameters"];
+		if (!empty($data)) {
+			foreach ($data as $k => $v) {
+				$val = $this->getParameterValue($k);
+				if (!$val) {
+					$val = new TriggerParameterValue();
+				}
+				$val->id_trigger_parameter = $k;
+				$val->value = $v;
+				$val->id_trigger_value = $this->id;
+				$val->save();
+			}
+		}
+		parent::afterSave();
 	}
 }

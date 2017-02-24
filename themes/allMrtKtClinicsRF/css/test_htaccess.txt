@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule .*\([a-z_-])*.(png|jpg|jpeg|gif) /images/$1.$2 [NC]

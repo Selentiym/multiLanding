@@ -66,6 +66,7 @@ class Triggers extends CTModel
 		// class name for the relations automatically generated below.
 		return array(
             'trigger_values' => array(self::HAS_MANY, 'TriggerValues', array('trigger_id' => 'id'), 'select' => '*'),
+            'parameters' => array(self::HAS_MANY, 'TriggerParameter', 'id_trigger'),
 		);
 	}
 

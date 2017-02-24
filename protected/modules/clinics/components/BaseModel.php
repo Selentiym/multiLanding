@@ -79,11 +79,11 @@ class BaseModel extends CTModel
 	}
 	
 	/**
-	 * @arg array search a search array that specifies what is being searched
-	 * @arg string order - a field to be ordered by
-	 * @arg integer limit - a limit of objects to be found
+	 * @param array $search a search array that specifies what is being searched
+	 * @param string $order - a field to be ordered by
+	 * @param integer $limit - a limit of objects to be found
 	 * @param CDbCriteria $initialCrit
-	 * @return an array of model object that fit the search options
+	 * @return array of model objects that fit the search options
 	 */
 	public function userSearch($search,$order='rating',$limit=-1, CDbCriteria $initialCrit = null)
 	{
@@ -195,7 +195,7 @@ class BaseModel extends CTModel
 			//За одно возвращаем модель описания к заданному поиску.
 			$rez['objects'] = array_merge($toSort, $toEnd);
 		}
-		$rez['description'] = Description::model() -> giveModelByTriggerArray($filter, get_class($this));
+		//$rez['description'] = Description::model() -> giveModelByTriggerArray($filter, get_class($this));
 		return $rez;
 	}
 	

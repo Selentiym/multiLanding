@@ -23,7 +23,9 @@
 		if ((isset($fileClass))&&(strlen($fileClass)>0))
 		{
 			$d = '/';
+			$fromModule = $this -> getModule() -> filesPath;
 			$add = !$for_abs ? Yii::app() -> baseUrl : '';
+			$add = $add . '/' . $fromModule;
 			//$d = DIRECTORY_SEPARATOR;
 			if (!isset($seed))
 			{

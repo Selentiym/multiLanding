@@ -1,0 +1,76 @@
+#root_articles {
+	
+}
+#root_articles #illness_list{
+	font-family:OpenSansItalic; /* defined in common.css */
+	font-size:20px;
+	font-style:italic;
+	color:#b60000;
+	display:block;
+	text-align:center;
+}
+#root_articles #illness_list:before {
+	content:'';
+	background:url('../images/illness_lib.png') no-repeat;
+	width:30px;
+	height:30px;
+	display:inline-block;
+	vertical-align:middle;
+	margin-right:10px;
+}
+#root_articles .article_column {
+	width:450px;
+	display:inline-block;
+}
+#root_articles .article_column ul{
+	list-style:none;
+}
+
+#root_articles .article_column ul li{
+	text-align:left;
+	margin-bottom:30px;
+}
+#root_articles .article_column ul li a{
+	text-decoration:none;
+	color:black;
+	font-family:Arial;
+	font-size:14px;
+	text-transform:uppercase;
+}
+#root_articles #article_content {
+	margin: 0 auto;
+}
+#root_articles #article_content > div{
+	margin-top:30px;
+}
+#root_articles .article_column ul li a:hover{
+	color:#b63333;
+}
+
+#root_articles .article_column ul li:before{
+	content:'';
+	width:14px;
+	height:14px;
+	margin-right:10px;
+	vertical-align:middle;
+	display:inline-block;
+	background:url('../images/marker.png') no-repeat;
+}
+#root_articles #articles {
+	text-align:center;
+}
+#search_articles .input_styled {
+	height:35px;
+	margin-left:65px;
+}
+#search_articles .input_styled input{
+	width:340px;
+}
+#search_articles .input_styled .image {
+	width:35px;
+}
+#search_articles .input_styled .image span {
+	background:url('../images/search_icon.png') no-repeat;
+	width:13px;
+	height:13px;
+}

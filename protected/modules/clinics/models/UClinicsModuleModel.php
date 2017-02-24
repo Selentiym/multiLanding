@@ -5,11 +5,7 @@
  * Date: 01.02.2017
  * Time: 12:16
  */
-abstract class UClinicsModuleModel extends CActiveRecord {
-    public function getDbConnection(){
-//        $db = ClinicsModule::getDbConnection();
-        return ClinicsModule::getLastInstance() -> getDbConnection();
-    }
+abstract class UClinicsModuleModel extends UModuleModel {
     public function readData($data){
         return true;
     }
@@ -25,11 +21,11 @@ abstract class UClinicsModuleModel extends CActiveRecord {
     public function explainErrors(){
         var_dump($this -> getErrors());
     }
-    public function customFind($id = null){
-        if ($id) {
-            return static::model() -> findByPk($id);
-        } else {
-            return static::model();
-        }
+
+    /**
+     * @return string
+     */
+    public function getModuleClassName() {
+        return 'ClinicsModule';
     }
 }

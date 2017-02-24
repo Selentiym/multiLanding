@@ -1,0 +1,183 @@
+@font-face {
+	font-family: HelveticaLight; /* Гарнитура шрифта */
+	src: url(../fonts/HelveticaLight.ttf); /* Путь к файлу со шрифтом */
+}
+@font-face {
+	font-family: OpenSansItalic; /* Гарнитура шрифта */
+	src: url(../fonts/OpenSansLightItalic.ttf); /* Путь к файлу со шрифтом */
+}
+html {
+	font-family:HelveticaLight;
+}
+#wrapper {
+	width:980px;
+	margin:0 auto;
+}
+header {
+	height:150px;
+	background:#3cbf7d;
+	color:white;
+	text-align:justify;
+}
+header > div {
+	display:inline-block;
+	vertical-align:middle;
+}
+header:before {
+	content:' ';
+	width:1px;
+	height:100%;
+	display:inline-block;
+	vertical-align:middle;
+}
+header:after {
+	content:' ';
+	width:100%;
+	height:1px;
+	display:inline-block;
+}
+header #logo_cont {
+	margin-left:20px;
+	text-align:center;
+	
+	display:inline-block;
+}
+header #logo {
+	background:url('../images/logo_new.png') no-repeat;
+	width:89px;
+	height:89px;
+	display:inline-block;
+	vertical-align:middle;
+}
+header  #header_text {
+	width:460px;
+	padding:10px;
+	text-align:left;
+	margin-right:40px;
+}
+header  #header_text #name{
+	
+	font-size:19px;
+	padding-bottom:2px;
+	border-bottom:2px solid white;
+	display:inline;
+}
+header  #header_text #words{
+	font-weight:bold;
+	padding:5px 0;
+	font-size:13px;
+}
+header #tel_cont {
+	margin:0 10px;
+}
+header #tel_bold {
+	font-weight:bold;
+	font-size:18px;
+	padding-bottom:10px;
+}
+header #work_hours {
+	font-size:12px;
+}
+header  #header_text #long_hedaer_text{
+	font-size:12px;
+	line-height:14px;
+}
+.up {
+	vertical-align:super;
+	font-size:10px;
+}
+
+
+
+header #search {
+	margin-right:25px;
+	border-radius:30px;
+	padding:8px 10px;
+	background:white;
+	width:90px;
+	font-size:14px;
+}
+header #search input{
+	border: none;
+	background: none;
+	padding: 0;
+	display: inline-block;
+	vertical-align:middle;
+	outline:none;
+}
+header #search input[type="search"]{
+	width:67px;
+}
+header #search input[type="submit"] {
+	cursor:pointer;
+	background:url('../images/lupa.png') no-repeat;
+	width:19px;
+	height:19px;
+}
+
+
+/* Content! */
+section.content .content_block {
+	width:900px;
+	padding:20px 40px;
+	border-bottom:2px solid #e4f1f9;
+}
+
+section.content #content_head_decor {
+	padding: 40px;
+}
+section.content #content_head_decor div{
+	text-align:center;
+}
+
+section.content #content_head_decor div div {
+	display:inline-block;
+	color:#f04141;
+	font-size:19px;
+}
+section.content #content_head_decor div div span{
+	display:inline-block;
+	border-bottom:1px solid #f04141;
+	padding-bottom:4px;
+	font-family:OpenSansItalic;
+}
+section.content #content_head_decor div div:after {
+	content:'';
+	width:34px;
+	height:11px;
+	margin-left:10px;
+	margin-right:10px;
+	display:inline-block;
+	vertical-align:middle;
+	background:url(../images/arrow.png);
+}
+section.content #content_head_decor div div:last-child:after {
+	display:none;
+}
+section.content #content_head_decor div div:before {
+	content:'';
+	margin-top:5px;
+	margin-right:10px;
+	display:inline-block;
+	vertical-align:middle;
+}
+#content_head_decor #jaloba:before {
+	width:31px;
+	height:30px;
+	background:url('../images/symptom.png') no-repeat;
+}
+#content_head_decor #diagn:before {
+	width:32px;
+	height:31px;
+	background:url('../images/diagnost.png') no-repeat;
+}
+#content_head_decor #cure:before {
+	width:31px;
+	height:31px;
+	background:url('../images/cure.png') no-repeat;
+}
+#content_head_decor #reabil:before {
+	width:28px;
+	height:32px;
+	background:url('../images/reab.png') no-repeat;
+}

@@ -1,0 +1,52 @@
+h1 {
+	color:#125c88;
+	font-weight:normal;
+	font-family:OpenSans;
+	font-size:18px;
+	text-align:center;
+}
+#article_head {
+	padding:20px 40px;
+	padding-bottom:0;
+}
+#article_text_cont {
+	padding:0px 40px;
+	margin:0 auto;
+	width:600px;
+	font-size:14px;
+	font-family:Arial;
+	text-align:justify;
+}
+#article_text_cont h2{
+	color:#6ba582;
+	font-size:20px;
+	font-family:OpenSans;
+	font-weight:bold;
+	font-style:italic;
+	text-align:center;
+}
+ul.children{
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+ul.children li{
+	padding:20px 40px;
+	height:100px;
+}
+ul.children li:nth-child(2n+1){
+	background:#e2f5ec;
+}
+
+ul.children li{
+	color:black;
+	font-family:Arial;
+	font-size:12px;
+}
+ul.children li .a_shortcut{
+	font-size:14px;
+	font-family:Arial;
+	color:#186b86;
+	display:inline-block;
+	margin-bottom:15px;
+}

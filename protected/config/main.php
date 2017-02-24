@@ -13,7 +13,7 @@ return array(
 
 	// autoloading model and component classes
 	'import'=>array(
-		'application.components.CHtml',
+		'application.components.modified.CHtml',
 		'application.models.*',
 		'application.models.Section',
 		'application.components.*',
@@ -146,7 +146,7 @@ return array(
 		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
-			'errorAction'=>'site/error',
+			'errorAction'=>'error/index',
 		),
 		'log'=>array(
 			'class'=>'CLogRouter',

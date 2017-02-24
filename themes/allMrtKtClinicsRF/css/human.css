@@ -1,0 +1,262 @@
+#jaloba_center {
+	text-align:center;
+}
+#jaloba_center span{
+	display: inline-block;
+	border-bottom: 1px solid #f04141;
+	padding-bottom: 4px;
+	font-family: OpenSansItalic;
+	color: #f04141;
+	font-size: 19px;
+}
+#jaloba_center:before {
+	width: 31px;
+	height: 30px;
+	background: url('../images/symptom.png') no-repeat;
+	content:'';
+	margin-top:5px;
+	margin-right:10px;
+	display:inline-block;
+	vertical-align:middle;
+}
+.center {
+	font-size:14px;
+	font-family:Arial;
+	text-align:center;
+	display:block;
+	margin-top:10px;
+}
+
+#picture_block {
+	position:relative;
+	top:0;
+	left:0;
+	margin-top:10px;
+	text-align:center;
+}
+#main_picture div#inline_cont{
+	
+	width:217px;
+	height:689px;
+	display:inline-block;
+}
+#main_picture div#inline_cont #background_container{
+	background:url('../images/human.png') no-repeat;
+	width:217px;
+	height:689px;
+	position:relative;
+	top:0;
+	left:0;
+}
+
+
+
+#background_container div{
+	position:absolute;
+	z-index:1;
+}
+#background_container div.point {
+	z-index:10;
+	border-radius:10px;
+	width:20px;
+	height:20px;
+	background:#ee5959;
+}
+#background_container div.point:hover {
+	background:#3cbf7d;
+}
+#background_container div.mask {
+	z-index:5;
+}
+
+
+#background_container #head{
+	width:72px;
+	height:113px;
+	left:69px;
+	top:1px;
+}
+#background_container #head .mask{
+	background:url('../images/head.png');
+	width:72px;
+	height:113px;
+}
+#background_container #head .point{
+	left:51px;
+	top:24px;
+}
+
+
+#background_container #right_leg{
+	
+	left:102px;
+	top:380px;
+}
+#background_container #right_leg .mask{
+	background:url('../images/right_leg.png');
+	width:71px;
+	height:309px;
+}
+#background_container #right_leg .point{
+	left:25px;
+	top:50px;
+}
+
+
+#background_container #left_leg{
+	left:36px;
+	top:380px;
+}
+#background_container #left_leg .mask{
+	background:url('../images/left_leg.png');
+	width:66px;
+	height:309px;
+}
+#background_container #left_leg .point{
+	left:25px;
+	top:50px;
+}
+
+
+#background_container #stomach{
+	left:37px;
+	top:252px;
+}
+#background_container #stomach .mask{
+	background:url('../images/stomach.png');
+	width:134px;
+	height:96px;
+}
+#background_container #stomach .point{
+	left:55px;
+	top:36px;
+}
+
+
+#background_container #chest{
+	left:5.5px;
+	top:125px;
+}
+#background_container #chest .mask{
+	background:url('../images/chest.png');
+	width:203px;
+	height:97px;
+}
+#background_container #chest .point{
+	left:120px;
+	top:36px;
+}
+
+
+#background_container #right_arm{
+	left:153px;
+	top:120px;
+}
+#background_container #right_arm .mask{
+	background:url('../images/right_arm.png');
+	width:64px;
+	height:292px;
+}
+#background_container #right_arm .point{
+	left:35px;
+	top:110px;
+}
+
+
+#background_container #left_arm{
+	left:1px;
+	top:119.5px;
+}
+#background_container #left_arm .mask{
+	background:url('../images/left_arm.png');
+	width:50px;
+	height:298px;
+}
+#background_container #left_arm .point{
+	left:7px;
+	top:110px;
+}
+
+
+#background_container #belt{
+	left:36px;
+	top:310px;
+}
+#background_container #belt .mask{
+	background:url('../images/belt.png');
+	width:137px;
+	height:88px;
+}
+#background_container #belt .point{
+	left:57px;
+	top:40px;
+}
+
+
+#background_container #general{
+	left:0px;
+	top:0px;
+}
+#background_container #general .mask{
+	background:url('../images/general.png');
+	width:216px;
+	height:688px;
+}
+#background_container #general .point{
+	left:200px;
+	top:40px;
+}
+
+#sideMenu, #rezults {
+	display:inline-block;
+	vertical-align:top;
+}
+#sideMenu {
+	width:100px;
+}
+#sideMenu div {
+	background:none;
+}
+#rezults {
+	width:500px;
+	background:#f5f9fb;
+	border:1px solid #5696bc;
+	padding:20px 40px;
+	color:#659ec1;
+	min-height:200px;
+}
+#sideMenu div{
+	display:inline-block;
+	color:black;
+	font-size:14px;
+	font-family:Arial;
+	padding:2px;
+	width:96px;
+}
+#sideMenu div.active{
+	background:#5696bc;
+	color:white;
+}
+#rezults a {
+	font-style:italic;
+	text-decoration:none;
+	border-bottom:1px solid #9dbfd5;
+	color:#659ec1;
+}
+#rezults .column{
+	display:inline-block;
+	width:50%;
+	vertical-align:top;
+}
+#rezults .column div{
+	margin:10px 0;
+}
+#rezults div.top{
+	color:#5696bc;
+	font-style:italic;
+	font-size:14px;
+	font-family:Arial;
+	margin-top:10px;
+	margin-bottom:20px;
+	text-align:center;
+}

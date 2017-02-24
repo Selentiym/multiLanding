@@ -12,6 +12,10 @@ class FileViewAction extends UAction {
      */
     public $access = true;
     /**
+     * @var callable access function to be called to access page
+     */
+    public $guest = false;
+    /**
      * @var string view for render
      */
     public $view;
@@ -32,7 +36,7 @@ class FileViewAction extends UAction {
      */
     public function run()
     {
-        if (!Yii::app() -> user -> isGuest) {
+        if ((!Yii::app() -> user -> isGuest)||($this -> guest)) {
             if (!is_callable($this -> access)) {
                 $this -> access = function(){ return $this -> access;};
             }

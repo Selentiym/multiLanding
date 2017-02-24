@@ -1,0 +1,260 @@
+@import url('single_object.css');
+section.content .content_block#search_block {
+	padding-bottom:0;
+	margin-bottom:0;
+}
+section.content #column1 .content_block {
+	width:710px;
+}
+#extended_search {
+	width:730px;
+	text-align:left;
+	margin:0 auto;
+}
+#search_block #reset{
+	width:85px;
+}
+.extended_select_cont{
+	border-radius:5px;
+	width:215px;
+	overflow:hidden;
+	background:url('../images/select_arrow.png') no-repeat right #e4f1f9;
+	padding:0;
+	display:inline-block;
+	vertical-align: middle;
+	height:28px;
+	margin:5px 0;
+	margin-right:35px;
+}
+.extended_select_cont:nth-child(3n+1){
+	margin-right:0;
+}
+.extended_select {
+	width:235px;
+	display:inline-block;
+	font-style:italic;
+	font-size:14px;
+	font-family:Arial;
+	text-indent:10px;
+	background:transparent;
+	border:none;
+	outline:none;
+	height:28px;
+	text-transform:capitalize;
+}
+#objectName {
+	border-radius: 5px;
+	width: 202px;
+	border:1px solid #ccc;
+	overflow: hidden;
+	background: #e4f1f9;
+	padding: 0 5px;
+	display: inline-block;
+	height: 28px;
+	margin: 5px 0;
+	margin-right: 35px;
+	outline: none;
+	box-shadow: none;
+	vertical-align:middle;
+}
+#note {
+	color:#9c9c9c;
+	font-family:Arial;
+	font-size:12px;
+	font-style:italic;
+}
+.content_column {
+	display:inline-block;
+}
+#column1 {
+	width:790px;
+}
+#column2 {
+	width:180px;
+	vertical-align:top;
+}
+
+#search_menu {
+	padding:20px 40px;
+}
+#search_info {
+	font-size:12px;
+	color:black;
+	font-family:Arial;
+	margin-right:100px;
+	display:inline-block;
+}
+#search_info span{
+	color:#f37474;
+}
+#sortby {
+	font-style:italic;
+	color:#5c5c5c;
+	font-size:12px;
+	display:inline-block;
+	float:right;
+}
+#sortby a {
+	color:#ace2c7;
+	border-bottom:1px solid #ace2c7;
+	text-decoration:none;
+	margin-left:10px;
+	
+}
+#sortby a:active, #sortby a:hover, #sortby a:visited {
+	color:#ace2c7;
+}/*
+.single_object {
+	border-bottom:2px solid #e4f1f9;
+	padding:10px 50px;
+}
+.single_object:nth-child(2n+1){
+	background:#e2f5ec;
+}
+.single_object .left_side{
+	display:inline-block;
+}
+.single_object .right_side{
+	display:inline-block;
+	vertical-align:top;
+	width:540px;
+}
+
+
+.object_image_cont {
+	padding:5px;
+	width:130px;
+	height:150px;
+	text-align:center;
+	
+}
+.object_image_cont img{
+	max-width:130px;
+	max-height:150px;
+	display:inline-block;
+}
+.single_object .name {
+	color:#00713d;
+	font-family:OpenSans;
+	font-size:18px;
+	padding:2px;
+	margin:0;
+	display:inline-block;
+}
+.single_object .rateit{
+	float:right;
+	display:inline-block;
+}
+.single_object .name span{
+	border-bottom:1px solid #a8c1cf;
+}
+.single_object .specialities {
+	color:#080808;
+	font-size:13px;
+	font-family:Arial;
+}
+.single_object .experience {
+	color:#ef9271;
+	font-family:OpenSansItalic;
+	font-size:12px;
+}
+.single_object .description {
+	font-size:12px;
+	font-family:OpenSans;
+	color:#090909;
+	padding:10px 0;
+}
+.single_object .price {
+	font-family:OpenSansItalic;
+	font-size:12px;
+}
+.single_object .reviews a{
+	color:#129251;
+	text-decoration:underline;
+	font-size:11px;
+	font-family:Arial;
+	font-style:italic;
+}
+
+.single_object .bottom{
+	padding:10px 0;
+}
+.single_object .assign{
+	display:inline-block;
+}
+.single_object .assign span{
+	background:#ef9271;
+	color:#fefefe;
+	font-size:16px;
+	font-family:Arial;
+	border-radius:5px;
+	padding:10px 25px;
+	display:inline-block;
+	cursor:pointer;
+}
+.single_object .more_info {
+	display:inline-block;
+	float:right;
+	vertical-align:top;
+}
+.single_object .more_info span{
+	display:inline-block;
+	text-decoration:none;
+	color:#fefefe;
+	font-family:Arial;
+	font-size:12px;
+	background:#47bc81;
+	padding:5px 8px;
+}*/
+
+#column2 {
+	padding:20px 0px;
+}
+#all_spec {
+	color:#131313;
+	font-family:Arial;
+	font-weight:bold;
+	font-size:14px;
+	margin:0;
+	margin-bottom:5px;
+	display:inline-block;
+	padding-left:15px;
+}
+#column2 #spec_list div{
+	font-size:12px;
+	font-family:Arial;
+}
+#column2 #spec_list .letter{
+	color:#78a9c8;
+	padding-left:15px;
+}
+#spec_list .speciality_shortcut{
+	color:#141414;
+	margin:3px 0;
+	padding:3px 15px;
+	cursor:pointer;
+}
+#spec_list .active {
+	background:#fbe4db;
+}
+#pager div {
+	display:inline-block;
+	margin-left:5px;
+	vertical-align:middle;
+	cursor:pointer;
+	color:#5696bc;
+	font-size:16px;
+}
+#pager div.active {
+	color:#ef9271;
+}
+#list_left {
+	width:6px;
+	height:13px;
+	background:url('../images/list_left.png') no-repeat;
+}
+#list_right {
+	width:6px;
+	height:13px;
+	background:url('../images/list_right.png') no-repeat;
+}

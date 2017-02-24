@@ -38,6 +38,7 @@
 					$model -> setScenario($this -> scenario);
 				}
 				$model = $model->customFind($arg);
+				$model -> readData($_GET);
 				//Если так ничего и не нашлось, возмущаемся
 				if(!$model)
 					throw new CHttpException(404, "{$this->modelClass} not found");

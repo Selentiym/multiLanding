@@ -1,0 +1,135 @@
+#personal_background {
+	background:#e2f5ec;
+}
+#map {
+	height:200px;
+}
+.main_part .center {
+	width:620px;
+}
+.rateit {
+	float:right;
+}
+.experience {
+	color:#ef9271;
+	font-family:OpenSansItalic;
+	font-size:12px;
+}
+.consult {
+	display:inline-block;
+	margin-left:40px;
+	vertical-align:middle;
+}
+.consult .price_img {
+	background:url('../images/price.png') no-repeat;
+	width:24px;
+	height:27px;
+	display:inline-block;
+	vertical-align:middle;
+}
+.consult span{
+	font-size:16px;
+	font-style:italic;
+	vertical-align:middle;
+}
+.object_name {
+	vertical-align:middle;
+}
+.image_cont {
+	float:left;
+	margin-right:10px;
+	margin-bottom:10px;
+}
+.assign_cont {
+	clear:both;
+}
+#left_column {
+	display:inline-block;
+	width:400px;
+	margin:20px;
+	vertical-align:top;
+}
+#right_column {
+	display:inline-block;
+	width:400px;
+	margin:20px;
+	vertical-align:top;
+}
+#left_column > div {
+	margin-bottom:50px;
+}
+#left_column  div div.im{
+	width: 45px;
+	height:100%;
+	display:inline-block;
+	vertical-align:top;
+	text-align:center;
+}
+#left_column  div div.im span{
+	display:inline-block;
+}
+#left_column  div div.content{
+	display:inline-block;
+	vertical-align:top;
+	font-size:14px;
+	font-family:Arial;
+}
+#left_column .heading {
+	display:block;
+}
+#doc_spec .im span {
+	background:url('../images/doc_spec.png') no-repeat;
+	width:24px;
+	height:27px;
+}
+#doc_info .im span {
+	background:url('../images/doc_info.png') no-repeat;
+	width:23px;
+	height:27px;
+}
+#doc_ed .im span {
+	background:url('../images/doc_ed.png') no-repeat;
+	width:43px;
+	height:20px;
+}
+#doc_qual .im span {
+	background:url('../images/doc_qual.png') no-repeat;
+	width:29px;
+	height:24px;
+}
+#doc_serv .im span {
+	background:url('../images/doc_serv.png') no-repeat;
+	width:25px;
+	height:27px;
+}
+
+#add_review {
+	margin-left:0;
+}
+#reviews {
+	padding:0;
+}
+
+#other_docs h3{
+	text-align:center;
+	font-weight:normal;
+	font-size:14px;
+	font-family:Arial;
+}
+#other_docs {
+	text-align:center;
+}
+#other_docs img{
+	cursor:pointer;
+}
+#other_docs .dop_doc {
+	display:inline-block;
+	width:130px;
+	margin:0 20px;
+}
+#other_docs .dop_doc a{
+	color:black;
+	text-decoration:none;
+	font-size:14px;
+	font-family:Arial;
+}
