@@ -21,3 +21,4 @@ protected/runtime/**/*
 *.pss.php
 vendor/
 images/filemanager/
+files/
