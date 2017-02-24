@@ -176,6 +176,15 @@ class AdminController extends Controller
                 'scenario' => 'createDescendant',
                 'access' => true
             ),
+            'copyDescendants' => array(
+                'class' => 'application.controllers.actions.ClassMethodAction',
+                'method' => 'copyDescendants',
+                'ajax' => true,
+                'ignore' => true,
+                'modelClass' => 'Article',
+                'scenario' => 'copyDescendants',
+                'access' => true
+            ),
         ];
     }
 

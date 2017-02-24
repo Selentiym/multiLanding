@@ -10,6 +10,7 @@
  * @property integer $parent_id
  * @property integer $level
  * @property string $text
+ * @property string $description
  */
  
 class Article extends UClinicsModuleModel {
@@ -119,7 +120,7 @@ class Article extends UClinicsModuleModel {
 			$dups = self::model()->findByAttributes(array('verbiage' => $this->verbiage), $criteria);
 
 			if ($dups) {
-				Yii::app()->user->setFlash('duplicateArticle', CHtml::encode('Статья с таким URL уже существует'));
+				Yii::app()->user->setFlash('duplicateArticle'.$this -> verbiage, CHtml::encode('Статья с таким URL '.$this -> verbiage.' уже существует'));
 				return false;
 			}
 		}
@@ -411,6 +412,9 @@ class Article extends UClinicsModuleModel {
 			case 'createDescendant':
 				return $this -> findByPk($_GET['id']);
 				break;
+			case 'copyDescendants':
+				return $this -> findByPk($_POST["articleId"]);
+				break;
 			case 'search':
 				$this -> attributes = $_GET[get_class($this)];
 				return $this;
@@ -463,15 +467,23 @@ class Article extends UClinicsModuleModel {
 		]);
 		return $arr;
 	}
-	public function createDescendantFast() {
+
+	/**
+	 * @return Article
+	 */
+	public function cloneToChild(){
 		$article = new Article();
-		$article -> setScenario('createDescendant');
 		$article -> attributes = $this -> attributes;
 		$article -> name = $_POST["name"];
 		$article -> parent_id = $this -> id;
 		$article -> level = (int)$this -> level + 1;
 		$article -> id = null;
 		$article -> verbiage = null;
+		return $article;
+	}
+	public function createDescendantFast() {
+		$article = $this -> cloneToChild();
+		$article -> setScenario('createDescendant');
 		if (!$article -> save()) {
 			$rez['success'] = false;
 			$err = $article -> getErrors();
@@ -482,5 +494,34 @@ class Article extends UClinicsModuleModel {
 		$rez["dump"] = $article -> dumpForProject();
 		echo json_encode($rez);
 		return $article;
+	}
+	public function copyDescendants(){
+		$mod = Yii::app() -> getModule('taskgen');
+		/**
+		 * @type TaskGenModule $mod
+		 * @type Task $t
+		 */
+		$t = Task::model() -> findByPk($_GET["id"]);
+		$this -> copyChildrenFromTaskgen($t);
+	}
+
+	/**
+	 * @param Task $t
+	 */
+	public function copyChildrenFromTaskgen(Task $t){
+		/**
+		 * @type Task $t
+		 */
+		foreach($t -> children as $task){
+			$temp = $task -> dumpText();
+			$article = $this -> cloneToChild();
+			$article -> text = $temp['text'];
+			$article -> description = $temp['description'];
+			$article -> name = $task -> name;
+			$article -> verbiage = str2url($task -> name);
+			$article -> save();
+			$article -> copyChildrenFromTaskgen($task);
+		}
+
 	}
 }

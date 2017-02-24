@@ -41,7 +41,7 @@ return SiteDispatcher::mergeArray(
             ),
             'urlManager'=>array(
                 'rules' => array(
-                    '<module:(clinics)>/admin' => '<module>/admin/index',
+                    '<module:(clinics)>/admin' => '<module>/admin/login',
                     '<module:(taskgen)>/task/<action:(getText)>' => '<module>/task/<action>',
                     '<module:(taskgen)>/task/<action:(getText)>/<id:\d+>' => '<module>/task/<action>',
                 ),

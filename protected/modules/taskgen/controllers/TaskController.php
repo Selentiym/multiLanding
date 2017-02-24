@@ -33,10 +33,6 @@ class TaskController extends CController {
         /**
          * @type Task $task
          */
-        $text = $task -> currentText;
-        $rez['text'] = $text -> text;
-        $rez['description'] = $text -> description;
-        $rez['final'] = ($task -> id_text == $text -> id)&&($text);
-        echo json_encode($rez, JSON_FORCE_OBJECT);
+        echo json_encode($task -> dumpText(), JSON_FORCE_OBJECT);
     }
 }

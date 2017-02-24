@@ -186,7 +186,7 @@
             <?php echo CHtml::button('Список статей', array('id' => 'articleList','onClick' => 'location.href = "'.$this -> createUrl('admin/ArticleList').'";')); ?>
         </div>
             <?php
-                $this -> renderPartial('/article/taskgen');
+                $this -> renderPartial('/article/taskgen', ['model' => $model]);
             ?>
         <!-- Выводим генератор для search_id -->
 		<?php  //$this -> renderPartial('//searchid/triggerForm', array('id' => 'search_id_generator'))?>

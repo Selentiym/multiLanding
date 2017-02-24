@@ -16,10 +16,44 @@ class TaskGenModule extends UWebModule {
         ));
     }
 
+
+    public function giveProjectTree(array $config = []){
+        Yii::app() -> getClientScript() -> registerScript('jsNamespaceForTaskGenModule','
+            TaskGenModule = {};
+            TaskGenModule.baseAssets = "'.$this -> _assetsPath.'";
+            TaskGenModule.baseUrl = "'.Yii::app() -> baseUrl.'/'.$this -> getId().'/";
+        ',CClientScript::POS_BEGIN);
+        $this -> registerJSFile('/js/treeCustom.js',CClientScript::POS_BEGIN);
+        $defaultConfig = [
+                "id" => "taskgenTree",
+                "clickHandler" => "js:function(e){
+                        if (!e) {
+                            return false;
+                        } else {
+                            e.preventDefault();
+                            return false;
+                        }
+                    }",
+                "toHref" => "js:function(){
+                        if (this.id) {
+                            return '#';
+                        }
+                    }",
+                "generateButtons" => "js:function(){
+                        return;
+                    }",
+                "generatePanel" => "js:function(tree){  return;}"
+            ];
+        $config = CMap::mergeArray($defaultConfig, $config);
+        Yii::app() -> controller -> widget('application.extensions.tree.Tree', [
+            "url" => $this -> createUrl('task/children'),
+            "config" => $config
+        ]);
+    }
     /**
      * @param array $config
      */
-    public function giveProjectTree(array $config = []){
+    public function giveProjectTree2(array $config = []){
         Yii::app() -> getClientScript() -> registerCoreScript('jquery');
         Yii::app() -> getClientScript() -> registerCss('asd','.square {display:block; width:20px; height:20px; background:#123; margin:10px;}');
         $this -> registerCssFile('/css/tree.css');

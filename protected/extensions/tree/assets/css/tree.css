@@ -34,6 +34,9 @@
 .TreeContainer .plus{
     background: url('../images/plus_small.png');
 }
+.TreeContainer .download{
+    background: url('../images/download.png');
+}
 .TreeContainer .controls .font20{
     font-size:20px;
 }

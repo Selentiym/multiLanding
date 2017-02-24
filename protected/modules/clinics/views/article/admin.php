@@ -21,6 +21,7 @@ $('.search-form form').submit(function(){
 </p>
 
 <?php
+$model -> attributes = $_GET[get_class($model)];
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'articles-grid',
 	'dataProvider'=>$model->search(),

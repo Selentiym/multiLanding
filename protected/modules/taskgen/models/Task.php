@@ -291,4 +291,11 @@ class Task extends TaskGenModel {
 		]);
 		return $arr;
 	}
+	public function dumpText(){
+		$text = $this -> currentText;
+		$rez['text'] = $text -> text;
+		$rez['description'] = $text -> description;
+		$rez['final'] = ($this -> id_text == $text -> id)&&($text);
+		return $rez;
+	}
 }

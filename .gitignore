@@ -20,3 +20,4 @@ protected/runtime/**/*
 *.tokendata
 *.pss.php
 vendor/
+images/filemanager/
