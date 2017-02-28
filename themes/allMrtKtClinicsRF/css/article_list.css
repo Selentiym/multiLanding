@@ -21,6 +21,7 @@
 #root_articles .article_column {
 	width:450px;
 	display:inline-block;
+	vertical-align: top;
 }
 #root_articles .article_column ul{
 	list-style:none;

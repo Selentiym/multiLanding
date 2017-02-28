@@ -8,6 +8,7 @@
  * @property integer $id_type
  * @property integer $id_block
  * @property string $name
+ * @property string $verbiage
  * @property integer $object_type
  *
  * @property ObjectPriceBlock $block
@@ -31,11 +32,16 @@ class ObjectPrice extends CTModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_type, id_block, name', 'required'),
+			array('id_type, id_block, name, verbiage', 'required'),
 			array('id_type, id_block, object_type', 'numerical', 'integerOnly'=>true),
+			array('verbiage',
+					'match', 'not' => true, 'pattern' => '/[^a-zA-Z0-9_-]/',
+					'message' => CHtml::encode('Запрещенные символы в поле <{attribute}>'),
+			),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, id_type, id_block, name, object_type', 'safe', 'on'=>'search'),
+			array('id, id_type, id_block, name, object_type, verbiage', 'safe'),
 		);
 	}
 

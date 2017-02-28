@@ -31,6 +31,7 @@ $blocks = ObjectPriceBlock::model() -> findAll(['order' => 'num DESC']);
         <th>Значение</th>
     </tr>
 <?php
+$object -> getPriceValue(-1,true);
 foreach ($blocks as $block) {
     foreach ($block -> prices as $price) {
         if ($price -> object_type == $o) {

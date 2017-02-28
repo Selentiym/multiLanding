@@ -4,7 +4,7 @@ $baseTheme = Yii::app() -> theme -> baseUrl;
 $baseRenderedTheme = Yii::app() -> themeManager -> getBaseUrl('__last');
 Yii::app() -> getClientScript() -> registerScript('noEmptyGetParameters','
 	$("form.noEmpty").submit(function() {
-		$(this).children().each(function(){
+		$(this).find(":input").each(function(){
 			var val = $(this).val();
 			if ((val == "0")||(!val)) {
 				$(this).attr("disabled","disabled");
@@ -75,7 +75,7 @@ Yii::app() -> getClientScript() -> registerScript('noEmptyGetParameters','
 		<header>
 			<div id="logo_cont"><a href="<?php echo Yii::app() -> baseUrl.'/'; ?>"><div id = "logo"></div></a></div>
 			<div id="header_text">
-				<div id="name">GOSCLINICA.RU</div>
+				<div id="name">ВСЕ МРТ И КТ КЛИНКИ СПБ</div>
 				<div id="words">Информационный портал медицинских услуг</div>
 				<div id="long_hedaer_text">
 					Здесь вы найдете полную информацию о медицинских услугах государственных<br/>
@@ -112,9 +112,36 @@ Yii::app() -> getClientScript() -> registerScript('noEmptyGetParameters','
 		<section class="content">
 
 			<div class="content_block" id="search_block">
-				<?php
-					$this -> renderPartial('/triggers/_form');
-				?>
+				<h2 class="heading" id="search_clinics">Поиск клиник</h2>
+				<form id="searchForm" action="<?php echo $this -> createUrl('home/clinics',[],'&',true); ?>" class="noEmpty">
+					<div class="row">
+
+						<div class="speciality_dropdown select">
+							<div class="image"><span></span></div>
+							<div class="select_cont">
+								<?php $specialities = CHtml::listData(ObjectPrice::model() -> findAll(),'verbiage','name'); ?>
+								<?php CHtml::DropDownListChosen2('research','search_speciality', $specialities,array('placeholder' => 'Выберите исследование','empty_line' => 'Исследование'),array($_GET['research'])); ?>
+							</div>
+						</div>
+
+						<div class="metro_dropdown select">
+							<div class="image"><span></span></div>
+							<div class="select_cont">
+								<?php $metro_obj = Metro::model()->findAll(array('order' => 'name ASC')); ?>
+								<?php CHtml::DropDownListChosen2('metro','search_metro', CHtml::listData($metro_obj, 'id', 'name'),array('placeholder' => 'Выберите метро','empty_line' => 'Метро'),array($_GET['metro'])); ?>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<a href="<?php echo $this -> createUrl('home/clinics',[],'&',true); ?>"><input type="button" value="Сбросить" class="search_submit"/></a>
+						<input type="submit" value="Найти" class="search_submit"/>
+					</div>
+					<div class="row" id="triggers">
+						<?php
+							$this -> renderPartial('/triggers/_form');
+						?>
+					</div>
+				</form>
 			</div>
 			<div id="main_content">
 				<?php echo $content; ?>

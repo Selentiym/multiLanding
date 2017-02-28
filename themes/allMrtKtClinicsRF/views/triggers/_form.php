@@ -7,7 +7,6 @@
  */
 
 ?>
-<form method="get" class="noEmpty">
 <?php
 $triggers = Triggers::model() -> findAll();
 if (!empty($triggers)) {
@@ -15,11 +14,10 @@ if (!empty($triggers)) {
         CHtml::DropDownListChosen2(
             $t -> verbiage,
             $t -> verbiage, CHtml::listData($t -> trigger_values,'verbiage','value'),
-            ['placeholder' => $t -> name],
-            [$_GET[$t -> verbiage]]
+            ['placeholder' => $t -> name,'empty_line' => true, 'class' => 'trigger_select'],
+            [$_GET[$t -> verbiage]],
+            []
         );
     }
 }
 ?>
-    <input type="submit" value="go!"/>
-</form>

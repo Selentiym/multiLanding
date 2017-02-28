@@ -409,6 +409,13 @@ class Article extends UClinicsModuleModel {
 	 */
 	public function customFind($arg = null){
 		switch($this -> getScenario()){
+			case 'preview':
+				$this -> attributes = $_POST['Article'];
+				return $this;
+				break;
+			case 'view':
+				return $this -> findByAttributes(['verbiage' => $_GET['verbiage']]);
+				break;
 			case 'createDescendant':
 				return $this -> findByPk($_GET['id']);
 				break;
@@ -437,7 +444,7 @@ class Article extends UClinicsModuleModel {
 		$text = $this -> text;
 		$verb = '([a-zA-Z]+)';
 		return preg_replace_callback('/(\&lt;|\<)'.$verb.':'.$verb.'(\&gt;|\>)/ui',function($matches) use ($triggers) {
-			var_dump($matches);
+			//var_dump($matches);
 			$trigger_verb = $matches[2];
 			$field = $matches[3];
 			/**

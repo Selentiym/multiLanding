@@ -4,7 +4,7 @@
     // reset autoincrement     
     protected function afterDelete() {
         parent::afterDelete();   
-        resetId($this);
+        //resetId($this);
     }
 	public function showImage($name, $class = '')
 	{

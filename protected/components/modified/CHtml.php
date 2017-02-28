@@ -65,12 +65,14 @@ class CHtml extends Html {
         if (is_array($data)) {
             asort($data);
         }
+
         if ($htmlOptions['placeholder']) {
-            $data[0] = $htmlOptions['placeholder'];
-            if (count($selected_ids) < 1) {
-                $selected_ids = array(0);
+            if ($select2Options !== 'not select') {
+                $select2Options['placeholder'] = $htmlOptions['placeholder'];
+                $htmlOptions['empty_line'] = true;
+                unset($htmlOptions['placeholder']);
             }
-            unset($htmlOptions['placeholder']);
+            //array_unshift($data,'');
         }
         if (count($selected_ids) > 0) {
             foreach($selected_ids as $id){
@@ -84,7 +86,16 @@ class CHtml extends Html {
         if ($htmlOptions['empty_line']) {
             //print_r($data);
             //array_unshift($data, '');
-            $data[''] = '' ;
+            if ($htmlOptions['empty_line']===true) {
+                $htmlOptions['empty_line']='';
+            }
+            if ($select2Options !== 'not select') {
+                $place = $select2Options['placeholder'];
+                unset($select2Options['placeholder']);
+            } else {
+                $place = $htmlOptions['empty_line'];
+            }
+            $data = ['' => $place] + $data;//array_unshift($data,$htmlOptions['empty_line']);
             unset($htmlOptions['empty_line']);
         }
         $htmlOptions['name'] = $name;
@@ -92,8 +103,9 @@ class CHtml extends Html {
         $htmlOptions = array_merge_recursive($htmlOptions, $extra_htmlOptions);
         echo parent::DropDownList($name,'',$data,$htmlOptions);
         if ($select2Options !== 'not select') {
+            $select2Options['width'] = 'resolve';
             Yii::app()->clientScript->registerScript('chosen_'.$htmlOptions['id'], "
-                $('#".$htmlOptions['id']."').select2(".$select2Options.");
+                $('#".$htmlOptions['id']."').select2(".json_encode($select2Options).");
             ",CClientScript::POS_END);
         }
     }

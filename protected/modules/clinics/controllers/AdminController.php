@@ -1043,7 +1043,7 @@ class AdminController extends Controller
 							}
 						}
 					}
-					$this->redirect(array('/admin/triggers','id'=>$model->id));
+					$this->redirect($this -> createUrl('admin/triggers'));
 				} else {
 					new CustomFlash("error", 'Triggers', 'CreateFilepath', 'Не удалось сгенерировать каталог для изображений.', true) ;
 				}

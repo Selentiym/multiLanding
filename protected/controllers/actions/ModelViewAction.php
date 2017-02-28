@@ -32,6 +32,9 @@
 		public function run($arg = false)
 		{
 			if (!Yii::app() -> user -> isGuest) {
+				if (is_callable($this -> modelClass)) {
+					$this -> modelClass = call_user_func($this -> modelClass);
+				}
 				//Устанавливаем сценарий для модели поиска, чтобы искать правильным образом
 				$model = CActiveRecord::model($this->modelClass);
 				if ($this -> scenario) {

@@ -371,7 +371,7 @@ section.content #content_head_decor div div:before {
 #search_block .advanced_search span{
 	display:inline-block;
 	margin-right:5px;
-	padding:bottom:1px;
+	padding-bottom:1px;
 	border-bottom:1px solid #8bb3ce;
 	color: #8bb3ce;
 	font-style:italic;
@@ -406,4 +406,35 @@ footer {
 	background:#898989;
 	height:250px;
 	width:980px;
+}
+
+/**
+ *Miscellaneous
+ */
+#triggers {
+	text-align:center;
+	padding:5px;
+}
+#triggers .select2-container {
+	margin:0 10px;
+}
+.trigger_select {
+	min-width:100px;
+	margin:0 10px;
+	text-align:center;
+}
+
+
+.heading {
+	font-family:OpenSansItalic; /* defined in common.css */
+	font-size:20px;
+	font-style:italic;
+	color:#b60000;
+	display:block;
+	text-align:center;
+}
+#search_clinics:before{
+	display:inline-block;
+	width:30px;
+	height:30px;
 }

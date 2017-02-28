@@ -237,12 +237,11 @@ class BaseModel extends CTModel
 			}
 			$ok &= $check;
 		}
-		$triggers_array = array_map('trim', explode(';', $this->triggers));
+		//$triggers_array = array_map('trim', explode(';', $this->triggers));
 		if ($search['research']) {
-			$search['research'] = array_filter($search['research']);
-			if (!empty($search['research'])) {
-				$check = (count(array_intersect($search['research'],$triggers_array)) == count($search['research']));
-				$ok &= $check;
+			$p = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
+			if ($p instanceof ObjectPrice) {
+				$ok &= ObjectPriceValue::model() -> findByAttributes(['id_price' => $p -> id, 'id_object' => $this -> id]) instanceof ObjectPriceValue;
 			}
 		}
 		if ($search['district'] != 0) {
@@ -837,6 +836,9 @@ class BaseModel extends CTModel
 	 */
 	public function customFind($arg = null){
 		switch($this -> getScenario()){
+			case 'view':
+				return $this -> findByAttributes(['verbiage' => $_GET['verbiage']]);
+				break;
 			case 'model' :
 				return static::model();
 				break;
@@ -848,10 +850,11 @@ class BaseModel extends CTModel
 
 	/**
 	 * @param integer $id of the price whose value is returned
-	 * @return ObjectPriceValue|null
+	 * @param bool $refresh
+	 * @return null|ObjectPriceValue
 	 */
-	public function getPriceValue ($id) {
-		return $this -> getPriceValuesArray()[$id];
+	public function getPriceValue ($id,$refresh = false) {
+		return $this -> getPriceValuesArray($refresh)[$id];
 	}
 
 	/**
@@ -865,16 +868,24 @@ class BaseModel extends CTModel
 	}
 
 	/**
+	 * @param bool $refresh
 	 * @return ObjectPriceValue[]
 	 */
-	public function getPriceValuesArray(){
-		if (!isset($this -> _priceValues)) {
+	public function getPriceValuesArray($refresh = false){
+		if ((!isset($this -> _priceValues))||$refresh) {
 			$this -> _priceValues = [];
 			foreach($this -> getPriceValues() as $val){
 				$this -> _priceValues[$val -> id_price] = $val;
 			}
 		}
 		return $this -> _priceValues;
+	}
+
+	/**
+	 * @return string
+     */
+	public function getUrl() {
+		return  Yii::app() -> controller -> createUrl('/home/modelView',['verbiage' => $this -> verbiage, 'modelName' => get_class($this)]);
 	}
 }
 ?>

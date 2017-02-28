@@ -44,6 +44,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'name', 'header' => 'Название'),
         array('name' => 'id_type', 'value' => function($data){ echo $data -> type -> name; }, 'header' => 'Тип'),
         array('name' => 'id_block','value' => function($data){ echo $data -> block -> name; } , 'header' => "Блок"),
+        array('name' => 'verbiage','header' => "verbiage"),
         array(
             'class'=>'CButtonColumn',
             'template'=>'{update}&nbsp;{delete}',

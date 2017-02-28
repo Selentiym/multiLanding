@@ -94,11 +94,8 @@ class clinics extends BaseModel
     public function relations()
     {
         return parent::relations() + array(
-            //'services' => array(self::HAS_MANY, 'Services', 'object_id'),
-            'services' => array(self::HAS_MANY, 'Services', 'object_id', 'condition' => 'services.object_type = '.Objects::model() -> getNumber(get_class($this))),
-            'prices' => array(self::HAS_MANY, 'PriceList', 'object_id', 'condition' => 'prices.object_type = '.Objects::model() -> getNumber(get_class($this))),
-            'comments' => array(self::HAS_MANY, 'Comments', 'object_id', 'condition' => 'comments.object_type = '.Objects::model() -> getNumber(get_class($this))),
-            'approved_comments' => array(self::HAS_MANY, 'Comments', 'object_id','order'=> 'id DESC', 'condition' => 'approved_comments.object_type = '.Objects::model() -> getNumber(get_class($this)).' AND approved_comments.approved=1'),
+            //'comments' => array(self::HAS_MANY, 'Comments', 'object_id', 'condition' => 'comments.object_type = '.Objects::model() -> getNumber(get_class($this))),
+            //'approved_comments' => array(self::HAS_MANY, 'Comments', 'object_id','order'=> 'id DESC', 'condition' => 'approved_comments.object_type = '.Objects::model() -> getNumber(get_class($this)).' AND approved_comments.approved=1'),
             //'clinicfields' => array(self::HAS_MANY, 'ObjectsFields', 'object_id', 'with' => 'field'),
             'fields' => array(self::HAS_MANY, 'FieldsValue', 'object_id', 'with' => 'field','condition' => 'field.object_type = '.Objects::model() -> getNumber(get_class($this))),
 			'doctors' => array(self::MANY_MANY, 'doctors', '{{employments}}(id_clinic, id_doctor)')
@@ -455,6 +452,7 @@ class clinics extends BaseModel
 	public function FillFieldsFromArray($model, $post_arr)
 	{
 		$model->attributes=$post_arr['clinics'];
+		$model -> text = $post_arr['clinics']['text'];
 		//print_r($post_arr['clinics']);
 		$model -> partner = $post_arr['clinics']["partner"] > 0 ? 1 : 0;
 		$model -> ignore_clinic = $post_arr['clinics']["ignore_clinic"] > 0 ? 1 : 0;
@@ -507,7 +505,7 @@ class clinics extends BaseModel
 			$logo_old = $model->logo;
 			$model->logo = CUploadedFile::getInstance($model,'logo');
 			$image_unique_id = substr(md5(uniqid(mt_rand(), true)), 0, 5) . '.' .$model->logo->extensionName;
-			$fileName = $images_filePath . DIRECTORY_SEPARATOR . $image_unique_id;
+			$fileName = $images_filePath . $image_unique_id;
 
 			if ($model->validate()) {
 				$model->logo->saveAs($fileName);

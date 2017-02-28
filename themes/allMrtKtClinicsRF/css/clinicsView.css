@@ -24,7 +24,10 @@
 }
 .image_cont {
 	display:inline-block;
-	max-width:150px;
+	width:150px;
+}
+.image_cont img{
+	width:100%;
 }
 .object_name {
 	color:#00713d;

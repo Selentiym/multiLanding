@@ -48,10 +48,16 @@
             </div>
 
             <div>
-            <?php echo $form->labelEx($model,'name'); ?>
-            <?php echo $form->textField($model,'name',array('size'=>50,'maxlength'=>50)); ?>
-            <?php echo $form->error($model,'name'); ?>
-        </div>
+                <?php echo $form->labelEx($model,'name'); ?>
+                <?php echo $form->textField($model,'name',array('size'=>50,'maxlength'=>50)); ?>
+                <?php echo $form->error($model,'name'); ?>
+            </div>
+
+            <div>
+                <?php echo $form->labelEx($model,'verbiage'); ?>
+                <?php echo $form->textField($model,'verbiage',array('size'=>50,'maxlength'=>50)); ?>
+                <?php echo $form->error($model,'verbiage'); ?>
+            </div>
 
               
         <br/>

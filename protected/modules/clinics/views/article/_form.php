@@ -4,7 +4,7 @@
 			var form = $("#Article-form");
 			var save_action = (form.attr("action")) ? form.attr("action") : "";
 			var save_target = (form.attr("target")) ? form.attr("target") : "";
-			form.attr("action","'.Yii::app() -> baseUrl.'/home/ArticlePreview");
+			form.attr("action","'.$this -> createUrl("//home/articlePreview").'");
 			form.attr("target","_blank");
 			//alert(form);
 			form.submit();

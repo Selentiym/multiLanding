@@ -46,9 +46,24 @@ class ClinicsModule extends UWebModule
 				return $val;
 			}
 			$t = TriggerValues::model() -> findByAttributes(['verbiage' => $val]);
-			return $t -> id;
+			if ($t instanceof TriggerValues) {
+				return $t->id;
+			}
+			return $val;
 		}, $triggers);
+		if ($triggers['metro']) {
+			$triggers['metro'] = [$triggers['metro']];
+		}
 		return clinics::model() -> userSearch($triggers, $order, $limit, $criteria)['objects'];
+	}
+
+	/**
+	 * This functions exists to ensure that all the needed classes have been loaded
+	 * @param string $class
+	 * @retrun $class
+	 */
+	public function getClassModel($class){
+		return $class::model();
 	}
 	public function getRules() {
 		return [
@@ -83,5 +98,17 @@ class ClinicsModule extends UWebModule
 
 			'<moduleClinics:(clinics)>/admin/<modelClass:(TriggerParameter)><act:(List|Create|Update|Delete)>/<id:\d+>' => '<moduleClinics>/admin/<modelClass><act>',
 		];
+	}
+
+	/**
+	 * @param CDbCriteria|null $criteria
+	 * @return Article[]
+	 */
+	public function getRootArticles(CDbCriteria $criteria = null) {
+		if (!$criteria) {
+			$criteria = new CDbCriteria();
+		}
+		$criteria -> addCondition('level = 0 OR parent_id = 0 OR parent_id IS NULL');
+		return Article::model() -> findAll($criteria);
 	}
 }
