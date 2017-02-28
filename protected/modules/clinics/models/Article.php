@@ -440,6 +440,16 @@ class Article extends UClinicsModuleModel {
 	 * @param array $triggers consists of pairs ['verbiage' => id_value]
 	 * @return mixed
 	 */
+	public function prepareTextByVerbiage($triggers = []) {
+		$triggers = array_map(function($verb){
+			return TriggerValues::model() -> findByAttributes(['verbiage' => $verb]) -> id;
+		},$triggers);
+		return $this -> prepareText($triggers);
+	}
+	/**
+	 * @param array $triggers consists of pairs ['verbiage' => id_value]
+	 * @return mixed
+	 */
 	public function prepareText($triggers = []) {
 		$text = $this -> text;
 		$verb = '([a-zA-Z]+)';

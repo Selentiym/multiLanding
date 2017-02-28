@@ -73,7 +73,7 @@ Yii::app() -> getClientScript() -> registerScript('noEmptyGetParameters','
 		<noscript><div><img src="//mc.yandex.ru/watch/34545835" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 
 		<header>
-			<div id="logo_cont"><a href="<?php echo Yii::app() -> baseUrl.'/'; ?>"><div id = "logo"></div></a></div>
+			<div id="logo_cont"><a href="<?php echo Yii::app() -> baseUrl; ?>"><div id = "logo"></div></a></div>
 			<div id="header_text">
 				<div id="name">ВСЕ МРТ И КТ КЛИНКИ СПБ</div>
 				<div id="words">Информационный портал медицинских услуг</div>

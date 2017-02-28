@@ -39,6 +39,10 @@ Yii::app()->getClientScript()->registerScriptFile(Yii::app() -> theme -> baseUrl
                 if ($service instanceof clinics) {
                     $this->renderPartial('/clinics/_single_clinics', ['data' => $service]);
                 }
+                $a = Article::model() -> findByAttributes(['verbiage' => 'dynamic']);
+                if ($a) {
+                    echo "<div class='single_object'>".$a -> prepareTextByVerbiage($_GET)."</div>";
+                }
                 if (!empty($objects)) {
                     foreach($objects as $object) {
                         $this -> renderPartial('/clinics/_single_clinics',['data' => $object]);
