@@ -42,13 +42,21 @@ return SiteDispatcher::mergeArray(
             'urlManager'=>array(
                 //'urlFormat' => null,
                 'rules' => array(
-                    'clinics' => 'home',
+                    //'clinics' => 'home/clinics',
                     '<module:(clinics)>/admin' => '<module>/admin/login',
                     '<module:(taskgen)>/task/<action:(getText)>' => '<module>/task/<action>',
                     '<module:(taskgen)>/task/<action:(getText)>/<id:\d+>' => '<module>/task/<action>',
                     '<modelName:(clinics|doctors)>/show/<verbiage:\w+>' => 'home/modelView',
                     'article' => 'home/articles',
                     'article/<verbiage:\w+>' => 'home/articleView',
+                    [
+                        'class' => 'application.components.urlRules.ModelAttributeUrlRule',
+                        'modelClass' => 'ObjectPrice',
+                        'attribute' => 'verbiage',
+                        'attributeInPattern' => 'research',
+                        'route' => 'home/<modelName>',
+                        'pattern' => '<modelName:(clinics|doctors)>/<research:\w+>'
+                    ],
                 ),
             ),
             'dbClinics'=>array(

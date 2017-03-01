@@ -19,11 +19,12 @@ $cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/rateit.css');
 $cs->registerScriptFile(Yii::app() -> theme -> baseUrl.'/js/select2.full.js',CClientScript::POS_BEGIN);
 $cs->registerScriptFile(Yii::app()->theme -> baseUrl.'/js/jquery.rateit.min.js?' . time(), CClientScript::POS_END);
 $cs -> registerScript('Rate','Rate()',CClientScript::POS_READY);
+$cs -> registerCoreScript('prettyFormUrl');
 ?>
 
 <div class="content_block" id="search_block">
     <h2 class="heading" id="search_clinics">Поиск клиник</h2>
-    <form id="searchForm" action="<?php echo $this -> createUrl('home/clinics',[],'&',true); ?>" class="noEmpty">
+    <form id="searchForm" action="prettyFormUrl" data-action="home/clinics" data-params="{}" data-gen-url="<?php echo addslashes(Yii::app() -> createUrl('home/createFormUrl')); ?>" class="noEmpty prettyFormUrl">
         <div class="row">
 
             <div class="speciality_dropdown select">

@@ -147,6 +147,14 @@ return array(
 							'css' => [
 								'css/font-awesome.min.css'
 							],
+						],
+						'prettyFormUrl' => [
+							'baseUrl' => 'libs/prettyFormUrl/',
+							'js' => [
+								'pretty.js'
+							],
+							'position' => CClientScript::POS_READY,
+							'depends' => ['jquery']
 						]
 				]
 		),

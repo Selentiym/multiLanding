@@ -81,4 +81,25 @@ class HomeController extends CController {
         }
         return parent::createUrl($route,$params,$ampersand);
     }
+
+    /**
+     * generates pretty url for a form
+     */
+    public function actionCreateFormUrl() {
+        if (Yii::app() -> request -> isAjaxRequest) {
+            $data = $_POST;
+//            $m = $_GET['method'];
+//            if ($m == 'post') {
+//                $data = $_POST;
+//            } else {
+//                $data = $_GET;
+//            }
+            $params = [];
+            parse_str($data['data'], $p);
+            if (!empty($p)) {
+                $params = $p;
+            }
+            echo $this->createUrl($data['action'], $params);
+        }
+    }
 }
