@@ -12,11 +12,47 @@ $modelName = 'clinics';
 
 $objects = $mod -> getClinics($_GET);
 
-Yii::app()->getClientScript()->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/objects_list.css');
-Yii::app()->getClientScript()->registerScriptFile(Yii::app() -> theme -> baseUrl.'/js/select2.full.js',CClientScript::POS_BEGIN);
+$cs = Yii::app()->getClientScript();
+
+$cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/objects_list.css');
+$cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/rateit.css');
+$cs->registerScriptFile(Yii::app() -> theme -> baseUrl.'/js/select2.full.js',CClientScript::POS_BEGIN);
+$cs->registerScriptFile(Yii::app()->theme -> baseUrl.'/js/jquery.rateit.min.js?' . time(), CClientScript::POS_END);
+$cs -> registerScript('Rate','Rate()',CClientScript::POS_READY);
 ?>
 
+<div class="content_block" id="search_block">
+    <h2 class="heading" id="search_clinics">Поиск клиник</h2>
+    <form id="searchForm" action="<?php echo $this -> createUrl('home/clinics',[],'&',true); ?>" class="noEmpty">
+        <div class="row">
 
+            <div class="speciality_dropdown select">
+                <div class="image"><span></span></div>
+                <div class="select_cont">
+                    <?php $specialities = CHtml::listData(ObjectPrice::model() -> findAll(),'verbiage','name'); ?>
+                    <?php CHtml::DropDownListChosen2('research','search_speciality', $specialities,array('placeholder' => 'Выберите исследование','empty_line' => 'Исследование'),array($_GET['research'])); ?>
+                </div>
+            </div>
+
+            <div class="metro_dropdown select">
+                <div class="image"><span></span></div>
+                <div class="select_cont">
+                    <?php $metro_obj = Metro::model()->findAll(array('order' => 'name ASC')); ?>
+                    <?php CHtml::DropDownListChosen2('metro','search_metro', CHtml::listData($metro_obj, 'id', 'name'),array('placeholder' => 'Выберите метро','empty_line' => 'Метро'),array($_GET['metro'])); ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <a href="<?php echo $this -> createUrl('home/clinics',[],'&',true); ?>"><input type="button" value="Сбросить" class="search_submit"/></a>
+            <input type="submit" value="Найти" class="search_submit"/>
+        </div>
+        <div class="row" id="triggers">
+            <?php
+            $this -> renderPartial('/triggers/_form');
+            ?>
+        </div>
+    </form>
+</div>
 <div id="objects_list">
     <div id="column1" class="content_column">
         <div id="links" class="content_block">

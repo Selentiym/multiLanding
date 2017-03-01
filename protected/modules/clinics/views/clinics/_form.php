@@ -76,11 +76,11 @@
             <?php echo $form->error($model,'experience'); ?>
         </div>
 
-        <div>
-            <?php echo $form->labelEx($model,'fax'); ?>
-            <?php echo $form->textField($model,'fax',array('size'=>60,'maxlength'=>2000)); ?>
-            <?php echo $form->error($model,'fax'); ?>
-        </div>
+<!--        <div>-->
+<!--            --><?php //echo $form->labelEx($model,'fax'); ?>
+<!--            --><?php //echo $form->textField($model,'fax',array('size'=>60,'maxlength'=>2000)); ?>
+<!--            --><?php //echo $form->error($model,'fax'); ?>
+<!--        </div>-->
 
         <div>
             <?php echo $form->labelEx($model,'address'); ?>
@@ -132,11 +132,11 @@
             <?php echo $form->error($model,'site'); ?>
         </div>
 
-        <div>
-            <?php echo $form->labelEx($model,'working_days'); ?>
-            <?php echo $form->textField($model,'working_days',array('size'=>60,'maxlength'=>255)); ?>
-            <?php echo $form->error($model,'working_days'); ?>
-        </div>
+<!--        <div>-->
+<!--            --><?php //echo $form->labelEx($model,'working_days'); ?>
+<!--            --><?php //echo $form->textField($model,'working_days',array('size'=>60,'maxlength'=>255)); ?>
+<!--            --><?php //echo $form->error($model,'working_days'); ?>
+<!--        </div>-->
 
         <div>
             <?php echo $form->labelEx($model,'working_hours'); ?>
@@ -347,22 +347,23 @@
             <br/>
         </div>
 
-        <div>
-            <?php echo $form->labelEx($model,'audio'); ?>
-            <?php
-                echo (!empty($model->audio)? 
-                    '<div id="audio">' . CHtml::ajaxLink('<i class="icon-remove"></i>', CController::createUrl('admin/propDelete/' . $model->id), array('type'=> 'POST', 'data'=>array('model' => 'clinic', 'prop' => 'audio'), 'success' => 'js: $("#audio").hide()')) . ' '. $model->audio . '</div><br/>'
-                    : '');
-            ?>
-            <?php echo CHtml::activeFileField($model,'audio'); ?>
-            <?php echo $form->error($model,'audio'); ?>
-        </div>
 
-        <div>
-            <?php echo $form->labelEx($model,'video'); ?>
-            <?php echo $form->textField($model,'video',array('size'=>60,'maxlength'=>255)); ?>
-            <?php echo $form->error($model,'video'); ?>
-        </div>
+<!--        <div>-->
+<!--            --><?php //echo $form->labelEx($model,'audio'); ?>
+<!--            --><?php
+//                echo (!empty($model->audio)?
+//                    '<div id="audio">' . CHtml::ajaxLink('<i class="icon-remove"></i>', CController::createUrl('admin/propDelete/' . $model->id), array('type'=> 'POST', 'data'=>array('model' => 'clinic', 'prop' => 'audio'), 'success' => 'js: $("#audio").hide()')) . ' '. $model->audio . '</div><br/>'
+//                    : '');
+//            ?>
+<!--            --><?php //echo CHtml::activeFileField($model,'audio'); ?>
+<!--            --><?php //echo $form->error($model,'audio'); ?>
+<!--        </div>-->
+<!---->
+<!--        <div>-->
+<!--            --><?php //echo $form->labelEx($model,'video'); ?>
+<!--            --><?php //echo $form->textField($model,'video',array('size'=>60,'maxlength'=>255)); ?>
+<!--            --><?php //echo $form->error($model,'video'); ?>
+<!--        </div>-->
 
     </div>
 

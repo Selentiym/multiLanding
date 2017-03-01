@@ -35,7 +35,8 @@
 	font-size:18px;
 	margin:2px;
 	display:inline-block;
-	border-bottom:1px solid #00713d;
+	/*border-bottom:1px solid #00713d;*/
+	text-decoration: underline;
 	padding-bottom:0;
 }
 .object_text {
@@ -50,7 +51,11 @@
 	padding:5px 10px;
 }
 .small_info > div {
-	/*margin:0px 0;*/
+	min-height:22px;
+}
+.small_info .fa {
+	color:#00713d;
+	vertical-align: middle;
 }
 .time {
 	margin-bottom:5px;

@@ -141,6 +141,12 @@ return array(
 										'css/smoothDivScroll.css'
 								],
 								'depends' => ['jquery']
+						],
+						'font-awesome' => [
+							'baseUrl' => 'libs/font-awesome/',
+							'css' => [
+								'css/font-awesome.min.css'
+							],
 						]
 				]
 		),

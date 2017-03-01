@@ -22,6 +22,10 @@
 		 */
 		public $ajax = false;
 		/**
+		 * @var bool whether guests are allowed to view this model
+		 */
+		public $guest = false;
+		/**
 		 *
 		 */
 		public $layout = '/layouts/admin';
@@ -31,7 +35,7 @@
 		 */
 		public function run($arg = false)
 		{
-			if (!Yii::app() -> user -> isGuest) {
+			if ((!Yii::app() -> user -> isGuest)||($this -> guest)) {
 				if (is_callable($this -> modelClass)) {
 					$this -> modelClass = call_user_func($this -> modelClass);
 				}

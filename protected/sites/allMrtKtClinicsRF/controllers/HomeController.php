@@ -46,6 +46,7 @@ class HomeController extends CController {
                     return '/'.get_class($model).'/view';
                 },
                 'modelClass' => $_GET['modelName'],
+                'guest' => true,
                 'scenario' => 'view',
                 'layout'=>'home'
             ]

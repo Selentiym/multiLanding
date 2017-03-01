@@ -7,8 +7,11 @@ $this->setPageTitle($model->title);
 Yii::app() -> getClientScript() -> registerMetaTag($model -> description,'description');
 Yii::app() -> getClientScript() -> registerMetaTag($model -> keywords,'keywords');
 $modelName = get_class($model);
+
+
 $info = $this -> renderPartial('/clinics/_info', array('clinic' => $model),true);
 $cs = Yii::app()->getClientScript();
+$cs -> registerCoreScript('font-awesome');
 $cs->registerCssFile(Yii::app()->theme->baseUrl.'/css/objects_list.css');
 $cs->registerCssFile(Yii::app()->theme->baseUrl.'/css/clinicsView.css');
 $cs->registerCssFile(Yii::app()->theme->baseUrl.'/css/rateit.css?' . time());
@@ -102,18 +105,55 @@ $cs -> registerScript('Order','
 		</div>
 		<div class="center">
 			<h2 class="name object_name p-name"><?php echo $model -> name; ?></h2>
+			<div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 			<div class="object_text">
 				<?php echo $model -> text; ?>
 			</div>
-			<div class="small_info">
-				<div class="time">
-					<div class="time_img"></div>
+			<div class="small_info list-group">
+				<?php if ($model -> working_hours) : ?>
+				<div class="time list-group-item">
+					<i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
 					<div class="text"><?php echo $model -> working_hours; ?></div>
 				</div>
-				<div class="address">
-					<div class="address_img"></div>
-					<div class="text p-adr"><?php echo $model -> address; ?></div>
+				<?php endif; ?>
+				<?php if ($model -> address) : ?>
+				<div class="address list-group-item">
+					<i class="fa fa-map-marker fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
+					<div class="text p-adr"><?php echo $model -> address; echo " (".implode(', ',array_filter(array_map(function($id){
+									return Districts::model() -> findByPk($id) -> name;
+								},explode(';',$model -> district))));?>)</div>
 				</div>
+				<?php endif; ?>
+				<?php if ($model -> phone) : ?>
+				<div class="phone list-group-item">
+					<i class="fa fa-mobile fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
+					<div class="text p-adr"><?php echo $model -> phone; ?></div>
+				</div>
+				<?php endif; ?>
+				<?php if ($model -> mrt) : ?>
+				<div class="tomogrMrt list-group-item">
+					<i class="fa fa-life-ring fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
+					<div class="text p-adr"><?php echo $model -> mrt; ?></div>
+				</div>
+				<?php endif; ?>
+				<?php if ($model -> kt) : ?>
+				<div class="tomogrKt list-group-item">
+					<i class="fa fa-navicon fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
+					<div class="text p-adr"><?php echo $model -> kt; ?></div>
+				</div>
+				<?php endif; ?>
+				<?php if ($model -> site) : ?>
+				<div class="tomogrKt list-group-item">
+					<i class="fa fa-link fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
+					<div class="text p-adr"><?php echo $model -> site; ?></div>
+				</div>
+				<?php endif; ?>
+				<?php if ($model -> experience) : ?>
+				<div class="tomogrKt list-group-item">
+					<i class="fa fa-line-chart fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
+					<div class="text p-adr">Существует <?php echo $model -> experience; ?> лет</div>
+				</div>
+				<?php endif; ?>
 			</div>
 			<div class="assign_cont objects_cont">
 				<!--<div class="assign"><a href="<?php echo  Yii::app() -> baseUrl;?>/assign"><span>Записаться на прием</span></a></div>-->

@@ -8,9 +8,9 @@
 		<div class="object_image_cont">
 			<img src="<?php echo $data -> giveImageFolderRelativeUrl() . $data -> logo;?>" alt="<?php echo $data->name; ?>"/>
 		</div>
-		<div class="reviews">
-			<?php echo CHtml::link('Отзывы', $data -> getUrl()); ?>
-		</div>
+<!--		<div class="reviews">-->
+<!--			--><?php //echo CHtml::link('Отзывы', $data -> getUrl()); ?>
+<!--		</div>-->
 	</div>
 	<div class="right_side">
 		<h2 class="name"><a href="<?php echo $data -> getUrl(); ?>"><span><?php echo $data -> name; ?></span></a></h2>
