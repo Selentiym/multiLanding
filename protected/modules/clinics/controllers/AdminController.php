@@ -1016,9 +1016,9 @@ class AdminController extends Controller
     {
         $model = new Triggers();
             
-        if(isset($_POST['Triggers']))
+        if(isset($_POST[get_class($model)]))
         {
-            $model->attributes=$_POST['Triggers'];
+            $model->attributes=$_POST[get_class($model)];
             if($model->save()) {
 				$images_filePath = $model -> giveImageFolderAbsoluteUrl();
 				//echo $images_filePath;
@@ -1029,9 +1029,9 @@ class AdminController extends Controller
 						mkdir($images_filePath);
 					}
 
-					if(isset($_FILES['Triggers'])) { // logo
+					if(isset($_FILES[get_class($model)])) { // logo
 					
-						if(!empty($_FILES['Triggers']['name']['logo'])){
+						if(!empty($_FILES[get_class($model)]['name']['logo'])){
 							$model->logo = CUploadedFile::getInstance($model,'logo');
 							$image_unique_id = substr(md5(uniqid(mt_rand(), true)), 0, 5) . '.' .$model->logo->extensionName;
 							$fileName = $images_filePath . DIRECTORY_SEPARATOR . $image_unique_id;
@@ -1045,7 +1045,7 @@ class AdminController extends Controller
 					}
 					$this->redirect($this -> createUrl('admin/triggers'));
 				} else {
-					new CustomFlash("error", 'Triggers', 'CreateFilepath', 'Не удалось сгенерировать каталог для изображений.', true) ;
+					new CustomFlash("error", get_class($model), 'CreateFilepath', 'Не удалось сгенерировать каталог для изображений.', true) ;
 				}
             } 
         }
@@ -1067,11 +1067,11 @@ class AdminController extends Controller
         if (!file_exists($images_filePath))
             mkdir($images_filePath);
 
-        if(isset($_POST['Triggers']))
+        if(isset($_POST[get_class($model)]))
         {
-            $model->attributes=$_POST['Triggers'];
-            if(isset($_FILES['Triggers'])) { // logo
-                if(!empty($_FILES['Triggers']['name']['logo'])){
+            $model->attributes=$_POST[get_class($model)];
+            if(isset($_FILES[get_class($model)])) { // logo
+                if(!empty($_FILES[get_class($model)]['name']['logo'])){
                     $logo_old = $model->logo;
                     $model->logo = CUploadedFile::getInstance($model,'logo');
                     $image_unique_id = substr(md5(uniqid(mt_rand(), true)), 0, 5) . '.' .$model->logo->extensionName;

@@ -8,8 +8,23 @@
  * @property string $name
  * @property string $logo
  */
-class Triggers extends CTModel
-{
+class Triggers extends CTModel {
+	use tTriggersStandard;
+	public static $types = [
+		'DropDownTrigger' => 'Списком',
+		'TickTrigger' => 'Галочками'
+	];
+
+	public function instantiate($attributes) {
+		$className = $attributes['type'];
+		$loaded = @class_exists($className);
+		if ($loaded) {
+			return new $className(null);
+		}
+		$defautlName = current(array_flip(self::$types));
+		return new $defautlName(null);
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -35,7 +50,7 @@ class Triggers extends CTModel
 			array('logo', 'file', 'types'=>'jpg, jpeg, gif, png', 'maxSize' => 1048576, 'allowEmpty'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, verbiage', 'safe', 'on'=>'search'),
+			array('id, name, verbiage, type', 'safe'),
 		);
 	}
 	protected function beforeSave()
@@ -161,6 +176,34 @@ class Triggers extends CTModel
 			echo $val -> value;
 		}
 	}
+
+	/**
+	 * @param array $values selected values
+	 * @param array $htmlOptions htmlOptions for the element
+	 * @param array $dopParameters additional parameters that may differ from trigger to trigger
+	 * @return null|string
+	 */
+	public function getHtml($values = [], $htmlOptions = [], $dopParameters = []){
+		$name = $htmlOptions['name'] ? $htmlOptions['name'] : $this -> verbiage;
+		$id = $htmlOptions['id'] ? $htmlOptions['id'] : $this -> verbiage;
+		return CHtml::DropDownListChosen2(
+				$name,
+				$id,
+				CHtml::listData($this -> trigger_values,'verbiage','value'),
+				$htmlOptions,
+				$values,
+				$dopParameters,
+				true
+		);
+	}
+
+	/**
+	 * @param $object - to be checked
+	 * @param array $values of the trigger that are selected
+	 * @param array $cached some data that may be useful for all the triggers in common
+	 * @return bool
+	 */
+	//public function checkObject($object, $values = [], $cached = []);
 	/*public function generateImageFolderUrl($seed = NULL)
 	{
 		if (!isset($seed))
@@ -175,4 +218,7 @@ class Triggers extends CTModel
 			return Yii::app()->basePath.'/../images/triggers/' . $seed . '/';
 		}
 	}*/
+	public function objectClassForFileFolder(){
+		return 'Triggers';
+	}
 }

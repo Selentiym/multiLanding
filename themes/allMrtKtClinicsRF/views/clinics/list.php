@@ -49,7 +49,7 @@ $cs -> registerCoreScript('prettyFormUrl');
         </div>
         <div class="row" id="triggers">
             <?php
-            $this -> renderPartial('/triggers/_form');
+                $this -> renderPartial('/triggers/_form');
             ?>
         </div>
     </form>

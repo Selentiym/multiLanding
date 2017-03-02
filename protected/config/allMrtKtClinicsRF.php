@@ -57,6 +57,7 @@ return SiteDispatcher::mergeArray(
                         'route' => 'home/<modelName>',
                         'pattern' => '<modelName:(clinics|doctors)>/<research:\w+>'
                     ],
+                    'clinics' => 'home/clinics',
                 ),
             ),
             'dbClinics'=>array(

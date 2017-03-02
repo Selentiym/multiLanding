@@ -41,6 +41,7 @@ Yii::app()->clientScript->registerScript('search', "
         'id',
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
         array('name' => 'verbiage', 'header' => $model->getAttributeLabel('verbiage')),
+        array('name' => 'type', 'value' => function($data){ return Triggers::$types[$data -> type];} ,'header' => "Тип"),
         array(
             'class'=>'CLinkColumn',
             'header'=>CHtml::encode('Значения'),

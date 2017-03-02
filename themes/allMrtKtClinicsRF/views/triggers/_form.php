@@ -11,13 +11,18 @@
 $triggers = Triggers::model() -> findAll();
 if (!empty($triggers)) {
     foreach ($triggers as $t) {
-        CHtml::DropDownListChosen2(
-            $t -> verbiage,
-            $t -> verbiage, CHtml::listData($t -> trigger_values,'verbiage','value'),
-            ['placeholder' => $t -> name,'empty_line' => true, 'class' => 'trigger_select'],
-            [$_GET[$t -> verbiage]],
-            []
-        );
+        /**
+         * @type Triggers $t
+         */
+        echo $t -> getHtml([$_GET[$t -> verbiage]],['placeholder' => $t -> name,'empty_line' => true, 'class' => 'trigger_select']);
+
+//        CHtml::DropDownListChosen2(
+//            $t -> verbiage,
+//            $t -> verbiage, CHtml::listData($t -> trigger_values,'verbiage','value'),
+//            ['placeholder' => $t -> name,'empty_line' => true, 'class' => 'trigger_select'],
+//            [$_GET[$t -> verbiage]],
+//            []
+//        );
     }
 }
 ?>

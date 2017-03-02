@@ -96,6 +96,7 @@ class HomeController extends CController {
 //            }
             $params = [];
             parse_str($data['data'], $p);
+            $p = array_filter($p);
             if (!empty($p)) {
                 $params = $p;
             }

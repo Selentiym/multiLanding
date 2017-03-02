@@ -14,6 +14,7 @@ class ClinicsModule extends UWebModule
 		// import the module-level models and components
 		$this->setImport(array(
 			'clinics.models.*',
+			'clinics.models.triggers.*',
 			'clinics.components.*',
 		));
 		require_once(self::getBasePath().'/components/Helpers.php');

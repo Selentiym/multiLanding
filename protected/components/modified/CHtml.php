@@ -57,7 +57,7 @@ class CHtml extends Html {
             $('#".$htmlOptions['id']."').select2(".$select2Options.");
         ",CClientScript::POS_END);
     }
-    public static function DropDownListChosen2($name,$id,$data,$htmlOptions=array(),$selected_ids=array(),$select2Options='not select') {
+    public static function DropDownListChosen2($name,$id,$data,$htmlOptions=array(),$selected_ids=array(),$select2Options='not select',$return = false) {
         $htmlOptions['id'] = $id;
         $selected = array();
         //$selected_ids = array();
@@ -101,13 +101,19 @@ class CHtml extends Html {
         $htmlOptions['name'] = $name;
 
         $htmlOptions = array_merge_recursive($htmlOptions, $extra_htmlOptions);
-        echo parent::DropDownList($name,'',$data,$htmlOptions);
+        $text = parent::DropDownList($name, '', $data, $htmlOptions);
         if ($select2Options !== 'not select') {
             $select2Options['width'] = 'resolve';
             Yii::app()->clientScript->registerScript('chosen_'.$htmlOptions['id'], "
                 $('#".$htmlOptions['id']."').select2(".json_encode($select2Options).");
             ",CClientScript::POS_END);
         }
+        if ($return) {
+            return $text;
+        } else {
+            echo $text;
+        }
+        return null;
     }
     public static function giveAttributeArray($models, $attribute){
         $rez = array();

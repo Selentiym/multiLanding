@@ -33,7 +33,7 @@
 				if (isset($this -> $attr_name))
 				{
 					//return $d.'..'.$d. $fileClass .$d. get_class($this) .$d . $this -> $attr_name . $d;
-					return $add . $d . $fileClass .$d. get_class($this) .$d . $this -> $attr_name . $d;
+					return $add . $d . $fileClass .$d. $this -> objectClassForFileFolder() .$d . $this -> $attr_name . $d;
 					//return $d . $fileClass .$d. get_class($this) .$d . $this -> $attr_name . $d;
 				} else {
 					return false;
@@ -78,6 +78,9 @@
 	{
 		return 'id';
 	}
+	 public function objectClassForFileFolder(){
+		 return get_class($this);
+	 }
 	//Удаляем все изображения и другие файлы, связанные с этой моделью, прямо перед удалением записи в БД.
 	protected function beforeDelete(){
 		if (parent::beforeDelete()) {
