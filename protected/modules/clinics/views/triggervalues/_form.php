@@ -33,8 +33,55 @@
                 <?php echo $form->error($model,'verbiage'); ?>
             </div>
 
+
+                <?php
+                /**
+                 * @type TriggerValues $model
+                 */
+                $parent = $model -> trigger -> parent;
+                if ($parent) {
+                    echo "<div>
+                <p>Зависит от (если есть родитель)</p>";
+                    echo CHtml::activeDropDownList(
+                        TriggerValues::model(),
+                        'id',
+                        CHtml::listData($parent -> trigger_values, 'verbiage', 'value'),
+                        array('name' => 'TriggerValues[dependency_array][]', 'multiple' => 'multiple'),
+                        array_map(function($data){
+                            return $data -> verbiage_parent;
+                        }, $model -> dependencies)
+                    );
+                    echo "</div>";
+                }
+                /**
+                 * @type TriggerValues $model
+                 */
+                $children = $model -> trigger -> children;
+                if ($children) {
+                    echo "<div>
+                <p>Показывать при данном значении (Если есть дочерние триггеры)</p>";
+                    $possibleChildren = [];
+                    foreach ($children as $child) {
+                        /**
+                         * @type Triggers $child
+                         */
+                        $possibleChildren = array_merge($child -> trigger_values, $possibleChildren);
+                    }
+                    echo CHtml::activeDropDownList(
+                        TriggerValues::model(),
+                        'id',
+                        CHtml::listData($possibleChildren, 'verbiage', 'value'),
+                        array('name' => 'TriggerValues[children_array][]', 'multiple' => 'multiple'),
+                        array_map(function($data){
+                            return $data -> verbiage_child;
+                        }, $model -> children)
+                    );
+                    echo "</div>";
+                }
+                ?>
+
             <div class="buttons">
-                <?php echo CHtml::submitButton($model->isNewRecord ? CHtml::encode('Создать') : CHtml::encode('Сохранить')); ?>
+                <?php echo CHtml::submitButton($model->isNewRecord ? CHtml::encode('Создать') : CHtml::encode('Сохранить'),['name' => 'submitted']); ?>
             </div>
             <table>
                 <tr>

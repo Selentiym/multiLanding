@@ -10,7 +10,11 @@
         // See class documentation of CActiveForm for details on this.
         'enableAjaxValidation'=>false,
         'htmlOptions'=>array('enctype'=>'multipart/form-data'),
-    ));?>
+    ));
+    /**
+     * @type CActiveForm $form
+     */
+    ?>
 
         <div class="span6">
 
@@ -27,11 +31,21 @@
                 <?php echo $form->textField($model, 'verbiage',array('size'=>60,'maxlength'=>255)); ?>
                 <?php echo $form->error($model,'verbiage'); ?>
             </div>
+
             <div>
                 <?php echo $form->labelEx($model,'type'); ?>
                 <?php echo CHtml::activeDropDownList($model,'type', Triggers::$types); ?>
                 <?php echo $form->error($model,'type'); ?>
             </div>
+
+
+
+            <div id="parents_block">
+                <?php echo '<p>Зависит от</p>'; ?>
+                <?php echo $form->dropDownList($model,'id_parent', ['' => 'Основной триггер'] + CHtml::listData(Triggers::topLevel(),'id','name')); ?>
+                <?php echo $form->error($model,'id_parent'); ?>
+            </div>
+
 
            <input type="hidden" name="MAX_FILE_SIZE" value="20971520" />
            <div>

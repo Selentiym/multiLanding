@@ -7,7 +7,13 @@
  */
 class DropDownTrigger extends Triggers {
     use tTriggersStandard;
-    public function getHtml($values = [], $htmlOptions = [], $dopParameters = []){
+    /**
+     * @param array $data contains ALL information about the form
+     * @param array $htmlOptions htmlOptions for the element
+     * @param array $dopParameters additional parameters that may differ from trigger to trigger
+     * @return null|string
+     */
+    /*public function getHtml(&$data = [], $htmlOptions = [], $dopParameters = []){
         $name = $htmlOptions['name'] ? $htmlOptions['name'] : $this -> verbiage;
         $id = $htmlOptions['id'] ? $htmlOptions['id'] : $this -> verbiage;
         return CHtml::DropDownListChosen2(
@@ -15,11 +21,11 @@ class DropDownTrigger extends Triggers {
             $id,
             CHtml::listData($this -> trigger_values,'verbiage','value'),
             $htmlOptions,
-            $values,
+            $data[$this -> verbiage] ? [$data[$this -> verbiage]] : [],
             $dopParameters,
             true
-        );
-    }
+        ) . $this -> getChildrenHtml($data, $id);
+    }*/
 
     /**
      * Returns the static model of the specified AR class.

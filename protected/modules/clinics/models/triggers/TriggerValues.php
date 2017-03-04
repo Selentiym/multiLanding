@@ -8,8 +8,14 @@
  * @property integer $trigger_id
  * @property string $verbiage
  * @property string $value
+ *
+ * @property TriggerValues[] $dependencies
+ * @property TriggerValues[] $children
+ * @property Triggers $trigger
  */
 class TriggerValues extends CTModel {
+	public $dependency_array;
+	public $children_array;
 	private $_triggerParameterValues;
 	/**
 	 * @return string delimeter the delimeter in searchId string
@@ -43,7 +49,7 @@ class TriggerValues extends CTModel {
 			array('value, verbiage', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, trigger_id, value, verbiage', 'safe', 'on'=>'search'),
+			array('id, trigger_id, value, verbiage, dependency_array, children_array', 'safe'),
 		);
 	}
 
@@ -56,6 +62,8 @@ class TriggerValues extends CTModel {
 		// class name for the relations automatically generated below.
 		return array(
             'trigger' => array(self::BELONGS_TO, 'Triggers', array('trigger_id' => 'id'), 'select' => '*'),
+            'dependencies' => array(self::HAS_MANY, 'TriggerValueDependency', ['verbiage_child' => 'verbiage']),
+            'children' => array(self::HAS_MANY, 'TriggerValueDependency', ['verbiage_parent' => 'verbiage']),
 		);
 	}
 
@@ -198,6 +206,44 @@ class TriggerValues extends CTModel {
 				$val->value = $v;
 				$val->id_trigger_value = $this->id;
 				$val->save();
+			}
+		}
+		if ($_POST["submitted"]) {
+			//Родителей задаем
+			if (empty($this->dependency_array)) {
+				$this->dependency_array = [];
+			}
+			$has = [];
+			foreach ($this->dependencies as $d) {
+				$has[] = $d->verbiage_parent;
+				if (!in_array($d->verbiage_parent, $this->dependency_array)) {
+					$d->delete();
+				}
+			}
+			$toAdd = array_diff($this->dependency_array, $has);
+			foreach ($toAdd as $verb) {
+				$dep = new TriggerValueDependency();
+				$dep->verbiage_child = $this->verbiage;
+				$dep->verbiage_parent = $verb;
+				$dep->save();
+			}
+			//Детей задаем
+			if (empty($this->children_array)) {
+				$this->children_array = [];
+			}
+			$has = [];
+			foreach ($this->children as $d) {
+				$has[] = $d->verbiage_child;
+				if (!in_array($d->verbiage_child, $this->children_array)) {
+					$d->delete();
+				}
+			}
+			$toAdd = array_diff($this->children_array, $has);
+			foreach ($toAdd as $verb) {
+				$dep = new TriggerValueDependency();
+				$dep->verbiage_parent = $this->verbiage;
+				$dep->verbiage_child = $verb;
+				$dep->save();
 			}
 		}
 		parent::afterSave();

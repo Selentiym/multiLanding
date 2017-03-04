@@ -185,6 +185,15 @@ class AdminController extends Controller
                 'scenario' => 'copyDescendants',
                 'access' => true
             ),
+            'triggerRequest' => array(
+                'class' => 'application.controllers.actions.ClassMethodAction',
+                'method' => 'dumpValues',
+                'ajax' => true,
+                'ignore' => true,
+                'modelClass' => 'Triggers',
+                'scenario' => 'dumpValues',
+                'access' => true
+            ),
         ];
     }
 

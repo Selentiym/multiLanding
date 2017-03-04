@@ -6,7 +6,14 @@
  * The followings are the available columns in table '{{triggers}}':
  * @property integer $id
  * @property string $name
+ * @property string $verbiage
+ * @property string $type
  * @property string $logo
+ * @property int $id_parent
+ *
+ * @property Triggers $parent
+ * @property Triggers[] $children
+ * @property TriggerValues[] $trigger_values
  */
 class Triggers extends CTModel {
 	use tTriggersStandard;
@@ -50,7 +57,7 @@ class Triggers extends CTModel {
 			array('logo', 'file', 'types'=>'jpg, jpeg, gif, png', 'maxSize' => 1048576, 'allowEmpty'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, verbiage, type', 'safe'),
+			array('id, name, verbiage, type, id_parent', 'safe'),
 		);
 	}
 	protected function beforeSave()
@@ -82,6 +89,8 @@ class Triggers extends CTModel {
 		return array(
             'trigger_values' => array(self::HAS_MANY, 'TriggerValues', array('trigger_id' => 'id'), 'select' => '*'),
             'parameters' => array(self::HAS_MANY, 'TriggerParameter', 'id_trigger'),
+			'parent' => array(self::BELONGS_TO, 'Triggers', 'id_parent'),
+			'children' => array(self::HAS_MANY, 'Triggers', 'id_parent'),
 		);
 	}
 
@@ -137,6 +146,15 @@ class Triggers extends CTModel {
 		return parent::model($className);
 	}
 	/* CUSTOM FUNCTIONS*/
+	/**
+	 * @return Triggers[]
+	 */
+	public static function topLevel() {
+		$criteria = new CDbCriteria();
+		$criteria -> addCondition('id_parent IS NULL OR id_parent = 0');
+		return self::model() -> findAll($criteria);
+	}
+
 	public function FolderKey()
 	{
 		return 'verbiage';
@@ -178,25 +196,89 @@ class Triggers extends CTModel {
 	}
 
 	/**
-	 * @param array $values selected values
+	 * @param array $data contains ALL information about the form
 	 * @param array $htmlOptions htmlOptions for the element
 	 * @param array $dopParameters additional parameters that may differ from trigger to trigger
 	 * @return null|string
 	 */
-	public function getHtml($values = [], $htmlOptions = [], $dopParameters = []){
+	public function getHtml(&$data = [], $htmlOptions = [], $dopParameters = []){
 		$name = $htmlOptions['name'] ? $htmlOptions['name'] : $this -> verbiage;
 		$id = $htmlOptions['id'] ? $htmlOptions['id'] : $this -> verbiage;
+		$options = [];
+		if ($p = $this -> parent) {
+			$cr = new CDbCriteria();
+			$cr -> compare('verbiage_parent',$data[$p -> verbiage]);
+			$cr -> together = 'child';
+			$cr -> with = 'child';
+			//$cr -> ('child.id_trigger='.$this -> id);
+			$dep = TriggerValueDependency::model() -> findAll($cr);
+			$options = array_map(function($d){
+				return $d -> child;
+			}, $dep);
+		} else {
+			$options = $this -> trigger_values;
+		}
+		$children = $dopParameters['noChildren'] ? '' : $this -> getChildrenHtml($data, $id);
 		return CHtml::DropDownListChosen2(
-				$name,
-				$id,
-				CHtml::listData($this -> trigger_values,'verbiage','value'),
-				$htmlOptions,
-				$values,
-				$dopParameters,
-				true
-		);
+			$name,
+			$id,
+			CHtml::listData($options,'verbiage','value'),
+			//$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
+			$htmlOptions,
+			$data[$this -> verbiage] ? [$data[$this -> verbiage]] : [],
+			$dopParameters,
+			true
+		) . $children;
 	}
 
+	/**
+	 * @param $elementId
+	 * @return string html of children
+	 */
+	public function getChildrenHtml(&$data, $elementId) {
+		$verbs = [];
+		$html = '';
+		foreach ($this -> children as $child) {
+			$verbs[] = $child -> verbiage;
+			/**
+			 * @type Triggers $child
+			 */
+			$options = ['placeholder' => $child -> name,'empty_line' => true, 'class' => 'trigger_select'];
+			if (!$data[$this->verbiage]) {
+				$options['disabled'] = 'disabled';
+			}
+			$html .= $child -> getHtml($data,$options);
+		}
+		$params = [
+			'url' => $this -> getModule() -> createUrl('admin/triggerRequest',['verbiage' => $this -> verbiage]),
+			'verbiage' => $this -> verbiage,
+			'childrenVerbs' => $verbs,
+			'parentVerb' => $this -> parent ? $this -> parent -> verbiage : false,
+			'elementId' => $elementId
+		] + $this -> loadJavascripts();
+		$this -> getModule() -> registerJSFile('js/triggers.js',CClientScript::POS_BEGIN);
+		Yii::app() -> getClientScript() -> registerScript('trigger'.$this -> verbiage,'
+			new Trigger('.CJavaScript::encode($params).');
+		',CClientScript::POS_END);
+		return $html;
+	}
+	public function loadJavascripts(){
+		return [
+			'beforeDataUpdate' => 'js:function(){
+
+			}',
+			'dataUpdate' => 'js:function(data){
+				//alert("update");
+				this.element.html(data.html);
+				this.element.removeAttr("disabled");
+				//this.element.trigger("change");
+				this.element.select2();
+			}',
+			'afterDataUpdate' => 'js:function(){
+
+			}'
+		];
+	}
 	/**
 	 * @param $object - to be checked
 	 * @param array $values of the trigger that are selected
@@ -220,5 +302,26 @@ class Triggers extends CTModel {
 	}*/
 	public function objectClassForFileFolder(){
 		return 'Triggers';
+	}
+
+	public function customFind($id = null){
+		switch($this -> getScenario()) {
+			case 'dumpValues':
+				return $this -> findByAttributes(['verbiage' => $_GET['verbiage']]);
+				break;
+			default:
+				return parent::customFind($id);
+				break;
+		}
+	}
+	public function dumpValues() {
+		$data = $_POST;
+		$toArg = [$data['parent'] => $data['newVal']];
+		$options = ['placeholder' => $this -> name,'empty_line' => true, 'class' => 'trigger_select'];
+
+		echo json_encode(['html' => $this -> getHtml($toArg,$options,['noChildren' => true])] + $this -> dumpExtraValues());
+	}
+	public function dumpExtraValues() {
+		return [];
 	}
 }

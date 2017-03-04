@@ -13,6 +13,7 @@ trait tAssets {
      * @param array $options
      */
     public function registerJSFile($file, $pos = null, $options = []){
+        $addr = $this -> getAssetsPath().'/'.$file;
         Yii::app() -> getClientScript() -> registerScriptFile($this -> getAssetsPath().'/'.$file,$pos,$options);
     }
     /**

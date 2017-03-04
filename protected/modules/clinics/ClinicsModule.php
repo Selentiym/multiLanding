@@ -97,6 +97,8 @@ class ClinicsModule extends UWebModule
 			'<moduleClinics:(clinics)>/admin/<modelClass:(Price|PriceBlock)><act:(Create)>' => '<moduleClinics>/admin/<modelClass><act>',
 			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)><modelClass:(Price)>List' => '<moduleClinics>/admin/<modelClass>List',
 
+			'<moduleClinics:(clinics)>/admin/triggerRequest/<verbiage:\w+>' => '<moduleClinics>/admin/triggerRequest',
+
 			'<moduleClinics:(clinics)>/admin/<modelClass:(TriggerParameter)><act:(List|Create|Update|Delete)>/<id:\d+>' => '<moduleClinics>/admin/<modelClass><act>',
 		];
 	}

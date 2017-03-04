@@ -8,13 +8,13 @@
 
 ?>
 <?php
-$triggers = Triggers::model() -> findAll();
+$triggers = Triggers::topLevel();
 if (!empty($triggers)) {
     foreach ($triggers as $t) {
         /**
          * @type Triggers $t
          */
-        echo $t -> getHtml([$_GET[$t -> verbiage]],['placeholder' => $t -> name,'empty_line' => true, 'class' => 'trigger_select']);
+        echo $t -> getHtml($_GET,['placeholder' => $t -> name,'empty_line' => true, 'class' => 'trigger_select']);
 
 //        CHtml::DropDownListChosen2(
 //            $t -> verbiage,
