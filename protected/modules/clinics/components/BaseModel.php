@@ -13,7 +13,7 @@ class BaseModel extends CTModel
 	/**
 	 * @var array SFields specific fields. Those will not be taken into account in the default search function.
 	 */
-	public $SFields = array('district','metro','research','submitted','price');//,'speciality');
+	public $SFields = array('metro','research','submitted','price','street');//,'speciality');
 	/**
 	 * @var integer type. Stores id of the object's type.
 	 */
@@ -243,9 +243,6 @@ class BaseModel extends CTModel
 			if ($p instanceof ObjectPrice) {
 				$ok &= ObjectPriceValue::model() -> findByAttributes(['id_price' => $p -> id, 'id_object' => $this -> id]) instanceof ObjectPriceValue;
 			}
-		}
-		if ($search['district'] != 0) {
-			$ok &= (!($search['district']))||((in_array($search['district'], array_map('trim', explode(';', $this->district)))));
 		}
 		return $ok;
 	}

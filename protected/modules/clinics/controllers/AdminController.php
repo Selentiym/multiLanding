@@ -192,7 +192,8 @@ class AdminController extends Controller
                 'ignore' => true,
                 'modelClass' => 'Triggers',
                 'scenario' => 'dumpValues',
-                'access' => true
+                'access' => true,
+                'guest' => true
             ),
         ];
     }
@@ -217,7 +218,7 @@ class AdminController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                  'actions'=>array('login'),
+                  'actions'=>array('login', 'triggerRequest'),
                   'users'=> array('*')
 			),
             array('allow',
@@ -1731,4 +1732,67 @@ class AdminController extends Controller
             return $el -> dumpForProject();
         }), JSON_PRETTY_PRINT);
     }
+//    public function actionLoadDistricts(){
+//        foreach (Districts::model() -> findAll() as $d) {
+//            $val = new TriggerValues();
+//            $val -> verbiage = str2url($d -> name);
+//            $val -> value = $d -> name;
+//            $val -> trigger_id = 7;
+//            if (!$val -> save()) {
+//                var_dump($val -> getErrors());
+//                continue;
+//            }
+//            $dep = new TriggerValueDependency();
+//            $dep -> verbiage_child = $val -> verbiage;
+//            $dep -> verbiage_parent = 'spb';
+//            if (!$dep -> save()) {
+//                var_dump($dep -> getErrors());
+//            }
+//        }
+//    }
+//    public function actionParseStreets() {
+//        $empty = [];
+//        $select = Triggers::model() -> findByAttributes(['verbiage' => 'district']) -> getHtml($empty, [], ['noChildren' => true]);
+//        echo "<form method='post'>
+//<textarea name='str'></textarea>
+//<input type='submit' value='распарсить' name='go'>$select
+//</form>";
+//
+//        $data = $_POST;
+//        if ($data['go']) {
+//            $str = $data['str'];
+//            $str = strip_tags($str,'<td>');
+//            $str = substr($str,4);
+//            $str = substr($str,0,-5);
+//            $streets = explode('</td><td>',$str);
+//            sort($streets);
+//            var_dump($streets);
+//            $i = 0;
+//            $inDatabase = TriggerValueDependency::model() -> findByAttributes(['verbiage_parent'=>$data['district']]);
+//            if (!$inDatabase) {
+//                foreach ($streets as $street) {
+//                    $val = new TriggerValues();
+//                    $val -> value = $street;
+//                    $val -> verbiage = str2url($street);
+//                    $val -> trigger_id = 8;
+//                    if (!$val -> save()) {
+//                        var_dump($val -> getErrors());
+//                        continue;
+//                    }
+//                    $dep = new TriggerValueDependency();
+//                    $dep -> verbiage_child = $val -> verbiage;
+//                    $dep -> verbiage_parent = $data['district'];
+//                    if (!$dep -> save()) {
+//                        var_dump($dep -> getErrors());
+//                        continue;
+//                    }
+//
+//                    echo "Saved: $i ".$val -> verbiage." to ".$dep -> verbiage_parent."<br/>".PHP_EOL;
+//                    $i ++;
+//                }
+//            } else {
+//                echo $data['district']." already has dependencies!";
+//            }
+//        }
+//    }
 }

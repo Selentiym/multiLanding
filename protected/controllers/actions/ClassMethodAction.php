@@ -51,7 +51,7 @@
 		 */
 		public function run($arg = false)
 		{
-			if ((!Yii::app() -> user -> isGuest)&&(!$this -> guest)) {
+			if ((!Yii::app() -> user -> isGuest)||($this -> guest)) {
 				//Ищем объект.
 				$modelClass = $this -> modelClass;
 				$method = $this -> method;

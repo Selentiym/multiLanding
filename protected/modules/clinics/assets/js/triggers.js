@@ -29,7 +29,7 @@ function Trigger(params){
             }
         }
     });
-    me.element.change(function(){
+    me.changeCallback = function(){
         var val = me.element.val();
         if (me.element.is('input[type=checkbox]')) {
             if (!me.element.is(':checked')) {
@@ -39,7 +39,8 @@ function Trigger(params){
         for (var i = 0; i < me.children.length; i++) {
             me.children[i].parentChanged(val);
         }
-    });
+    };
+    me.element.change(me.changeCallback);
     me.parentChanged = function(newVal){
         //alert(newVal + ' \n' + me.url);
         if (newVal) {
@@ -58,10 +59,12 @@ function Trigger(params){
                 if (typeof me.afterDataUpdate == 'function') {
                     me.afterDataUpdate.call(me, data);
                 }
+                me.changeCallback();
             });
         } else {
             me.element.val('');
             me.element.attr('disabled','disabled');
+            me.changeCallback();
         }
     };
     Triggers.objs[me.verbiage] = me;

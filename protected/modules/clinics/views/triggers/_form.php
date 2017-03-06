@@ -42,7 +42,7 @@
 
             <div id="parents_block">
                 <?php echo '<p>Зависит от</p>'; ?>
-                <?php echo $form->dropDownList($model,'id_parent', ['' => 'Основной триггер'] + CHtml::listData(Triggers::topLevel(),'id','name')); ?>
+                <?php echo $form->dropDownList($model,'id_parent', ['' => 'Основной триггер'] + CHtml::listData(Triggers::model() -> findAll(),'id','name')); ?>
                 <?php echo $form->error($model,'id_parent'); ?>
             </div>
 

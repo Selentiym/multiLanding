@@ -205,7 +205,7 @@ class Triggers extends CTModel {
 		$name = $htmlOptions['name'] ? $htmlOptions['name'] : $this -> verbiage;
 		$id = $htmlOptions['id'] ? $htmlOptions['id'] : $this -> verbiage;
 		$options = [];
-		if ($p = $this -> parent) {
+		if (($p = $this -> parent)&&($data[$p -> verbiage])) {
 			$cr = new CDbCriteria();
 			$cr -> compare('verbiage_parent',$data[$p -> verbiage]);
 			$cr -> together = 'child';
