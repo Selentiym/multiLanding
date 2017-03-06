@@ -437,41 +437,103 @@ class Article extends UClinicsModuleModel {
 	}
 
 	/**
-	 * @param array $triggers consists of pairs ['verbiage' => id_value]
+	 * @param array $triggers consists of pairs ['trigger_verbiage' => 'trigger_value_verbiage']
 	 * @return mixed
 	 */
 	public function prepareTextByVerbiage($triggers = []) {
 		$triggers = array_map(function($verb){
-			return TriggerValues::model() -> findByAttributes(['verbiage' => $verb]) -> id;
+			return ['verbiage' => $verb, 'id' => TriggerValues::model() -> findByAttributes(['verbiage' => $verb]) -> id];
 		},$triggers);
 		return $this -> prepareText($triggers);
 	}
 	/**
-	 * @param array $triggers consists of pairs ['verbiage' => id_value]
+	 * @param array $triggers consists of pairs ['verbiage' => [verbiage => verbiage, id => id]]
 	 * @return mixed
 	 */
 	public function prepareText($triggers = []) {
 		$text = $this -> text;
-		$verb = '([a-zA-Z]+)';
-		return preg_replace_callback('/(\&lt;|\<)'.$verb.':'.$verb.'(\&gt;|\>)/ui',function($matches) use ($triggers) {
-			//var_dump($matches);
-			$trigger_verb = $matches[2];
-			$field = $matches[3];
+		$verb = '([a-zA-Z0-9\-_]+)';
+		$opening = '(\&lt;|\<)';
+		$closing = '(\&gt;|\>)';
+		$singleParameter = $opening.$verb.':'.$verb.$closing;
+
+		$renderParameter = function($trigger_verb, $field) use ($triggers){
+
+			//Нашли id выбранного пользователем значения параметра
+			$val_id = $triggers[$trigger_verb];
+
+			//Если поле тупо value, то нужно отобразить само значение параметра
+			if ($field == 'value') {
+				$val = TriggerValues::model() -> findByPk($val_id['id']);
+				if ($val instanceof TriggerValues) {
+					return $val -> value;
+				} else {
+					throw new TextException("Could not find trigger value by id {$val_id['id']}");
+				}
+			}
+
 			/**
 			 * @type TriggerParameter $param
 			 */
+			//Дошли до параметра. Ищем в базе параметр по verbiage, взятом из field
 			$param = TriggerParameter::model() -> findByAttributes(['verbiage' => $field]);
 			if (!$param) {
 				throw new TextException('Could not find TriggerParameter by verbiage "'.$field.'"');
 			}
 			$param_val = null;
-			if ($val_id = $triggers[$trigger_verb]) {
-				$param_val = TriggerParameterValue::model() -> findByAttributes(['id_trigger_parameter' => $param -> id, 'id_trigger_value' => $val_id]);
+			if ($val_id['id']) {
+				$param_val = TriggerParameterValue::model() -> findByAttributes(['id_trigger_parameter' => $param -> id, 'id_trigger_value' => $val_id['id']]);
 			}
 			if ($param_val instanceof TriggerParameterValue) {
 				return $param_val -> value;
 			}
 			return $param -> defaultValue;
+		};
+
+		$text = preg_replace_callback("/if\s*$opening$verb(\=|:)$verb$closing:((.|\s)*)endif;/ui",function($matches) use ($renderParameter, $triggers){
+			//Получили название триггера и поле, которое отображать
+			$trigger_verb = $matches[2];
+			if ($matches[3] == ':') {
+				$field = $matches[4];
+				try {
+					$param = $renderParameter($trigger_verb, $field);
+				} catch (TextException $e) {
+					$param = '';
+				}
+				if (!$param) {
+					return '';
+				}
+			} elseif ($matches[3] == '=') {
+				$valVerb = $matches[4];
+				$val = $triggers[$trigger_verb]['verbiage'];
+				if ($valVerb != $val) {
+					return '';
+				}
+			} else {
+				return '';
+			}
+			return $matches[6];
+
+		},$text);
+
+//		$text = preg_replace_callback('/if:\s*'.$singleParameter.'((.|\s)*)endif;/uim',function($matches) use ($renderParameter){
+//			//Получили название триггера и поле, которое отображать
+//			$trigger_verb = $matches[2];
+//			$field = $matches[3];
+//			try {
+//				$param = $renderParameter($trigger_verb, $field);
+//			} catch (TextException $e) {
+//				$param = '';
+//			}
+//			if (!$param) {
+//				return '';
+//			}
+//			return $matches[5];
+//		},$text);
+
+		return preg_replace_callback('/'.$singleParameter.'/ui',function($matches) use ($renderParameter) {
+			//var_dump($matches);
+			return $renderParameter($matches[2], $matches[3]);
 		},$text);
 	}
 

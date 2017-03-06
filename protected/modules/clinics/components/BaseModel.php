@@ -13,7 +13,7 @@ class BaseModel extends CTModel
 	/**
 	 * @var array SFields specific fields. Those will not be taken into account in the default search function.
 	 */
-	public $SFields = array('metro','research','submitted','price','street');//,'speciality');
+	public $SFields = array('metro','research','submitted','price','street','sortBy');//,'speciality');
 	/**
 	 * @var integer type. Stores id of the object's type.
 	 */
@@ -87,6 +87,7 @@ class BaseModel extends CTModel
 	 */
 	public function userSearch($search,$order='rating',$limit=-1, CDbCriteria $initialCrit = null)
 	{
+		$order = $search['sortBy'];
 		//$objects = $this -> model() -> findAll('rating DESC');
 		//Если поле сортировки не задано, сортируем по рейтингу
 		if (!$order) {
@@ -759,18 +760,24 @@ class BaseModel extends CTModel
 		return TriggerValues::model() -> findAll($criteria);
 	}//*/
 	public function giveMrtPrices() {
-		return array_filter($this -> prices, function($pr) {
-			//echo $pr -> name. ' - ' .strpos($pr -> name, 'МРТ').'<br/>';
-			return (strpos($pr -> name, 'МРТ') !== false);
+		return array_filter($this -> getPriceValues(), function($pr) {
+			/**
+			 * @type ObjectPriceValue $pr
+			 */
+			return $pr -> price -> id_type == PriceType::getId("mrt");
 		});
 	}
 	public function giveKtPrices() {
-		return array_filter($this -> prices, function($pr) {
-			return (strpos($pr -> name, 'КТ') !== false);
+		return array_filter($this -> getPriceValues(), function($pr) {
+			/**
+			 * @type ObjectPriceValue $pr
+			 */
+			return $pr -> price -> id_type == PriceType::getId("kt");
 		});
 	}
 	public function giveMinMrtPrice() {
 		$obj = false;
+		$min = 0;
 		foreach ($this -> giveMrtPrices() as $pr) {
 			
 			if (($pr -> price < $min) || (!$obj)) {
@@ -782,6 +789,7 @@ class BaseModel extends CTModel
 	}
 	public function giveMinKtPrice() {
 		$obj = false;
+		$min = 0;
 		foreach ($this -> giveKtPrices() as $pr) {
 			
 			if (($pr -> price < $min) || (!$obj)) {

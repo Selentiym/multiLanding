@@ -20,11 +20,20 @@ $cs->registerScriptFile(Yii::app() -> theme -> baseUrl.'/js/select2.full.js',CCl
 $cs->registerScriptFile(Yii::app()->theme -> baseUrl.'/js/jquery.rateit.min.js?' . time(), CClientScript::POS_END);
 $cs -> registerScript('Rate','Rate()',CClientScript::POS_READY);
 $cs -> registerCoreScript('prettyFormUrl');
+$cs -> registerScript('Order','
+	$("#sortby a").click(function(e){
+
+		$("#sortByField").val($(this).attr("data-sort"));
+		$("#searchForm").submit();
+		return false;
+	});
+',CClientScript::POS_READY);
 ?>
 
 <div class="content_block" id="search_block">
     <h2 class="heading" id="search_clinics">Поиск клиник</h2>
     <form id="searchForm" action="prettyFormUrl" data-action="home/clinics" data-params="{}" data-gen-url="<?php echo addslashes(Yii::app() -> createUrl('home/createFormUrl')); ?>" class="noEmpty prettyFormUrl">
+        <input name="sortBy" id="sortByField" type="hidden" value='<?php echo $_GET["sortBy"]; ?>'/>
         <div class="row">
 
             <div class="speciality_dropdown select">
@@ -67,7 +76,10 @@ $cs -> registerCoreScript('prettyFormUrl');
                 Найдено <span><?php echo count($objects) + 1; ?></span> <?php echo $modelName=='clinics' ? 'клиник' : 'врачей'; ?>
             </div>
             <div id="sortby">
-                Сортиовать по: <a href="#" data-sort = "rating">Рейтинг</a><a href="#" data-sort="experience">Опыт</a><? if ($modelName=='doctors') :?><a href="#" data-sort = "price">Цена</a><? endif; ?>
+                Сортиовать по:
+                <a href="#" data-sort="rating">Рейтинг</a>
+                <?php $priceVar = ($_GET['sortBy'] == 'priceUp') ? 'priceDown' : 'priceUp'; ?>
+                <a href="#" class="<?php echo $_GET['sortBy']; ?>" data-sort = "<?php echo $priceVar; ?>">Цена</a>
             </div>
         </div>
         <div id="the_list">

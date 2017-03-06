@@ -106,4 +106,18 @@ class PriceType extends CTModel
 	{
 		return parent::model($className);
 	}
+
+	/**
+	 * @param $alias
+	 * @return int
+	 */
+	public static function getId($alias) {
+		static $arr;
+		if (!isset($arr)) {
+			foreach (self::model() -> findAll() as $type) {
+				$arr[$type -> alias] = $type -> id;
+			}
+		}
+		return $arr[$alias];
+	}
 }
