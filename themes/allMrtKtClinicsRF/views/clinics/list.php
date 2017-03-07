@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Created by PhpStorm.
@@ -20,6 +19,7 @@ $cs->registerScriptFile(Yii::app() -> theme -> baseUrl.'/js/select2.full.js',CCl
 $cs->registerScriptFile(Yii::app()->theme -> baseUrl.'/js/jquery.rateit.min.js?' . time(), CClientScript::POS_END);
 $cs -> registerScript('Rate','Rate()',CClientScript::POS_READY);
 $cs -> registerCoreScript('prettyFormUrl');
+$cs -> registerCoreScript('font-awesome');
 $cs -> registerScript('Order','
 	$("#sortby a").click(function(e){
 
@@ -28,6 +28,9 @@ $cs -> registerScript('Order','
 		return false;
 	});
 ',CClientScript::POS_READY);
+
+$noDisplay = ['mrt', 'kt'];
+
 ?>
 
 <div class="content_block" id="search_block">
@@ -35,6 +38,9 @@ $cs -> registerScript('Order','
     <form id="searchForm" action="prettyFormUrl" data-action="home/clinics" data-params="{}" data-gen-url="<?php echo addslashes(Yii::app() -> createUrl('home/createFormUrl')); ?>" class="noEmpty prettyFormUrl">
         <input name="sortBy" id="sortByField" type="hidden" value='<?php echo $_GET["sortBy"]; ?>'/>
         <div class="row">
+            <div>
+
+            </div>
 
             <div class="speciality_dropdown select">
                 <div class="image"><span></span></div>
@@ -79,7 +85,11 @@ $cs -> registerScript('Order','
                 Сортиовать по:
                 <a href="#" data-sort="rating">Рейтинг</a>
                 <?php $priceVar = ($_GET['sortBy'] == 'priceUp') ? 'priceDown' : 'priceUp'; ?>
-                <a href="#" class="<?php echo $_GET['sortBy']; ?>" data-sort = "<?php echo $priceVar; ?>">Цена</a>
+                <a href="#" class="<?php echo $_GET['sortBy']; ?>" data-sort = "<?php echo $priceVar; ?>">
+                    Цена
+                    <?php if ($_GET['sortBy'] == 'priceUp') echo '<i class="fa fa-sort-up"></i>'; ?>
+                    <?php if ($_GET['sortBy'] == 'priceDown') echo '<i class="fa fa-sort-down"></i>'; ?>
+                </a>
             </div>
         </div>
         <div id="the_list">

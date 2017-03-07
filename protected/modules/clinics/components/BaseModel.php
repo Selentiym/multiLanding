@@ -13,7 +13,7 @@ class BaseModel extends CTModel
 	/**
 	 * @var array SFields specific fields. Those will not be taken into account in the default search function.
 	 */
-	public $SFields = array('metro','research','submitted','price','street','sortBy');//,'speciality');
+	public $SFields = array('metro','research','submitted','price','street','sortBy', 'mrt', 'kt');//,'speciality');
 	/**
 	 * @var integer type. Stores id of the object's type.
 	 */
@@ -179,20 +179,36 @@ class BaseModel extends CTModel
 					$toSort[] = $obj;
 				}
 			}
+			if ($price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']])) {
+				$getPrice = function ($o) use ($price) {
+					/**
+					 * @type BaseModel $o
+					 */
+					return $o->getPriceValue($price -> id)->value;
+				};
+			} else {
+				$getPrice = function($o) {
+					/**
+					 * @type BaseModel $o
+					 */
+					return $o -> giveMinMrtPrice() -> value;
+				};
+			}
+			$toSortExtended = [];
+			foreach ($toSort as $obj) {
+				$toSortExtended[] = ['obj' => $obj, 'price' => (float)$getPrice($obj)];
+			}
 			if ($order == 'priceDown') {
-				usort($toSort, function ($o1, $o2) {
-					$pr1 = $o1->giveMinMrtPrice()->price;
-					$pr2 = $o2->giveMinMrtPrice()->price;
-					return ($pr2 - $pr1);
+				usort($toSortExtended, function ($o1, $o2){
+					return $o2['price'] - $o1['price'];
 				});
 			}
 			if ($order == 'priceUp') {
-				usort($toSort, function ($o1, $o2) {
-					$pr1 = $o1->giveMinMrtPrice()->price;
-					$pr2 = $o2->giveMinMrtPrice()->price;
-					return ($pr1 - $pr2);
+				usort($toSortExtended, function ($o1, $o2){
+					return $o1['price'] - $o2['price'];
 				});
 			}
+			$toSort = array_map(function($data){return $data['obj'];},$toSortExtended);
 			//За одно возвращаем модель описания к заданному поиску.
 			$rez['objects'] = array_merge($toSort, $toEnd);
 		}
@@ -223,6 +239,16 @@ class BaseModel extends CTModel
 		/*if ($search['metro'] != 0) {
 			$ok &= (!($search['metro']))||((in_array($search['metro'], array_map('trim', explode(';', $this->metro_station)))));
 		}*/
+		if (!empty($search['mrt'])) {
+			if (!$this -> giveMinMrtPrice()) {
+				return false;
+			}
+		}
+		if (!empty($search['kt'])) {
+			if (!$this -> giveMinKtPrice()) {
+				return false;
+			}
+		}
 		if (!empty($search['metro'])) {
 			//Если хотя бы одна станция выбрана, то пробегаем по всем выбранным и смотрим, есть ли хоть какая-нибудь.
 			$check = false;
@@ -775,6 +801,10 @@ class BaseModel extends CTModel
 			return $pr -> price -> id_type == PriceType::getId("kt");
 		});
 	}
+
+	/**
+	 * @return ObjectPriceValue|bool
+	 */
 	public function giveMinMrtPrice() {
 		$obj = false;
 		$min = 0;

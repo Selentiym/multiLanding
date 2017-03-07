@@ -19,7 +19,8 @@ class Triggers extends CTModel {
 	use tTriggersStandard;
 	public static $types = [
 		'DropDownTrigger' => 'Списком',
-		'TickTrigger' => 'Галочками'
+		'TickTrigger' => 'Галочками',
+		'ButtonTrigger' => 'Кнопкой'
 	];
 
 	public function instantiate($attributes) {

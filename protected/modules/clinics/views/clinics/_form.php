@@ -180,7 +180,18 @@
             <?php echo $form->labelEx($model,'triggers'); ?>
 
             <?php
-			$triggers= CHtml::listData(TriggerValues::model()->findAll(), 'id', 'value');
+            $crit = new CDbCriteria();
+            $forTriggers = new CDbCriteria();
+            $verbs = ['street'];
+            $forTriggers -> addInCondition('verbiage',$verbs);
+            $crit -> addNotInCondition('trigger_id',
+                array_map(
+                    function($data){
+                        return $data -> id;
+                    },
+                    Triggers::model() -> findAll($forTriggers)
+                ));
+			$triggers= CHtml::listData(TriggerValues::model()->findAll($crit), 'id', 'value');
 			echo CHtml::activeDropDownList(TriggerValues::model(),'id',$triggers, array('name'=>'triggers_array[]','multiple' => 'multiple'),array_map('trim', explode (';', $model->triggers)));
             ?>
             <?php echo $form->error($model,'triggers'); ?>

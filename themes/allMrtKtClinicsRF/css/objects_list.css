@@ -263,6 +263,7 @@ section.content #column1 .content_block {
 	width:30%;
 	vertical-align: top;
 	margin-top: 20px;
+	text-align: center;
 }
 .triggerContainer:before {
 	content:'';
@@ -273,4 +274,22 @@ section.content #column1 .content_block {
 }
 .triggerContainer select.trigger_select {
 	width:150px;
+}
+.triggerContainer .button {
+	cursor:pointer;
+	display:inline-block;
+	padding:10px;
+	background-color: #3cbf7d;
+	border-radius: 5px;
+	color:white;
+	margin: 0 auto;
+}
+.triggerContainer .button:hover {
+	opacity:0.75;
+}
+.triggerContainer .button.pressed {
+	background-color: #b60000;
+}
+#sortby a.priceUp, #sortby a.priceDown {
+	color:#b60000;
 }
