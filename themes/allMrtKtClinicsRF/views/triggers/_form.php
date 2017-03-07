@@ -14,7 +14,7 @@ if (!empty($triggers)) {
         /**
          * @type Triggers $t
          */
-        echo $t -> getHtml($_GET,['placeholder' => $t -> name,'empty_line' => true, 'class' => 'trigger_select']);
+        echo "<div class='triggerContainer'>".$t -> getHtml($_GET,['placeholder' => $t -> name,'empty_line' => true, 'class' => 'trigger_select']) . "</div>";
 
 //        CHtml::DropDownListChosen2(
 //            $t -> verbiage,

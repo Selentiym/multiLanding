@@ -258,3 +258,19 @@ section.content #column1 .content_block {
 	height:13px;
 	background:url('../images/list_right.png') no-repeat;
 }
+.triggerContainer {
+	display:inline-block;
+	width:30%;
+	vertical-align: top;
+	margin-top: 20px;
+}
+.triggerContainer:before {
+	content:'';
+	width:1px;
+	height:100%;
+	display: inline-block;
+	vertical-align:top;
+}
+.triggerContainer select.trigger_select {
+	width:150px;
+}
