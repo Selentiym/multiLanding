@@ -11,9 +11,14 @@
  * @property integer $level
  * @property string $text
  * @property string $description
+ * @property integer $id_type
  */
  
 class Article extends UClinicsModuleModel {
+	public static $types = [
+		1 => 'text',
+		2 => 'service'
+	];
 	/**
 	 * @property array children - an array of Article objects that are children to this one.
 	 */
@@ -25,6 +30,22 @@ class Article extends UClinicsModuleModel {
 	public function tableName()
 	{
 		return '{{lib_articles}}';
+	}
+
+	/**
+	 * @param integer $id
+	 * @return string
+	 */
+	public static function getTypeName($id){
+		return self::$types[$id];
+	}
+
+	/**
+	 * @param string $name
+	 * @return integer
+	 */
+	public static function getTypeId($name) {
+		return array_flip(self::$types)[$name];
 	}
 	public function beforeDelete() {
 		if (parent::beforeDelete()) {
@@ -56,7 +77,7 @@ class Article extends UClinicsModuleModel {
 			array('verbiage, clinic_card', 'length', 'max'=>50),
             array('title', 'length', 'max'=>255),
             array('keywords, description', 'length', 'max'=>2000),
-			array('id, name, verbiage, parent_id, level, text, clinic_card, title, keywords, description, show_objects', 'safe', 'on'=>'search'),
+			array('id, name, verbiage, parent_id, level, text, clinic_card, title, keywords, description, show_objects, id_parent, id_type', 'safe'),
 		);
 	}
 
@@ -120,8 +141,10 @@ class Article extends UClinicsModuleModel {
 			$dups = self::model()->findByAttributes(array('verbiage' => $this->verbiage), $criteria);
 
 			if ($dups) {
-				Yii::app()->user->setFlash('duplicateArticle'.$this -> verbiage, CHtml::encode('Статья с таким URL '.$this -> verbiage.' уже существует'));
-				return false;
+				if ($dups -> id != $this -> id) {
+					Yii::app()->user->setFlash('duplicateArticle' . $this->verbiage, CHtml::encode('Статья с URL ' . $this->verbiage . ' уже существует'));
+					return false;
+				}
 			}
 		}
         return parent::beforeSave();

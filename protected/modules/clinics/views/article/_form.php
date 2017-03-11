@@ -91,6 +91,11 @@
 			<?php echo $form->error($model,'parent_id'); ?>  
 		</div>
         <div>
+            <?php echo $form->labelEx($model,'id_type');
+            echo CHtml::activeDropDownList($model,'id_type',Article::$types, [],[$model -> id_type],'');
+            echo $form->error($model,'id_type'); ?>
+        </div>
+        <div>
             <?php echo $form->labelEx($model,'show_objects'); ?>
             <?php echo CHtml::activeRadioButtonList($model,'show_objects',array(1 => 'Показать', 0 => 'Не показать')); ?>
             <?php echo $form->error($model,'show_objects'); ?>
@@ -186,7 +191,9 @@
             <?php echo CHtml::button('Список статей', array('id' => 'articleList','onClick' => 'location.href = "'.$this -> createUrl('admin/ArticleList').'";')); ?>
         </div>
             <?php
-                $this -> renderPartial('/article/taskgen', ['model' => $model]);
+            if (!$model -> isNewRecord) {
+                $this->renderPartial('/article/taskgen', ['model' => $model]);
+            }
             ?>
         <!-- Выводим генератор для search_id -->
 		<?php  //$this -> renderPartial('//searchid/triggerForm', array('id' => 'search_id_generator'))?>

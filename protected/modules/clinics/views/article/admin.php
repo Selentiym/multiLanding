@@ -33,6 +33,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
         array('name' => 'verbiage', 'header' => $model->getAttributeLabel('verbiage')),
         array('name' => 'parent_id', 'header' => $model->getAttributeLabel('parent_id'), 'value' => '($data->parent_id == 0)? CHtml::encode("0 (Корневая статья)"): Article::model() -> findByPk($data->parent_id) -> name'),
+        array('name' => 'id_type', 'header' => 'Тип', 'value' => 'Article::getTypeName($data->id_type)'),
         array(
             'class'=>'CButtonColumn',
             'template'=>'{update}&nbsp;{delete}',

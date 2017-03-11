@@ -110,6 +110,7 @@ class ClinicsModule extends UWebModule
 	public function getRootArticles(CDbCriteria $criteria = null) {
 		if (!$criteria) {
 			$criteria = new CDbCriteria();
+			$criteria -> compare('id_type', Article::getTypeId('text'));
 		}
 		$criteria -> addCondition('level = 0 OR parent_id = 0 OR parent_id IS NULL');
 		return Article::model() -> findAll($criteria);
