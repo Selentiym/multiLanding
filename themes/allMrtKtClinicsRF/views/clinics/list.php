@@ -37,27 +37,9 @@ $noDisplay = ['mrt', 'kt'];
     <h2 class="heading" id="search_clinics">Поиск клиник</h2>
     <form id="searchForm" action="prettyFormUrl" data-action="home/clinics" data-params="{}" data-gen-url="<?php echo addslashes(Yii::app() -> createUrl('home/createFormUrl')); ?>" class="noEmpty prettyFormUrl">
         <input name="sortBy" id="sortByField" type="hidden" value='<?php echo $_GET["sortBy"]; ?>'/>
-        <div class="row">
-            <div>
-
-            </div>
-
-            <div class="speciality_dropdown select">
-                <div class="image"><span></span></div>
-                <div class="select_cont">
-                    <?php $specialities = CHtml::listData(ObjectPrice::model() -> findAll(),'verbiage','name'); ?>
-                    <?php CHtml::DropDownListChosen2('research','search_speciality', $specialities,array('placeholder' => 'Выберите исследование','empty_line' => 'Исследование'),array($_GET['research'])); ?>
-                </div>
-            </div>
-
-            <div class="metro_dropdown select">
-                <div class="image"><span></span></div>
-                <div class="select_cont">
-                    <?php $metro_obj = Metro::model()->findAll(array('order' => 'name ASC')); ?>
-                    <?php CHtml::DropDownListChosen2('metro','search_metro', CHtml::listData($metro_obj, 'id', 'name'),array('placeholder' => 'Выберите метро','empty_line' => 'Метро'),array($_GET['metro'])); ?>
-                </div>
-            </div>
-        </div>
+        <?php
+            $this -> renderPartial('/clinics/_beautiful_form');
+        ?>
         <div class="row">
             <a href="<?php echo $this -> createUrl('home/clinics',[],'&',true); ?>"><input type="button" value="Сбросить" class="search_submit"/></a>
             <input type="submit" value="Найти" class="search_submit"/>

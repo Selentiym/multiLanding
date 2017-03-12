@@ -155,6 +155,17 @@ return array(
 							],
 							'position' => CClientScript::POS_READY,
 							'depends' => ['jquery']
+						],
+						'select2' => [
+							'baseUrl' => 'libs/select2/',
+							'js' => [
+								'select2.full.js'
+							],
+							'css' => [
+								'select2.min.css'
+							],
+							'position' => CClientScript::POS_END,
+							'depends' => ['jquery']
 						]
 				]
 		),

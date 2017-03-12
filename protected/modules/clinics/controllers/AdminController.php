@@ -114,6 +114,39 @@ class AdminController extends Controller
                 'modelClass' => 'User',
                 'view' => '//LK'
             ),
+            'Rules' => [
+                'class'=>'application.controllers.actions.FileViewAction',
+                'view' => '/rule/admin'
+            ],
+            'RuleList' => [
+                'class'=>'application.controllers.actions.ModelViewAction',
+                'modelClass' => 'ArticleRule',
+                'scenario' => 'list',
+                //'access' => function () {return $this -> isSuperAdmin();},
+                'view' => '/rule/list'
+            ],
+            'RuleCreate' => [
+                'class'=>'application.controllers.actions.ModelCreateAction',
+                'modelClass' => 'ArticleRule',
+                'scenario' => 'create',
+                'redirectUrl' => function($model){
+                    return $this -> createUrl('admin/RuleList',['type' => $model -> id_object_type]);
+                },
+                'view' => '/rule/_create'
+            ],
+            'RuleUpdate' => [
+                'class'=>'application.controllers.actions.ModelUpdateAction',
+                'modelClass' => 'ArticleRule',
+                'scenario' => 'update',
+                'redirectUrl' => function($model){
+                    return $this -> createUrl('admin/RuleList',['type' => $model -> id_object_type]);
+                },
+                'view' => '/rule/_update'
+            ],
+            'RuleDelete' => array(
+                'class' => 'application.controllers.actions.ModelDeleteAction',
+                'modelClass' => 'ArticleRule'
+            ),
             'ArticleList' => [
                 'class'=>'application.controllers.actions.ModelViewAction',
                 'modelClass' => 'Article',
