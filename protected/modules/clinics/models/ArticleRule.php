@@ -16,7 +16,7 @@
  * @property Article article
  * @property RuleTrigger[] triggerValues
  */
-class ArticleRule extends UClinicsModuleModel
+class ArticleRule extends UClinicsModuleModel implements iRule
 {
 	private $_triggers;
 	/**
@@ -100,7 +100,7 @@ class ArticleRule extends UClinicsModuleModel
 		$criteria->compare('expression',$this->expression,true);
 		$criteria->compare('id_object',$this->id_object);
 		$criteria->compare('id_object_type',$this->id_object_type);
-		$criteria->order='num ASC';
+		$criteria->order='active DESC, num ASC';
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -186,5 +186,65 @@ class ArticleRule extends UClinicsModuleModel
 			}
 		}
 		return parent::afterSave();
+	}
+	public function applyTriggers($args) {
+		$triggers = $this -> getTriggers();
+//		foreach ($args as $key => $val) {
+//			if ($triggers[$key] -> valueVerbiage != $val) {
+//				return false xor $this -> negative;
+//			}
+//		}
+		foreach ($triggers as $key => $val) {
+			if ($val -> valueVerbiage != $args[$key]) {
+				return false xor $this -> negative;
+			}
+		}
+		return true xor $this -> negative;
+	}
+
+	/**
+	 * @param mixed[] $args
+	 * @param array $cached
+	 * @return bool
+	 */
+	public function apply($args, &$cached = []){
+		if (!$this -> expression) {
+			return $this->applyTriggers($args);
+		} else {
+			$ev = new ArticleRuleExpressionEvaluator($args, $this);
+			$ev -> setExpression($this -> expression);
+			try {
+				return $ev->evaluate();
+			} catch (ExpressionException $e) {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @param string $typeName
+	 * @return Article|bool
+	 * @throws Exception
+	 */
+	public static function getArticle($typeName){
+		$id = Article::getTypeId($typeName);
+		if (!$id) {
+			throw new Exception("There is no type of articles called $typeName.");
+		}
+		$c = new CDbCriteria();
+		$c -> compare('id_object_type', $id);
+		$c -> compare('active', 1);
+		$c -> order = 'num ASC';
+		$toShow = false;
+		foreach (ArticleRule::model() -> findAll($c) as $rule) {
+			/**
+			 * @type ArticleRule $rule
+			 */
+			if ($rule -> apply($_GET)) {
+				$toShow = $rule -> article;
+				break;
+			}
+		}
+		return $toShow;
 	}
 }

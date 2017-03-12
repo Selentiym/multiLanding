@@ -127,7 +127,7 @@ class Article extends UClinicsModuleModel {
 		return $this -> ParentList;
 	}
     public function beforeSave() {
-        $sc = $this -> getScenario();
+		$sc = $this -> getScenario();
 		if ($sc != 'createDescendant') {
 			$criteria = new CDbCriteria;
 
@@ -625,5 +625,10 @@ class Article extends UClinicsModuleModel {
 			$article -> copyChildrenFromTaskgen($task);
 		}
 
+	}
+	public function readData($data) {
+		if (!$this -> parent_id) {
+			$this -> parent_id = 0;
+		}
 	}
 }

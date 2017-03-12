@@ -42,6 +42,7 @@ $mod = $this -> getModule();
                                 array('label'=> CHtml::encode('Клиники'), 'url'=>array('admin/clinics'), 'itemOptions' => array('class' => 'page_item')),
                                 array('label'=> CHtml::encode('Доктора'), 'url'=>array('admin/doctors'), 'itemOptions' => array('class' => 'page_item')),
                                 array('label'=> CHtml::encode('Статьи'), 'url'=>array('admin/ArticleList'), 'itemOptions' => array('class' => 'page_item')),
+                                array('label'=> CHtml::encode('Правила'), 'url'=>array('admin/Rules'), 'itemOptions' => array('class' => 'page_item')),
                                 array('label'=> CHtml::encode('Триггеры'), 'url'=>array('admin/triggers'), 'itemOptions' => array('class' => 'page_item')),
                                 array('label'=> CHtml::encode('Поля для клиник'), 'url'=>array('admin/clinicsFieldsGlobal'), 'itemOptions' => array('class' => 'page_item')),
                                 array('label'=> CHtml::encode('Поля для докторов'), 'url'=>array('admin/doctorsFieldsGlobal'), 'itemOptions' => array('class' => 'page_item')),

@@ -55,6 +55,14 @@ $noDisplay = ['mrt', 'kt'];
     <div id="column1" class="content_column">
         <div id="links" class="content_block">
             Тут будет дескрипшн
+            <?php
+                $a = ArticleRule::getArticle('service');
+                if ($a) {
+                    echo $a -> prepareText($_GET);
+                } else {
+                    echo "Статья не неайдена.";
+                }
+            ?>
 <!--            <a href="--><?php //echo Yii::app() -> baseUrl.'/'; ?><!--">Главная</a>-->
 <!--            --><?php //$val = $_POST["clinicsSearchForm"]["speciality"] ? $_POST["clinicsSearchForm"]["speciality"] : $_POST["doctorsSearchForm"]["speciality"]; ?>
 <!--            <a href="--><?php //echo $this -> createUrl('home/clinics');?><!--">--><?php //echo "Клиники" ; ?><!--</a>-->

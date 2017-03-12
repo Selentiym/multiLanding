@@ -19,6 +19,7 @@ return array(
 		'application.components.*',
 		'application.components.traits.*',
 		'application.components.forThemes.*',
+		'application.components.expressions.*',
 		'application.sites.common.controllers.*',
 	),
 
