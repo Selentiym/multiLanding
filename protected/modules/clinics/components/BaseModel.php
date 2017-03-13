@@ -87,10 +87,9 @@ class BaseModel extends CTModel
 	 */
 	public function userSearch($search,$order='rating',$limit=-1, CDbCriteria $initialCrit = null)
 	{
-		$order = $search['sortBy'];
 		//$objects = $this -> model() -> findAll('rating DESC');
 		//Если поле сортировки не задано, сортируем по рейтингу
-		if (!$order) {
+		if ((!$order)&&($order !== false)) {
 			$order='rating';
 		}
 		if (is_a($initialCrit, 'CDbCriteria')) {
@@ -98,9 +97,8 @@ class BaseModel extends CTModel
 		} else {
 			$criteria = new CDbCriteria();
 		}
-		$criteria -> addCondition("`ignore_clinic`=0");
 		//По цене будет отдельная сортировка
-		if (!in_array($order, array('priceUp','priceDown'))) {
+		if (!in_array($order, array('priceUp','priceDown'))&&($order)) {
 			$criteria -> order = $order.' DESC';
 		}
 		$objects = $this -> model() -> findAll($criteria);
@@ -228,9 +226,10 @@ class BaseModel extends CTModel
 		return $objects;
 	}*/
 	/**
-	 * @arg array search a search array that specifies what is being searched
+	 * @param mixed[] $search a search array that specifies what is being searched
 	 * @return boolean true if this object satisfies searching criteria and false if not
-	 * (unlike search function this one is overriden in every descendant and contains options that are specific)
+	 * (unlike search function this one should be overridden in every descendant and
+	 * contains options that are specific)
 	 */
 	public function SFilter($search)
 	{

@@ -4,12 +4,15 @@
  * User: user
  * Date: 23.02.2017
  * Time: 13:24
+ *
+ * @type ClinicsModule $mod
  */
 $mod = Yii::app() -> getModule('clinics');
 
 $modelName = 'clinics';
-
-$objects = $mod -> getClinics($_GET);
+$criteria = new CDbCriteria();
+$criteria -> addCondition("`ignore_clinic`=0");
+$objects = $mod -> getClinics($_GET,null,null,$criteria);
 
 $cs = Yii::app()->getClientScript();
 
@@ -122,11 +125,23 @@ $noDisplay = ['mrt', 'kt'];
 <!--        </div>-->
     </div>
     <div id="column2" class="content_column">
-        <h2 id="all_spec">Тут будут ссылочки</h2>
+        <h2 id="all_spec">Вам могло бы быть интересно</h2>
+        <?php
+            $criteria = new CDbCriteria();
+            $criteria -> compare('id_type', Article::getTypeId('text'));
+            $articles = $mod -> getArticles($_GET, false, null, $criteria);
+        ?>
         <div id="spec_list">
-            <div class="speciality_shortcut <?php echo $active; ?>" data-spec_id="<?php echo $id; ?>">
-                <span><?php echo "abc"; ?></span>
-            </div>
+            <?php
+            foreach ($articles as $article) {
+                $url = $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage]);
+                echo "
+                <div class='speciality_shortcut' >
+                    <span><a href='$url'>{$article->name}</a></span>
+                </div>
+                ";
+            }
+            ?>
         </div>
     </div>
 </div>

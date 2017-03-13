@@ -1,4 +1,7 @@
 <?php
+/**
+ * @type Article $model
+ */
 	Yii::app()->clientScript->registerScript('PreviewScript','
 		$("#previewButton").click(function(){
 			var form = $("#Article-form");
@@ -100,6 +103,12 @@
             <?php echo CHtml::activeRadioButtonList($model,'show_objects',array(1 => 'Показать', 0 => 'Не показать')); ?>
             <?php echo $form->error($model,'show_objects'); ?>
         </div>
+        <div>
+            <?php
+                echo CHtml::label('Исследования, с которыми связана статья','researches');
+                echo CHtml::activeDropDownList($model,'research_input',CHtml::listData(ObjectPrice::model() -> findAllByAttributes(['object_type' => Objects::getNumber('clinics')]),'verbiage','name'),['multiple' => 'multiple', 'id' => 'researches'],CHtml::giveAttributeArray($model -> researches, 'verbiage_research'),json_encode(['placeholder' => 'Исследования, описанные в статье']));
+            ?>
+        </div>
 		<div>
             <?php
             
@@ -108,10 +117,10 @@
 			$triggers = array_merge(array('0'=>''),CHtml::listData(TriggerValues::model()->findAll(), 'id', 'value'));
 			//$triggers = CHtml::listData(TriggerValues::model()->findAll(), 'id', 'value');
 			//print_r($triggers);
-			echo CHtml::activeDropDownList(TriggerValues::model(),'id',$triggers, array('name'=>'triggers_array[]','multiple'=>'multiple','allow_single_deselect'=>'true'),array_map('trim', explode (';', $model->trigger_value_id)));
+			echo CHtml::activeDropDownList(TriggerValues::model(),'id',$triggers, array('name'=>'triggers_array[]','multiple'=>'multiple','allow_single_deselect'=>'true'),array_map('trim', explode (';', $model->triggers)));
             ?>
 		</div>
-		
+
         <div>
             <?php echo $form->labelEx($model,'text'); ?>
             <div class="controls">

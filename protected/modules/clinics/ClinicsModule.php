@@ -34,14 +34,29 @@ class ClinicsModule extends UWebModule
 	}
 
 	/**
+	 * @param array $triggers
+	 * @param string $order
+	 * @param int $limit
+	 * @param CDbCriteria|null $criteria
+	 * @return mixed
+     */
+	public function getClinics (array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
+		$order = $triggers['sortBy'];
+		return $this -> getObjects('clinics',$triggers,$order,$limit,$criteria);
+	}
+	public function getArticles (array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
+		return $this -> getObjects('Article',$triggers,$order,$limit,$criteria);
+	}
+	/**
+	 * @param string $class
 	 * @param array $triggers consisting of pairs ['trigger_verbiage' => 'trigger_value_verbiage']
 	 * or of pairs ['trigger_verbiage' => 'trigger_value_id']
 	 * @param string $order
 	 * @param int $limit
 	 * @param CDbCriteria $criteria additional criteria to be filtered by
-	 * @return clinics[] that correspond to the specified condition
+	 * @return $class[] that correspond to the specified condition
 	 */
-	public function getClinics(array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
+	public function getObjects($class,array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
 		$triggers = array_map(function($val){
 			if ((int) $val) {
 				return $val;
@@ -55,8 +70,10 @@ class ClinicsModule extends UWebModule
 		if ($triggers['metro']) {
 			$triggers['metro'] = [$triggers['metro']];
 		}
-		return clinics::model() -> userSearch($triggers, $order, $limit, $criteria)['objects'];
+		return $class::model() -> userSearch($triggers, $order, $limit, $criteria)['objects'];
 	}
+
+
 
 	/**
 	 * This functions exists to ensure that all the needed classes have been loaded

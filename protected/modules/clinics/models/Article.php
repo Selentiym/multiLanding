@@ -12,9 +12,12 @@
  * @property string $text
  * @property string $description
  * @property integer $id_type
+ * @property string $triggers
+ *
+ * @property ArticleResearch[] $researches
  */
  
-class Article extends UClinicsModuleModel {
+class Article extends BaseModel {
 	public static $types = [
 		1 => 'text',
 		2 => 'service'
@@ -24,6 +27,7 @@ class Article extends UClinicsModuleModel {
 	 */
 	public $children;
 	protected $ParentList;
+	public $research_input = [];
 	/**
 	 * @return string the associated database table name
 	 */
@@ -77,7 +81,7 @@ class Article extends UClinicsModuleModel {
 			array('verbiage, clinic_card', 'length', 'max'=>50),
             array('title', 'length', 'max'=>255),
             array('keywords, description', 'length', 'max'=>2000),
-			array('id, name, verbiage, parent_id, level, text, clinic_card, title, keywords, description, show_objects, id_parent, id_type', 'safe'),
+			array('id, name, verbiage, parent_id, level, text, clinic_card, title, keywords, description, show_objects, id_parent, id_type, research_input', 'safe'),
 		);
 	}
 
@@ -88,6 +92,7 @@ class Article extends UClinicsModuleModel {
 	{
 		return array(
 			'parent' => array(self::BELONGS_TO, 'Article', 'parent_id'),
+			'researches' => array(self::HAS_MANY, 'ArticleResearch', 'id_article'),
 		);
 	}
 
@@ -127,7 +132,17 @@ class Article extends UClinicsModuleModel {
 		return $this -> ParentList;
 	}
     public function beforeSave() {
+		$post_arr = $_POST;
 		$sc = $this -> getScenario();
+		if (($sc == 'create')||($sc == 'update')) {
+			//triggers
+			if (!empty($post_arr['triggers_array'])) {
+				$triggers = implode(';', $post_arr['triggers_array']);
+				$this -> triggers = $triggers;//substr($triggers, 0, strrpos($triggers, ';'));
+			} else {
+				$this -> triggers = '';
+			}
+		}
 		if ($sc != 'createDescendant') {
 			$criteria = new CDbCriteria;
 
@@ -630,5 +645,48 @@ class Article extends UClinicsModuleModel {
 		if (!$this -> parent_id) {
 			$this -> parent_id = 0;
 		}
+	}
+	public function afterSave() {
+		if (in_array($this -> getScenario(), ['update', 'create'])) {
+			$data = $this -> research_input;
+			$hasObjects = [];
+			$has = [];
+			foreach ($this -> researches as $research) {
+				$hasObjects[$research -> verbiage_research] = $research;
+				$has[] = $research -> verbiage_research;
+			}
+			$toAdd = array_diff($data, $has);
+			$toDel = array_diff($has, $data);
+			foreach ($toAdd as $verb) {
+				$a = new ArticleResearch();
+				$a -> id_article = $this -> id;
+				$a -> verbiage_research = $verb;
+				$a -> save();
+			}
+			foreach ($toDel as $verb) {
+				$hasObjects[$verb] -> delete();
+			}
+		}
+	}
+	/**
+	 * @param mixed[] $search a search array that specifies what is being searched
+	 * @return boolean true if this object satisfies searching criteria and false if not
+	 * (unlike search function this one should be overridden in every descendant and
+	 * contains options that are specific)
+	 */
+	public function SFilter($search) {
+		unset($search['mrt']);
+		unset($search['kt']);
+		unset($search['metro']);
+		if ($res = $search['research']) {
+			if (!ArticleResearch::model() -> findByAttributes(['id_article' => $this -> id,'verbiage_research' => $res])) {
+				return false;
+			}
+			unset($search['research']);
+		}
+		return parent::SFilter($search);
+	}
+	public function getReadyToDisplay() {
+		return;
 	}
 }
