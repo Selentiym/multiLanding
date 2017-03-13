@@ -141,19 +141,19 @@ Yii::app()->clientScript->registerScript('search', "
 
 <div class="row-fluid">
     <div class="span5">
-        <?php echo CHtml::link('Импорт докторов', '', array('class' => 'btn btn-success', 'onclick'=> 'javascript:showImportDoctorsForm()')); ?>
+        <?php //echo CHtml::link('Импорт докторов', '', array('class' => 'btn btn-success', 'onclick'=> 'javascript:showImportDoctorsForm()')); ?>
 
     <div>
-        <?php $this->renderPartial('_import_doctors'); ?>
+        <?php //$this->renderPartial('_import_doctors'); ?>
     </div>
     </div>
     
 
     
     <div class="span5">
-        <?php echo CHtml::link('Экспорт докторов', Yii::app()->controller->createUrl('admin/doctorsExportCsv'), array('class' => 'btn btn-warning')); ?>
+        <?php //echo CHtml::link('Экспорт докторов', Yii::app()->controller->createUrl('admin/doctorsExportCsv'), array('class' => 'btn btn-warning')); ?>
     <div>
-        <?php $this->renderPartial('_export_doctors'); ?>
+        <?php //$this->renderPartial('_export_doctors'); ?>
     </div>
     </div>
     

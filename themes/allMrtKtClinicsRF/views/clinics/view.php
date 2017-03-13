@@ -179,7 +179,7 @@ $cs -> registerScript('Order','
 <div class="content_block_no_padding">
 	<div id="doctors_list" style="display:<?php echo $word == 'main' ? 'block' : 'none' ;?>">
 		<?php foreach($model -> doctors as $doctor) {
-			$this -> renderPartial('//home/_single_doctors', array('data' => $doctor));
+			$this -> renderPartial('/doctors/_single_doctors', array('data' => $doctor));
 		} ?>
 	</div>
 	<div id="info" style="display:<?php echo $word == 'info' ? 'block' : 'none' ;?>">

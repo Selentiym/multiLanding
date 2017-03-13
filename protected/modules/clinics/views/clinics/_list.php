@@ -132,7 +132,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
 <div class="row-fluid">
     <div class="span5">
-        <?php echo CHtml::link('Импорт клиник', '', array('class' => 'btn btn-success', 'onclick'=> 'location.href="'.Yii::app() -> baseUrl.'/admin/googleDoc";')); ?>
+        <?php //echo CHtml::link('Импорт клиник', '', array('class' => 'btn btn-success', 'onclick'=> 'location.href="'.Yii::app() -> baseUrl.'/admin/googleDoc";')); ?>
         <?php //echo CHtml::link('Импорт клиник', '', array('class' => 'btn btn-success', 'onclick'=> 'javascript:showImportClinicsForm()')); ?>
 
     <!--<div>
