@@ -53,7 +53,7 @@ $mod = $this -> getModule();
                                 //array('label'=> CHtml::encode('Фильтры для сортировки (клиники)'), 'url'=>array('admin/clinicsFilters'), 'itemOptions' => array('class' => 'page_item')),
                                 //array('label'=> CHtml::encode('Фильтры для сортировки (доктора)'), 'url'=>array('admin/doctorsFilters'), 'itemOptions' => array('class' => 'page_item')),
                                 //array('label'=> CHtml::encode('Комментарии'), 'url'=>array('admin/comments'), 'itemOptions' => array('class' => 'page_item')),
-                                array('label'=> CHtml::encode('Описания при поиске'), 'url'=>array('admin/Descriptions'), 'itemOptions' => array('class' => 'page_item')),
+//                                array('label'=> CHtml::encode('Описания при поиске'), 'url'=>array('admin/Descriptions'), 'itemOptions' => array('class' => 'page_item')),
                                 //array('label'=> CHtml::encode('Баннеры'), 'url'=>array('admin/banners'), 'itemOptions' => array('class' => 'page_item')),
                                 //array('label'=> CHtml::encode('Пользователи'), 'url'=>array('admin/users'), 'itemOptions' => array('class' => 'page_item')),
                             ),

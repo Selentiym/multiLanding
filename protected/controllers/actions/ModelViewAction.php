@@ -30,7 +30,7 @@
 		 */
 		public $layout = '/layouts/admin';
 		/**
-		 * @param $arg string model argument to be taken into customFind
+		 * @param string|bool $arg  model argument to be taken into customFind
 		 * @throws CHttpException
 		 */
 		public function run($arg = false)

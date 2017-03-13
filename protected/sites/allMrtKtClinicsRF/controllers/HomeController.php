@@ -24,6 +24,7 @@ class HomeController extends CController {
                 },
                 'scenario' => 'view',
                 'layout'=>'home',
+                'guest' => true
             ),
             'articlePreview'=>array(
                 'class'=>'application.controllers.actions.ModelViewAction',
