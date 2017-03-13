@@ -20,16 +20,21 @@ html {
 	background:white;
 }
 header {
-	height:150px;
+	height:200px;
 	background:#3cbf7d;
 	color:white;
 	text-align:justify;
 }
-header > div {
+#firstHeaderLineWrapper {
+	display:block;
+	height:150px;
+}
+#firstHeaderLineWrapper > div {
 	display:inline-block;
 	vertical-align:middle;
 }
-header:before {
+
+header #firstHeaderLineWrapper:before {
 	content:' ';
 	width:1px;
 	height:100%;
@@ -121,6 +126,25 @@ header #search input[type="submit"] {
 	height:19px;
 }
 
+header .navigationBar {
+	display: block;
+	width:100%;
+	height:50px;
+	text-align:left;
+	background: white ;
+}
+header .navigationBar a {
+	font-family: OpenSansItalic;
+	font-size: 20px;
+	font-style: italic;
+	color: #b60000;
+	text-decoration: none;
+	display: inline-block;
+}
+header .navigationBar .navButton {
+	display: inline-block;
+	padding:15px;
+}
 
 /* Content! */
 section.content .content_block {
