@@ -506,7 +506,8 @@ class Article extends BaseModel {
 				if ($val instanceof TriggerValues) {
 					return $val -> value;
 				} else {
-					throw new TextException("Could not find trigger value by id {$val_id['id']}");
+					return '';
+					//throw new TextException("Could not find trigger value by id {$val_id['id']}");
 				}
 			}
 
