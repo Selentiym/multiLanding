@@ -543,7 +543,9 @@ class Article extends BaseModel {
 				}
 			} elseif ($matches[3] == '=') {
 				$valVerb = $matches[4];
-				$val = $triggers[$trigger_verb]['verbiage'];
+				if (!empty($triggers[$trigger_verb])) {
+					$val = $triggers[$trigger_verb]['verbiage'];
+				}
 				if ($valVerb != $val) {
 					return '';
 				}

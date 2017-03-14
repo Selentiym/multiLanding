@@ -61,7 +61,7 @@ $noDisplay = ['mrt', 'kt'];
             <?php
                 $a = ArticleRule::getArticle('service');
                 if ($a) {
-                    echo $a -> prepareText($_GET);
+                    echo $a -> prepareTextByVerbiage($_GET);
                 } else {
                     echo "Статья не неайдена.";
                 }

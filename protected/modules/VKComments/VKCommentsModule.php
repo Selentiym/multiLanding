@@ -129,4 +129,5 @@ class VKCommentsModule extends UWebModule implements iCommentPool{
 		return Yii::app() -> getController() -> renderPartial($this -> getId() . '.views._form',['model' => $model, 'mod' => $this, 'acc' => $acc],true);
 		//$this ->  -> renderPartial();
 	}
+	//public function render
 }
