@@ -1,8 +1,10 @@
 <?php
-
 class ClinicsModule extends UWebModule
 {
 	public $defaultController = 'admin';
+
+	public $clinicsComments = null;
+	public $doctorsComments = null;
 
 	public function init()
 	{
@@ -13,10 +15,16 @@ class ClinicsModule extends UWebModule
 
 		// import the module-level models and components
 		$this->setImport(array(
-			'clinics.models.*',
-			'clinics.models.triggers.*',
-			'clinics.components.*',
+			$this -> getId().'.models.*',
+			$this -> getId().'.models.triggers.*',
+			$this -> getId().'.components.*',
 		));
+		if (!$this -> clinicsComments instanceof iCommentPool) {
+			$this -> clinicsComments = Yii::app() -> getComponent($this -> clinicsComments);
+		}
+		if (!$this -> doctorsComments instanceof iCommentPool) {
+			$this -> doctorsComments = Yii::app() -> getComponent($this -> clinicsComments);
+		}
 		require_once(self::getBasePath().'/components/Helpers.php');
 		$this -> setComponents($config['components']);
 	}

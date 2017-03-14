@@ -55,6 +55,32 @@ class AdminController extends Controller
 
     public function actions(){
         return [
+            'objectCommentsList'=>array(
+                'class'=>'application.controllers.actions.ModelViewAction',
+                'modelClass' => $_GET['modelName'],
+                'scenario' => 'comments',
+                'view' => '/comments/_list',
+            ),
+            'PriceBlockCreate' => array(
+                'class' => 'application.controllers.actions.ModelCreateAction',
+                'modelClass' => 'ObjectPriceBlock',
+                'view' => '/prices/blocks/create',
+                'redirectUrl' => $this -> createUrl('admin/PriceBlockList'),
+                'scenario' => 'create'
+            ),
+            'PriceBlockUpdate' => array(
+                'class' => 'application.controllers.actions.ModelUpdateAction',
+                'modelClass' => 'ObjectPriceBlock',
+                'view' => '/prices/blocks/update',
+                'redirectUrl' => function($data){
+                    return $this -> createUrl('admin/PriceBlockList');
+                },
+                'scenario' => 'update'
+            ),
+            'PriceBlockDelete' => array(
+                'class' => 'application.controllers.actions.ModelDeleteAction',
+                'modelClass' => 'ObjectPriceBlock'
+            ),
             'PriceBlockList'=>array(
                 'class'=>'application.controllers.actions.FileViewAction',
                 //'access' => function () {return $this -> isSuperAdmin();},

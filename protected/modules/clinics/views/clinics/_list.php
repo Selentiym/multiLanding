@@ -105,6 +105,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
         ),
 
+        array(
+            'class'=>'CLinkColumn',
+            'header'=>CHtml::encode('Отзывы'),
+            'label'=>CHtml::button("Редактировать"),
+            'urlExpression'=>function($data) {return $this -> createUrl("admin/objectCommentsList", array("id"=>$data->id,'modelName' => 'clinics'));},
+
+        ),
+
       array(
             'class'=>'CButtonColumn',
             'template'=>'{update}&nbsp;{delete}',

@@ -876,6 +876,9 @@ class BaseModel extends CTModel
 			case 'model' :
 				return static::model();
 				break;
+			case 'comments':
+				return $this -> findByPk($_GET['id']);
+				break;
 			default:
 				return static::model();
 				break;

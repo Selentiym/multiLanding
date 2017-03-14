@@ -19,6 +19,11 @@ return SiteDispatcher::mergeArray(
                 'dbConfig' => 'dbClinics',
                 'filesPath' => 'files/mrkt'
             ],
+            'clinicsComments' => [
+                'class' => 'application.modules.VKComments.VKCommentsModule',
+                'dbConfig' => 'dbClinics',
+                'bankConfig' => 'dbClinics',
+            ],
             'taskgen' => [
                 'class' => 'application.modules.taskgen.TaskGenModule',
                 'dbConfig' => 'dbTaskGen'
