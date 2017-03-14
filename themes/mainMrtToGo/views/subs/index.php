@@ -457,8 +457,13 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section) {
             <div class="col-md-6">
                 <span>© 2016, Бесплатная общегородская служба записи на МРТ и КТ</span>
             </div>
-            <div class="col-md-6">
-                <a class="phone-footer" href="tel:<?php echo '8812'.Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a>
+            <?php if ($c = Yii::app() -> getComponent('phoneExtra')) {
+                $phoneComp = $c;
+            } else {
+                $phoneComp = Yii::app() -> phone;
+            } ?>
+            <div class="col-md-3">
+                <a class="phone-footer" href="tel:<?php echo '8812'.$phoneComp -> getShort(); ?>"><?php echo $phoneComp -> getFormatted(); ?></a>
             </div>
         </div>
     </div>

@@ -43,6 +43,10 @@ return SiteDispatcher::mergeArray(
                 'moduleId' => 'tracker',
                 'number' => null
             ],
+            'phoneExtra' => [
+                'class' => 'application.components.constantPhoneComponent',
+                'number' => '8(812)241-10-56'
+            ],
             'dbCustom'=>array(
                 'class' => 'CDbConnection',
                 'connectionString' => 'mysql:host=localhost;dbname=cq97848_landing',
