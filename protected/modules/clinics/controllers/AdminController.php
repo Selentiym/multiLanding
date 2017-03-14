@@ -59,27 +59,18 @@ class AdminController extends Controller
                 'class'=>'application.controllers.actions.ModelViewAction',
                 'modelClass' => $_GET['modelName'],
                 'scenario' => 'comments',
-                'view' => '/comments/_list',
+                'view' => '/comments/_list'
             ),
-            'PriceBlockCreate' => array(
-                'class' => 'application.controllers.actions.ModelCreateAction',
-                'modelClass' => 'ObjectPriceBlock',
-                'view' => '/prices/blocks/create',
-                'redirectUrl' => $this -> createUrl('admin/PriceBlockList'),
-                'scenario' => 'create'
-            ),
-            'PriceBlockUpdate' => array(
-                'class' => 'application.controllers.actions.ModelUpdateAction',
-                'modelClass' => 'ObjectPriceBlock',
-                'view' => '/prices/blocks/update',
+            'objectCommentCreate' => array(
+                'class' => 'application.controllers.actions.ClassMethodAction',
+                'method' => 'createComment',
+                'modelClass' => $_GET['modelName'],
+                'view' => $_POST['submit'] ? false : '/comments/create',
                 'redirectUrl' => function($data){
-                    return $this -> createUrl('admin/PriceBlockList');
+                    return $this -> createUrl('admin/objectCommentsList',['modelName' => get_class($data), 'id' => $data -> id]);
                 },
-                'scenario' => 'update'
-            ),
-            'PriceBlockDelete' => array(
-                'class' => 'application.controllers.actions.ModelDeleteAction',
-                'modelClass' => 'ObjectPriceBlock'
+                'scenario' => 'comments',
+                'access' => $this -> isSuperAdmin()
             ),
             'PriceBlockList'=>array(
                 'class'=>'application.controllers.actions.FileViewAction',
@@ -1853,5 +1844,67 @@ class AdminController extends Controller
                 echo $data['district']." already has dependencies!";
             }
         }
+    }
+    private function findObject($id, $modelName, $scenario = null){
+        $model = $modelName::model();
+        $model -> setScenario($scenario);
+        $model = $model -> customFind($id);
+        $model -> setScenario($scenario);
+        if (!$model) {
+            throw new Exception("Could not find $modelName object by id $id");
+        }
+        return $model;
+    }
+    public function actionObjectCommentDelete($id, $modelName, $idComment){
+        $model = $this -> findObject($id,$modelName, 'comments');
+        $commentsMod = $this -> getModule() -> getObjectsReviewsPool(get_class($model));
+        $modelComment = $commentsMod -> getComment($idComment);
+        $commentsMod -> deleteComment($modelComment);
+    }
+    public function actionObjectCommentUpdate($id, $modelName, $idComment){
+        $data = $_POST;
+        /**
+         * @type clinics|doctors $model
+         */
+        $model = $this -> findObject($id,$modelName, 'comments');
+        $commentsMod = $this -> getModule() -> getObjectsReviewsPool(get_class($model));
+        $modelComment = $commentsMod -> getComment($idComment);
+        if ($data['submit']) {
+            $modelData = $data['Comment'];
+            /**
+             * @type VKCommentsModule $commentsMod
+             */
+            $modelComment = $commentsMod -> updateComment($modelComment,$model -> id, $modelData['text'],$modelData);
+            if (empty($modelComment -> getErrors())) {
+                $this -> redirect($this -> createUrl('admin/objectCommentsList',['modelName' => get_class($model), 'id' => $model -> id]));
+            } else {
+                $err = $modelComment -> getErrors();
+            }
+        }
+        $form = $commentsMod -> commentForm($modelComment);
+        $this -> render('/comments/_update',['model' => $model, 'form' => $form]);
+    }
+    public function actionObjectCommentCreate($id, $modelName){
+        $data = $_POST;
+        /**
+         * @type clinics|doctors $model
+         */
+        $model = $this -> findObject($id,$modelName, 'comments');
+        $commentsMod = $this -> getModule() -> getObjectsReviewsPool(get_class($model));
+        $saved = null;
+        if ($data['submit']) {
+            $modelData = $data['Comment'];
+            /**
+             * @type VKCommentsModule $commentsMod
+             */
+            $saved = $commentsMod -> addComment($model -> id, $modelData['text'],$modelData);
+            if (empty($saved -> getErrors())) {
+                $this -> redirect($this -> createUrl('admin/objectCommentsList',['modelName' => get_class($model),'id' => $model -> id]));
+            } else {
+                $err = $saved -> getErrors();
+            }
+        }
+        $form = $commentsMod -> commentForm($saved);
+        $this -> render('/comments/_create',['model' => $model, 'form' => $form]);
     }
 }

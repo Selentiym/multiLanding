@@ -17,12 +17,13 @@ return SiteDispatcher::mergeArray(
             'clinics' => [
                 'class' => 'application.modules.clinics.ClinicsModule',
                 'dbConfig' => 'dbClinics',
-                'filesPath' => 'files/mrkt'
+                'filesPath' => 'files/mrkt',
+                'clinicsComments' => function () {return Yii::app() -> getModule('clinicsComments'); }
             ],
             'clinicsComments' => [
                 'class' => 'application.modules.VKComments.VKCommentsModule',
-                'dbConfig' => 'dbClinics',
-                'bankConfig' => 'dbClinics',
+                'dbConfig' => 'dbClinicComments',
+                'bankConfig' => 'dbComments',
             ],
             'taskgen' => [
                 'class' => 'application.modules.taskgen.TaskGenModule',
@@ -69,6 +70,24 @@ return SiteDispatcher::mergeArray(
                 'class' => 'CDbConnection',
                 'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
                 'tablePrefix' => 'tbl_',
+                'emulatePrepare' => true,
+                'username' => 'cq97848_clmod',
+                'password' => 'kicker1995',
+                'charset' => 'utf8',
+            ),
+            'dbClinicComments'=>array(
+                'class' => 'CDbConnection',
+                'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
+                'tablePrefix' => 'tbl_clc_',
+                'emulatePrepare' => true,
+                'username' => 'cq97848_clmod',
+                'password' => 'kicker1995',
+                'charset' => 'utf8',
+            ),
+            'dbComments'=>array(
+                'class' => 'CDbConnection',
+                'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
+                'tablePrefix' => 'tbl_c_',
                 'emulatePrepare' => true,
                 'username' => 'cq97848_clmod',
                 'password' => 'kicker1995',

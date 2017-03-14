@@ -1,9 +1,13 @@
 <?php
-class ClinicsModule extends UWebModule
-{
+class ClinicsModule extends UWebModule {
 	public $defaultController = 'admin';
-
+	/**
+	 * @var iCommentPool|null
+	 */
 	public $clinicsComments = null;
+	/**
+	 * @var iCommentPool|null
+	 */
 	public $doctorsComments = null;
 
 	public function init()
@@ -19,12 +23,8 @@ class ClinicsModule extends UWebModule
 			$this -> getId().'.models.triggers.*',
 			$this -> getId().'.components.*',
 		));
-		if (!$this -> clinicsComments instanceof iCommentPool) {
-			$this -> clinicsComments = Yii::app() -> getComponent($this -> clinicsComments);
-		}
-		if (!$this -> doctorsComments instanceof iCommentPool) {
-			$this -> doctorsComments = Yii::app() -> getComponent($this -> clinicsComments);
-		}
+		$this -> clinicsComments = $this -> getAttribute('clinicsComments');
+		$this -> doctorsComments = $this -> getAttribute('doctorsComments');
 		require_once(self::getBasePath().'/components/Helpers.php');
 		$this -> setComponents($config['components']);
 	}
@@ -64,7 +64,7 @@ class ClinicsModule extends UWebModule
 	 * @param CDbCriteria $criteria additional criteria to be filtered by
 	 * @return $class[] that correspond to the specified condition
 	 */
-	public function getObjects($class,array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
+	protected function getObjects($class,array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
 		$triggers = array_map(function($val){
 			if ((int) $val) {
 				return $val;
@@ -139,5 +139,20 @@ class ClinicsModule extends UWebModule
 		}
 		$criteria -> addCondition('level = 0 OR parent_id = 0 OR parent_id IS NULL');
 		return Article::model() -> findAll($criteria);
+	}
+
+	/**
+	 * @param string $class = 'doctors'|'clinics'
+	 * @return iCommentPool
+	 */
+	public function getObjectsReviewsPool($class) {
+		if (in_array($class,['clinics','doctors'])) {
+			$name = $class . 'Comments';
+			return $this -> $name;
+		}
+		return null;
+	}
+	public function _isAllowedToEvaluate($name) {
+		return in_array($name, ['clinicsComments','doctorsComments']) || parent::_isAllowedToEvaluate($name);
 	}
 }

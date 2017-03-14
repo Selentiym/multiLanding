@@ -43,7 +43,15 @@ class VKCommentsModule extends UWebModule implements iCommentPool{
 	 * @return VkAccount
 	 */
 	public function getAccount($id){
-		VKAccount::model() -> findByPk($id);
+		return VKAccount::model() -> findByPk($id);
+	}
+
+	/**
+	 * @param $id
+	 * @return array|mixed|null
+	 */
+	public function getComment($id) {
+		return Comment::model() -> findByPk($id);
 	}
 	/**
 	 * @return VKAccount
@@ -72,23 +80,53 @@ class VKCommentsModule extends UWebModule implements iCommentPool{
 		}
 		return $temp;
 	}
-
 	/**
 	 * @param integer $objectId
 	 * @param string $text
 	 * @param mixed[] $else
-	 * @return bool successful or not
+	 * @return Comment
 	 */
 	public function addComment($objectId, $text, $else) {
 		$c = new Comment();
 		$c -> text = $text;
 		$c -> id_object = $objectId;
 		$c -> attributes = $else;
-		if (!$else['vk_id']) {
-			$vk = $else['api'];
-			$vk = VKAccount::createByVkId($vk);
-			$c -> vk_id = $vk -> id;
+		$c -> save();
+		return $c;
+	}
+
+	/**
+	 * @param Comment $c
+	 * @param $objectId
+	 * @param $text
+	 * @param $else
+	 * @return Comment
+	 */
+	public function updateComment(Comment $c, $objectId, $text, $else) {
+		$c -> text = $text;
+		$c -> id_object = $objectId;
+		$c -> attributes = $else;
+		$c -> save();
+		return $c;
+	}
+
+	/**
+	 * @param Comment $comment
+	 * @return bool
+	 */
+	public function deleteComment(Comment $comment) {
+		return $comment -> delete();
+	}
+	/**
+	 * @param Comment $model
+	 * @return string html of the form
+	 */
+	public function commentForm(Comment $model = null){
+		if (!$model) {
+			$model = new Comment();
 		}
-		return $c -> save();
+		$acc = Yii::app() -> getController() -> renderPartial($this -> getId() . '.views.VKAccount',['model' => $model -> getAccount()],true);
+		return Yii::app() -> getController() -> renderPartial($this -> getId() . '.views._form',['model' => $model, 'mod' => $this, 'acc' => $acc],true);
+		//$this ->  -> renderPartial();
 	}
 }

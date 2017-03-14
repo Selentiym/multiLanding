@@ -10,9 +10,11 @@
  * @property string $created
  * @property integer $vk_id
  * @property integer $num
+ *
  */
 class Comment extends UVKCommentsModel
 {
+	public $api;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -32,7 +34,7 @@ class Comment extends UVKCommentsModel
 			array('text', 'required', 'message' => CHtml::encode('Поле <{attribute}> не может быть пустым.')),
 			array('id_object, approved', 'numerical', 'integerOnly'=>true),
             array('created', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
-            array('text, vk_id', 'safe'),
+            array('text, vk_id, approved, api', 'safe'),
 			array('id, approved, text', 'safe', 'on'=>'search'),
 		);
 	}
@@ -44,8 +46,14 @@ class Comment extends UVKCommentsModel
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
-		);
+		return array();
+	}
+
+	/**
+	 * @return VkAccount
+	 */
+	public function getAccount() {
+		return $this -> getModule() -> getAccount($this -> vk_id);
 	}
 
     public function scopes() {
@@ -88,5 +96,13 @@ class Comment extends UVKCommentsModel
 			$temp = $this -> getModule() -> getRandomAccount();
 		}
 		return $temp;
+	}
+	public function beforeSave() {
+		if ((!$this -> vk_id)&&($this -> api)) {
+			$vk = $this -> api;
+			$vk = VKAccount::createByVkId($vk);
+			$this -> vk_id = $vk -> id;
+		}
+		return $this->vk_id > 0 && parent::beforeSave();
 	}
 }

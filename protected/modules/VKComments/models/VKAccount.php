@@ -126,12 +126,7 @@ class VKAccount extends UVKCommentsModel {
 				'user_ids' => $id,
 				"fields" => "photo_50, domain"
 		])->getResponse());
-		$vkAccount = new self;
-		$vkAccount -> vk_id = $id;
-		$vkAccount -> domain = $obj -> domain;
-		$vkAccount -> first_name = $obj -> first_name;
-		$vkAccount -> last_name = $obj -> last_name;
-		$vkAccount -> photo = $obj -> photo_50;
+		$vkAccount = VKAccount::createFromRaw($obj);
 		if (!$vkAccount -> save()) {
 			$err = $vkAccount -> getErrors();
 		}
@@ -153,5 +148,14 @@ class VKAccount extends UVKCommentsModel {
 			self::setDbConnection(parent::getDbConnection());
 		}
 		return self::$_connection;
+	}
+	public static function createFromRaw($data){
+		$acc = new self;
+		$acc -> domain = $data -> domain;
+		$acc -> first_name = $data -> first_name;
+		$acc -> last_name = $data -> last_name;
+		$acc -> photo = $data -> photo_50;
+		$acc -> vk_id = $data -> id;
+		return $acc;
 	}
 }
