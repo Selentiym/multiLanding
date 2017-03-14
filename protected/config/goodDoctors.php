@@ -17,6 +17,9 @@ return SiteDispatcher::mergeArray(
                 'dbConfig' => 'dbClinics'
             ]
         ),
+        'controllerMap'=>array(
+            'main'=>'application.sites.goodDoctors.controllers.MainController',
+        ),
         'components'=>array(
             'phone' => [
                 'class' => 'application.components.CallTrackerPhoneComponent',
