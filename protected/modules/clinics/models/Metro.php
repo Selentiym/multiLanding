@@ -6,6 +6,8 @@
  * The followings are the available columns in table '{{metro}}':
  * @property integer $id
  * @property string $name
+ * @property float $longitude
+ * @property float $latitude
  */
 class Metro extends CTModel
 {

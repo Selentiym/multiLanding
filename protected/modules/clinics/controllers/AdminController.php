@@ -1907,4 +1907,62 @@ class AdminController extends Controller
         $form = $commentsMod -> commentForm($saved);
         $this -> render('/comments/_create',['model' => $model, 'form' => $form]);
     }
+    public function actionParseMetroCoords() {
+        $empty = [];
+        echo "<form method='post'>
+<textarea name='str'></textarea>
+<input type='submit' value='распарсить' name='go'>
+</form>";
+
+        $data = $_POST;
+        if ($data['go']) {
+            $str = $data['str'];
+            $str = strip_tags($str,'<tr><td>');
+            $str = str_replace('</tr>','',$str);
+            $str = preg_replace('[\r\n]','',$str);
+            $str = preg_replace('/\W*<\/td>\W*<td>\W*/ui',';',$str);
+            $arrs = explode('<tr>',$str);
+            $i = 0;
+            foreach ($arrs as $arrString) {
+                $arrString = preg_replace('~\W*</?td>\W*~ui','',$arrString);
+                $arr = explode(';',$arrString);
+                var_dump($arr);
+                $m = Metro::model() -> findByAttributes(['name' => $arr[0]]);
+                if ($m instanceof Metro) {
+                    echo $m->id;
+                    $m -> longitude = $arr[2];
+                    $m -> latitude = $arr[1];
+                    if ($m -> save()) {
+                        $i ++;
+                    }
+                }
+            }
+            echo "Сохранено $i станций";
+            //$inDatabase = TriggerValueDependency::model() -> findByAttributes(['verbiage_parent'=>$data['district']]);
+//            if (!$inDatabase) {
+//                foreach ($streets as $street) {
+//                    $val = new TriggerValues();
+//                    $val -> value = $street;
+//                    $val -> verbiage = str2url($street);
+//                    $val -> trigger_id = 8;
+//                    if (!$val -> save()) {
+//                        var_dump($val -> getErrors());
+//                        continue;
+//                    }
+//                    $dep = new TriggerValueDependency();
+//                    $dep -> verbiage_child = $val -> verbiage;
+//                    $dep -> verbiage_parent = $data['district'];
+//                    if (!$dep -> save()) {
+//                        var_dump($dep -> getErrors());
+//                        continue;
+//                    }
+//
+//                    echo "Saved: $i ".$val -> verbiage." to ".$dep -> verbiage_parent."<br/>".PHP_EOL;
+//                    $i ++;
+//                }
+//            } else {
+//                echo $data['district']." already has dependencies!";
+//            }
+        }
+    }
 }
