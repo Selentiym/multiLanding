@@ -93,13 +93,15 @@ function prepareTextToJS($str) {
 function giveMetroNamesArrayByCoords($shir,$dolg, $deltax='0.05', $deltay='0.05'){
     $str = urlencode($deltax.' '.$deltay);
     $url = "https://geocode-maps.yandex.ru/1.x/?kind=metro&geocode=N{$shir}%20E{$dolg}";//.'&'."rspn=0&spn={$str}";
-    $obj = new SimpleXMLElement(file_get_contents($url));
+    $xml = file_get_contents($url);
+    $obj = new SimpleXMLElement($xml);
     return giveMetrosNamesArrayByXML($obj);
 }
 function giveMetroNamesArrayByAddress($addr, $deltax='0.05', $deltay='0.05'){
     $addr = urlencode($addr);
     $url = "https://geocode-maps.yandex.ru/1.x/?kind=metro&geocode=Санкт-Петербург,{$addr}";
-    $obj = new SimpleXMLElement(file_get_contents($url));
+    $xml = file_get_contents($url);
+    $obj = new SimpleXMLElement($xml);
     return giveMetrosNamesArrayByXML($obj);
 }
 function giveMetrosNamesArrayByXML($obj){
@@ -120,6 +122,64 @@ function giveMetrosNamesArrayByXML($obj){
     //var_dump($rez);
     return array_filter($rez);
     //var_dump(get_object_vars($obj));
+}
+function toRad($grad){
+    return Pi() * $grad / 180;
+}
+
+/**
+ * All angles in degrees! $fi - долгота, $teta - широта
+ * @param float $fi1
+ * @param float $teta1
+ * @param float $fi2
+ * @param float $teta2
+ * @param float $R
+ * @return float distance between two pints in meters
+ */
+function DistanceSpherical_bad($fi1,$teta1,$fi2,$teta2, $R = 6371302.0) {
+//    $fi1 = toRad($fi1);
+//    $fi2 = toRad($fi2);
+    $teta1 = toRad($teta1);
+    $teta2 = toRad($teta2);
+    return $R * acos( cos($teta1)*cos($teta2) * cos(toRad($fi1 - $fi2))+ sin($teta1)*sin($teta2)  );
+}
+//Невский, 1 59.936846, 30.312176
+//Адмиралтейская 59.935831, 30.315203
+//59.937986, 30.322821
+//метро невский проспект 59.935579, 30.327025
+//метро академическая 60.012719, 30.396133
+//метро чернышевская 59.944436, 30.359975
+//метро ладожская 59.932495, 30.439306
+//метро ладожская из базы 59.93244, 30.439474
+//метро площадь Александра невского 59.923563, 30.383421
+//метро площадь Александра невского из базы 59.92365, 30.383471
+//беларусская, 4 59.935786, 30.499708
+//echo DistanceSpherical(30.322821, 59.937986, 30.312176, 59.936846);
+//echo DistanceSpherical(30.327025, 59.935579, 30.383421, 59.923563);
+//echo DistanceSpherical(30.322821, 59.937986, 30.322821, 59.937987);
+/**
+ * All angles in degrees! $fi - долгота, $teta - широта
+ * Calculate using converting to cartesian coordinates
+ * @param float $fi1
+ * @param float $teta1
+ * @param float $fi2
+ * @param float $teta2
+ * @param float $R
+ * @return float distance between two pints in meters
+ */
+function DistanceSpherical($fi1,$teta1,$fi2,$teta2, $R = 6371302) {
+    $fi1 = toRad($fi1);
+    $fi2 = toRad($fi2);
+    $teta1 = toRad($teta1);
+    $teta2 = toRad($teta2);
+
+    $x1 = $R * cos($teta1) * cos($fi1);
+    $y1 = $R * cos($teta1) * sin($fi1);
+    $z1 = $R * sin($teta1);
+    $x2 = $R * cos($teta2) * cos($fi2);
+    $y2 = $R * cos($teta2) * sin($fi2);
+    $z2 = $R * sin($teta2);
+    return (sqrt( pow(($x1-$x2),2) + pow(($y1-$y2),2) + pow(($z1-$z2),2) ));
 }
 function uploadImage($target_url,$whereToStore){
     if ($target_url) {
