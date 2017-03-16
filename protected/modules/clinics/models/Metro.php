@@ -93,4 +93,21 @@ class Metro extends CTModel
 	{
 		return parent::model($className);
 	}
+
+	/**
+	 * @param float $lat
+	 * @param float $long
+	 * @return string
+	 */
+	public function display($lat = null, $long = null){
+		$distStr = '';
+		$lat = (float)$lat;
+		$long = (float)$long;
+		if (($lat)&&($long)&&($this -> latitude)&&($this -> longitude)) {
+			$dist = DistanceSpherical($this -> latitude, $this -> longitude, $lat, $long);
+			$distStr = 50*round($dist/50);
+			$distStr = "({$distStr}м)";
+		}
+		return $this -> name . $distStr;
+	}
 }

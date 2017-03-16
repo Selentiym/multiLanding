@@ -89,10 +89,21 @@ function prepareTextToJS($str) {
     $text = preg_replace($search, $replace, $str);
     return $text;
 }
-
-function giveMetroNamesArrayByCoords($shir,$dolg, $deltax='0.05', $deltay='0.05'){
+function giveDistrictByCoords($lat,$long){
+    $url = "https://geocode-maps.yandex.ru/1.x/?kind=district&geocode=N{$lat}%20E{$long}&format=json";
+    $json = file_get_contents($url);
+    $rez = json_decode($json);
+    try {
+        $name = end($rez->response->GeoObjectCollection->featureMember)->GeoObject->name;
+    } catch (Exception $e) {
+        new CustomFlash('error','BaseModel','NoDistrict','Could not geodecode district',true);
+    }
+    return preg_replace('/\W*район\W*/ui','',$name);
+    //$rez -> Ge
+}
+function giveMetroNamesArrayByCoords($lat,$long, $deltax='0.05', $deltay='0.05'){
     $str = urlencode($deltax.' '.$deltay);
-    $url = "https://geocode-maps.yandex.ru/1.x/?kind=metro&geocode=N{$shir}%20E{$dolg}";//.'&'."rspn=0&spn={$str}";
+    $url = "https://geocode-maps.yandex.ru/1.x/?kind=metro&geocode=N{$lat}%20E{$long}";//.'&'."rspn=0&spn={$str}";
     $xml = file_get_contents($url);
     $obj = new SimpleXMLElement($xml);
     return giveMetrosNamesArrayByXML($obj);

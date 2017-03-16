@@ -734,15 +734,23 @@ class BaseModel extends CTModel
 			//Пытаемся найти ближайшее метро.
 			try {
 				//throw new Exception('no way to find nearest metro');
-				if (($this -> map_coordinates)&&(!$this -> metro_station)) {
-					list($shir, $dolg) = explode(', ',$this -> map_coordinates);
-					$metros = giveMetroNamesArrayByCoords($shir, $dolg);
-					$criteria = new CDbCriteria();
-					$criteria -> addInCondition('name',$metros);
-					$met = Metro::model() -> findAll($criteria);
-					//var_dump(Html::listData($met,'id','id'));
-					$this -> metro_station = implode(';',Html::listData($met,'id','id'));
-					//echo $this -> metro_station;
+				if ($this -> map_coordinates) {
+					list($lat, $long) = $this -> getCoordinates();
+					if (!$this -> metro_station) {
+						$metros = giveMetroNamesArrayByCoords($lat, $long);
+						$criteria = new CDbCriteria();
+						$criteria->addInCondition('name', $metros);
+						$met = Metro::model()->findAll($criteria);
+						//var_dump(Html::listData($met,'id','id'));
+						$this->metro_station = implode(';', Html::listData($met, 'id', 'id'));
+					}
+					if (!$this -> district) {
+						$name = giveDistrictByCoords($lat, $long);
+						$distr = Districts::model() -> findByAttributes(['name' => $name]);
+						if ($distr instanceof Districts) {
+							$this -> district = $distr -> id;
+						}
+					}
 				}
 			} catch (Exception $e) {}
 			return true;
@@ -923,6 +931,15 @@ class BaseModel extends CTModel
      */
 	public function getUrl() {
 		return  Yii::app() -> controller -> createUrl('/home/modelView',['verbiage' => $this -> verbiage, 'modelName' => get_class($this)]);
+	}
+
+	/**
+	 * @return float[] latitude=широта longitude=долгота St. Petersburg <=> [59,30]
+	 */
+	public function getCoordinates() {
+		return array_map(function($data){
+			return (float)trim($data);
+		},explode(',',$this -> map_coordinates));
 	}
 }
 ?>
