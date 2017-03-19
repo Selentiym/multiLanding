@@ -34,7 +34,7 @@ Yii::app()->clientScript->registerScript('search', "
         'prevPageLabel'=>'<',
         'nextPageLabel'=>'>',
         'lastPageLabel'=>'>>',
-        'maxButtonCount'=>'10',
+        'maxButtonCount'=>'100000',
         'header'=>'<span>Перейти на страницу:</span>',
     ),
     'columns'=>array(

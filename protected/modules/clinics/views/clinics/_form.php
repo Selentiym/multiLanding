@@ -70,11 +70,11 @@
             <?php echo $form->error($model,'kt'); ?>
         </div>
 		
-        <div>
-            <?php echo $form->labelEx($model,'experience'); ?>
-            <?php echo $form->textField($model,'experience',array('size'=>10,'maxlength'=>5)); ?>
-            <?php echo $form->error($model,'experience'); ?>
-        </div>
+<!--        <div>-->
+<!--            --><?php //echo $form->labelEx($model,'experience'); ?>
+<!--            --><?php //echo $form->textField($model,'experience',array('size'=>10,'maxlength'=>5)); ?>
+<!--            --><?php //echo $form->error($model,'experience'); ?>
+<!--        </div>-->
 
 <!--        <div>-->
 <!--            --><?php //echo $form->labelEx($model,'fax'); ?>
@@ -100,37 +100,17 @@
         </div>
         <br/>
 
-        <div>
-            <?php echo $form->labelEx($model,'district'); ?>
-
-            <?php
-            $district= CHtml::listData(Districts::model()->findAll(), 'id', 'name');
-			
-			echo CHtml::activeDropDownList(Districts::model(),'id', $district,array('name' => 'district_array[]','multiple' => 'multiple'),array_map('trim', explode (';', $model->district)));
-			
-            /*$this->widget('application.extensions.EchMultiSelect.EchMultiSelect', array(
-                'name' => 'district_array',
-                'data' => $district,
-                'value' => array_map('trim', explode (';', $model->district)),
-                'options' => array(
-                    'selectedText' =>Yii::t('EchMultiSelect.EchMultiSelect','# выбрано'),
-                    'autoOpen'=>false,
-                    'filter'=> false,
-                    'noneSelectedText'=> Yii::t('EchMultiSelect.EchMultiSelect','Выберите район..'),
-                    'checkAllText' => Yii::t('EchMultiSelect.EchMultiSelect','Выбрать все'),
-                    'uncheckAllText' => Yii::t('EchMultiSelect.EchMultiSelect','Очистить все'),
-                ),
-            ));*/
-            ?>
-            <?php echo $form->error($model,'district'); ?>
-        </div>
-        <br/>
 
         <div>
-            <?php echo $form->labelEx($model,'site'); ?>
-            <?php echo $form->textField($model,'site',array('size'=>60,'maxlength'=>1000)); ?>
-            <?php echo $form->error($model,'site'); ?>
+            <?php echo $form->labelEx($model,'external_link'); ?>
+            <?php echo $form->textField($model,'external_link',array('size'=>60,'maxlength'=>1000)); ?>
+            <?php echo $form->error($model,'external_link'); ?>
         </div>
+<!--        <div>-->
+<!--            --><?php //echo $form->labelEx($model,'site'); ?>
+<!--            --><?php //echo $form->textField($model,'site',array('size'=>60,'maxlength'=>1000)); ?>
+<!--            --><?php //echo $form->error($model,'site'); ?>
+<!--        </div>-->
 
 <!--        <div>-->
 <!--            --><?php //echo $form->labelEx($model,'working_days'); ?>

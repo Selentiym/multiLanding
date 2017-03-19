@@ -104,10 +104,13 @@ class Metro extends CTModel
 		$lat = (float)$lat;
 		$long = (float)$long;
 		if (($lat)&&($long)&&($this -> latitude)&&($this -> longitude)) {
-			$dist = DistanceSpherical($this -> latitude, $this -> longitude, $lat, $long);
+			$dist = $this -> distanceFrom($lat, $long);
 			$distStr = 50*round($dist/50);
 			$distStr = "({$distStr}м)";
 		}
 		return $this -> name . $distStr;
+	}
+	public function distanceFrom($lat, $long){
+		return DistanceSpherical($this -> latitude, $this -> longitude, $lat, $long);
 	}
 }

@@ -2,6 +2,7 @@
 
 /**
  * Class BaseModel
+ * @property string $external_link
  * @property ObjectPriceValue[] $priceValues
  */
 class BaseModel extends CTModel
@@ -277,46 +278,8 @@ class BaseModel extends CTModel
 	 * in order to display them in the corresponding view.
 	 * Currently it is in base model, but should be different in all of them.
 	 */
-	public function getReadyToDisplay()
-	{
-		/* metro stations */
-		$metros_array = array_map('trim', explode(';', $this->metro_station));
-		
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("id", $metros_array);
-		$metros_array = Metro::model()->findAll($criteria);
+	public function getReadyToDisplay() {
 
-		if (!empty($metros_array)) {
-			foreach ($metros_array as $metro)
-				$metros .= $metro->name . ', ';
-		}
-		$metros = substr($metros, 0, strrpos($metros, ','));
-		$this->metros_display = $metros;
-
-		/* districts */
-		$districts_array = array_map('trim', explode(';', $this->district));
-		
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("id", $districts_array);
-		$districts_array = Districts::model()->findAll($criteria);
-
-		if (!empty($districts_array)) {
-			foreach ($districts_array as $district)
-				$districts .= $district->name . ', ';
-		}
-		$districts = substr($districts, 0, strrpos($districts, ','));
-		$this->districts_display = $districts;
-		/* triggers */
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("t.id", array_map('trim', explode(';', $this->triggers)));
-		$criteria->with = array('trigger');
-		$criteria->limit = 5;
-		$criteria->together = true;
-
-		$this -> triggers_display = TriggerValues::model()->findAll($criteria);
-		//print_r($this -> triggers_display);
-		//echo "<br/>";
-		return;
 	}
 	/**
 	 * Tansforms data into correct encoding and writes it to a file.
@@ -711,7 +674,7 @@ class BaseModel extends CTModel
 			
 		}
 	}
-	public function BeforeSave(){
+	public function beforeSave(){
 		
 		if (parent::beforeSave()) {
 			try {
@@ -744,11 +707,11 @@ class BaseModel extends CTModel
 						//var_dump(Html::listData($met,'id','id'));
 						$this->metro_station = implode(';', Html::listData($met, 'id', 'id'));
 					}
-					if (!$this -> district) {
+					if (!$this -> getFirstTriggerValueString('district')) {
 						$name = giveDistrictByCoords($lat, $long);
-						$distr = Districts::model() -> findByAttributes(['name' => $name]);
-						if ($distr instanceof Districts) {
-							$this -> district = $distr -> id;
+						$distr = TriggerValues::model() -> findByAttributes(['value' => $name]);
+						if ($distr instanceof TriggerValues) {
+							$this -> triggers .= ';'.$distr -> id;
 						}
 					}
 				}
@@ -757,6 +720,10 @@ class BaseModel extends CTModel
 		} else {
 			return false;
 		}
+	}
+	public function afterSave() {
+		parent::afterSave();
+		$this -> savePrices();
 	}
 	public function preparePrices($prices){
 		$mrt = array();
@@ -776,21 +743,26 @@ class BaseModel extends CTModel
 		asort($other);
 		return array_merge($mrt,$kt,$other);
 	}
-	public function checkTrigger($id) {
-		$triggers_array = array_map('trim', explode(';', $this->triggers));
-		$trigger = Triggers::model() -> findByPk($id);
-		$arr = $trigger -> trigger_values;
-		$arr = array_filter($arr, function ($tr) use ($triggers_array) {
-			return in_array($tr -> id, $triggers_array);
-		});
-		return CHtml::giveStringFromArray($arr, ', ','value');
-		//return CHtml::giveStringFromArray(array_intersect($trigger -> trigger_values, $triggers_array), ', ', 'value');
-	}
+	/**
+	 * @return TriggerValues[]
+	 */
 	public function giveTriggerValuesObjects() {
-		$triggers_array = array_map('trim', explode(';', $this->triggers));
-		$criteria = new CDbCriteria; 
-		$criteria -> addInCondition('id', $triggers_array);
-		return TriggerValues::model() -> findAll($criteria);
+		static $allValues;
+		if (!isset($allValues)) {
+			$triggers_array = array_filter(array_map('trim', explode(';', $this->triggers)));
+			$criteria = new CDbCriteria;
+			$criteria -> addInCondition('t.id', $triggers_array);
+			foreach ( TriggerValues::model() -> with('trigger') -> findAll($criteria) as $obj) {
+				/**
+				 * @type TriggerValues $obj
+				 */
+				if (!$allValues[$obj -> trigger -> verbiage]) {
+					$allValues[$obj -> trigger -> verbiage] = [];
+				}
+				$allValues[$obj -> trigger -> verbiage][] = $obj;
+			}
+		}
+		return $allValues;
 	}//*/
 	public function giveMrtPrices() {
 		return array_filter($this -> getPriceValues(), function($pr) {
@@ -940,6 +912,136 @@ class BaseModel extends CTModel
 		return array_map(function($data){
 			return (float)trim($data);
 		},explode(',',$this -> map_coordinates));
+	}
+
+	/**
+	 * @param string $verbiage of the trigger
+	 * @return TriggerValues[]
+	 */
+	public function getTriggerValues($verbiage){
+		$temp = $this -> giveTriggerValuesObjects()[$verbiage];
+		if (!is_array($temp)) {
+			$temp = [];
+		}
+		return $temp;
+	}
+
+	/**
+	 * @param string $verbiage of the trigger
+	 * @return TriggerValues
+	 */
+	public function getFirstTriggerValue($verbiage){
+		return current($this -> getTriggerValues($verbiage));
+	}
+
+	/**
+	 * @param string $verbiage
+	 * @return string
+	 */
+	public function getFirstTriggerValueString($verbiage){
+		$temp = $this -> getFirstTriggerValue($verbiage);
+		if (!$temp) {
+			return '';
+		}
+		return $temp -> value;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSortedMetroString() {
+		$ids = array_filter(array_map('trim',explode(';',$this -> metro_station)));
+		$c = new CDbCriteria();
+		$c -> addInCondition('id',$ids);
+		$metros = Metro::model() -> findAll($c);
+		list($lat, $long) = $this -> getCoordinates();
+		usort($metros,function($m1, $m2) use ($lat, $long){
+			/**
+			 * @type Metro $m1
+			 * @type Metro $m2
+			 */
+			return $m1 -> distanceFrom($lat, $long) - $m2 -> distanceFrom($lat, $long);
+		});
+		return CHtml::giveStringFromArray(array_map(function($d)use($lat, $long){
+			return $d -> display($lat,$long);
+		}, $metros),', ');
+	}
+	public function savePrices() {
+		if (!$this -> external_link) {
+			return false;
+		}
+		$fromSite = $this -> parsePrices();
+		$allPrices = ObjectPrice::model() -> findAllByAttributes(['object_type' => Objects::getNumber(get_class($this))]);
+		foreach ($allPrices as $price) {
+			/**
+			 * @type ObjectPrice $price
+			 */
+			$key = $price -> name2 ? $price -> name2: $price -> name;
+			$p = $fromSite[$key];
+			if ($p) {
+				$obj = new ObjectPriceValue();
+				$obj->id_object = $this->id;
+				$obj->id_price = $price -> id;
+				$obj->value = $p;
+				if (!$obj -> save()) {
+					$err = $obj -> getErrors();
+				}
+			}
+		}
+	}
+	public function parsePrices(){
+		static $rez;
+		if (!$this -> external_link) {
+			return [];
+		}
+		if (!$rez) {
+			require_once(Yii::getPathOfAlias('application.components.simple_html_dom') . '.php');
+			$html = file_get_html($this -> external_link);
+			//$html = file_get_html('http://mrt-catalog.ru/clinic/16');
+			$both = current($html->find('#myTabContent'));
+			$mrt = $both->childNodes(0)->childNodes(0)->childNodes();
+			$kt = $both->childNodes(1)->childNodes(0)->childNodes();
+			$rezMrt = [];
+			foreach ($mrt as $item) {
+				$priceArr = $item->find('span');
+				if ($priceArr) {
+					$price = preg_replace('/[^\d]/ui', '', trim(strip_tags(current($priceArr)->innerText())));
+					try {
+						// $html = $item -> __toString();
+						$temp = $item->find('a');
+						if (!empty($temp)) {
+							$text = current($temp)->innerText();
+						}
+
+					} catch (Exception $e) {
+					}
+					if ($text) {
+						$rezMrt[$text] = $price;
+					}
+				}
+			}
+			$rezKt = [];
+			foreach ($kt as $item) {
+				$priceArr = $item->find('span');
+				if ($priceArr) {
+					$price = preg_replace('/[^\d]/ui', '', trim(strip_tags(current($priceArr)->innerText())));
+					try {
+						// $html = $item -> __toString();
+						$temp = $item->find('a');
+						if (!empty($temp)) {
+							$text = current($temp)->innerText();
+						}
+
+					} catch (Exception $e) {
+					}
+					if ($text) {
+						$rezKt[$text] = $price;
+					}
+				}
+			}
+			$rez = array_merge($rezMrt, $rezKt);
+		}
+		return $rez;
 	}
 }
 ?>

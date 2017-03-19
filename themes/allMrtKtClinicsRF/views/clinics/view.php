@@ -7,9 +7,11 @@ $this->setPageTitle($model->title);
 Yii::app() -> getClientScript() -> registerMetaTag($model -> description,'description');
 Yii::app() -> getClientScript() -> registerMetaTag($model -> keywords,'keywords');
 $modelName = get_class($model);
-
+$data = $_GET;
 
 $info = $this -> renderPartial('/clinics/_info', array('clinic' => $model),true);
+
+
 $cs = Yii::app()->getClientScript();
 $cs -> registerCoreScript('font-awesome');
 $cs->registerCssFile(Yii::app()->theme->baseUrl.'/css/objects_list.css');
@@ -110,12 +112,22 @@ $cs -> registerScript('Order','
 				<?php echo $model -> text; ?>
 			</div>
 			<div class="small_info list-group">
+				<?php
+				$verb = 'finance';
+				if ($temp = $model -> getFirstTriggerValueString($verb)) : ?>
+					<div class="time list-group-item">
+						<i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
+						<div class="text"><?php echo ($data[$verb] ? '<b>' : ''). $temp . ($data[$verb] ? '</b>' : ''); ?></div>
+					</div>
+				<?php endif; ?>
+
 				<?php if ($model -> working_hours) : ?>
 				<div class="time list-group-item">
 					<i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
 					<div class="text"><?php echo $model -> working_hours; ?></div>
 				</div>
 				<?php endif; ?>
+
 				<?php if ($model -> address) : ?>
 				<div class="address list-group-item">
 					<i class="fa fa-map-marker fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
@@ -124,6 +136,37 @@ $cs -> registerScript('Order','
 								},explode(';',$model -> district))));?>)</div>
 				</div>
 				<?php endif; ?>
+
+				<?php
+				$verb = 'district';
+				if ($temp = $model -> getFirstTriggerValueString($verb)) : ?>
+					<div class="time list-group-item">
+						<i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
+						<div class="text"><?php echo ($data[$verb] ? '<b>' : ''). $temp . ($data[$verb] ? '</b>' : ''); ?></div>
+					</div>
+				<?php endif; ?>
+
+				<?php
+				$verb = 'metro';
+				if ($model -> metro_station) : ?>
+					<div class="time list-group-item">
+						<i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
+						<div class="text">
+							<?php
+								if ($data[$verb]) {
+									list($lat, $long) = $model -> getCoordinates();
+									echo "<b>";
+									$m = Metro::model() -> findByAttributes(['id' => $data[$verb]]);
+									echo $m -> display($lat, $long);
+									echo "</b>";
+								} else {
+									echo $model -> getSortedMetroString();
+								}
+							?>
+						</div>
+					</div>
+				<?php endif; ?>
+
 				<?php if ($model -> phone) : ?>
 				<div class="phone list-group-item">
 					<i class="fa fa-mobile fa-lg fa-fw" aria-hidden="true"></i>&nbsp;

@@ -8,6 +8,7 @@
  * @property integer $id_type
  * @property integer $id_block
  * @property string $name
+ * @property string $name2
  * @property string $verbiage
  * @property integer $object_type
  *
@@ -41,7 +42,7 @@ class ObjectPrice extends CTModel
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, id_type, id_block, name, object_type', 'safe', 'on'=>'search'),
-			array('id, id_type, id_block, name, object_type, verbiage', 'safe'),
+			array('id, id_type, id_block, name, name2,object_type, verbiage', 'safe'),
 		);
 	}
 
@@ -68,6 +69,7 @@ class ObjectPrice extends CTModel
 			'id_type' => 'Id Type',
 			'id_block' => 'Id Block',
 			'name' => 'Name',
+			'name2' => 'Название на сайте-источнике',
 			'object_type' => 'Object Type',
 		);
 	}

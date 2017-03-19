@@ -77,10 +77,10 @@ class doctors extends BaseModel
             array('site', 'length', 'max'=>1000),
             array('logo', 'file', 'types'=>'jpg, gif, png', 'maxSize' => 1048576, 'allowEmpty'=>true),
             array('audio', 'file', 'types'=>'mp3', 'maxSize' => 209715200, 'allowEmpty'=>true),
-            array('district, metro_station, phone, fax, triggers, map_coordinates, metros_display, districts_display, triggers_display, keywords, description', 'length', 'max'=>2000),
+            array('district, metro_station, phone, fax, triggers, map_coordinates, keywords, description', 'length', 'max'=>2000),
 			array('verbiage, address, working_days, working_hours, video, title', 'length', 'max'=>255),
 			array('*', 'safe'),
-			array('id, name, verbiage, phone, phone_extra, fax, address, address_extra, site, district, metro_station, working_days, working_hours, services, rating, triggers, map_coordinates, text, audio, video, metros_display, districts_display, triggers_display, title, keywords, description, experience, education, curses', 'safe', 'on'=>'search'),
+			array('id, name, verbiage, phone, phone_extra, fax, address, address_extra, site, district, metro_station, working_days, working_hours, services, rating, triggers, map_coordinates, text, audio, video, title, keywords, description, experience, education, curses', 'safe', 'on'=>'search'),
 			array('clinicsInput, rewards, short, text', 'safe')
 		);
 	}
@@ -190,7 +190,7 @@ class doctors extends BaseModel
 	/**
 	* Function to be called after $model -> save() methods succeeds
 	*/
-	protected function afterSave()
+	public function afterSave()
 	{
 		
 		parent::afterSave();
@@ -228,50 +228,7 @@ class doctors extends BaseModel
 	
 	
 	public function ReadData(){
-		$metros = ''; $districts = ''; $triggers = '';
-		$metros_array = array_map('trim', explode(';', $this->metro_station));
-		$districts_array = array_map('trim', explode(';', $this->district));
-		$triggers_array = array_map('trim', explode(';', $this->triggers));
-		
-		/* metro stations */
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("id", $metros_array);
-		$metros_array = Metro::model()->findAll($criteria);
 
-		if (!empty($metros_array)) {
-			foreach ($metros_array as $metro)
-				$metros .= $metro->name . ', ';
-		}
-		$metros = substr($metros, 0, strrpos($metros, ','));
-		
-		/* districts */
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("id", $districts_array);
-		$districts_array = Districts::model()->findAll($criteria);
-
-		if (!empty($districts_array)) {
-			foreach ($districts_array as $district)
-				$districts .= $district->name . ', ';
-		}
-		$districts = substr($districts, 0, strrpos($districts, ','));
-
-		/* triggers */
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("t.id", $triggers_array);
-		$criteria->with = array('trigger');
-		$criteria->limit = 5;
-		$criteria->together = true;
-
-		$triggers_array = TriggerValues::model()->findAll($criteria);
-
-		if (!empty($triggers_array)) {
-			foreach ($triggers_array as $trigger)
-				$triggers .= $trigger->trigger->name . ':&nbsp;&nbsp; ' .  $trigger->value . '<br/> ';
-		}
-
-		$this->metros_display = $metros;
-		$this->districts_display = $districts;
-		$this->triggers_display = $triggers_array;
 	}
 	
 	public function filterByTriggerValuesIdString($doctors, $string)
