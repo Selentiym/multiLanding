@@ -57,6 +57,54 @@ $noDisplay = ['mrt', 'kt'];
 <div id="objects_list">
     <div id="column1" class="content_column">
         <div id="links" class="content_block">
+            <h1>
+                <?php
+                $triggersPrepared = Article::prepareTriggers($_GET);
+                $fr = function ($trigger, $field) use ($triggersPrepared){
+                    return Article::renderParameter($triggersPrepared, $trigger,$field);
+                };
+                $text = '';
+
+                if ($street = $fr('street','value')) {
+                    $text .= $street.",";
+                } elseif ($distr = $fr('district','value')) {
+                    $text .= $distr.' район,';
+                }
+                $text .= ' '.$fr('research', 'value');
+
+                if ($triggersPrepared['contrast']) {
+                    $text .= ' с контрастом';
+                }
+                $field = $fr('field','value');
+                $slices = $fr('slices','value');
+                $type = $fr('magnetType', 'type');
+                if (($field)||($slices)||($type)) {
+
+                    $text .= ' на';
+                    if ($type) {
+                        $text .= ' '.$type;
+                    }
+                    if ($field) {
+                        $text .= ' '.$field;
+                    } elseif($slices) {
+                        $slices = preg_replace('/[^\d]/','',$slices);
+                        $text .= ' '.$slices.'-срезовом';
+                    }
+                    $text .= ' томографе';
+                }
+
+                if ($temp = $fr('con','value')) {
+                    $text .= ' около метро '.$temp;
+                }
+
+                if (!$street) {
+                    if ($temp = $fr('metro','value')) {
+                        $text .= ' около метро '.$temp;
+                    }
+                }
+                echo $text;
+                ?>
+            </h1>
             Тут будет дескрипшн
             <?php
                 $a = ArticleRule::getArticle('service');
@@ -91,7 +139,7 @@ $noDisplay = ['mrt', 'kt'];
                 if ($service instanceof clinics) {
                     $this->renderPartial('/clinics/_single_clinics', ['data' => $service]);
                 }
-                $a = Article::model() -> findByAttributes(['verbiage' => 'dynamic']);
+                //$a = Article::model() -> findByAttributes(['verbiage' => 'dynamic']);
                 if ($a) {
                     echo "<div class='single_object'>".$a -> prepareTextByVerbiage($_GET)."</div>";
                 }

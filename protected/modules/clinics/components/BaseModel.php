@@ -999,8 +999,18 @@ class BaseModel extends CTModel
 			$html = file_get_html($this -> external_link);
 			//$html = file_get_html('http://mrt-catalog.ru/clinic/16');
 			$both = current($html->find('#myTabContent'));
-			$mrt = $both->childNodes(0)->childNodes(0)->childNodes();
-			$kt = $both->childNodes(1)->childNodes(0)->childNodes();
+			$mrtNode = $both->childNodes(0);
+			if ($mrtNode) {
+				$mrt = $mrtNode->childNodes(0)->childNodes();
+			} else {
+				$mrt = [];
+			}
+			$ktNode = $both->childNodes(1);
+			if ($ktNode) {
+				$kt = $ktNode->childNodes(0)->childNodes();
+			} else {
+				$kt = [];
+			}
 			$rezMrt = [];
 			foreach ($mrt as $item) {
 				$priceArr = $item->find('span');

@@ -192,7 +192,6 @@ class doctors extends BaseModel
 	*/
 	public function afterSave()
 	{
-		
 		parent::afterSave();
 		//Сохраняем изменения в массиве докторов
 		if (!isset($this -> clinicsInput)) {
