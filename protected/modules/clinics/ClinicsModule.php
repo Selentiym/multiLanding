@@ -155,4 +155,36 @@ class ClinicsModule extends UWebModule {
 	public function _isAllowedToEvaluate($name) {
 		return in_array($name, ['clinicsComments','doctorsComments']) || parent::_isAllowedToEvaluate($name);
 	}
+
+	/**
+	 *
+	 */
+	public function averagePrice($triggers) {
+		if ($v = $triggers['research']) {
+			$prices = [ObjectPrice::model() -> findByAttributes(['verbiage' => $v])];
+		} else {
+			$prices = [];
+			if ($triggers['mrt']) {
+				$prices = array_merge($prices, ObjectPrice::model() -> findAllByAttributes(['id_type' => PriceType::getId('mrt')]));
+			}
+			if ($triggers['kt']) {
+				$prices = array_merge($prices, ObjectPrice::model() -> findAllByAttributes(['id_type' => PriceType::getId('kt')]));
+			}
+			if (empty($prices)) {
+				$prices = ObjectPrice::model() -> findAll();
+			}
+		}
+		$c = 0;
+		$sum = 0;
+		foreach ($prices as $p) {
+			foreach ($p -> values as $value) {
+				$sum += $value -> value;
+				$c ++;
+			}
+		}
+		if ($c == 0) {
+			return 0;
+		}
+		return round($sum / $c);
+	}
 }

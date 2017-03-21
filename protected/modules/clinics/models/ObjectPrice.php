@@ -56,6 +56,7 @@ class ObjectPrice extends CTModel
 		return array(
 			'type' => array(self::BELONGS_TO, 'PriceType', 'id_type'),
 			'block' => array(self::BELONGS_TO, 'ObjectPriceBlock', 'id_block'),
+			'values' => array(self::HAS_MANY, 'ObjectPriceValue','id_price'),
 		);
 	}
 

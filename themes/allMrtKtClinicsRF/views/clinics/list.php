@@ -59,7 +59,8 @@ $noDisplay = ['mrt', 'kt'];
         <div id="links" class="content_block">
             <h1>
                 <?php
-                $triggersPrepared = Article::prepareTriggers($_GET);
+                $triggers = $_GET;
+                $triggersPrepared = Article::prepareTriggers($triggers);
                 $fr = function ($trigger, $field) use ($triggersPrepared){
                     return Article::renderParameter($triggersPrepared, $trigger,$field);
                 };
@@ -70,13 +71,28 @@ $noDisplay = ['mrt', 'kt'];
                 } elseif ($distr = $fr('district','value')) {
                     $text .= $distr.' район,';
                 }
-                $text .= ' '.$fr('research', 'value');
+                if ($triggersPrepared['time']['verbiage']) {
+                    $text .= ($text ? ' к' : 'К').'круглосуточно';
+                }
+                $research = $fr('research', 'value');
+                if (!$research) {
+                    if ($triggersPrepared['mrt']['verbiage']) {
+                        $r = 'МРТ ';
+                    }
+                    if ($triggersPrepared['kt']['verbiage']) {
+                        $r = $r ? $r.' и КТ' : 'КТ' ;
+                    }
+                    $r = $r ? $r : 'МРТ или КТ';
+                } else {
+                    $r = $research;
+                }
+                $text .= ($text ? ' с' : 'С').'делать '.$r;
 
                 if ($triggersPrepared['contrast']) {
                     $text .= ' с контрастом';
                 }
                 $field = $fr('field','value');
-                $slices = $fr('slices','value');
+                $slices = preg_replace('/[^\d]/','',$fr('slices','value'));
                 $type = $fr('magnetType', 'type');
                 if (($field)||($slices)||($type)) {
 
@@ -87,33 +103,120 @@ $noDisplay = ['mrt', 'kt'];
                     if ($field) {
                         $text .= ' '.$field;
                     } elseif($slices) {
-                        $slices = preg_replace('/[^\d]/','',$slices);
                         $text .= ' '.$slices.'-срезовом';
                     }
                     $text .= ' томографе';
                 }
 
-                if ($temp = $fr('con','value')) {
-                    $text .= ' около метро '.$temp;
-                }
-
                 if (!$street) {
-                    if ($temp = $fr('metro','value')) {
-                        $text .= ' около метро '.$temp;
+                    if ($metro = $fr('metro','value')) {
+                        $text .= ' около метро '.$metro;
                     }
                 }
+                if ($temp = $fr("children","value")) {
+                    $text .= ' детям';
+                }
+
+                if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
+                    $text .= ' недорого - представленные ниже клиники сгруппированы с учетом: Скидок, Акций и цен Ночью';
+                }
+
                 echo $text;
                 ?>
             </h1>
-            Тут будет дескрипшн
             <?php
-                $a = ArticleRule::getArticle('service');
-                if ($a) {
-                    echo $a -> prepareTextByVerbiage($_GET);
-                } else {
-                    echo "Статья не неайдена.";
+                $countClinics = function($verbs) use ($triggers){
+                    $condition = [];
+                    foreach ($verbs as $verb) {
+                        $condition[$verb] = $triggers[$verb];
+                    }
+                    $condition = array_filter($condition);
+                    return count(Yii::app() -> getModule('clinics') -> getClinics($condition));
+                };
+                $echoClinicsNumber = function($num){
+                    $r = $num;
+                    if ($num == 0) {
+                        $r .= ' клиник';
+                    } elseif ($num % 10 == 1) {
+                        $r .= ' клинике';
+                    } elseif($num % 10 != 1 ){
+                        $r .= ' клиниках';
+                    }
+                    return $r;
+                };
+                $echoMedCentersNumber = function($num){
+                    $r = $num;
+                    if ($num == 0) {
+                        $r .= ' медицинских центров';
+                    } elseif ($num % 10 == 1) {
+                        $r .= ' медицинском центре';
+                    } elseif($num % 10 != 1 ){
+                        $r .= ' медицинских центрах';
+                    }
+                    return $r;
+                };
+                echo "<p>Где можно сделать $r в Санкт-Петербурге (СПб)?</p>";
+                $num = $mod -> getClinics([
+                    'mrt' => $triggersPrepared['mrt']['verbiage'],
+                    'kt' => $triggersPrepared['kt']['verbiage'],
+                    'research' => $triggersPrepared['research']['verbiage'],
+                ]);
+                echo "<p>Пройти диагностику $r можно в ".$echoClinicsNumber($countClinics(['mrt','kt','research'])). ' Санкт-Петербурга</p>';
+                echo "<p>Сколько стоит {$r}?</p>";
+                echo "<p>Средняя цена на $r равна {$mod->averagePrice($triggers)}</p>";
+
+
+                if ($street) {
+                    echo "<p>Где можно сделать $r в непосредственной близости от адреса: {$street}?</p>";
+                    echo "Пройти $r можно в ".$echoMedCentersNumber($countClinics(['district']))." в непосредственной близости от адреса: {$street}";
+                } elseif ($distr = $fr('district', 'districtPredl')) {
+                    echo "<p>Где можно сделать $r в $distr районе?</p>";
+                    echo "<p>Пройти $r можно в ".$echoMedCentersNumber($countClinics(['district','mrt','kt','research']))." в $distr районе.</p>";
+                } elseif ($metro = $fr('metro','value')) {
+                    echo "<p>Где можно сделать $r в возле метро $metro?</p>";
+                    echo "<p>Пройти $r можно в ".$echoMedCentersNumber($countClinics(['metro']))." возле метро $metro.</p>";
                 }
+                if (($type)&&(!$slices)&&(!$field)) {
+                    echo "<p>$r на ".$fr('magnetType','tomografTypeCommentPredl').' томографе можно пройти в '.$echoClinicsNumber($countClinics(['mrt','kt','research','magnetType']))."</p>";
+                } elseif ($field) {
+                    echo "<p>$r на $field ".$fr('field','fieldCommentPredl')." томографе можно пройти в ".$echoClinicsNumber($countClinics(['mrt','kt','research','magnetType','field']))."</p>";
+                } elseif ($slices) {
+                    echo "<p>$r на {$slices}-срезовом томографе можно пройти в ".$echoClinicsNumber($countClinics(['mrt','kt','research','magnetType','field']))."</p>";
+                }
+                if ($triggers['contrast']) {
+                    echo "<p>$r с контрастом - $r с контрастированием можно сделать в ".$echoMedCentersNumber($countClinics(['mrt','kt','research','contrast']))."</p>";
+                    //Определяем, что интересно пользоателю: мрт или кт
+                    if ($triggers['research']) {
+                        $rType = PriceType::getAlias(ObjectPrice::model()->findByAttributes(['verbiage' => $triggers['research']])->id_type);
+                    } else {
+                        if ($triggers['mrt']) {
+                            $rType = 'mrt';
+                        }
+                        if ($triggers['kt']) {
+                            $rType = 'kt';
+                        }
+                    }
+                    if ($rType == 'mrt') {
+                        echo "
+                    <p>Это исследование, при котором пациенту внутривенно вводят парамагнитное контрастное вещество. В отличие от компьютерной томографии, контрастные вещества, используемые в МРТ диагностике легче переносятся организмом, но все же проверить функцию почек перед проведением исследования рекомендуется (анализ на креатинин). Использование контрастного усиления позволяет получить дополнительную диагностическую информацию при поиске и дифференциации новообразований (как доброкачественных, так и злокачественных), позволяет более качественно визуализировать сосуды, также контрастное усиление необходимо в ряде специализированных видов КТ и МРТ диагностики, таких как Перфузия.</p>
+                    ";
+                    } else {
+                        echo "<p>Это исследование, при котором пациенту внутривенно вводят йодсодержащее контрастное вещество. Нужно понимать, что использование контраста при проведении компьютерной томографии имеет ограничения и противопоказания, к которым относятся: аллергия на йод и сниженная функция почек (рекомендуется сделать анализ на креатинин). Использование контрастного усиления позволяет получить дополнительную диагностическую информацию при поиске и дифференциации новообразований (как доброкачественных, так и злокачественных), позволяет визуализировать сосуды, также контрастное усиление необходимо в ряде специализированных видов КТ и МРТ диагностики, таких как Перфузия.</p>";
+                    }
+                }
+                if ($triggers['children']) {
+                    echo "<p>$r детям - сделать $r ребенку можно в ".$echoClinicsNumber($countClinics(['research','mrt','kt','children']))."</p>";
+                }
+                if ($triggers['sortBy'] == 'priceUp') {
+                    echo "<p>Медицинские клиники, представленные ниже, отфильтрованы по возрастанию цены на $r с учетом: Скидок, Акций и цен Ночью. От более дешевого ценового предложения к более высокому.</p>";
+                }
+                if ($triggers['time']) {
+                    echo "<p>$r круглосуточно – ниже представлены медицинские центры, где $r можно пройти круглосуточно.</p>";
+                }
+                //echo "Пройти диагностику $r можно в ".$countClinics(['mrt','kt','research']). " медцентрах.";
             ?>
+
+
 <!--            <a href="--><?php //echo Yii::app() -> baseUrl.'/'; ?><!--">Главная</a>-->
 <!--            --><?php //$val = $_POST["clinicsSearchForm"]["speciality"] ? $_POST["clinicsSearchForm"]["speciality"] : $_POST["doctorsSearchForm"]["speciality"]; ?>
 <!--            <a href="--><?php //echo $this -> createUrl('home/clinics');?><!--">--><?php //echo "Клиники" ; ?><!--</a>-->

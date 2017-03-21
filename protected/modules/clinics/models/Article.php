@@ -512,7 +512,7 @@ class Article extends BaseModel {
 				return '';
 			}
 			if (!$val_id['verbiage']) {
-				return 'МРТ и КТ';
+				return '';
 			}
 			$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $val_id['verbiage']]);
 			if (!$price) {return '';}
