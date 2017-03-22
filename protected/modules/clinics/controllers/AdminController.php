@@ -1486,6 +1486,7 @@ class AdminController extends Controller
     {
         $this->render('view');
 
+        echo md5('abc'.'unique salt');
         //васька 59.942525, 30.278247
         //март 59.941344, 30.257154
         echo DistanceSpherical(30.278247, 59.942525,30.257154,59.941344);

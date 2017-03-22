@@ -18,6 +18,7 @@
  * @property integer $metro_station
  * @property string $working_days
  * @property string $working_hours
+ * @property string $restrictions
  * @property string $services
  * @property double $rating
  * @property string $logo
@@ -82,7 +83,7 @@ class clinics extends BaseModel
 			array('verbiage, address, working_days, working_hours, video, title', 'length', 'max'=>255),
 			array('*', 'safe'),
 			array('id, name, verbiage, phone, phone_extra, fax, address, address_extra, site, district, metro_station, working_days, working_hours, services, rating, triggers, map_coordinates, text, audio, video, title, keywords, description, experience, partner', 'safe', 'on'=>'search'),
-			array('doctorsInput, mrt, kt, external_link', 'safe')
+			array('doctorsInput, mrt, kt, external_link, restrictions', 'safe')
 		);
 	}
 
@@ -132,7 +133,8 @@ class clinics extends BaseModel
 			'description' => CHtml::encode('Description'),
 			'mrt' => CHtml::encode('Информация об МРТ аппаратуре (кратко, <br/> для переноса строки.)'),
 			'kt' => CHtml::encode('Информация о КТ аппаратуре (кратко, <br/> для переноса строки.)'),
-			'experience' => CHtml::encode('Существует (лет)')
+			'experience' => CHtml::encode('Существует (лет)'),
+			'restrictions' => CHtml::encode('Ограничения')
 		);
 	}
     /** This is a standard search function (not in use)

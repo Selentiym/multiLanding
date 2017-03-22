@@ -124,6 +124,12 @@
             <?php echo $form->error($model,'working_hours'); ?>
         </div>
 
+        <div>
+            <?php echo $form->labelEx($model,'restrictions'); ?>
+            <?php echo $form->textField($model,'restrictions',array('size'=>60,'maxlength'=>255)); ?>
+            <?php echo $form->error($model,'restrictions'); ?>
+        </div>
+
     </div>
 
     <div class="span6">
