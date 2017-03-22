@@ -36,41 +36,51 @@ $cs -> registerScript('Order','
 $noDisplay = ['mrt', 'kt'];
 
 
-$keys = ['поиск клиник'];
+$keys = [];
 $triggers = $_GET;
 $triggersPrepared = Article::prepareTriggers($triggers);
 $fr = function ($trigger, $field) use ($triggersPrepared, $mod){
     return $mod -> renderParameter($triggersPrepared, $trigger,$field);
 };
-
-$echoClinicsNumber = function($num){
-    $r = $num;
-    if ($num == 0) {
-        $r .= ' клиник';
+function echoClinicsNumber ($arr){
+    $verbs = translateVerbiages($arr);
+    $num = countClinics($verbs);
+    $r = $num.clinicWord($num);
+    return CHtml::link($r,Yii::app() -> getController() -> createUrl('home/clinics', $verbs,'&',false,true));
+};
+function clinicWord ($num) {
+    $r = '';
+    if ($num == 11) {
+        $r .= ' клиниках';
     } elseif ($num % 10 == 1) {
         $r .= ' клинике';
     } elseif($num % 10 != 1 ){
         $r .= ' клиниках';
     }
     return $r;
-};
-$echoMedCentersNumber = function($num){
+}
+function echoMedCentersNumber ($arr) {
+    $verbs = translateVerbiages($arr);
+    $num = countClinics($verbs);
     $r = $num;
-    if ($num == 0) {
-        $r .= ' медицинских центров';
+    if ($num == 11) {
+        $r .= ' медицинских центрах';
     } elseif ($num % 10 == 1) {
         $r .= ' медицинском центре';
     } elseif($num % 10 != 1 ){
         $r .= ' медицинских центрах';
     }
-    return $r;
+    return CHtml::link($r,Yii::app() -> getController() -> createUrl('home/clinics', $verbs,'&',false,true));
 };
-$countClinics = function($verbs) use ($triggers){
+function translateVerbiages ($verbs) {
     $condition = [];
     foreach ($verbs as $verb) {
-        $condition[$verb] = $triggers[$verb];
+        $condition[$verb] = $_GET[$verb];
     }
     $condition = array_filter($condition);
+    return $condition;
+}
+function countClinics ($condition){
     return count(Yii::app() -> getModule('clinics') -> getClinics($condition));
 };
 $text = '';
@@ -83,11 +93,12 @@ if ($street = $fr('street','value')) {
     $keys[] = $distr;
 }
 if ($triggers['time']) {
-    $text .= ($text ? ' к' : 'К').'круглосуточно';
+    $text .= ($text ? ' к' : 'К').'руглосуточно';
     $keys[] = 'круглосуточно';
 }
 $research = $fr('research', 'value');
 if (!$research) {
+    $keys[] = 'томография';
     if ($triggers['mrt']) {
         $r = 'МРТ ';
         $keys[] = 'мрт';
@@ -146,8 +157,9 @@ if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
     $h1 .= ' недорого - представленные ниже клиники сгруппированы с учетом: Скидок, Акций и цен Ночью';
     $title .= ' недорого - здесь представлены клиники, с наиболее выгодной ценой на данное исследование с учетом скидок, акций и ночных цен';
 }
+$keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
-$description = $h1. " можно пройти в ".$echoClinicsNumber(count($objects))." Санкт-Петербурга, на данной странице представлены все эти медицинские центры, также здесь вы можите провести детальный поиск по различным параметрам исследования.";
+$description = $h1. " можно пройти в ".clinicWord(count($objects))." Санкт-Петербурга, на данной странице представлены все эти медицинские центры, также здесь вы можите провести детальный поиск по различным параметрам исследования.";
 
 $research = $triggers['research'] ? ObjectPrice::model()->findByAttributes(['verbiage' => $triggers['research']]) : null;
 if ($research) {
@@ -190,33 +202,35 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     'kt' => $triggersPrepared['kt']['verbiage'],
                     'research' => $triggersPrepared['research']['verbiage'],
                 ]);
-                echo "<p>Пройти диагностику $r можно в ".$echoClinicsNumber($countClinics(['mrt','kt','research'])). ' Санкт-Петербурга</p>';
+                echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research']). ' Санкт-Петербурга</p>';
                 echo "<p>Сколько стоит {$r}?</p>";
                 echo "<p>Средняя цена на $r равна {$mod->averagePrice($triggers)}</p>";
 
 
                 if ($street) {
                     echo "<p>Где можно сделать $r в непосредственной близости от адреса: {$street}?</p>";
-                    echo "Пройти $r можно в ".$echoMedCentersNumber($countClinics(['district']))." в непосредственной близости от адреса: {$street}";
+                    echo "Пройти $r можно в ".echoMedCentersNumber(['district'])." в непосредственной близости от адреса: {$street}";
                 } elseif ($distr = $fr('district', 'districtPredl')) {
                     echo "<p>Где можно сделать $r в $distr районе?</p>";
-                    echo "<p>Пройти $r можно в ".$echoMedCentersNumber($countClinics(['district','mrt','kt','research']))." в $distr районе.</p>";
+                    echo "<p>Пройти $r можно в ".echoMedCentersNumber(['district','mrt','kt','research'])." в $distr районе.</p>";
                 } elseif ($metro = $fr('metro','value')) {
                     echo "<p>Где можно сделать $r в возле метро $metro?</p>";
-                    echo "<p>Пройти $r можно в ".$echoMedCentersNumber($countClinics(['metro']))." возле метро $metro.</p>";
+                    echo "<p>Пройти $r можно в ".echoMedCentersNumber(['metro'])." возле метро $metro.</p>";
                 }
                 if (($type)&&(!$slices)&&(!$field)) {
-                    echo "<p>$r на ".$fr('magnetType','tomografTypeCommentPredl').' томографе можно пройти в '.$echoClinicsNumber($countClinics(['mrt','kt','research','magnetType']))."</p>";
+                    echo "<p>$r на ".$fr('magnetType','tomografTypeCommentPredl').' томографе можно пройти в '.echoClinicsNumber(['mrt','kt','research','magnetType'])."</p>";
                 } elseif ($field) {
-                    echo "<p>$r на $field ".$fr('field','fieldCommentPredl')." томографе можно пройти в ".$echoClinicsNumber($countClinics(['mrt','kt','research','magnetType','field']))."</p>";
+                    echo "<p>$r на $field ".$fr('field','fieldCommentPredl')." томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','magnetType','field'])."</p>";
                 } elseif ($slices) {
-                    echo "<p>$r на {$slices}-срезовом томографе можно пройти в ".$echoClinicsNumber($countClinics(['mrt','kt','research','magnetType','field']))."</p>";
+                    echo "<p>$r на {$slices}-срезовом томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','magnetType','field'])."</p>";
                 }
                 if ($triggers['contrast']) {
-                    echo "<p>$r с контрастом - $r с контрастированием можно сделать в ".$echoMedCentersNumber($countClinics(['mrt','kt','research','contrast']))."</p>";
+                    echo "<p>$r с контрастированием можно сделать в ".echoMedCentersNumber(['mrt','kt','research','contrast'])."</p>";
                     //Определяем, что интересно пользоателю: мрт или кт
                     if ($research) {
                         $rType = PriceType::getAlias($research->id_type);
+                    } elseif ($triggers['mrt'] && $triggers['kt']) {
+                        $rType = 'both';
                     } else {
                         if ($triggers['mrt']) {
                             $rType = 'mrt';
@@ -229,18 +243,20 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                         echo "
                     <p>Это исследование, при котором пациенту внутривенно вводят парамагнитное контрастное вещество. В отличие от компьютерной томографии, контрастные вещества, используемые в МРТ диагностике легче переносятся организмом, но все же проверить функцию почек перед проведением исследования рекомендуется (анализ на креатинин). Использование контрастного усиления позволяет получить дополнительную диагностическую информацию при поиске и дифференциации новообразований (как доброкачественных, так и злокачественных), позволяет более качественно визуализировать сосуды, также контрастное усиление необходимо в ряде специализированных видов КТ и МРТ диагностики, таких как Перфузия.</p>
                     ";
-                    } else {
+                    } elseif ($rType == 'kt') {
                         echo "<p>Это исследование, при котором пациенту внутривенно вводят йодсодержащее контрастное вещество. Нужно понимать, что использование контраста при проведении компьютерной томографии имеет ограничения и противопоказания, к которым относятся: аллергия на йод и сниженная функция почек (рекомендуется сделать анализ на креатинин). Использование контрастного усиления позволяет получить дополнительную диагностическую информацию при поиске и дифференциации новообразований (как доброкачественных, так и злокачественных), позволяет визуализировать сосуды, также контрастное усиление необходимо в ряде специализированных видов КТ и МРТ диагностики, таких как Перфузия.</p>";
+                    } else {
+                        echo "<p>Это исследование, при котором пациенту внутривенно вводят йодсодержащее (в случае КТ) или парамагнитное (в случае МРТ) контрастное вещество. Нужно понимать, что использование контраста при проведении компьютерной томографии имеет ограничения и противопоказания, к которым относятся: аллергия на йод и сниженная функция почек (рекомендуется сделать анализ на креатинин). В отличие от компьютерной томографии, контрастные вещества, используемые в МРТ диагностике легче переносятся организмом, но все же проверить функцию почек перед проведением исследования стоит. Использование контрастного усиления позволяет получить дополнительную диагностическую информацию при поиске и дифференциации новообразований (как доброкачественных, так и злокачественных), при КТ позволяет визуализировать сосуды (они не видны без использования контраста), а при МРТ улучшает видимость сосудов, также контрастное усиление необходимо в ряде специализированных видов КТ и МРТ диагностики, таких как Перфузия.Это исследование, при котором пациенту внутривенно вводят йодсодержащее (в случае КТ) или парамагнитное (в случае МРТ) контрастное вещество. Нужно понимать, что использование контраста при проведении компьютерной томографии имеет ограничения и противопоказания, к которым относятся: аллергия на йод и сниженная функция почек (рекомендуется сделать анализ на креатинин). В отличие от компьютерной томографии, контрастные вещества, используемые в МРТ диагностике легче переносятся организмом, но все же проверить функцию почек перед проведением исследования стоит. Использование контрастного усиления позволяет получить дополнительную диагностическую информацию при поиске и дифференциации новообразований (как доброкачественных, так и злокачественных), при КТ позволяет визуализировать сосуды (они не видны без использования контраста), а при МРТ улучшает видимость сосудов, также контрастное усиление необходимо в ряде специализированных видов КТ и МРТ диагностики, таких как Перфузия.</p>";
                     }
                 }
                 if ($triggers['children']) {
-                    echo "<p>$r детям - сделать $r ребенку можно в ".$echoClinicsNumber($countClinics(['research','mrt','kt','children']))."</p>";
+                    echo "<p>$r детям - сделать $r ребенку можно в ".echoClinicsNumber(['research','mrt','kt','children'])."</p>";
                 }
                 if ($triggers['sortBy'] == 'priceUp') {
                     echo "<p>Медицинские клиники, представленные ниже, отфильтрованы по возрастанию цены на $r с учетом: Скидок, Акций и цен Ночью. От более дешевого ценового предложения к более высокому.</p>";
                 }
                 if ($triggers['time']) {
-                    echo "<p>$r круглосуточно – ниже представлены медицинские центры, где $r можно пройти круглосуточно.</p>";
+                    echo "<p>Ниже представлены медицинские центры, где $r можно пройти круглосуточно.</p>";
                 }
                 //echo "Пройти диагностику $r можно в ".$countClinics(['mrt','kt','research']). " медцентрах.";
             ?>

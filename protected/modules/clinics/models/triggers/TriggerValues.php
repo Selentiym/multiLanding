@@ -176,6 +176,14 @@ class TriggerValues extends CTModel {
 		return $this -> getTriggerParameterValuesArray() [$id];
 	}
 	/**
+	 * @param string $verbiage of the TriggerParameter for which the value is needed
+	 * @return TriggerParameterValue|null
+	 */
+	public function getParameterValueByVerbiage($verbiage) {
+		$id = TriggerParameter::idByVerbiage($verbiage);
+		return $this -> getTriggerParameterValuesArray()[$id];
+	}
+	/**
 	 * @return TriggerParameterValue[]
 	 */
 	public function getTriggerParameterValuesArray(){

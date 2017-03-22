@@ -141,4 +141,18 @@ class TriggerParameter extends CTModel
 		}
 		return parent::customFind($arg, $external, $scenario);
 	}
+
+	/**
+	 * @param string $verbiage
+	 * @return int
+	 */
+	public static function idByVerbiage($verbiage) {
+		static $arr;
+		if (!isset($arr)) {
+			foreach (self::model() -> findAll() as $param) {
+				$arr[$param -> verbiage] = $param -> id;
+			}
+		}
+		return $arr[$verbiage];
+	}
 }

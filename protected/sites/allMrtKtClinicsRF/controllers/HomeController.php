@@ -60,10 +60,15 @@ class HomeController extends CController {
      * @param array $params
      * @param string $ampersand
      * @param bool $clear
+     * @param bool $paramsOnly
      * @return string|void
      */
-    public function createUrl($route,$params=[],$ampersand = '&',$clear = false){
-        $dops = $_GET;
+    public function createUrl($route,$params=[],$ampersand = '&',$clear = false, $paramsOnly = false){
+        if (!$paramsOnly) {
+            $dops = $_GET;
+        } else {
+            $dops = [];
+        }
         static $allowed;
 
         if (!$clear) {
@@ -77,8 +82,6 @@ class HomeController extends CController {
                 return in_array($key,$allowed);
             }, ARRAY_FILTER_USE_KEY);
             $params = SiteDispatcher::mergeArray($dops,$params);
-        } else {
-            $a=1;
         }
         return parent::createUrl($route,$params,$ampersand);
     }

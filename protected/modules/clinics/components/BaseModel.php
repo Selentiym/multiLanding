@@ -720,6 +720,17 @@ class BaseModel extends CTModel
 					}
 				}
 			} catch (Exception $e) {}
+			$dups = $this -> findAllByAttributes(['verbiage' => $this -> verbiage]);
+			$e = false;
+			if (count($dups) > 2) {
+				$e = true;
+			}elseif (count($dups) == 1) {
+				$e = current($dups) -> id != $this -> id;
+			}
+			if ($e) {
+				$this->addError('verbiage', 'Атрибут "' . $this->getAttributeLabel('verbiage') . '" должен быть уникальным!');
+				return false;
+			}
 			return true;
 		} else {
 			return false;
