@@ -8,9 +8,11 @@ Yii::app() -> getClientScript() -> registerMetaTag($model -> description,'descri
 Yii::app() -> getClientScript() -> registerMetaTag($model -> keywords,'keywords');
 $modelName = get_class($model);
 $data = $_GET;
+if ($data['research']) {
+	$data['research'] = ObjectPrice::model() -> findByAttributes(['verbiage' => $data['research']]);
+}
 
 $info = $this -> renderPartial('/clinics/_info', array('clinic' => $model),true);
-
 
 $cs = Yii::app()->getClientScript();
 $cs -> registerCoreScript('font-awesome');
@@ -111,93 +113,10 @@ $cs -> registerScript('Order','
 			<div class="object_text">
 				<?php echo $model -> text; ?>
 			</div>
-			<div class="small_info list-group">
-				<?php
-				$verb = 'finance';
-				if ($temp = $model -> getFirstTriggerValueString($verb)) : ?>
-					<div class="time list-group-item">
-						<i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-						<div class="text"><?php echo ($data[$verb] ? '<b>' : ''). $temp . ($data[$verb] ? '</b>' : ''); ?></div>
-					</div>
-				<?php endif; ?>
 
-				<?php if ($model -> working_hours) : ?>
-				<div class="time list-group-item">
-					<i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-					<div class="text"><?php echo $model -> working_hours; ?></div>
-				</div>
-				<?php endif; ?>
-
-				<?php if ($model -> address) : ?>
-				<div class="address list-group-item">
-					<i class="fa fa-map-marker fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-					<div class="text p-adr"><?php echo $model -> address; echo " (".implode(', ',array_filter(array_map(function($id){
-									return Districts::model() -> findByPk($id) -> name;
-								},explode(';',$model -> district))));?>)</div>
-				</div>
-				<?php endif; ?>
-
-				<?php
-				$verb = 'district';
-				if ($temp = $model -> getFirstTriggerValueString($verb)) : ?>
-					<div class="time list-group-item">
-						<i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-						<div class="text"><?php echo ($data[$verb] ? '<b>' : ''). $temp . ($data[$verb] ? '</b>' : ''); ?></div>
-					</div>
-				<?php endif; ?>
-
-				<?php
-				$verb = 'metro';
-				if ($model -> metro_station) : ?>
-					<div class="time list-group-item">
-						<i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-						<div class="text">
-							<?php
-								if ($data[$verb]) {
-									list($lat, $long) = $model -> getCoordinates();
-									echo "<b>";
-									$m = Metro::model() -> findByAttributes(['id' => $data[$verb]]);
-									echo $m -> display($lat, $long);
-									echo "</b>";
-								} else {
-									echo $model -> getSortedMetroString();
-								}
-							?>
-						</div>
-					</div>
-				<?php endif; ?>
-
-				<?php if ($model -> phone) : ?>
-				<div class="phone list-group-item">
-					<i class="fa fa-mobile fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-					<div class="text p-adr"><?php echo $model -> phone; ?></div>
-				</div>
-				<?php endif; ?>
-				<?php if ($model -> mrt) : ?>
-				<div class="tomogrMrt list-group-item">
-					<i class="fa fa-life-ring fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-					<div class="text p-adr"><?php echo $model -> mrt; ?></div>
-				</div>
-				<?php endif; ?>
-				<?php if ($model -> kt) : ?>
-				<div class="tomogrKt list-group-item">
-					<i class="fa fa-navicon fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-					<div class="text p-adr"><?php echo $model -> kt; ?></div>
-				</div>
-				<?php endif; ?>
-				<?php if ($model -> site) : ?>
-				<div class="tomogrKt list-group-item">
-					<i class="fa fa-link fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-					<div class="text p-adr"><?php echo $model -> site; ?></div>
-				</div>
-				<?php endif; ?>
-				<?php if ($model -> experience) : ?>
-				<div class="tomogrKt list-group-item">
-					<i class="fa fa-line-chart fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-					<div class="text p-adr">Существует <?php echo $model -> experience; ?> лет</div>
-				</div>
-				<?php endif; ?>
-			</div>
+			<?php
+			$this -> renderPartial('//clinics/_iconData', ['model' => $model, 'data' => $data]);
+			?>
 			<div class="assign_cont objects_cont">
 				<!--<div class="assign"><a href="<?php echo  Yii::app() -> baseUrl;?>/assign"><span>Записаться на прием</span></a></div>-->
 				<div id="<?php echo $id; ?>"></div>

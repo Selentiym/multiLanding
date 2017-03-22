@@ -17,6 +17,7 @@ $objects = $mod -> getClinics($_GET,null,null,$criteria);
 $cs = Yii::app()->getClientScript();
 
 $cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/objects_list.css');
+$cs->registerCssFile(Yii::app()->theme->baseUrl.'/css/clinicsView.css');
 $cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/rateit.css');
 $cs->registerScriptFile(Yii::app() -> theme -> baseUrl.'/js/select2.full.js',CClientScript::POS_BEGIN);
 $cs->registerScriptFile(Yii::app()->theme -> baseUrl.'/js/jquery.rateit.min.js?' . time(), CClientScript::POS_END);
@@ -33,6 +34,128 @@ $cs -> registerScript('Order','
 ',CClientScript::POS_READY);
 
 $noDisplay = ['mrt', 'kt'];
+
+
+$keys = ['поиск клиник'];
+$triggers = $_GET;
+$triggersPrepared = Article::prepareTriggers($triggers);
+$fr = function ($trigger, $field) use ($triggersPrepared, $mod){
+    return $mod -> renderParameter($triggersPrepared, $trigger,$field);
+};
+
+$echoClinicsNumber = function($num){
+    $r = $num;
+    if ($num == 0) {
+        $r .= ' клиник';
+    } elseif ($num % 10 == 1) {
+        $r .= ' клинике';
+    } elseif($num % 10 != 1 ){
+        $r .= ' клиниках';
+    }
+    return $r;
+};
+$echoMedCentersNumber = function($num){
+    $r = $num;
+    if ($num == 0) {
+        $r .= ' медицинских центров';
+    } elseif ($num % 10 == 1) {
+        $r .= ' медицинском центре';
+    } elseif($num % 10 != 1 ){
+        $r .= ' медицинских центрах';
+    }
+    return $r;
+};
+$countClinics = function($verbs) use ($triggers){
+    $condition = [];
+    foreach ($verbs as $verb) {
+        $condition[$verb] = $triggers[$verb];
+    }
+    $condition = array_filter($condition);
+    return count(Yii::app() -> getModule('clinics') -> getClinics($condition));
+};
+$text = '';
+
+if ($street = $fr('street','value')) {
+    $text .= $street.",";
+    $keys[] = $street;
+} elseif ($distr = $fr('district','value')) {
+    $text .= $distr.' район,';
+    $keys[] = $distr;
+}
+if ($triggers['time']) {
+    $text .= ($text ? ' к' : 'К').'круглосуточно';
+    $keys[] = 'круглосуточно';
+}
+$research = $fr('research', 'value');
+if (!$research) {
+    if ($triggers['mrt']) {
+        $r = 'МРТ ';
+        $keys[] = 'мрт';
+    }
+    if ($triggers['kt']) {
+        $r = $r ? $r.' и КТ' : 'КТ' ;
+        $keys[] = 'кт';
+    }
+    $r = $r ? $r : 'МРТ или КТ';
+} else {
+    $r = $research;
+    $keys[] = $research;
+}
+$text .= ($text ? ' с' : 'С').'делать '.$r;
+
+if ($triggers['contrast']) {
+    $text .= ' с контрастом';
+    $keys[] = 'с контрастом';
+}
+$field = $fr('field','value');
+$keys[] = $field;
+$slices = preg_replace('/[^\d]/','',$fr('slices','value'));
+$keys[] = $slices;
+$type = $fr('magnetType', 'type');
+$keys[] = $type;
+if (($field)||($slices)||($type)) {
+
+    $text .= ' на';
+    if ($type) {
+        $text .= ' '.$type;
+    }
+    if ($field) {
+        $text .= ' '.$field;
+    } elseif($slices) {
+        $text .= ' '.$slices.'-срезовом';
+    }
+    $text .= ' томографе';
+}
+$keys[] = 'томограф';
+$metro = $fr('metro','value');
+$keys[] = $metro;
+if (!$street) {
+    if ($metro) {
+        $text .= ' около метро '.$metro;
+    }
+}
+if ($temp = $fr("children","value")) {
+    $text .= ' детям';
+    $keys[] = 'детям';
+    $keys[] = 'ребенку';
+}
+$h1 = $text;
+$title = $text;
+if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
+    $keys[] = $r.' недорого';
+    $h1 .= ' недорого - представленные ниже клиники сгруппированы с учетом: Скидок, Акций и цен Ночью';
+    $title .= ' недорого - здесь представлены клиники, с наиболее выгодной ценой на данное исследование с учетом скидок, акций и ночных цен';
+}
+$this -> pageTitle = $title;
+$description = $h1. " можно пройти в ".$echoClinicsNumber(count($objects))." Санкт-Петербурга, на данной странице представлены все эти медицинские центры, также здесь вы можите провести детальный поиск по различным параметрам исследования.";
+
+$research = $triggers['research'] ? ObjectPrice::model()->findByAttributes(['verbiage' => $triggers['research']]) : null;
+if ($research) {
+    $decription .= $research -> getArticle() -> description;
+}
+Yii::app() -> getClientScript() -> registerMetaTag($description,'description');
+Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($keys)),'keywords');
+
 
 ?>
 
@@ -58,103 +181,9 @@ $noDisplay = ['mrt', 'kt'];
     <div id="column1" class="content_column">
         <div id="links" class="content_block">
             <h1>
-                <?php
-                $triggers = $_GET;
-                $triggersPrepared = Article::prepareTriggers($triggers);
-                $fr = function ($trigger, $field) use ($triggersPrepared){
-                    return Article::renderParameter($triggersPrepared, $trigger,$field);
-                };
-                $text = '';
-
-                if ($street = $fr('street','value')) {
-                    $text .= $street.",";
-                } elseif ($distr = $fr('district','value')) {
-                    $text .= $distr.' район,';
-                }
-                if ($triggersPrepared['time']['verbiage']) {
-                    $text .= ($text ? ' к' : 'К').'круглосуточно';
-                }
-                $research = $fr('research', 'value');
-                if (!$research) {
-                    if ($triggersPrepared['mrt']['verbiage']) {
-                        $r = 'МРТ ';
-                    }
-                    if ($triggersPrepared['kt']['verbiage']) {
-                        $r = $r ? $r.' и КТ' : 'КТ' ;
-                    }
-                    $r = $r ? $r : 'МРТ или КТ';
-                } else {
-                    $r = $research;
-                }
-                $text .= ($text ? ' с' : 'С').'делать '.$r;
-
-                if ($triggersPrepared['contrast']) {
-                    $text .= ' с контрастом';
-                }
-                $field = $fr('field','value');
-                $slices = preg_replace('/[^\d]/','',$fr('slices','value'));
-                $type = $fr('magnetType', 'type');
-                if (($field)||($slices)||($type)) {
-
-                    $text .= ' на';
-                    if ($type) {
-                        $text .= ' '.$type;
-                    }
-                    if ($field) {
-                        $text .= ' '.$field;
-                    } elseif($slices) {
-                        $text .= ' '.$slices.'-срезовом';
-                    }
-                    $text .= ' томографе';
-                }
-
-                if (!$street) {
-                    if ($metro = $fr('metro','value')) {
-                        $text .= ' около метро '.$metro;
-                    }
-                }
-                if ($temp = $fr("children","value")) {
-                    $text .= ' детям';
-                }
-
-                if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
-                    $text .= ' недорого - представленные ниже клиники сгруппированы с учетом: Скидок, Акций и цен Ночью';
-                }
-
-                echo $text;
-                ?>
+                <?php echo $h1; ?>
             </h1>
             <?php
-                $countClinics = function($verbs) use ($triggers){
-                    $condition = [];
-                    foreach ($verbs as $verb) {
-                        $condition[$verb] = $triggers[$verb];
-                    }
-                    $condition = array_filter($condition);
-                    return count(Yii::app() -> getModule('clinics') -> getClinics($condition));
-                };
-                $echoClinicsNumber = function($num){
-                    $r = $num;
-                    if ($num == 0) {
-                        $r .= ' клиник';
-                    } elseif ($num % 10 == 1) {
-                        $r .= ' клинике';
-                    } elseif($num % 10 != 1 ){
-                        $r .= ' клиниках';
-                    }
-                    return $r;
-                };
-                $echoMedCentersNumber = function($num){
-                    $r = $num;
-                    if ($num == 0) {
-                        $r .= ' медицинских центров';
-                    } elseif ($num % 10 == 1) {
-                        $r .= ' медицинском центре';
-                    } elseif($num % 10 != 1 ){
-                        $r .= ' медицинских центрах';
-                    }
-                    return $r;
-                };
                 echo "<p>Где можно сделать $r в Санкт-Петербурге (СПб)?</p>";
                 $num = $mod -> getClinics([
                     'mrt' => $triggersPrepared['mrt']['verbiage'],
@@ -186,8 +215,8 @@ $noDisplay = ['mrt', 'kt'];
                 if ($triggers['contrast']) {
                     echo "<p>$r с контрастом - $r с контрастированием можно сделать в ".$echoMedCentersNumber($countClinics(['mrt','kt','research','contrast']))."</p>";
                     //Определяем, что интересно пользоателю: мрт или кт
-                    if ($triggers['research']) {
-                        $rType = PriceType::getAlias(ObjectPrice::model()->findByAttributes(['verbiage' => $triggers['research']])->id_type);
+                    if ($research) {
+                        $rType = PriceType::getAlias($research->id_type);
                     } else {
                         if ($triggers['mrt']) {
                             $rType = 'mrt';
@@ -215,7 +244,12 @@ $noDisplay = ['mrt', 'kt'];
                 }
                 //echo "Пройти диагностику $r можно в ".$countClinics(['mrt','kt','research']). " медцентрах.";
             ?>
-
+            <?php
+            /**
+             * Генерируем title
+             */
+            $title = '';
+            ?>
 
 <!--            <a href="--><?php //echo Yii::app() -> baseUrl.'/'; ?><!--">Главная</a>-->
 <!--            --><?php //$val = $_POST["clinicsSearchForm"]["speciality"] ? $_POST["clinicsSearchForm"]["speciality"] : $_POST["doctorsSearchForm"]["speciality"]; ?>
@@ -238,9 +272,13 @@ $noDisplay = ['mrt', 'kt'];
         </div>
         <div id="the_list">
             <?php
+                $data = $triggers;
+                if ($data['research']) {
+                    $data['research'] = ObjectPrice::model() -> findByAttributes(['verbiage' => $data['research']]);
+                }
                 $service = Yii::app() -> getModule('clinics') -> getClassModel('clinics') -> findByAttributes(['verbiage' => 'service']);
                 if ($service instanceof clinics) {
-                    $this->renderPartial('/clinics/_single_clinics', ['data' => $service]);
+                    $this->renderPartial('/clinics/_single_clinics', ['model' => $service, 'data' => $data]);
                 }
                 //$a = Article::model() -> findByAttributes(['verbiage' => 'dynamic']);
                 if ($a) {
@@ -248,7 +286,7 @@ $noDisplay = ['mrt', 'kt'];
                 }
                 if (!empty($objects)) {
                     foreach($objects as $object) {
-                        $this -> renderPartial('/clinics/_single_clinics',['data' => $object]);
+                        $this -> renderPartial('/clinics/_single_clinics',['model' => $object, 'data' => $data]);
                     }
                 } else {
                     echo "<div class='single_object'>Не найдено ни одной клиники. Тут будет отдельная страничка.</div>";

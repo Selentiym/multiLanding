@@ -8,6 +8,10 @@
 class BaseModel extends CTModel
 {
 	/**
+	 * @var TriggerValues
+	 */
+	private $allTriggerValues;
+	/**
 	 * @param integer PAGE_SIZE - number of objects on a single page
 	 */
 	const PAGE_SIZE = 18;
@@ -747,8 +751,7 @@ class BaseModel extends CTModel
 	 * @return TriggerValues[]
 	 */
 	public function giveTriggerValuesObjects() {
-		static $allValues;
-		if (!isset($allValues)) {
+		if (!isset($this -> allTriggerValues)) {
 			$triggers_array = array_filter(array_map('trim', explode(';', $this->triggers)));
 			$criteria = new CDbCriteria;
 			$criteria -> addInCondition('t.id', $triggers_array);
@@ -756,13 +759,13 @@ class BaseModel extends CTModel
 				/**
 				 * @type TriggerValues $obj
 				 */
-				if (!$allValues[$obj -> trigger -> verbiage]) {
-					$allValues[$obj -> trigger -> verbiage] = [];
+				if (!$this -> allTriggerValues[$obj -> trigger -> verbiage]) {
+					$this -> allTriggerValues[$obj -> trigger -> verbiage] = [];
 				}
-				$allValues[$obj -> trigger -> verbiage][] = $obj;
+				$this -> allTriggerValues[$obj -> trigger -> verbiage][] = $obj;
 			}
 		}
-		return $allValues;
+		return $this -> allTriggerValues;
 	}//*/
 	public function giveMrtPrices() {
 		return array_filter($this -> getPriceValues(), function($pr) {

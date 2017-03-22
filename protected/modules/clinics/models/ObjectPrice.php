@@ -122,4 +122,11 @@ class ObjectPrice extends CTModel
 	{
 		return parent::model($className);
 	}
+
+	/**
+	 * @return Article
+	 */
+	public function getArticle() {
+		return new Article();
+	}
 }

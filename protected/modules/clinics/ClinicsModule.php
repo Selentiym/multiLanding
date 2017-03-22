@@ -187,4 +187,14 @@ class ClinicsModule extends UWebModule {
 		}
 		return round($sum / $c);
 	}
+	public function renderParameter ($triggers, $trigger_verb, $field){
+		static $rendered;
+		if (!isset($rendered)) {
+			$rendered = [];
+		}
+		if (!isset($rendered[$trigger_verb][$field])) {
+			$rendered[$trigger_verb][$field] = Article::renderParameter($triggers, $trigger_verb, $field);
+		}
+		return $rendered[$trigger_verb][$field];
+	}
 }

@@ -1485,6 +1485,10 @@ class AdminController extends Controller
     public function actionIndex()
     {
         $this->render('view');
+
+        //васька 59.942525, 30.278247
+        //март 59.941344, 30.257154
+        echo DistanceSpherical(30.278247, 59.942525,30.257154,59.941344);
 //        $a = Article::model() -> findByPk(3);
 //        //$a -> text = "<search:nameOne>";
 //        echo $a -> prepareText(['search' => 2]);
