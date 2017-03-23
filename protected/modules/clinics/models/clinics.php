@@ -143,7 +143,7 @@ class clinics extends BaseModel
 	public function search()
 	{
 		$criteria=new CDbCriteria;
-
+		$criteria -> order = 'partner DESC';
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('phone',$this->phone,true);
