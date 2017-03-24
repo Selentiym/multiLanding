@@ -12,6 +12,7 @@ class TaskGenModule extends UWebModule {
         // import the module-level models and components
         $this->setImport(array(
             $this -> getId() . '.models.*',
+            $this -> getId() . '.models.strings.*',
             $this -> getId() . '.components.*',
         ));
     }

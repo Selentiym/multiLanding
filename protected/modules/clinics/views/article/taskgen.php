@@ -7,6 +7,7 @@ Yii::app() -> getModule('taskgen') -> giveProjectTree([
     "generateButtons" => 'js:function(branch){
         if (!branch) {return;}
         if (!branch.parent.parent) {return;}
+        var $idContainer = $("#id_taskgen");
         createStatuses(branch);
         branch.copyButton = $("<span>",{
             class: "copy_to_author button",
@@ -18,6 +19,7 @@ Yii::app() -> getModule('taskgen') -> giveProjectTree([
                 if (confirm("Вы, действительно, хотите заменить текст в окне редактора?")) {
                     tinyMCE.activeEditor.setContent(str);
                     $("#description").val(data.description);
+                    $idContainer.val(branch.id);
                 }
             });
         });
@@ -30,6 +32,7 @@ Yii::app() -> getModule('taskgen') -> giveProjectTree([
             $.post("'.$this -> createUrl("admin/copyDescendants").'/?id=" + branch.id,
                         {articleId: '.$model -> id.'}, null,"json"
                     ).done(function(data){
+                        $idContainer.val(branch.id);
                         if (data.success) {
                             alert("Загрузка успешна!");
                         }

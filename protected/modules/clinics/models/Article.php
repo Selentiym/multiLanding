@@ -12,6 +12,7 @@
  * @property string $text
  * @property string $description
  * @property integer $id_type
+ * @property integer $id_taskgen
  * @property string $triggers
  *
  * @property ArticleResearch[] $researches
@@ -82,7 +83,7 @@ class Article extends BaseModel {
 			array('verbiage, clinic_card', 'length', 'max'=>50),
             array('title', 'length', 'max'=>255),
             array('keywords, description', 'length', 'max'=>2000),
-			array('id, name, verbiage, parent_id, level, text, clinic_card, title, keywords, description, show_objects, id_parent, id_type, research_input', 'safe'),
+			array('id, name, verbiage, parent_id, level, text, clinic_card, title, keywords, description, show_objects, id_parent, id_type, research_input, id_taskgen', 'safe'),
 		);
 	}
 
@@ -675,8 +676,10 @@ class Article extends BaseModel {
 			$article -> description = $temp['description'];
 			$article -> name = $task -> name;
 			$article -> verbiage = str2url($task -> name);
-			$article -> save();
-			$article -> copyChildrenFromTaskgen($task);
+			$article -> id_taskgen = $task -> id;
+			if ($article -> save()) {
+				$article->copyChildrenFromTaskgen($task);
+			}
 		}
 
 	}

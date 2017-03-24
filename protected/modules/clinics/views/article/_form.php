@@ -45,6 +45,7 @@
             <?php echo $form->textField($model,'name',array('size'=>50,'maxlength'=>50)); ?>
             <?php echo $form->error($model,'name'); ?>
         </div>
+            <?php echo $form->hiddenField($model,'id_taskgen',array('id' => 'id_taskgen','size'=>50,'maxlength'=>50)); ?>
 
         <div>
             <?php echo $form->labelEx($model,'verbiage'); ?>

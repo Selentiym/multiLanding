@@ -35,4 +35,7 @@ class TaskController extends CController {
          */
         echo json_encode($task -> dumpText(), JSON_FORCE_OBJECT);
     }
+    public function actionGetKeys($id){
+
+    }
 }
