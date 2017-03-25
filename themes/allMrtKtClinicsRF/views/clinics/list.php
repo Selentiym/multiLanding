@@ -110,8 +110,12 @@ if (!$research) {
     $r = $r ? $r : 'МРТ или КТ';
 } else {
     $r = $research;
+    $rRod = $fr('research','nameRod');
+    $rVin = $fr('research','nameVin');
     $keys[] = $research;
 }
+$rRod = isset($rRod) ? $rRod : $r;
+$rVin = isset($rVin) ? $rVin : $r;
 $text .= ($text ? ' с' : 'С').'делать '.$r;
 
 if ($triggers['contrast']) {
@@ -197,9 +201,9 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
             </h1>
             <?php
                 if ($triggers['city']) {
-                    echo "<p>Где можно сделать $r в {$fr('city','cityNamePredl')}?</p>";
+                    echo "<p>Где можно сделать $rVin в {$fr('city','cityNamePredl')}?</p>";
                 } else {
-                    echo "<p>Где можно сделать $r?</p>";
+                    echo "<p>Где можно сделать $rVin?</p>";
                 }
                 $num = $mod -> getClinics([
                     'mrt' => $triggers['mrt'],
@@ -208,26 +212,26 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 ]);
                 echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research','city']). ' '.$fr('city','cityNameRod').'</p>';
                 echo "<p>Сколько стоит {$r}?</p>";
-                echo "<p>Средняя цена на $r равна {$mod->averagePrice($triggers)}</p>";
+                echo "<p>Средняя цена на $rVin равна {$mod->averagePrice($triggers)}</p>";
                 if ($street) {
                     echo "<p>Где можно сделать $r в непосредственной близости от адреса: {$street}?</p>";
-                    echo "Пройти $r можно в ".echoMedCentersNumber(['district'])." в непосредственной близости от адреса: {$street}";
+                    echo "Пройти $rVin можно в ".echoMedCentersNumber(['district'])." в непосредственной близости от адреса: {$street}";
                 } elseif ($distr = $fr('district', 'districtPredl')) {
-                    echo "<p>Где можно сделать $r в $distr районе?</p>";
-                    echo "<p>Пройти $r можно в ".echoMedCentersNumber(['district','mrt','kt','research','city'])." в $distr районе.</p>";
+                    echo "<p>Где можно сделать $rVin в $distr районе?</p>";
+                    echo "<p>Пройти $rVin можно в ".echoMedCentersNumber(['district','mrt','kt','research','city'])." в $distr районе.</p>";
                 } elseif ($metro = $fr('metro','value')) {
-                    echo "<p>Где можно сделать $r в возле метро $metro?</p>";
-                    echo "<p>Пройти $r можно в ".echoMedCentersNumber(['metro'])." возле метро $metro.</p>";
+                    echo "<p>Где можно сделать $rVin в возле метро $metro?</p>";
+                    echo "<p>Пройти $rVin можно в ".echoMedCentersNumber(['metro'])." возле метро $metro.</p>";
                 }
                 if (($type)&&(!$slices)&&(!$field)) {
-                    echo "<p>$r на ".$fr('magnetType','tomografTypeCommentPredl').' томографе можно пройти в '.echoClinicsNumber(['mrt','kt','research','city','magnetType'])."</p>";
+                    echo "<p>$rVin на ".$fr('magnetType','tomografTypeCommentPredl').' томографе можно пройти в '.echoClinicsNumber(['mrt','kt','research','city','magnetType'])."</p>";
                 } elseif ($field) {
-                    echo "<p>$r на $field ".$fr('field','fieldCommentPredl')." томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','city','magnetType','field'])."</p>";
+                    echo "<p>$rVin на $field ".$fr('field','fieldCommentPredl')." томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','city','magnetType','field'])."</p>";
                 } elseif ($slices) {
-                    echo "<p>$r на {$slices}-срезовом томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','city','magnetType','field'])."</p>";
+                    echo "<p>$rVin на {$slices}-срезовом томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','city','magnetType','field'])."</p>";
                 }
                 if ($triggers['contrast']) {
-                    echo "<p>$r с контрастированием можно сделать в ".echoMedCentersNumber(['mrt','kt','research','city','contrast'])."</p>";
+                    echo "<p>$rVin с контрастированием можно сделать в ".echoMedCentersNumber(['mrt','kt','research','city','contrast'])."</p>";
                     //Определяем, что интересно пользоателю: мрт или кт
                     if ($research) {
                         $rType = PriceType::getAlias($research->id_type);
@@ -252,10 +256,10 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     }
                 }
                 if ($triggers['children']) {
-                    echo "<p>$r детям - сделать $r ребенку можно в ".echoClinicsNumber(['research','mrt','kt','children'])."</p>";
+                    echo "<p>Сделать $rVin ребенку можно в ".echoClinicsNumber(['research','mrt','kt','children'])."</p>";
                 }
                 if ($triggers['sortBy'] == 'priceUp') {
-                    echo "<p>Медицинские клиники, представленные ниже, отфильтрованы по возрастанию цены на $r с учетом: Скидок, Акций и цен Ночью. От более дешевого ценового предложения к более высокому.</p>";
+                    echo "<p>Медицинские клиники, представленные ниже, отфильтрованы по возрастанию цены на $rVin с учетом: Скидок, Акций и цен Ночью. От более дешевого ценового предложения к более высокому.</p>";
                 }
                 if ($triggers['time']) {
                     echo "<p>Ниже представлены медицинские центры, где $r можно пройти круглосуточно.</p>";
