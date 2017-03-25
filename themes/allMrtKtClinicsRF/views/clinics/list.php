@@ -296,7 +296,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 if ($service instanceof clinics) {
                     $this->renderPartial('/clinics/_single_clinics', ['model' => $service, 'data' => $data]);
                 }
-                $a = ArticleRule::getArticle('service');
+                $a = ArticleRule::getArticle('dynamic');
                 //$a = ;
                 if ($a) {
                     echo "<div class='single_object'>".$a -> prepareTextByVerbiage($_GET)."</div>";

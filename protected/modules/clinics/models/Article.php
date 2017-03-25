@@ -22,7 +22,8 @@ class Article extends BaseModel {
 	const PRICE_VERBIAGE = 'research';
 	public static $types = [
 		1 => 'text',
-		2 => 'service'
+		2 => 'service',
+		3 => 'dynamic'
 	];
 	/**
 	 * @property array children - an array of Article objects that are children to this one.
