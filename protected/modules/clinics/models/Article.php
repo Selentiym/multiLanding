@@ -509,15 +509,25 @@ class Article extends BaseModel {
 
 		//Если речь об исследовании, то особый алгоритм
 		if ($trigger_verb == self::PRICE_VERBIAGE) {
-			if ($field != 'value') {
-				return '';
-			}
+			//Ищем цену
 			if (!$val_id['verbiage']) {
 				return '';
 			}
-			$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $val_id['verbiage']]);
-			if (!$price) {return '';}
-			return $price -> name;
+			$price = ObjectPrice::model()->findByAttributes(['verbiage' => $val_id['verbiage']]);
+			if (!$price) {
+				return '';
+			}
+			//Рендерим значение
+			if ($field == 'value') {
+				return $price->name;
+			} elseif ($field == 'count') {
+				$num = count(Yii::app() -> getModule('clinics') -> getClinics(['research' => $price -> verbiage,'city' => $triggers['city']['verbiage']]));
+				if (($num % 10 == 1)&&($num != 11)) {
+					return $num.' клиники';
+				} else {
+					return $num.' клиник';
+				}
+			}
 		}
 
 		//Если поле тупо value, то нужно отобразить само значение параметра

@@ -65,6 +65,14 @@
                 <?php echo $form->error($model,'verbiage'); ?>
             </div>
 
+            <div>
+                <?php
+                echo $form->labelEx($model,'id_article');
+                echo CHtml::activeDropDownList($model,'id_article',['' => 'Не выбрано'] + CHtml::listData(Article::model() -> findAll(),'id','name'), [],[$model -> id_article],'');
+                echo $form->error($model,'id_article');
+                ?>
+            </div>
+
               
         <br/>
         <div class="buttons">

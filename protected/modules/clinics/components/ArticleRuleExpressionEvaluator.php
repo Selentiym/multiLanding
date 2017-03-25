@@ -40,9 +40,14 @@ class ArticleRuleExpressionEvaluator extends aLogicalExpressionEvaluator {
             }
         } elseif (!isset(self::$_cached[$str])) {
             self::$_cached[$str] = self::EVALUATING;
-            $a = ArticleRule::model() -> findByAttributes(['verbiage' => $str]);
-            if ($a instanceof ArticleRule) {
-                self::$_cached[$str] = $a->apply($this->_args);
+            $rez = $this -> evaluateSpecialOperand($str);
+            if ($rez === null) {
+                $a = ArticleRule::model()->findByAttributes(['verbiage' => $str]);
+                if ($a instanceof ArticleRule) {
+                    self::$_cached[$str] = $a->apply($this->_args);
+                }
+            } else {
+                self::$_cached[$str] = $rez;
             }
         } else {
             if (self::$_cached[$str] === self::EVALUATING) {
@@ -50,6 +55,20 @@ class ArticleRuleExpressionEvaluator extends aLogicalExpressionEvaluator {
             }
         }
         return self::$_cached[$str];
+    }
+
+    protected function evaluateSpecialOperand($str) {
+        if (in_array($str,['mrtResearch','ktResearch'])) {
+            /**
+             * @type ObjectPrice $price
+             */
+            $price = ObjectPrice::model() -> findByAttributes(['verbiage' => $this -> _args['research']]);
+            if (! $price instanceof ObjectPrice) {
+                return false;
+            }
+            return strstr($str, $price -> type -> alias);
+        }
+        return null;
     }
 
     /**
@@ -60,6 +79,6 @@ class ArticleRuleExpressionEvaluator extends aLogicalExpressionEvaluator {
         if (!isset(self::$_allowedData)) {
             self::$_allowedData = CHtml::giveAttributeArray(ArticleRule::model() -> findAll(), 'verbiage');
         }
-        return in_array($str, self::$_allowedData);
+        return in_array($str, self::$_allowedData)||in_array($str,['mrtResearch','ktResearch']);
     }
 }
