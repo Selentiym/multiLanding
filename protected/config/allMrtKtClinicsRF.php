@@ -72,6 +72,7 @@ return SiteDispatcher::mergeArray(
                         'pattern' => '<modelName:(clinics|doctors)>/<research:\w+>'
                     ],
                     'clinics' => 'home/clinics',
+                    '<area:(spb|msc)>/clinics' => 'home/clinics',
                 ),
             ),
             'dbClinics'=>array(
