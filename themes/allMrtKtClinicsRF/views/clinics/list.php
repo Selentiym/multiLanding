@@ -159,7 +159,7 @@ if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
 }
 $keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
-$description = $h1. " можно пройти в ".clinicWord(count($objects))." Санкт-Петербурга, на данной странице представлены все эти медицинские центры, также здесь вы можите провести детальный поиск по различным параметрам исследования.";
+$description = $h1. " можно пройти в ".clinicWord(count($objects))." ".$fr('city', 'cityNameRod').", на данной странице представлены все эти медицинские центры, также здесь вы можите провести детальный поиск по различным параметрам исследования.";
 
 $research = $triggers['research'] ? ObjectPrice::model()->findByAttributes(['verbiage' => $triggers['research']]) : null;
 if ($research) {
@@ -196,36 +196,38 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 <?php echo $h1; ?>
             </h1>
             <?php
-                echo "<p>Где можно сделать $r в Санкт-Петербурге (СПб)?</p>";
+                if ($triggers['city']) {
+                    echo "<p>Где можно сделать $r в {$fr('city','cityNamePredl')}?</p>";
+                } else {
+                    echo "<p>Где можно сделать $r?</p>";
+                }
                 $num = $mod -> getClinics([
-                    'mrt' => $triggersPrepared['mrt']['verbiage'],
-                    'kt' => $triggersPrepared['kt']['verbiage'],
-                    'research' => $triggersPrepared['research']['verbiage'],
+                    'mrt' => $triggers['mrt'],
+                    'kt' => $triggers['kt'],
+                    'research' => $triggers['research'],
                 ]);
-                echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research']). ' Санкт-Петербурга</p>';
+                echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research','city']). ' '.$fr('city','cityNameRod').'</p>';
                 echo "<p>Сколько стоит {$r}?</p>";
                 echo "<p>Средняя цена на $r равна {$mod->averagePrice($triggers)}</p>";
-
-
                 if ($street) {
                     echo "<p>Где можно сделать $r в непосредственной близости от адреса: {$street}?</p>";
                     echo "Пройти $r можно в ".echoMedCentersNumber(['district'])." в непосредственной близости от адреса: {$street}";
                 } elseif ($distr = $fr('district', 'districtPredl')) {
                     echo "<p>Где можно сделать $r в $distr районе?</p>";
-                    echo "<p>Пройти $r можно в ".echoMedCentersNumber(['district','mrt','kt','research'])." в $distr районе.</p>";
+                    echo "<p>Пройти $r можно в ".echoMedCentersNumber(['district','mrt','kt','research','city'])." в $distr районе.</p>";
                 } elseif ($metro = $fr('metro','value')) {
                     echo "<p>Где можно сделать $r в возле метро $metro?</p>";
                     echo "<p>Пройти $r можно в ".echoMedCentersNumber(['metro'])." возле метро $metro.</p>";
                 }
                 if (($type)&&(!$slices)&&(!$field)) {
-                    echo "<p>$r на ".$fr('magnetType','tomografTypeCommentPredl').' томографе можно пройти в '.echoClinicsNumber(['mrt','kt','research','magnetType'])."</p>";
+                    echo "<p>$r на ".$fr('magnetType','tomografTypeCommentPredl').' томографе можно пройти в '.echoClinicsNumber(['mrt','kt','research','city','magnetType'])."</p>";
                 } elseif ($field) {
-                    echo "<p>$r на $field ".$fr('field','fieldCommentPredl')." томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','magnetType','field'])."</p>";
+                    echo "<p>$r на $field ".$fr('field','fieldCommentPredl')." томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','city','magnetType','field'])."</p>";
                 } elseif ($slices) {
-                    echo "<p>$r на {$slices}-срезовом томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','magnetType','field'])."</p>";
+                    echo "<p>$r на {$slices}-срезовом томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','city','magnetType','field'])."</p>";
                 }
                 if ($triggers['contrast']) {
-                    echo "<p>$r с контрастированием можно сделать в ".echoMedCentersNumber(['mrt','kt','research','contrast'])."</p>";
+                    echo "<p>$r с контрастированием можно сделать в ".echoMedCentersNumber(['mrt','kt','research','city','contrast'])."</p>";
                     //Определяем, что интересно пользоателю: мрт или кт
                     if ($research) {
                         $rType = PriceType::getAlias($research->id_type);
@@ -258,7 +260,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 if ($triggers['time']) {
                     echo "<p>Ниже представлены медицинские центры, где $r можно пройти круглосуточно.</p>";
                 }
-                //echo "Пройти диагностику $r можно в ".$countClinics(['mrt','kt','research']). " медцентрах.";
+                //echo "Пройти диагностику $r можно в ".$countClinics(['mrt','kt','research','city']). " медцентрах.";
             ?>
             <?php
             /**
