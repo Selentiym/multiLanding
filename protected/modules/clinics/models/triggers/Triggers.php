@@ -20,7 +20,8 @@ class Triggers extends CTModel {
 	public static $types = [
 		'DropDownTrigger' => 'Списком',
 		'TickTrigger' => 'Галочками',
-		'ButtonTrigger' => 'Кнопкой'
+		'ButtonTrigger' => 'Кнопкой',
+		'HiddenTrigger' => 'Спрятанный',
 	];
 
 	public function instantiate($attributes) {

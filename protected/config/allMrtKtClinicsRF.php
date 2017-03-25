@@ -61,6 +61,14 @@ return SiteDispatcher::mergeArray(
                         'attribute' => 'verbiage',
                         'attributeInPattern' => 'research',
                         'route' => 'home/<modelName>',
+                        'pattern' => '<area:(spb|msc)>/<modelName:(clinics|doctors)>/<research:\w+>'
+                    ],
+                    [
+                        'class' => 'application.components.urlRules.ModelAttributeUrlRule',
+                        'modelClass' => 'ObjectPrice',
+                        'attribute' => 'verbiage',
+                        'attributeInPattern' => 'research',
+                        'route' => 'home/<modelName>',
                         'pattern' => '<modelName:(clinics|doctors)>/<research:\w+>'
                     ],
                     'clinics' => 'home/clinics',

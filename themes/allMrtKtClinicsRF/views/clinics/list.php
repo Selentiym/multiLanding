@@ -116,7 +116,7 @@ if (!$research) {
 }
 $rRod = isset($rRod) ? $rRod : $r;
 $rVin = isset($rVin) ? $rVin : $r;
-$text .= ($text ? ' с' : 'С').'делать '.$r;
+$text .= ($text ? ' с' : 'С').'делать '.$rVin;
 
 if ($triggers['contrast']) {
     $text .= ' с контрастом';
