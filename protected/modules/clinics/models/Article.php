@@ -528,6 +528,16 @@ class Article extends BaseModel {
 				} else {
 					return $num.' клиник';
 				}
+			} elseif ($field == 'valueVin') {
+				if ($price -> nameVin) {
+					return $price -> nameVin;
+				}
+				return $price -> name;
+			} elseif ($field == 'valueRod') {
+				if ($price -> nameRod) {
+					return $price -> nameRod;
+				}
+				return $price -> name;
 			}
 		}
 
