@@ -528,12 +528,12 @@ class Article extends BaseModel {
 				} else {
 					return $num.' клиник';
 				}
-			} elseif ($field == 'valueVin') {
+			} elseif ($field == 'nameVin') {
 				if ($price -> nameVin) {
 					return $price -> nameVin;
 				}
 				return $price -> name;
-			} elseif ($field == 'valueRod') {
+			} elseif ($field == 'nameRod') {
 				if ($price -> nameRod) {
 					return $price -> nameRod;
 				}
