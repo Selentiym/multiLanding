@@ -163,11 +163,13 @@ if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
 }
 $keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
-$description = $h1. " можно пройти в ".clinicWord(count($objects))." ".$fr('city', 'cityNameRod').", на данной странице представлены все эти медицинские центры, также здесь вы можите провести детальный поиск по различным параметрам исследования.";
-
+$description = $rRod. " можно пройти в ".clinicWord(count($objects))." ".$fr('city', 'cityNameRod').", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
+/**
+ * @type ObjectPrice $research
+ */
 $research = $triggers['research'] ? ObjectPrice::model()->findByAttributes(['verbiage' => $triggers['research']]) : null;
 if ($research) {
-    $decription .= $research -> getArticle() -> description;
+    $description .= $research -> getArticle() -> description;
 }
 Yii::app() -> getClientScript() -> registerMetaTag($description,'description');
 Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($keys)),'keywords');
@@ -306,8 +308,9 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 //$a = ;
                 if ($a) {
                     echo "<div class='single_object'>".$a -> prepareTextByVerbiage($_GET)."</div>";
-                } else {
-                    echo "not found";
+                }
+                if (($research instanceof ObjectPrice)&&($a = $research -> getArticle())) {
+                    echo "<div class='single_object'>".$a -> prepareTextByVerbiage($triggers)."</div>";
                 }
                 if (!empty($objects)) {
                     foreach($objects as $object) {

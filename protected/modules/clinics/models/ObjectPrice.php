@@ -58,7 +58,7 @@ class ObjectPrice extends CTModel
 			'type' => array(self::BELONGS_TO, 'PriceType', 'id_type'),
 			'block' => array(self::BELONGS_TO, 'ObjectPriceBlock', 'id_block'),
 			'values' => array(self::HAS_MANY, 'ObjectPriceValue','id_price'),
-			'article' => array(self::HAS_MANY, 'Article','id_article'),
+			'article' => array(self::BELONGS_TO, 'Article','id_article'),
 		);
 	}
 
@@ -126,9 +126,9 @@ class ObjectPrice extends CTModel
 	}
 
 	/**
-	 * @return Article
+	 * @return Article|null
 	 */
 	public function getArticle() {
-		return new Article();
+		return $this -> article;
 	}
 }

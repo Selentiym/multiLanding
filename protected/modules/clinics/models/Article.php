@@ -507,6 +507,29 @@ class Article extends BaseModel {
 			if (!$m) {return '';}
 			return $m -> name;
 		}
+		//Чтобы меньше дергать базу, кэшируем
+		static $prices;
+		if (!isset($prices)) {
+			foreach (ObjectPrice::model() -> findAll() as $price) {
+				$prices[$price -> verbiage] = $price;
+			}
+		}
+		//Если нужно рендерить параметр конкретного исследования,
+		// то названием триггера будет исследование.
+		if ($price = $prices[$trigger_verb]) {
+			if ($field == 'min') {
+				$min = false;
+				$priceMin = false;
+				foreach ($price -> values as $value) {
+					if (($value -> value < $min)||(!$priceMin)) {
+						$priceMin = $price;
+						$min = $value -> value;
+					}
+				}
+				return $min;
+			}
+			return '';
+		}
 
 		//Если речь об исследовании, то особый алгоритм
 		if ($trigger_verb == self::PRICE_VERBIAGE) {
@@ -514,7 +537,7 @@ class Article extends BaseModel {
 			if (!$val_id['verbiage']) {
 				return '';
 			}
-			$price = ObjectPrice::model()->findByAttributes(['verbiage' => $val_id['verbiage']]);
+			$price = $prices[$val_id['verbiage']];
 			if (!$price) {
 				return '';
 			}
