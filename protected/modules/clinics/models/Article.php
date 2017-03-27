@@ -23,7 +23,8 @@ class Article extends BaseModel {
 	public static $types = [
 		1 => 'text',
 		2 => 'service',
-		3 => 'dynamic'
+		3 => 'dynamic',
+		4 => 'commercial'
 	];
 	/**
 	 * @property array children - an array of Article objects that are children to this one.
