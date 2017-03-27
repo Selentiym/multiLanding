@@ -81,7 +81,7 @@ $cs -> registerScript('Order','
 		$coordinaty=explode(' ',trim(strip_tags($point[1])));
 		
 		$cs -> registerScript('mapAct','
-			addCoords(['.$coordinaty[1].', '.$coordinaty[0].'],"'.$model -> name.', '.$adress.'");
+			addCoords(['.$coordinaty[1].', '.$coordinaty[0].'],"'.CJavaScript::encode($model -> name).', '.$adress.'");
 		',CClientScript::POS_READY);
 	} else {
 		$cs -> registerScript('mapAct','
