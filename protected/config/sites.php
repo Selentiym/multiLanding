@@ -47,7 +47,7 @@ return array(
     'oMrt' => [
         'host' => [
             'о-мрт.рф',
-            'http://xn----xtbekk.xn--p1ai/',
+            'xn----xtbekk.xn--p1ai',
         ],
         'userAgent' => false
     ],
