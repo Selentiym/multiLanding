@@ -5,8 +5,8 @@
  * Date: 06.07.2016
  * Time: 10:03
  */
-class FileViewAction extends UAction {
-
+class FileViewAction extends UAction implements iCallFunc {
+    use tCallFunc;
     /**
      * @var callable access function to be called to access page
      */
@@ -52,7 +52,7 @@ class FileViewAction extends UAction {
                         $this->controller->layout = $this->layout;
                     }
                     if (!$this->partial){
-                        $this->controller->render($this->view, array('get' => $_GET));
+                        $this->controller->render($this->getAttribute('view'), array('get' => $_GET));
                     } else {
                         $this->controller->renderPartial($this->view, array('get' => $_GET), false, $this -> showScripts);
                     }
@@ -64,6 +64,13 @@ class FileViewAction extends UAction {
         } else {
             $this -> controller -> redirect(Yii::app() -> baseUrl.'/login');
         }
+    }
+    /**
+     * @param string $name
+     * @return bool
+     */
+    function _isAllowedToEvaluate($name) {
+        return true;
     }
 }
 ?>

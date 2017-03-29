@@ -52,6 +52,7 @@ return SiteDispatcher::mergeArray(
                     '<module:(clinics)>/admin' => '<module>/admin/login',
                     '<module:(taskgen)>/task/<action:(getText)>' => '<module>/task/<action>',
                     '<module:(taskgen)>/task/<action:(getText)>/<id:\d+>' => '<module>/task/<action>',
+                    '<area:(spb|msc)>' => 'home/landing',
                     '<modelName:(clinics|doctors)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
                     'article' => 'home/articles',
                     'article/<verbiage:\w+>' => 'home/articleView',
@@ -71,8 +72,8 @@ return SiteDispatcher::mergeArray(
                         'route' => 'home/<modelName>',
                         'pattern' => '<modelName:(clinics|doctors)>/<research:\w+>'
                     ],
+                    'clinics-<area:(spb|msc)>' => 'home/clinics',
                     'clinics' => 'home/clinics',
-                    '<area:(spb|msc)>/clinics' => 'home/clinics',
                 ),
             ),
             'dbClinics'=>array(

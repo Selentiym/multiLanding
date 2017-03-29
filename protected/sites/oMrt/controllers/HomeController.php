@@ -50,7 +50,14 @@ class HomeController extends CController {
                 'guest' => true,
                 'scenario' => 'view',
                 'layout'=>'home'
-            ]
+            ],
+            'landing'=>array(
+                'class'=>'application.controllers.actions.FileViewAction',
+                'view' => function(){
+                    return '/landing/index'.$_GET['area'];
+                },
+                'guest' => true,
+            ),
         ];
     }
 
