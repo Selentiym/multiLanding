@@ -44,6 +44,13 @@ return array(
         ],
         'userAgent' => false
     ],
+    'oMrt' => [
+        'host' => [
+            'о-мрт.рф',
+            'http://xn----xtbekk.xn--p1ai/',
+        ],
+        'userAgent' => false
+    ],
     'newDesign' => [
         'host' => [
             'domain',
