@@ -63,32 +63,33 @@ $cs -> registerScript('Order','
 		$(this).hide();
 		$(this).parent().children(".show").show();
 	});
-',CClientScript::POS_READY); 
-
-	$adress = $model -> address;
-	//$adress = "Санкт-петербург, проспект металлистов, 25к1";
-	//$key = "ключ апи яндекс карт";
-	$found = array();
-	if (trim($adress)) {
-		$adress1=urlencode($adress);
-		$url="http://geocode-maps.yandex.ru/1.x/?geocode=".$adress1;//."&key=".$key;
-		//$content=file_get_contents($url);
-		preg_match('/<pos>(.*?)<\/pos>/',$content,$point);
-		preg_match('/<found>(.*?)<\/found>/',$content,$found);
+',CClientScript::POS_READY);
+	$temp = $model -> getCoordinates();
+	$coordinaty[0] = $temp[1];
+	$coordinaty[1] = $temp[0];
+	if ((!$coordinaty[0])||(!$coordinaty[1])) {
+		$adress = $model->address;
+		//$adress = "Санкт-петербург, проспект металлистов, 25к1";
+		//$key = "ключ апи яндекс карт";
+		$found = array();
+		if (trim($adress)) {
+			$adress1 = urlencode($adress);
+			$url = "http://geocode-maps.yandex.ru/1.x/?geocode=" . $adress1;//."&key=".$key;
+			//$content=file_get_contents($url);
+			preg_match('/<pos>(.*?)<\/pos>/', $content, $point);
+			preg_match('/<found>(.*?)<\/found>/', $content, $found);
+		}
+		$coordinaty = explode(' ', trim(strip_tags($point[1])));
 	}
-	if (trim(next($found)) > 0) {
-		$coordinaty=explode(' ',trim(strip_tags($point[1])));
-		
-		$cs -> registerScript('mapAct','
-			addCoords(['.$coordinaty[1].', '.$coordinaty[0].'],"'.CJavaScript::encode($model -> name).', '.$adress.'");
-		',CClientScript::POS_READY);
+	if ($coordinaty[1]&&$coordinaty[0]) {
+		$cs->registerScript('mapAct', '
+			addCoords([' . $coordinaty[1] . ', ' . $coordinaty[0] . '],"' . CJavaScript::encode($model->name) . ', ' . $adress . '");
+		', CClientScript::POS_READY);
 	} else {
-		$cs -> registerScript('mapAct','
-			$("#map").html("Не удалось найти местоположение заправшиваемого объекта. Пожалуйста, сообщите о данной ошибке в техподдержку сайта. Адрес: '.$adress.'.");
-		',CClientScript::POS_READY);
+		$cs->registerScript('mapAct', '
+			$("#map").html("Не удалось найти местоположение заправшиваемого объекта. Пожалуйста, сообщите о данной ошибке в техподдержку сайта. Адрес: ' . $adress . '.");
+		', CClientScript::POS_READY);
 	}
-
-
 	//$this -> renderPartial('//home/searchForm', array('filterForm' => $filterForm, 'modelName' => $modelName, 'fromPage' => $fromPage,'page' => $page));
 ?>
 <div class="h-card">
