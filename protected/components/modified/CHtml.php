@@ -26,7 +26,7 @@ class CHtml extends Html {
         ",CClientScript::POS_END);
     }
     public static function link($text, $url='#',$htmlOptions=array ( )) {
-        $htmlOptions ['rel'] = 'nofollow';
+        //$htmlOptions ['rel'] = 'nofollow';
         return parent::link($text, $url, $htmlOptions);
     }
     public static function activeDropDownListChosen2($model,$attribute,$data,$htmlOptions=array(),$selected_ids=array(),$select2Options='') {

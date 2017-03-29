@@ -159,7 +159,7 @@ $title = $text;
 if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
     $keys[] = $r.' недорого';
     $h1 .= ' недорого - представленные ниже клиники сгруппированы с учетом: Скидок, Акций и цен Ночью';
-    $title .= ' недорого - здесь представлены клиники, с наиболее выгодной ценой на данное исследование с учетом скидок, акций и ночных цен';
+    $title .= ' недорого - здесь представлены клиники с наиболее выгодной ценой на данное исследование с учетом скидок, акций и ночных цен';
 }
 $keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
@@ -214,12 +214,12 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     'kt' => $triggers['kt'],
                     'research' => $triggers['research'],
                 ]);
-                echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research','area']). ' '.$cityName.'</p>';
+                echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research','area','city']). ' '.$cityName.'</p>';
                 echo "<p>Сколько стоит {$r}?</p>";
                 echo "<p>Средняя цена на $rVin равна {$mod->averagePrice($triggers)}</p>";
                 if ($street) {
                     echo "<p>Где можно сделать $r в непосредственной близости от адреса: {$street}?</p>";
-                    echo "Пройти $rVin можно в ".echoMedCentersNumber(['district'])." в непосредственной близости от адреса: {$street}";
+                    echo "Пройти $rVin можно в ".echoMedCentersNumber(['district','street'])." в непосредственной близости от адреса: {$street}";
                 } elseif ($distr = $fr('district', 'districtPredl')) {
                     echo "<p>Где можно сделать $rVin в $distr районе?</p>";
                     echo "<p>Пройти $rVin можно в ".echoMedCentersNumber(['district','mrt','kt','research','area'])." в $distr районе.</p>";
@@ -260,7 +260,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     }
                 }
                 if ($triggers['children']) {
-                    echo "<p>Сделать $rVin ребенку можно в ".echoClinicsNumber(['research','mrt','kt','children'])."</p>";
+                    echo "<p>Сделать $rVin ребенку можно в ".echoClinicsNumber(['research','mrt','kt','children','area'])."</p>";
                 }
                 if ($triggers['sortBy'] == 'priceUp') {
                     echo "<p>Медицинские клиники, представленные ниже, отфильтрованы по возрастанию цены на $rVin с учетом: Скидок, Акций и цен Ночью. От более дешевого ценового предложения к более высокому.</p>";
