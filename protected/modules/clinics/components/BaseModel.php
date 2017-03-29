@@ -1067,5 +1067,17 @@ class BaseModel extends CTModel
 		}
 		return $rez;
 	}
+
+	/**
+	 * @param CDbCriteria $criteria
+	 * @return Comment[]
+	 */
+	public function getApprovedComments(CDbCriteria $criteria = null) {
+		if (!$criteria) {
+			$criteria = new CDbCriteria();
+		}
+		$criteria -> compare('approved',1);
+		return $this -> getModule() -> getObjectsReviewsPool('clinics') -> getComments($this -> id, $criteria);
+	}
 }
 ?>

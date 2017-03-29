@@ -1,0 +1,9 @@
+span.vkCommentsLoading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url('../img/loading.gif');
+}
+.reviews {
+    width:100%;
+}

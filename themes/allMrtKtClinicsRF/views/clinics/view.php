@@ -3,6 +3,7 @@
  * @type clinics|doctors $model
  * @type HomeController $this
  */
+$word = 'prices';
 $this->setPageTitle($model->title);
 Yii::app() -> getClientScript() -> registerMetaTag($model -> description,'description');
 Yii::app() -> getClientScript() -> registerMetaTag($model -> keywords,'keywords');
@@ -71,9 +72,7 @@ $cs -> registerScript('Order','
 	if (trim($adress)) {
 		$adress1=urlencode($adress);
 		$url="http://geocode-maps.yandex.ru/1.x/?geocode=".$adress1;//."&key=".$key;
-		//echo $url;
-		$content=file_get_contents($url);
-		//echo $content;
+		//$content=file_get_contents($url);
 		preg_match('/<pos>(.*?)<\/pos>/',$content,$point);
 		preg_match('/<found>(.*?)<\/found>/',$content,$found);
 	}
@@ -135,7 +134,7 @@ $cs -> registerScript('Order','
 		<div data-word="info" class="item <?php echo ($word == 'info') ? 'active' : '' ; ?>">О клинике</div>
 		<?php endif; ?>
 		<div data-word="prices" class="item <?php echo ($word == 'prices') ? 'active' : '' ; ?>">Цены</div>
-<!--		<div data-word="reviews" class="item --><?php //echo ($word == 'reviews') ? 'active' : '' ; ?><!--">Отзывы <span class="amount">(--><?php ////echo count($model->comments); ?><!--)</span></div>-->
+		<div data-word="reviews" class="item <?php echo ($word == 'reviews') ? 'active' : '' ; ?>">Отзывы <span class="amount">(<?php echo count($comments = $model -> getApprovedComments()); ?>)</span></div>
 	</div>
 </div>
 <div class="content_block_no_padding">
@@ -150,8 +149,11 @@ $cs -> registerScript('Order','
 	<div id="prices" style="display:<?php echo $word == 'prices' ? 'block' : 'none' ;?>">
 		<?php $this -> renderPartial('/clinics/_priceList', array('prices' => $model -> getPriceValues(),'clinic' => $model)); ?>
 	</div>
-<!--	<div id="reviews" style="display:--><?php //echo $word == 'reviews' ? 'block' : 'none' ;?><!--">-->
-<!--		--><?php //$this -> renderPartial('//home/_clinic_reviews', array('id'=>$model -> id,'reviews' => $model->comments)); ?>
-<!--	</div>-->
+	<div id="reviews" style="display:<?php echo $word == 'reviews' ? 'block' : 'none' ;?>">
+		<?php
+		echo Yii::app() -> getModule('clinics') -> getObjectsReviewsPool(get_class($model)) -> showObjectCommentsWidget($model -> id);
+		//$this -> renderPartial('//clinics/_clinic_reviews', array('model' => $model));
+		?>
+	</div>
 </div>
 </div>
