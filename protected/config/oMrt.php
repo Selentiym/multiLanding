@@ -62,7 +62,7 @@ return SiteDispatcher::mergeArray(
                         'attribute' => 'verbiage',
                         'attributeInPattern' => 'research',
                         'route' => 'home/<modelName>',
-                        'pattern' => '<area:(spb|msc)>/<modelName:(clinics|doctors)>/<research:\w+>'
+                        'pattern' => '<modelName:(clinics|doctors)>-<area:(spb|msc)>/<research:\w+>'
                     ],
                     [
                         'class' => 'application.components.urlRules.ModelAttributeUrlRule',
