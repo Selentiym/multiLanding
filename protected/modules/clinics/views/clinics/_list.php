@@ -86,7 +86,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'id',
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
         array('name' => 'phone', 'header' => $model->getAttributeLabel('phone')),
-        array('name' => 'site', 'header' => $model->getAttributeLabel('site')),
+        array('header' => 'Город', 'value' => function($data){
+            /**
+             * @type clinics $data
+             */
+            return $data -> getFirstTriggerValue('area') -> value;
+        }),
 
         array(
             'class'=>'CLinkColumn',
