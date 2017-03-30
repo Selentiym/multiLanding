@@ -1795,62 +1795,203 @@ class AdminController extends Controller
         $form = $commentsMod -> commentForm($saved);
         $this -> render('/comments/_create',['model' => $model, 'form' => $form]);
     }
-    public function actionParseMetroCoords() {
-        $empty = [];
+    public function actionParseDistricts() {
         echo "<form method='post'>
-<textarea name='str'></textarea>
-<input type='submit' value='распарсить' name='go'>
-</form>";
-
+        <textarea name='str'></textarea>
+        <input type='submit' value='распарсить' name='go'>
+        </form>";
+        $data = $_POST;
+        if ($data['go']) {
+            $arr = preg_split('~\<[/]option\>\<option[^\>]*\>~ui',$data['str']);
+            $i = 0;
+            foreach ($arr as $dName) {
+                $dName = trim($dName);
+                $obj = new TriggerValues();
+                $obj -> value = $dName;
+                $obj -> verbiage = str2url($dName);
+                $obj -> trigger_id = 7;
+                if ($obj -> save()) {
+                    $dep = new TriggerValueDependency();
+                    $dep -> verbiage_parent = 'mscCity';
+                    $dep -> verbiage_child = $obj -> verbiage;
+                    $dep -> save();
+                    $i++;
+                } else {
+                    echo "Could not save $dName with verbiage {$obj->verbiage}<br/>";
+                }
+            }
+            echo "saved $i";
+        }
+    }
+    public function actionParseMetroCoords() {
+        echo "<form method='post'>
+        <textarea name='str'></textarea>
+        <input type='submit' value='распарсить метро' name='go'>
+        </form>";
         $data = $_POST;
         if ($data['go']) {
             $str = $data['str'];
-            $str = strip_tags($str,'<tr><td>');
-            $str = str_replace('</tr>','',$str);
-            $str = preg_replace('[\r\n]','',$str);
-            $str = preg_replace('/\W*<\/td>\W*<td>\W*/ui',';',$str);
-            $arrs = explode('<tr>',$str);
-            $i = 0;
-            foreach ($arrs as $arrString) {
-                $arrString = preg_replace('~\W*</?td>\W*~ui','',$arrString);
-                $arr = explode(';',$arrString);
-                var_dump($arr);
-                $m = Metro::model() -> findByAttributes(['name' => $arr[0]]);
-                if ($m instanceof Metro) {
-                    echo $m->id;
-                    $m -> longitude = $arr[2];
-                    $m -> latitude = $arr[1];
-                    if ($m -> save()) {
-                        $i ++;
-                    }
+            $obj = json_decode($str) -> data;
+            $obj = json_decode(end($obj)->data) -> stations;
+            $names = [];
+            $i = 1;
+            foreach ($obj as $station) {
+                //echo $station -> name.'<br/>';
+                $names[] = $station -> name;
+                if (!Metro::model() -> findByAttributes(['name' => $station -> name])) {
+                    echo "$i ".$station -> name. " not found <br/>";
+                    $i++;
                 }
             }
-            echo "Сохранено $i станций";
-            //$inDatabase = TriggerValueDependency::model() -> findByAttributes(['verbiage_parent'=>$data['district']]);
-//            if (!$inDatabase) {
-//                foreach ($streets as $street) {
-//                    $val = new TriggerValues();
-//                    $val -> value = $street;
-//                    $val -> verbiage = str2url($street);
-//                    $val -> trigger_id = 8;
-//                    if (!$val -> save()) {
-//                        var_dump($val -> getErrors());
-//                        continue;
-//                    }
-//                    $dep = new TriggerValueDependency();
-//                    $dep -> verbiage_child = $val -> verbiage;
-//                    $dep -> verbiage_parent = $data['district'];
-//                    if (!$dep -> save()) {
-//                        var_dump($dep -> getErrors());
-//                        continue;
-//                    }
+        }
+    }
+//    public function actionParseMetroCoords() {
+//        $empty = [];
+//        echo "<form method='post'>
+//<textarea name='str'></textarea>
+//<input type='submit' value='распарсить' name='go'>
+//</form>";
 //
-//                    echo "Saved: $i ".$val -> verbiage." to ".$dep -> verbiage_parent."<br/>".PHP_EOL;
-//                    $i ++;
-//                }
-//            } else {
-//                echo $data['district']." already has dependencies!";
+//        $data = $_POST;
+//        $data['go'] = 1;
+//        if ($data['go']) {
+//            $str = $data['str'];
+//            require_once(Yii::getPathOfAlias('application.components.simple_html_dom') . '.php');
+////            $html = str_get_html($str);
+////            $metros = $html -> find('.list-name');
+////            $str = strip_tags($str,'<tr><td>');
+////            $str = str_replace('</tr>','',$str);
+////            $str = preg_replace('[\r\n]','',$str);
+////            $str = preg_replace('/\W*<\/td>\W*<td>\W*/ui',';',$str);
+////            $arrs = explode('<tr>',$str);
+//            $i = 0;
+//            $c = new CDbCriteria();
+//            $c -> compare('city','msc');
+//            $c -> addCondition('latitude IS NULL');
+//            $metros = Metro::model() -> findAll($c);
+//            foreach ($metros as $m) {
+//                $m -> name = trim($m -> name);
+//                $n = $m -> name;
+//                $id = $m -> id;
+//                $rez = getCoordinates('Москва, станция метро '.$m -> name);
+//                $m -> latitude = (float)$rez['lat'];
+//                $m -> longitude = (float)$rez['long'];
+//                $m -> save();
+////                return;
 //            }
+////            foreach ($metros as $dom) {
+////                $name = trim(strip_tags($dom -> innerText()));
+////                $nameNew = preg_replace('/\d{4}\W*год$/ui','',$name);
+////                if ($name != $nameNew) {
+////                    echo 'replaced';
+////                }
+////                $m = new Metro();
+////                $m -> name = $nameNew;
+////                $m -> city = 'msc';
+////                if (($m -> save())&&((!$m -> latitude)||(!$m -> longitude))) {
+////                    $rez = getCoordinates('Москва, станция метро '.$nameNew);
+////                    $m -> latitude = $rez['lat'];
+////                    $m -> longitude = $rez['long'];
+////                    $m -> save();
+////                    $i ++;
+////                } else {
+////                    var_dump($m -> getErrors());
+////                }
+////            }
+////            foreach ($arrs as $arrString) {
+////                $arrString = preg_replace('~\W*</?td>\W*~ui','',$arrString);
+////                $arr = explode(';',$arrString);
+////                var_dump($arr);
+////                $m = new Metro();
+////                $m -> name = $arr[0];
+////                $m -> city = 'msc';
+////                if ($m instanceof Metro) {
+////                    $m -> longitude = $arr[2];
+////                    $m -> latitude = $arr[1];
+////                    if ($m -> save()) {
+////                        $i ++;
+////                    }
+////                }
+////            }
+//            echo "Сохранено $i станций";
+//            //$inDatabase = TriggerValueDependency::model() -> findByAttributes(['verbiage_parent'=>$data['district']]);
+////            if (!$inDatabase) {
+////                foreach ($streets as $street) {
+////                    $val = new TriggerValues();
+////                    $val -> value = $street;
+////                    $val -> verbiage = str2url($street);
+////                    $val -> trigger_id = 8;
+////                    if (!$val -> save()) {
+////                        var_dump($val -> getErrors());
+////                        continue;
+////                    }
+////                    $dep = new TriggerValueDependency();
+////                    $dep -> verbiage_child = $val -> verbiage;
+////                    $dep -> verbiage_parent = $data['district'];
+////                    if (!$dep -> save()) {
+////                        var_dump($dep -> getErrors());
+////                        continue;
+////                    }
+////
+////                    echo "Saved: $i ".$val -> verbiage." to ".$dep -> verbiage_parent."<br/>".PHP_EOL;
+////                    $i ++;
+////                }
+////            } else {
+////                echo $data['district']." already has dependencies!";
+////            }
+//        }
+//    }
+    public function actionReloadCoordinates(){
+        foreach(clinics::model() -> findAll() as $c){
+            /**
+             * @type clinics $c
+             */
+            $c -> parseCoords();
+            $c -> setScenario('noPrices');
+            if(!$c -> save()){
+                echo $c->verbiage." ".$c->id.":<br/>";
+                var_dump($c -> getErrors());
+            }
+        }
+    }
+    public function actionReloadDistricts(){
+        $i = 0;
+        foreach($this -> getModule() -> getClinics($_GET) as $c){
+            $i++;
+            /**
+             * @type clinics $c
+             */
+            $toDelete = CHtml::giveAttributeArray($c -> giveTriggerValuesObjects()['district'],'id');
+            $had = explode(';',$c -> triggers);
+            $save = array_filter($had,function($val) use ($toDelete) {
+                return !in_array($val, $toDelete);
+            });
+            $c -> triggers = implode(';',$save);
+            $c -> parseDistricts();
+            $c -> setScenario('noPrices');
+            if(!$c -> save()){
+                echo $c->verbiage." ".$c->id.":<br/>";
+                var_dump($c -> getErrors());
+            } else {
+                echo $c->name."<br/>";
+            }
+            if (($i > $_GET['limit'])&&($_GET['limit'])) {
+                break;
+            }
+        }
+    }
+    public function actionReloadMetros(){
+        //foreach($this -> getModule() -> getClinics(['area'=>'msc']) as $c){
+        foreach($this -> getModule() -> getClinics($_GET) as $c){
+            /**
+             * @type clinics $c
+             */
+            $c -> setScenario('noPrices');
+            $c -> parseMetros();
+            if(!$c -> save()){
+                echo $c->verbiage." ".$c->id.":<br/>";
+                var_dump($c -> getErrors());
+            }
         }
     }
 }

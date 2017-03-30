@@ -8,6 +8,7 @@
  * @property string $name
  * @property float $longitude
  * @property float $latitude
+ * @property string $city
  */
 class Metro extends CTModel
 {
@@ -112,5 +113,17 @@ class Metro extends CTModel
 	}
 	public function distanceFrom($lat, $long){
 		return DistanceSpherical($this -> latitude, $this -> longitude, $lat, $long);
+	}
+	public function beforeSave() {
+		$dups = $this -> findAllByAttributes(['name' => $this -> name, 'city' => $this -> city]);
+		$id = $this -> id;
+		$dups = array_filter($dups,function ($data) use ($id){
+			return $data -> id != $id;
+		});
+		if (!empty($dups)) {
+			$this -> addError('id','Metro station in given city with a gived name already exits! Look '.current($dups) -> id);
+			return false;
+		}
+		return parent::beforeSave();
 	}
 }

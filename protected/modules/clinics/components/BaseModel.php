@@ -683,18 +683,10 @@ class BaseModel extends CTModel
 		if (parent::beforeSave()) {
 			try {
 				if (!$this -> map_coordinates) {
-					$adress=urlencode('Санкт-Петербург, '.$this -> address);
-					$url="http://geocode-maps.yandex.ru/1.x/?geocode=".$adress;//."&key=".$key;
-					//echo $url;
-					@$content=file_get_contents($url);
-					//echo $content;
-					preg_match('/<pos>(.*?)<\/pos>/',$content,$point);
-					preg_match('/<found>(.*?)<\/found>/',$content,$found);
-					if (trim(next($found)) > 0) {
-						$coordinaty=explode(' ',trim(strip_tags($point[1])));
-						$this -> map_coordinates = $coordinaty[1].', '.$coordinaty[0];
-					} else {
-						new CustomFlash('warning','Clinics','coords','Координаты не определены',true);
+					try {
+						$this -> parseCoords();
+					} catch (HttpException $e) {
+						new CustomFlash('Warning','clinics','no coords','Координаты не найдены!',true);
 					}
 				}
 			} catch (Exception $e) {}
@@ -702,21 +694,11 @@ class BaseModel extends CTModel
 			try {
 				//throw new Exception('no way to find nearest metro');
 				if ($this -> map_coordinates) {
-					list($lat, $long) = $this -> getCoordinates();
 					if (!$this -> metro_station) {
-						$metros = giveMetroNamesArrayByCoords($lat, $long);
-						$criteria = new CDbCriteria();
-						$criteria->addInCondition('name', $metros);
-						$met = Metro::model()->findAll($criteria);
-						//var_dump(Html::listData($met,'id','id'));
-						$this->metro_station = implode(';', Html::listData($met, 'id', 'id'));
+						$this -> parseMetros();
 					}
 					if (!$this -> getFirstTriggerValueString('district')) {
-						$name = giveDistrictByCoords($lat, $long);
-						$distr = TriggerValues::model() -> findByAttributes(['value' => $name]);
-						if ($distr instanceof TriggerValues) {
-							$this -> triggers .= ';'.$distr -> id;
-						}
+						$this -> parseDistricts();
 					}
 				}
 			} catch (Exception $e) {}
@@ -736,9 +718,33 @@ class BaseModel extends CTModel
 			return false;
 		}
 	}
+	public function parseDistricts(){
+		list($lat, $long) = $this -> getCoordinates();
+		$name = giveDistrictByCoords($lat, $long);
+		$distr = TriggerValues::model() -> findByAttributes(['value' => $name]);
+		if ($distr instanceof TriggerValues) {
+			$this -> triggers .= ';'.$distr -> id;
+		}
+	}
+	public function parseCoords() {
+		$coords = getCoordinates($this -> getFirstTriggerValueString('area').', ' . $this->address);
+		$this->map_coordinates = $coords['lat'] . ', ' . $coords['long'];
+	}
+	public function parseMetros() {
+		list($lat, $long) = $this -> getCoordinates();
+		$metros = giveMetroNamesArrayByCoords($lat, $long);
+		$criteria = new CDbCriteria();
+		$criteria->addInCondition('name', $metros);
+		$criteria->compare('city',$this -> getFirstTriggerValue('area') -> verbiage);
+		$met = Metro::model()->findAll($criteria);
+		//var_dump(Html::listData($met,'id','id'));
+		$this->metro_station = implode(';', Html::listData($met, 'id', 'id'));
+	}
 	public function afterSave() {
 		parent::afterSave();
-		$this -> savePrices();
+		if ($this -> getScenario() != 'noPrices') {
+			$this -> savePrices();
+		}
 	}
 	public function preparePrices($prices){
 		$mrt = array();

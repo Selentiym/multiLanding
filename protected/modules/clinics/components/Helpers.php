@@ -93,24 +93,31 @@ function giveDistrictByCoords($lat,$long){
     $url = "https://geocode-maps.yandex.ru/1.x/?kind=district&geocode=N{$lat}%20E{$long}&format=json";
     $json = file_get_contents($url);
     $rez = json_decode($json);
+    $name = '';
     try {
-        $name = end($rez->response->GeoObjectCollection->featureMember)->GeoObject->name;
+        //$name = end($rez->response->GeoObjectCollection->featureMember)->GeoObject->name;
+        foreach ($rez->response->GeoObjectCollection->featureMember as $item) {
+            $temp = $item -> GeoObject -> name;
+            if (preg_match('/\W*район\W*/ui',$temp)) {
+                $name = trim(preg_replace('/\W*район\W*/ui','',$temp));
+            }
+        }
     } catch (Exception $e) {
         new CustomFlash('error','BaseModel','NoDistrict','Could not geodecode district',true);
     }
-    return preg_replace('/\W*район\W*/ui','',$name);
+    return $name;
     //$rez -> Ge
 }
-function giveMetroNamesArrayByCoords($lat,$long, $deltax='0.05', $deltay='0.05'){
+function giveMetroNamesArrayByCoords($lat,$long, $deltax='0.1', $deltay='0.1'){
     $str = urlencode($deltax.' '.$deltay);
     $url = "https://geocode-maps.yandex.ru/1.x/?kind=metro&geocode=N{$lat}%20E{$long}";//.'&'."rspn=0&spn={$str}";
     $xml = file_get_contents($url);
     $obj = new SimpleXMLElement($xml);
     return giveMetrosNamesArrayByXML($obj);
 }
-function giveMetroNamesArrayByAddress($addr, $deltax='0.05', $deltay='0.05'){
+function giveMetroNamesArrayByAddress($addr, $deltax='0.1', $deltay='0.1'){
     $addr = urlencode($addr);
-    $url = "https://geocode-maps.yandex.ru/1.x/?kind=metro&geocode=Санкт-Петербург,{$addr}";
+    $url = "https://geocode-maps.yandex.ru/1.x/?kind=metro&geocode={$addr}";
     $xml = file_get_contents($url);
     $obj = new SimpleXMLElement($xml);
     return giveMetrosNamesArrayByXML($obj);
@@ -122,7 +129,7 @@ function giveMetrosNamesArrayByXML($obj){
     $count = 0;
     foreach ($obj as $metroObj) {
         $temp = trim( preg_replace('/метро/','',($metroObj -> GeoObject -> name)));
-        if ($temp != $metroObj -> GeoObject -> name) {
+        if (($temp != $metroObj -> GeoObject -> name)&&(!in_array($temp,$rez))) {
             $rez[] = $temp;
             $count ++;
         }
@@ -207,4 +214,22 @@ function uploadImage($target_url,$whereToStore){
         return true;
     }
     return false;
+}
+function getCoordinates($address) {
+    $url="http://geocode-maps.yandex.ru/1.x/?geocode=".urlencode($address);
+    //echo $url;
+    @$content=file_get_contents($url);
+    //echo $content;
+    preg_match('/<pos>(.*?)<\/pos>/',$content,$point);
+    preg_match('/<found>(.*?)<\/found>/',$content,$found);
+    if (trim(next($found)) > 0) {
+        $coords=explode(' ',trim(strip_tags($point[1])));
+        $rez = [
+            'lat' => $coords[1],
+            'long' => $coords[0]
+        ];
+    } else {
+        throw new HttpException('Could not geodecode address '.$address.' via geocode-maps.yandex.ru/1.x');
+    }
+    return $rez;
 }
