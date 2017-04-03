@@ -1994,4 +1994,40 @@ class AdminController extends Controller
             }
         }
     }
+    public function actionParseSites(){
+        require_once(Yii::getPathOfAlias('application.components.simple_html_dom') . '.php');
+        foreach (clinics::model() -> findAll() as $clinic) {
+            /**
+             * @type simple_html_dom $html
+             */
+            if (!$clinic->external_link) {
+                echo $clinic->name." no link!<br/>";
+                continue;
+            }
+            try {
+                @$html = file_get_html($clinic->external_link);
+            } catch(Exception $e) {
+                continue;
+            }
+            $string = (string)current($html -> find('.dl-horizontal'));
+            $pos = strpos($string,'Сайт');
+            if ($pos !== false) {
+                $string = substr($string, $pos);
+                $string = strip_tags('<dt>'.$string,'<dd>');
+                $html2 = str_get_html($string);
+                $site = current($html2 -> find('dd')) -> innerText();
+                $clinic -> site = $site;
+                $clinic -> setScenario('noPrices');
+                $clinic -> save();
+                echo $clinic -> name . ' ' . $site.'<br/>';
+            }
+            break;
+            $i ++;
+            if ($i > 10) {
+                break;
+            }
+        }
+
+        //
+    }
 }

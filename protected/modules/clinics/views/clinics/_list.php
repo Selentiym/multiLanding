@@ -81,6 +81,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'lastPageLabel'=>'>>',
         'maxButtonCount'=>'10',
         'header'=>'<span>Перейти на страницу:</span>',
+        //'page' => $_GET['page']
     ),
     'columns'=>array(
         'id',
@@ -92,7 +93,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
              */
             return $data -> getFirstTriggerValue('area') -> value;
         }),
-
+        array(
+            'header'=>CHtml::encode('Сайт'),
+            'type' => 'url',
+            'value' => function($data){ return $data -> site; },
+//            'urlExpression'=>function($data){
+//                return $data -> site;
+//            },
+        ),
         array(
             'class'=>'CLinkColumn',
             'header'=>CHtml::encode('Цены'),
@@ -122,6 +130,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'class'=>'CButtonColumn',
             'template'=>'{update}&nbsp;{delete}',
             'deleteConfirmation'=>"js:'Вы действительно хотите удалить клинику <'+$(this).parent().parent().children(':nth-child(2)').text()+'>?'",
+
+          'header' => CHtml::textField(
+              'page', '',
+              array(
+                  'onchange' => "$.fn.yiiGridView.update('clinics-grid',{ data:{clinics_page: $(this).val() }})"
+              )
+          ),
             'buttons'=>array
             (
                 'update' => array

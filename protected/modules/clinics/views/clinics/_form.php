@@ -106,11 +106,12 @@
             <?php echo $form->textField($model,'external_link',array('size'=>60,'maxlength'=>1000)); ?>
             <?php echo $form->error($model,'external_link'); ?>
         </div>
-<!--        <div>-->
-<!--            --><?php //echo $form->labelEx($model,'site'); ?>
-<!--            --><?php //echo $form->textField($model,'site',array('size'=>60,'maxlength'=>1000)); ?>
-<!--            --><?php //echo $form->error($model,'site'); ?>
-<!--        </div>-->
+
+        <div>
+            <?php echo $form->labelEx($model,'site'); ?>
+            <?php echo $form->textField($model,'site',array('size'=>60,'maxlength'=>1000)); ?>
+            <?php echo $form->error($model,'site'); ?>
+        </div>
 
 <!--        <div>-->
 <!--            --><?php //echo $form->labelEx($model,'working_days'); ?>

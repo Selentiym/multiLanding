@@ -167,6 +167,7 @@ class clinics extends BaseModel
         $criteria->compare('description',$this->description,true);
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			//'pagination' => false,
 		));
 	}//*/
 
