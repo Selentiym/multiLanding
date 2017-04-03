@@ -1942,7 +1942,7 @@ class AdminController extends Controller
 //        }
 //    }
     public function actionReloadCoordinates(){
-        foreach(clinics::model() -> findAll() as $c){
+        foreach($this -> getModule() -> getClinics($_GET) as $c){
             /**
              * @type clinics $c
              */
@@ -2021,13 +2021,6 @@ class AdminController extends Controller
                 $clinic -> save();
                 echo $clinic -> name . ' ' . $site.'<br/>';
             }
-            break;
-            $i ++;
-            if ($i > 10) {
-                break;
-            }
         }
-
-        //
     }
 }
