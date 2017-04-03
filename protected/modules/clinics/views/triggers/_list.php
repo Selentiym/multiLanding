@@ -22,7 +22,9 @@ Yii::app()->clientScript->registerScript('search', "
 </p>
 
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php
+$model -> attributes = $_GET['triggers'];
+$this->widget('zii.widgets.grid.CGridView', array(
     'id'=>'triggers-grid',
     'dataProvider'=>$model->search(),
     'filter'=>$model,

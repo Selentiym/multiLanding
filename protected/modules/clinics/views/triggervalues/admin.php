@@ -20,7 +20,9 @@ $('.search-form form').submit(function(){
     <?php echo CHtml::link('Добавить новое' , $this -> createUrl('admin/triggerValueCreate',['id' => $trigger_id]), array('class' => 'btn')); ?>
 </p>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php
+$model -> attributes = $_GET['TriggerValues'];
+$this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'trigger-values-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
