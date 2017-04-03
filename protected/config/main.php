@@ -167,6 +167,41 @@ return array(
 							],
 							'position' => CClientScript::POS_END,
 							'depends' => ['jquery']
+						],
+						'tether' => [
+							'baseUrl' => 'libs/tether',
+							'js' => [
+								'js/tether.min.js'
+							],
+							'depends' => [
+								'jquery'
+							]
+						],
+						'bootstrap4reboot' => [
+							'baseUrl' => 'libs/bootstrap4/',
+							'css' => [
+								'css/bootstrap-reboot.min.css'
+							]
+						],
+						'bootstrap4css' => [
+							'baseUrl' => 'libs/bootstrap4/',
+							'css' => [
+								'css/bootstrap.min.css'
+							],
+							'depends' => [
+								'bootsrtap4reboot'
+							]
+						],
+						'bootstrap4js' => [
+							'baseUrl' => 'libs/bootstrap4/',
+							'js' => [
+								'js/bootstrap.min.js',
+								'js/ie10-viewport-bug-workaround.js'
+							],
+							'depends' => [
+								'tether',
+								'jquery'
+							]
 						]
 				]
 		),

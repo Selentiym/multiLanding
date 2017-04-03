@@ -10,7 +10,7 @@ return SiteDispatcher::mergeArray(
     require_once(dirname(__FILE__).'/clearRules.php'),
     array(
         'name' => 'Самая крупная сеть МРТ и КТ диагностических центров в СПб',
-        'theme' => 'oMrt',
+        'theme' => 'oMrt/oMrtBootstrap',
         'language' => 'oMrt',
         'defaultController' => 'home',
         'modules'=>array(
