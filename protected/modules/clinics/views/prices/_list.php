@@ -24,6 +24,7 @@ Yii::app()->clientScript->registerScript('search', "
 
 <?php
 $model -> object_type = Objects::getNumber($modelName);
+$model -> attributes = $_GET['ObjectPrice'];
 $this->widget('zii.widgets.grid.CGridView', array(
     'id'=>'fields-grid',
     'dataProvider'=>$model->search(),
