@@ -965,6 +965,13 @@ class BaseModel extends CTModel
 		}
 		return $temp -> value;
 	}
+	/**
+	 * @param string $verbiage
+	 * @return string
+	 */
+	public function getConcatenatedTriggerValueString($verbiage, $delimiter = ', '){
+		return implode($delimiter, CHtml::giveAttributeArray($this -> getTriggerValues($verbiage), 'value'));
+	}
 
 	/**
 	 * @return string

@@ -9,6 +9,8 @@ $cs = Yii::app() -> getClientScript();
 $cs -> registerCoreScript('bootstrap4css');
 $cs -> registerCoreScript('bootstrap4js');
 $cs -> registerCoreScript('font-awesome');
+
+$cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/styles.css');
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -67,6 +69,20 @@ $cs -> registerCoreScript('font-awesome');
         echo $content;
     ?>
 </main>
+<footer class="p-3">
+    <div class="container-fluid">
+        <div class="row justify-content-around align-items-center">
+            <div class="col-3"><?php echo date('Y'); ?>, все права защищены</div>
+            <div class="col-3">
+                <button class="btn">Записаться на МРТ/КТ</button>
+            </div>
+            <div class="col-3 justify-content-center">
+                <span>Звоните круглосуточно</span><br/>
+                <span>Телефон</span>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
 

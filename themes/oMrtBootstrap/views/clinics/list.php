@@ -8,22 +8,53 @@
  * @type ClinicsModule $mod
  */
 $mod = Yii::app() -> getModule('clinics');
-
+$triggers = $_GET;
 $modelName = 'clinics';
 $criteria = new CDbCriteria();
 $criteria -> addCondition("`ignore_clinic`=0");
 //comment
 $objects = [];
-//$objects = $mod -> getClinics($_GET,null,null,$criteria);
+$objects = $mod -> getClinics($_GET,null,null,$criteria);
 
 $cs = Yii::app()->getClientScript();
 
-$cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/objects_list.css');
-$cs->registerCssFile(Yii::app()->theme->baseUrl.'/css/clinicsView.css');
-$cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/rateit.css');
-$cs->registerScriptFile(Yii::app() -> theme -> baseUrl.'/js/select2.full.js',CClientScript::POS_BEGIN);
-$cs->registerScriptFile(Yii::app()->theme -> baseUrl.'/js/jquery.rateit.min.js?' . time(), CClientScript::POS_END);
-$cs -> registerScript('Rate','Rate()',CClientScript::POS_READY);
+$cs -> registerCoreScript('select2');
+$cs -> registerCoreScript('rateit');
+
+$cs->registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");
+$toAdd = '';
+foreach ($objects as $clinic) {
+    $variab = 'v'.str_replace('-','',$clinic -> verbiage);
+    if ($clinic -> map_coordinates) {
+        $toAdd .= "{$variab} = new ymaps.Placemark( ".json_encode(array_values($clinic -> getCoordinates()))." , {
+											hintContent: '".prepareTextToJS ($clinic -> name).", ".prepareTextToJS ($clinic -> address)."'
+										});";
+        $toAdd .= "allClinics.geoObjects.add({$variab});
+        ";
+    }
+    $i++;
+//    if ($i>10) break;
+}
+$cs->registerScript("map_init","
+    ymaps.ready(function () {
+
+        allClinics = new ymaps.Map('map', {
+            center: ".($triggers['area'] == 'spb' ? '[59.939095, 30.315868]' : '[55.755814, 37.617635]') ." ,
+            zoom: 10
+        }, {
+            searchControlProvider: 'yandex#search'
+        });
+        ".$toAdd."
+        $('#map').on('show.bs.collapse', function(){
+            allClinics.redraw();
+        });
+    });
+",CClientScript::POS_READY);
+
+//$cs->registerCssFile(Yii::app()->theme->baseUrl.'/css/clinicsView.css');
+//$cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/rateit.css');
+
+//$cs->registerScriptFile(Yii::app()->theme -> baseUrl.'/js/jquery.rateit.min.js?' . time(), CClientScript::POS_END);
 $cs -> registerCoreScript('prettyFormUrl');
 $cs -> registerCoreScript('font-awesome');
 $cs -> registerScript('Order','
@@ -39,7 +70,6 @@ $noDisplay = ['mrt', 'kt'];
 
 
 $keys = [];
-$triggers = $_GET;
 $triggersPrepared = Article::prepareTriggers($triggers);
 $fr = function ($trigger, $field) use ($triggersPrepared, $mod){
     return $mod -> renderParameter($triggersPrepared, $trigger,$field);
@@ -194,8 +224,193 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 } ?>
             </div>
         </div>
-        <div class="col-md-6"></div>
-        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form id="searchForm" action="prettyFormUrl" data-action="home/clinics" data-params="{}" data-gen-url="<?php echo addslashes(Yii::app() -> createUrl('home/createFormUrl')); ?>" class="noEmpty prettyFormUrl">
+<!--            <form id="searchForm">-->
+                <div class="d-flex align-items-start mb-3" id="formHead">
+                    <div>
+                        <?php echo Triggers::triggerHtml('mrt',$triggers); ?>
+                    </div>
+                    <div>
+                        <?php echo Triggers::triggerHtml('kt',$triggers); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4"><?php echo CHtml::DropDownListChosen2(
+                            'research',
+                            'research',
+                            CHtml::listData(ObjectPrice::model() -> findAll(['order' => 'id_block ASC']),'verbiage','name'),
+                            //$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
+                            ['style' => 'width:100%', 'empty_line' => true, 'placeholder' => 'Исследование'],
+                            $triggers['research'] ? [$triggers['research']] : [],
+                            [],
+                            true
+                        ); ?></div>
+                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('magnetType',$triggers); ?></div>
+                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('city',$triggers); ?></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <?php
+                        echo CHtml::DropDownListChosen2(
+                            'metro',
+                            'metro',
+                            CHtml::listData(Metro::model() -> findAllByAttributes(['city' => $triggers['area']],['order' => 'name ASC']),'id','name'),
+                            //$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
+                            ['style' => 'width:100%', 'empty_line' => true, 'placeholder' => 'Метро'],
+                            $triggers['metro'] ? [$triggers['metro']] : [],
+                            [],
+                            true
+                        );
+                        ?>
+                    </div>
+                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('field',$triggers); ?></div>
+                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('district',$triggers); ?></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-8 flex-last flex-md-first">
+                        <div class="row">
+                            <div class="col">
+                                <?php echo Triggers::triggerHtml('contrast',$triggers); ?>
+                            </div>
+
+                            <div class="col">
+                                <?php echo Triggers::triggerHtml('children',$triggers); ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <?php echo Triggers::triggerHtml('time',$triggers); ?>
+                            </div>
+                            <div class="col">
+                                <?php echo Triggers::triggerHtml('doctor',$triggers); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('street',$triggers); ?></div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-auto"><button type="submit" class="btn">Найти</button></div>
+                    <div class="col-auto ml-3"><a href="<?php echo $this -> createUrl('home/clinics',['area' => $triggers['area']],'&',true); ?>"><button type="button" class="btn" >Сбросить</button></a></div>
+                </div>
+            </form>
+            <div id="mapContainer" class="hidden-sm-down">
+                <h2 class="mb-3">Клиники на карте</h2>
+<!--                <div><button class="btn" data-toggle="collapse" data-target="#map">Показать на карте</button></div>-->
+                <div class=""  id="map" style="width:100%; height:300px">
+                </div>
+            </div>
+            <div id="clinicsList">
+                <ul class="list-unstyled">
+                    <?php foreach($objects as $clinic){
+                        $this -> renderPartial('/clinics/_single_clinics',['model' => $clinic,'price' => $research]);
+//                        break;
+                    } ?>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3 article-right">
+            <div class="card mb-3">
+                <div class="card-block">
+                    <h1 class="card-title"><?php echo $h1; ?></h1>
+                    <?php
+                    if ($triggers['city']) {
+                        echo "<p>Где можно сделать $rVin в {$fr('city','cityNamePredl')}?</p>";
+                    } else {
+                        echo "<p>Где можно сделать $rVin?</p>";
+                    }
+                    $num = $mod -> getClinics([
+                        'mrt' => $triggers['mrt'],
+                        'kt' => $triggers['kt'],
+                        'research' => $triggers['research'],
+                    ]);
+                    echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research','area','city']). ' '.$cityName.'</p>';
+                    echo "<p>Сколько стоит {$r}?</p>";
+                    echo "<p>Средняя цена на $rVin равна {$mod->averagePrice($triggers)}</p>";
+                    if ($street) {
+                        echo "<p>Где можно сделать $r в непосредственной близости от адреса: {$street}?</p>";
+                        echo "Пройти $rVin можно в ".echoMedCentersNumber(['district','street'])." в непосредственной близости от адреса: {$street}";
+                    } elseif ($distr = $fr('district', 'districtPredl')) {
+                        echo "<p>Где можно сделать $rVin в $distr районе?</p>";
+                        echo "<p>Пройти $rVin можно в ".echoMedCentersNumber(['district','mrt','kt','research','area'])." в $distr районе.</p>";
+                    } elseif ($metro = $fr('metro','value')) {
+                        echo "<p>Где можно сделать $rVin в возле метро $metro?</p>";
+                        echo "<p>Пройти $rVin можно в ".echoMedCentersNumber(['metro'])." возле метро $metro.</p>";
+                    }
+                    if (($type)&&(!$slices)&&(!$field)) {
+                        echo "<p>$rVin на ".$fr('magnetType','tomografTypeCommentPredl').' томографе можно пройти в '.echoClinicsNumber(['mrt','kt','research','area','magnetType'])."</p>";
+                    } elseif ($field) {
+                        echo "<p>$rVin на $field ".$fr('field','fieldCommentPredl')." томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','area','magnetType','field'])."</p>";
+                    } elseif ($slices) {
+                        echo "<p>$rVin на {$slices}-срезовом томографе можно пройти в ".echoClinicsNumber(['mrt','kt','research','area','magnetType','field'])."</p>";
+                    }
+                    if ($triggers['contrast']) {
+                        echo "<p>$rVin с контрастированием можно сделать в ".echoMedCentersNumber(['mrt','kt','research','area','contrast'])."</p>";
+                        //Определяем, что интересно пользоателю: мрт или кт
+                        if ($research) {
+                            $rType = PriceType::getAlias($research->id_type);
+                        } elseif ($triggers['mrt'] && $triggers['kt']) {
+                            $rType = 'both';
+                        } else {
+                            if ($triggers['mrt']) {
+                                $rType = 'mrt';
+                            }
+                            if ($triggers['kt']) {
+                                $rType = 'kt';
+                            }
+                        }
+                        if ($rType == 'mrt') {
+                            echo "
+                    <p>Это исследование, при котором пациенту внутривенно вводят парамагнитное контрастное вещество. В отличие от компьютерной томографии, контрастные вещества, используемые в МРТ диагностике легче переносятся организмом, но все же проверить функцию почек перед проведением исследования рекомендуется (анализ на креатинин). Использование контрастного усиления позволяет получить дополнительную диагностическую информацию при поиске и дифференциации новообразований (как доброкачественных, так и злокачественных), позволяет более качественно визуализировать сосуды, также контрастное усиление необходимо в ряде специализированных видов КТ и МРТ диагностики, таких как Перфузия.</p>
+                    ";
+                        } elseif ($rType == 'kt') {
+                            echo "<p>Это исследование, при котором пациенту внутривенно вводят йодсодержащее контрастное вещество. Нужно понимать, что использование контраста при проведении компьютерной томографии имеет ограничения и противопоказания, к которым относятся: аллергия на йод и сниженная функция почек (рекомендуется сделать анализ на креатинин). Использование контрастного усиления позволяет получить дополнительную диагностическую информацию при поиске и дифференциации новообразований (как доброкачественных, так и злокачественных), позволяет визуализировать сосуды, также контрастное усиление необходимо в ряде специализированных видов КТ и МРТ диагностики, таких как Перфузия.</p>";
+                        } else {
+                            echo "<p>Это исследование, при котором пациенту внутривенно вводят йодсодержащее (в случае КТ) или парамагнитное (в случае МРТ) контрастное вещество. Нужно понимать, что использование контраста при проведении компьютерной томографии имеет ограничения и противопоказания, к которым относятся: аллергия на йод и сниженная функция почек (рекомендуется сделать анализ на креатинин). В отличие от компьютерной томографии, контрастные вещества, используемые в МРТ диагностике легче переносятся организмом, но все же проверить функцию почек перед проведением исследования стоит. Использование контрастного усиления позволяет получить дополнительную диагностическую информацию при поиске и дифференциации новообразований (как доброкачественных, так и злокачественных), при КТ позволяет визуализировать сосуды (они не видны без использования контраста), а при МРТ улучшает видимость сосудов, также контрастное усиление необходимо в ряде специализированных видов КТ и МРТ диагностики, таких как Перфузия.Это исследование, при котором пациенту внутривенно вводят йодсодержащее (в случае КТ) или парамагнитное (в случае МРТ) контрастное вещество. Нужно понимать, что использование контраста при проведении компьютерной томографии имеет ограничения и противопоказания, к которым относятся: аллергия на йод и сниженная функция почек (рекомендуется сделать анализ на креатинин). В отличие от компьютерной томографии, контрастные вещества, используемые в МРТ диагностике легче переносятся организмом, но все же проверить функцию почек перед проведением исследования стоит. Использование контрастного усиления позволяет получить дополнительную диагностическую информацию при поиске и дифференциации новообразований (как доброкачественных, так и злокачественных), при КТ позволяет визуализировать сосуды (они не видны без использования контраста), а при МРТ улучшает видимость сосудов, также контрастное усиление необходимо в ряде специализированных видов КТ и МРТ диагностики, таких как Перфузия.</p>";
+                        }
+                    }
+                    if ($triggers['children']) {
+                        echo "<p>Сделать $rVin ребенку можно в ".echoClinicsNumber(['research','mrt','kt','children','area'])."</p>";
+                    }
+                    if ($triggers['sortBy'] == 'priceUp') {
+                        echo "<p>Медицинские клиники, представленные ниже, отфильтрованы по возрастанию цены на $rVin с учетом: Скидок, Акций и цен Ночью. От более дешевого ценового предложения к более высокому.</p>";
+                    }
+                    if ($triggers['time']) {
+                        echo "<p>Ниже представлены медицинские центры, где $r можно пройти круглосуточно.</p>";
+                    }
+                    //echo "Пройти диагностику $r можно в ".$countClinics(['mrt','kt','research','area']). " медцентрах.";
+                    ?>
+
+                </div>
+            </div>
+            <?php if ($a = ArticleRule::getArticle('dynamic')): ?>
+            <div class="card">
+                <div class="card-block">
+                    <?php
+                    //$a = ;
+                    if ($a) {
+                        echo "<div class='single_object'>".$a -> prepareTextByVerbiage($triggers)."</div>";
+                    } ?>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <?php
+            $criteria = new CDbCriteria();
+            $criteria -> compare('id_type', Article::getTypeId('text'));
+            $articles = $mod -> getArticles($triggers, false, null, $criteria);
+            if (!empty($articles)) {
+                echo "<div class='card'><div class='card-block'><div class='card-title'><h3>Полезные статьи</h3></div>";
+                foreach ($articles as $article) {
+                    $url = $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage]);
+                    echo "
+                        <div><a href='$url'>{$article->name}</a></div>
+                    ";
+                }
+                echo "</div></div>";
+            }
+            ?>
+        </div>
     </div>
 </div>
 

@@ -207,20 +207,31 @@ class Triggers extends CTModel {
 		$name = $htmlOptions['name'] ? $htmlOptions['name'] : $this -> verbiage;
 		$id = $htmlOptions['id'] ? $htmlOptions['id'] : $this -> verbiage;
 		$options = [];
-		if (($p = $this -> parent)&&($data[$p -> verbiage])) {
-			$cr = new CDbCriteria();
-			$cr -> compare('verbiage_parent',$data[$p -> verbiage]);
-			$cr -> together = 'child';
-			$cr -> with = 'child';
-			//$cr -> ('child.id_trigger='.$this -> id);
-			$dep = TriggerValueDependency::model() -> findAll($cr);
-			$options = array_map(function($d){
-				return $d -> child;
-			}, $dep);
-		} else {
-			$options = $this -> trigger_values;
+		$p = $this -> parent;
+		if ((!$data[$p->verbiage])&&($p)) {
+			if (!isset($htmlOptions['disabled'])) {
+				$htmlOptions['disabled'] = 'disabled';
+			}
 		}
-		$children = $dopParameters['noChildren'] ? '' : $this -> getChildrenHtml($data, $id);
+		if (!$htmlOptions['disabled']) {
+			if (($p) && ($data[$p->verbiage])) {
+				$cr = new CDbCriteria();
+				$cr->compare('verbiage_parent', $data[$p->verbiage]);
+				$cr->together = 'child';
+				$cr->with = 'child';
+				//$cr -> ('child.id_trigger='.$this -> id);
+				$dep = TriggerValueDependency::model()->findAll($cr);
+				$options = array_map(function ($d) {
+					return $d->child;
+				}, $dep);
+			} else {
+				$options = $this->trigger_values;
+			}
+		}
+		$children = $this -> getChildrenHtml($data, $id);
+		if ($dopParameters['noChildren']) {
+			$children = '';
+		}
 		return CHtml::DropDownListChosen2(
 			$name,
 			$id,
@@ -246,9 +257,6 @@ class Triggers extends CTModel {
 			 * @type Triggers $child
 			 */
 			$options = ['placeholder' => $child -> name,'empty_line' => true, 'class' => 'trigger_select'];
-			if (!$data[$this->verbiage]) {
-				$options['disabled'] = 'disabled';
-			}
 			$html .= $child -> getHtml($data,$options);
 		}
 		$params = [
@@ -325,5 +333,10 @@ class Triggers extends CTModel {
 	}
 	public function dumpExtraValues() {
 		return [];
+	}
+	public static function triggerHtml($verbiage, &$triggers){
+		$t = self::model() -> findByAttributes(['verbiage' => $verbiage]);
+		return $t -> getHtml($triggers,['placeholder' => $t -> name,'empty_line' => true, 'class' => 'trigger_select'],['noChildren' => true]);
+		//
 	}
 }

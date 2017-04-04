@@ -21,11 +21,15 @@ class TickTrigger extends Triggers {
         if (!$data[$this -> verbiage]) {
             $data[$this -> verbiage] = [$this -> getUncheckedValue()];
         }
-        return CHtml::checkBox(
+        $children = $this -> getChildrenHtml($data, $htmlOptions['id']);
+        if ($dopParameters['noChildren']) {
+            $children = '';
+        }
+        return "<label for='{$htmlOptions['id']}'>".CHtml::checkBox(
             $name,
             in_array($mainVal -> verbiage,empty($data[$this -> verbiage]) ? [] : [$data[$this -> verbiage]]),
             $htmlOptions
-        ) . "<label for='{$htmlOptions['id']}'>{$mainVal->value}</label>" . $this -> getChildrenHtml($data, $htmlOptions['id']);
+        ) . "{$mainVal->value}</label>" . $children;
     }
 
     /**

@@ -39,8 +39,9 @@ class ButtonTrigger extends Triggers {
         ",CClientScript::POS_READY);
         //Рендерим кнопку
         $htmlOptions['id'] = $id.'Button';
+        $children = $dopParameters['noChildren'] ? '' : $this -> getChildrenHtml($data, $htmlOptions['id']);
         return CHtml::tag('div',$htmlOptions, $mainVal -> value) .
-            $this -> getChildrenHtml($data, $htmlOptions['id']) .
+            $children .
             CHtml::hiddenField($htmlOptions['name'],$initialValue);
     }
 

@@ -202,6 +202,16 @@ return array(
 								'tether',
 								'jquery'
 							]
+						],
+						'rateit' => [
+							'baseUrl' => 'libs/rateit/',
+							'js' => [
+								'jquery.rateit.min.js'
+							],
+							'css' => [
+								'rateit.css'
+							],
+							'depends' => ['jquery']
 						]
 				]
 		),

@@ -1,0 +1,57 @@
+#searchForm div.row{
+    margin-bottom:1rem;
+}
+#searchForm .button {
+    padding:0.5rem 0.75rem;
+    margin:0.25rem;
+    cursor:pointer;
+    border-radius:5px;
+}
+#searchForm .button.pressed {
+    background-color: #09ce7d;
+}
+#searchForm select {
+    width:100%;
+}
+#searchForm #formHead {
+    border-bottom:1px solid #09ce7d;
+}
+button {
+    background-color: #09ce7d;
+    cursor:pointer;
+}
+
+a {
+    color: #09ce7d;
+}
+.article-right .card {
+    background-color: #dbdcd2;
+}
+.article-right h1 {
+    font-size:1rem;
+}
+.article-right h3 {
+    font-size:1rem;
+}
+footer {
+    background-color: #dbdcd2;
+}
+#mapContainer {
+    text-align:center;
+}
+.clinic .right-pane {
+    width:30%;
+    text-align:center;
+}
+.clinic .text {
+    display: inline-block;
+}
+.clinic .small_info i{
+    color: #09ce7d;
+}
+.clinic h3 {
+    font-size:1.2rem;
+}
+.clinic .price {
+    background-color: #09ce7d;
+}

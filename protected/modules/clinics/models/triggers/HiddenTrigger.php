@@ -15,11 +15,15 @@ class HiddenTrigger extends Triggers {
      */
     public function getHtml($data, $htmlOptions = [], $dopParameters = []){
         $name = $htmlOptions['name'] ? $htmlOptions['name'] : $this -> verbiage;
+        $children = $this -> getChildrenHtml($data, $htmlOptions['id']);
+        if ($dopParameters['noChildren']) {
+            $children = '';
+        }
         return CHtml::hiddenField(
             $name,
             $data[$this -> verbiage],
             $htmlOptions
-        ) . $this -> getChildrenHtml($data, $htmlOptions['id']);
+        ) . $children;
     }
 
     /**
