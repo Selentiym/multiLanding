@@ -44,7 +44,7 @@ if ($temp = $model -> getFirstTriggerValueString($verb)) : ?>
 $verb = 'children';
 if ($temp = $model -> getFirstTriggerValueString($verb)) : ?>
     <div class="time ">
-        <i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
+        <i class="fa fa-child fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
         <div class="text"><?php echo ($data[$verb] ? '<b>' : ''). $temp . ($data[$verb] ? '</b>' : ''); ?></div>
     </div>
 <?php endif; ?>

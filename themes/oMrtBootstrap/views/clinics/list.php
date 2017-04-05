@@ -208,12 +208,14 @@ if ($research) {
 Yii::app() -> getClientScript() -> registerMetaTag($description,'description');
 Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($keys)),'keywords');
 
-
+/**
+ * @type CController $this
+ */
 ?>
 
 <nav class="breadcrumb bg-faded no-gutters">
-    <a class="breadcrumb-item col-auto" href="#">bread1</a>
-    <a class="breadcrumb-item col-auto active" href="#">bread2</a>
+    <a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl($this->id.'/'.$this->defaultAction); ?>">Главная</a>
+    <a class="breadcrumb-item col-auto active" href="<?php $this -> createUrl('home/clinics',['area' => $triggers['area']]); ?>"><?php echo ($area = $fr('area','value')) ? $area : 'Поиск клиник' ; ?></a>
 </nav>
 <div class="container-fluid">
     <div class="row">
@@ -227,6 +229,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
         <div class="col-md-6">
             <form id="searchForm" action="prettyFormUrl" data-action="home/clinics" data-params="{}" data-gen-url="<?php echo addslashes(Yii::app() -> createUrl('home/createFormUrl')); ?>" class="noEmpty prettyFormUrl">
 <!--            <form id="searchForm">-->
+                <?php echo Triggers::triggerHtml('area',$triggers); ?>
                 <div class="d-flex align-items-start mb-3" id="formHead">
                     <div>
                         <?php echo Triggers::triggerHtml('mrt',$triggers); ?>
@@ -294,7 +297,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     <div class="col-auto ml-3"><a href="<?php echo $this -> createUrl('home/clinics',['area' => $triggers['area']],'&',true); ?>"><button type="button" class="btn" >Сбросить</button></a></div>
                 </div>
             </form>
-            <div id="mapContainer" class="hidden-sm-down">
+            <div id="mapContainer" class="hidden-sm-down mb-3">
                 <h2 class="mb-3">Клиники на карте</h2>
 <!--                <div><button class="btn" data-toggle="collapse" data-target="#map">Показать на карте</button></div>-->
                 <div class=""  id="map" style="width:100%; height:300px">
@@ -387,9 +390,18 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
             <div class="card">
                 <div class="card-block">
                     <?php
-                    //$a = ;
                     if ($a) {
-                        echo "<div class='single_object'>".$a -> prepareTextByVerbiage($triggers)."</div>";
+                        echo $a -> prepareTextByVerbiage($triggers);
+                    } ?>
+                </div>
+            </div>
+            <?php endif; ?>
+            <?php if ($research&&($a = $research -> getArticle())): ?>
+            <div class="card">
+                <div class="card-block">
+                    <?php
+                    if ($a) {
+                        echo $a -> prepareTextByVerbiage($triggers);
                     } ?>
                 </div>
             </div>

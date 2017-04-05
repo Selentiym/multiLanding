@@ -90,6 +90,7 @@ class HomeController extends CController {
             }, ARRAY_FILTER_USE_KEY);
             $params = SiteDispatcher::mergeArray($dops,$params);
         }
+        array_filter($params);
         return parent::createUrl($route,$params,$ampersand);
     }
 

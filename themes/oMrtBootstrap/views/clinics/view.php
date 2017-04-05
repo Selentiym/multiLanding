@@ -2,7 +2,9 @@
 /**
  * @type clinics|doctors $model
  * @type HomeController $this
+ * @type ClinicsModule $mod
  */
+$mod = Yii::app() -> getModule('clinics');
 $word = 'prices';
 $this->setPageTitle($model->title);
 Yii::app() -> getClientScript() -> registerMetaTag($model -> description,'description');
@@ -92,13 +94,37 @@ $cs -> registerScript('Order','
 	}
 	//$this -> renderPartial('//home/searchForm', array('filterForm' => $filterForm, 'modelName' => $modelName, 'fromPage' => $fromPage,'page' => $page));
 ?>
+
+<nav class="breadcrumb bg-faded no-gutters">
+	<a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl($this->id.'/'.$this->defaultAction); ?>">Главная</a>
+	<?php $area = $mod -> renderParameter($triggersPrepared, $trigger,$field); ?>
+	<a class="breadcrumb-item col-auto" href="<?php $this -> createUrl('home/clinics',['area' => $triggers['area']]); ?>"><?php echo ($area) ? $area : 'Поиск клиник' ; ?></a>
+	<a class="breadcrumb-item col-auto" href="<?php $this -> createUrl('home/modelView',['modelName' => get_class($model)]); ?>"><?php echo $model -> name ; ?></a>
+</nav>
+
+<div class="container-fluid clinic-full">
+	<div class="row">
+		<div class="col-12 col-md-8 mx-auto">
+			<div class="row">
+				<div class="col-4">
+					<h1><?php echo $model -> name; ?></h1>
+					<?php $this -> renderPartial('/clinics/_iconData',['model' => $model]); ?>
+					<?php $this -> renderPartial('//clinics/_buttons',['model' => $model]); ?>
+				</div>
+				<div class="col-8"></div>
+			</div>
+			<div class="row">
+
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="h-card">
 <div class="content_block" id="personal_object_cont">
 	<div id="links">
 		<a href="<?php echo $this -> createUrl('/'); ?>">Главная</a>
 		<a href="<?php echo $this -> createUrl('home/clinics');?>"><?php echo $modelName == "clinics" ? 'Клиники' : 'Врачи' ; ?></a>
-		
-		
 		<a href="#"><?php echo $model -> name; ?></a>
 	</div>
 	<div class="main_part">

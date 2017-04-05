@@ -8,21 +8,21 @@
     border-radius:5px;
 }
 #searchForm .button.pressed {
-    background-color: #09ce7d;
+    background-color: #57ae8a;
 }
 #searchForm select {
     width:100%;
 }
 #searchForm #formHead {
-    border-bottom:1px solid #09ce7d;
+    border-bottom:1px solid #57ae8a;
 }
 button {
-    background-color: #09ce7d;
+    background-color: #57ae8a;
     cursor:pointer;
 }
 
 a {
-    color: #09ce7d;
+    color: #57ae8a;
 }
 .article-right .card {
     background-color: #dbdcd2;
@@ -47,11 +47,17 @@ footer {
     display: inline-block;
 }
 .clinic .small_info i{
-    color: #09ce7d;
+    color: #57ae8a;
 }
 .clinic h3 {
     font-size:1.2rem;
 }
 .clinic .price {
-    background-color: #09ce7d;
+    background-color: #57ae8a;
+}
+nav {
+    background-color: #57ae8a;
+}
+.single-clinic {
+    border-top:1px solid #57ae8a;
 }
