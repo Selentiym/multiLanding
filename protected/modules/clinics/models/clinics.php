@@ -83,7 +83,7 @@ class clinics extends BaseModel
 			array('verbiage, address, working_days, working_hours, video, title', 'length', 'max'=>255),
 			array('*', 'safe'),
 			array('id, name, verbiage, phone, phone_extra, fax, address, address_extra, site, district, metro_station, working_days, working_hours, services, rating, triggers, map_coordinates, text, audio, video, title, keywords, description, experience, partner', 'safe', 'on'=>'search'),
-			array('doctorsInput, mrt, kt, external_link, restrictions', 'safe')
+			array('doctorsInput, mrt, kt, external_link, restrictions, path', 'safe')
 		);
 	}
 
@@ -116,6 +116,7 @@ class clinics extends BaseModel
 			'fax' => CHtml::encode('Факс'),
 			'address' => CHtml::encode('Адрес'),
             'site' => CHtml::encode('Сайт'),
+            'path' => CHtml::encode('Как добраться'),
             'district' => CHtml::encode('Район'),
 			'metro_station' => CHtml::encode('Метро'),
 			'working_days' => CHtml::encode('Рабочие дни'),
