@@ -113,6 +113,12 @@
             <?php echo $form->error($model,'site'); ?>
         </div>
 
+        <div>
+            <?php echo $form->labelEx($model,'path'); ?>
+            <?php echo $form->textArea($model,'path',array('size'=>60)); ?>
+            <?php echo $form->error($model,'path'); ?>
+        </div>
+
 <!--        <div>-->
 <!--            --><?php //echo $form->labelEx($model,'working_days'); ?>
 <!--            --><?php //echo $form->textField($model,'working_days',array('size'=>60,'maxlength'=>255)); ?>
