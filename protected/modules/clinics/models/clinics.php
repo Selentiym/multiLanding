@@ -33,6 +33,10 @@
  * @property bool $partner
  * @property bool $ignore_clinic
  *
+ *
+ *
+ * @property doctors[] $doctors
+ *
  */
  
 class clinics extends BaseModel

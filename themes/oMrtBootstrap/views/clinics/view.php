@@ -151,6 +151,9 @@ $cs -> registerScript('Order','
 			</div>
 			<div id="clinic-tabs" role="tablist">
 				<div class="collapse p-3"  id="description">
+					<div class="mb-3">
+						<?php echo $model -> text; ?>
+					</div>
 					<div id="clinic-carousel" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
 							<li data-target="#clinic-carousel" data-slide-to="0" class="active"></li>
@@ -186,18 +189,20 @@ $cs -> registerScript('Order','
 							<span class="sr-only">Next</span>
 						</a>
 					</div>
-					<div>
-						<?php echo $model -> description; ?>
-					</div>
 				</div>
 				<div class="collapse p-3"  id="doctors">
-					<div class="owl-carousel">
+
 						<?php
-						foreach (doctors::model() -> findAll() as $doctor) {
-							$this -> renderPartial('/doctors/_carousel',['doctor' => $doctor]);
+						if (!empty($model -> doctors)) {
+							echo '<div class="owl-carousel">';
+							foreach ($model -> doctors as $doctor) {
+								$this -> renderPartial('/doctors/_carousel',['doctor' => $doctor]);
+							}
+							echo '</div>';
+						} else {
+							echo "<p>К сожалению, список врачей пуст.</p>";
 						}
 						?>
-					</div>
 				</div>
 				<div class="collapse p-3"  id="prices">
 					<?php
