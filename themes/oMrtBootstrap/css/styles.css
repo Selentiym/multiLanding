@@ -20,7 +20,6 @@ button {
     background-color: #57ae8a;
     cursor:pointer;
 }
-
 a {
     color: #57ae8a;
 }
@@ -60,4 +59,50 @@ nav {
 }
 .single-clinic {
     border-top:1px solid #57ae8a;
+}
+.row.buttons > div {
+    font-size:1.25rem;
+    cursor:pointer;
+    background-color:#eaeaea;
+}
+.row.buttons > div[aria-expanded='true'] {
+    background-color:#57ae8a;
+}
+
+.doctor-carousel img{
+    /*max-height:200px;*/
+}
+
+.doctor-carousel .text-el {
+    color:#949494;
+}
+.doctor-carousel .text-el .name-el {
+    color:black;
+}
+
+.price-block {
+    background-color: #cdebde;
+    cursor:pointer;
+}
+.single-price {
+    background-color: #f2f2f2;
+}
+#reviews {
+    max-width:700px;
+}
+#clinic-carousel img {
+    max-height: 500px;
+    margin: 0 auto;
+}
+#clinic-carousel .carousel-control-prev,#clinic-carousel .carousel-control-next {
+}
+#clinic-carousel {
+    background-color: #f2f2f2;
+}
+.article h1, .article h2{
+    text-align: center;
+    margin-bottom:1rem;
+}
+.article h4 {
+    color:#57ae8a;
 }

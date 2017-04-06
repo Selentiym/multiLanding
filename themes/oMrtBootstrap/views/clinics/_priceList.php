@@ -1,19 +1,22 @@
 <?php
 /**
- * @type ObjectPriceValue[] $prices
+ * @type clinics $model
+ * @type ObjectPriceBlock[] $blocks
  */
-?>
-<h2 id="price_heading">Цены клиники</h2>
-<div id="price_cont">
-<?php
-	foreach($prices as $price) {
-		echo "<div class='single_price'>";
-		echo "<span class='price_name'>".$price -> price -> name."</span>";
-		echo "<span class='price_value'>".round($price -> value)." руб.</span>";
-		echo "</div>";
+if (!$blocks) {
+	$blocks = [];
+}
+	foreach($blocks as $block) {
+		$temp = [];
+		foreach ($block -> prices as $price) {
+			if ($model -> getPriceValue($price -> id)) {
+				$temp[] = $price;
+			}
+		}
+		$block -> prices = $temp;
+		$this -> renderPartial('/prices/_single_block_clinics',['block' => $block, 'model' => $model]);
 	}
 ?>
-</div>
 <!--<div id="small_clinic_info">-->
 <!--	--><?php //echo $clinic -> prices_text;?>
 <!--</div>-->

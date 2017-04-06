@@ -66,19 +66,19 @@ $triggers = $_GET;
         </nav>
     </div>
 </header>
-<main role="main">
+<main class="mb-3" role="main">
     <?php
         echo $content;
     ?>
 </main>
-<footer class="p-3">
+<footer class="p-3 text-center">
     <div class="container-fluid">
         <div class="row justify-content-around align-items-center">
-            <div class="col-3"><?php echo date('Y'); ?>, все права защищены</div>
-            <div class="col-3">
+            <div class="col-6 col-md-3 mb-3 mb-md-0"><?php echo date('Y'); ?>, все права защищены</div>
+            <div class="col-12 col-md-3 flex-last flex-md-unordered">
                 <button class="btn">Записаться на МРТ/КТ</button>
             </div>
-            <div class="col-3 justify-content-center">
+            <div class="col-6 col-md-3 mb-3 mb-md-0">
                 <span>Звоните круглосуточно</span><br/>
                 <span>Телефон</span>
             </div>

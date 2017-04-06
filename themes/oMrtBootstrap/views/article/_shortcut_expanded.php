@@ -1,9 +1,11 @@
-<li class='article_shortcut'>
-	<a class="a_shortcut" href="<?php echo $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage]); ?>">
-		<?php echo $article['name'];?><!--<span class="count"><?php //if ($article['c'] > 0) echo $article['c']; ?></span>-->
-	</a>
-	<div>
-		<?php echo CHtml::cutText(strip_tags($article['text']), 20,'..');?>
-		<?php //echo CHtml::giveFirstP($article['text']) ; ?>
+<?php
+/**
+ * @type Article $article
+ */
+?>
+<a href="<?php echo $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage]); ?>" class="list-group-item list-group-item-action flex-column align-items-start">
+	<div class="d-flex w-100 justify-content-between">
+		<h4 class="mb-1"><?php echo $article -> name; ?></h4>
 	</div>
-</li>
+	<p class="mb-1"><?php echo CHtml::cutText(strip_tags($article->text), 20,'..');?></p>
+</a>

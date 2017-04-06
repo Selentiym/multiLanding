@@ -4,11 +4,45 @@
  * @type HomeController $this
  * @type ClinicsModule $mod
  */
+$triggers = $_GET;
+$triggersPrepared = Article::prepareTriggers($triggers);
 $mod = Yii::app() -> getModule('clinics');
 $word = 'prices';
 $this->setPageTitle($model->title);
-Yii::app() -> getClientScript() -> registerMetaTag($model -> description,'description');
-Yii::app() -> getClientScript() -> registerMetaTag($model -> keywords,'keywords');
+
+$cs = Yii::app() -> getClientScript();
+$cs -> registerMetaTag($model -> description,'description');
+$cs -> registerMetaTag($model -> keywords,'keywords');
+$cs -> registerCoreScript('rateit');
+$theme = Yii::app() -> theme -> baseUrl;
+$cs -> registerScript($theme.'/js/map.js', CClientScript::POS_END);
+
+$cs -> registerCoreScript('owl');
+
+$cs -> registerScript('start_carousel','
+var owl2 = $(".owl-carousel");
+console.log(owl2);
+	owl2.owlCarousel({
+		autoHeight : true,
+		autoWidth: false,
+		stopOnHover : true,
+		touchDrag : true,
+		autoPlay : true,
+		responsive: {
+			0: {
+				items:2
+			},
+			768: {
+				items:4
+			},
+			1028 : {
+				items:6
+			}
+		},
+
+	});
+',CClientScript::POS_READY);
+
 $modelName = get_class($model);
 $data = $_GET;
 if ($data['research']) {
@@ -19,17 +53,10 @@ $info = $this -> renderPartial('/clinics/_info', array('clinic' => $model),true)
 
 $cs = Yii::app()->getClientScript();
 $cs -> registerCoreScript('font-awesome');
-$cs->registerCssFile(Yii::app()->theme->baseUrl.'/css/objects_list.css');
-$cs->registerCssFile(Yii::app()->theme->baseUrl.'/css/clinicsView.css');
-$cs->registerCssFile(Yii::app()->theme->baseUrl.'/css/rateit.css?' . time());
 $cs->registerScriptFile(Yii::app()->theme->baseUrl.'/js/map.js');
 $cs -> registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");
-$cs->registerScriptFile(Yii::app()->theme->baseUrl.'/js/jquery.rateit.min.js?' . time());
-$cs->registerScriptFile("https://docdoc.ru/widget/js", CClientScript::POS_BEGIN);
-$cs -> registerScript('Rate','Rate()',CClientScript::POS_READY);
 $cs -> registerScript('Order','
 	$("#sortby a").click(function(e){
-		
 		$("#sortByField").val($(this).attr("sort"));
 		$("#searchForm").submit();
 		return false;
@@ -69,20 +96,6 @@ $cs -> registerScript('Order','
 	$temp = $model -> getCoordinates();
 	$coordinaty[0] = $temp[1];
 	$coordinaty[1] = $temp[0];
-	if ((!$coordinaty[0])||(!$coordinaty[1])) {
-		$adress = $model->address;
-		//$adress = "Санкт-петербург, проспект металлистов, 25к1";
-		//$key = "ключ апи яндекс карт";
-		$found = array();
-		if (trim($adress)) {
-			$adress1 = urlencode($adress);
-			$url = "http://geocode-maps.yandex.ru/1.x/?geocode=" . $adress1;//."&key=".$key;
-			//$content=file_get_contents($url);
-			preg_match('/<pos>(.*?)<\/pos>/', $content, $point);
-			preg_match('/<found>(.*?)<\/found>/', $content, $found);
-		}
-		$coordinaty = explode(' ', trim(strip_tags($point[1])));
-	}
 	if ($coordinaty[1]&&$coordinaty[0]) {
 		$cs->registerScript('mapAct', '
 			addCoords([' . $coordinaty[1] . ', ' . $coordinaty[0] . '],"' . CJavaScript::encode($model->name) . ', ' . $adress . '");
@@ -97,90 +110,106 @@ $cs -> registerScript('Order','
 
 <nav class="breadcrumb bg-faded no-gutters">
 	<a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl($this->id.'/'.$this->defaultAction); ?>">Главная</a>
-	<?php $area = $mod -> renderParameter($triggersPrepared, $trigger,$field); ?>
+	<?php $area = $mod -> renderParameter($triggersPrepared, 'area','value'); ?>
 	<a class="breadcrumb-item col-auto" href="<?php $this -> createUrl('home/clinics',['area' => $triggers['area']]); ?>"><?php echo ($area) ? $area : 'Поиск клиник' ; ?></a>
 	<a class="breadcrumb-item col-auto" href="<?php $this -> createUrl('home/modelView',['modelName' => get_class($model)]); ?>"><?php echo $model -> name ; ?></a>
 </nav>
 
-<div class="container-fluid clinic-full">
+<div class="container-fluid clinic clinic-full">
 	<div class="row">
-		<div class="col-12 col-md-8 mx-auto">
-			<div class="row">
-				<div class="col-4">
+		<div class="col-12 col-lg-10 mx-auto">
+			<div class="row d-flex">
+				<div class="col-12 col-md-4">
 					<h1><?php echo $model -> name; ?></h1>
-					<?php $this -> renderPartial('/clinics/_iconData',['model' => $model]); ?>
-					<?php $this -> renderPartial('//clinics/_buttons',['model' => $model]); ?>
+					<?php $this -> renderPartial('/clinics/_iconData',['model' => $model, 'data' => $triggers]); ?>
+					<div class="text-center">
+					<?php $this -> renderPartial('/clinics/_buttons',['model' => $model]); ?>
+					</div>
 				</div>
-				<div class="col-8"></div>
-			</div>
-			<div class="row">
-
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="h-card">
-<div class="content_block" id="personal_object_cont">
-	<div id="links">
-		<a href="<?php echo $this -> createUrl('/'); ?>">Главная</a>
-		<a href="<?php echo $this -> createUrl('home/clinics');?>"><?php echo $modelName == "clinics" ? 'Клиники' : 'Врачи' ; ?></a>
-		<a href="#"><?php echo $model -> name; ?></a>
-	</div>
-	<div class="main_part">
-		<div class="left_side">
-			<div class="image_cont">
-				<img class="u-logo" src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt="<?php echo $model->name; ?>"/>
-			</div>
-		</div>
-		<div class="center">
-			<h2 class="name object_name p-name"><?php echo $model -> name; ?></h2>
-			<div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-			<div class="object_text">
-				<?php echo $model -> text; ?>
+				<div class="col-12 col-md-8 pt-5" style="height:400px;">
+					<div id="map" style="width:100%;height:100%;"></div>
+				</div>
 			</div>
 
-			<?php
-			$this -> renderPartial('//clinics/_iconData', ['model' => $model, 'data' => $data]);
-			?>
-			<div class="assign_cont objects_cont">
-				<!--<div class="assign"><a href="<?php echo  Yii::app() -> baseUrl;?>/assign"><span>Записаться на прием</span></a></div>-->
-				<div id="<?php echo $id; ?>"></div>
-				<!--<div class="number"><div class="tel_img"></div><div class="tel_number">Запись по телефону: <span class="p-tel"><?php echo $model -> phone; ?></span></div></div>-->
+			<div class="d-flex justify-content-between p-3">
+				<div>Значки</div>
+				<div><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
+			</div>
+			<div class="row buttons text-center">
+				<?php
+					function createBigButton($id, $text){
+						echo '
+						<div class="col p-4" data-toggle="collapse" data-parent="#clinic" data-target="#'.$id.'">
+							'.$text.'
+						</div>';
+					}
+					createBigButton('description','Описание');
+					createBigButton('doctors','Врачи');
+					createBigButton('prices','Цены');
+					createBigButton('reviews','Отзывы');
+				?>
+			</div>
+			<div id="clinic-tabs" role="tablist">
+				<div class="collapse p-3"  id="description">
+					<div id="clinic-carousel" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#clinic-carousel" data-slide-to="0" class="active"></li>
+							<li data-target="#clinic-carousel" data-slide-to="1"></li>
+							<li data-target="#clinic-carousel" data-slide-to="2"></li>
+						</ol>
+						<div class="carousel-inner" role="listbox">
+							<?php
+							$images = array_map(function($image){
+								return trim($image);
+							}, explode(';', $model->pictures));
+							$images = array_filter($images, function ($image) use($model) {
+								return file_exists($model -> giveImageFolderAbsoluteUrl().'/'.$image)&&($image);
+							});
+							$active='active';
+							foreach ($images as $im) {
+								echo '
+
+								<div class="carousel-item '.$active.'">
+									<img class="d-block img-fluid" src="'.$model->giveImageFolderRelativeUrl() . '/' . $im.'">
+								</div>
+								';
+								$active = '';
+							}
+							?>
+						</div>
+						<a class="carousel-control-prev" href="#clinic-carousel" role="button" data-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a>
+						<a class="carousel-control-next" href="#clinic-carousel" role="button" data-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
+					<div>
+						<?php echo $model -> description; ?>
+					</div>
+				</div>
+				<div class="collapse p-3"  id="doctors">
+					<div class="owl-carousel">
+						<?php
+						foreach (doctors::model() -> findAll() as $doctor) {
+							$this -> renderPartial('/doctors/_carousel',['doctor' => $doctor]);
+						}
+						?>
+					</div>
+				</div>
+				<div class="collapse p-3"  id="prices">
+					<?php
+						$this -> renderPartial('/clinics/_priceList',['model' => $model,'blocks' => ObjectPriceBlock::model()->findAll(['order' => 'num ASC'])]);
+					?>
+				</div>
+				<div class="collapse p-3 mx-auto" id="reviews">
+					<?php
+						echo Yii::app() -> getModule('clinics') -> getObjectsReviewsPool(get_class($model)) -> showObjectCommentsWidget($model -> id);
+					?>
+				</div>
 			</div>
 		</div>
-		<div class="right_side">
-			<div id="map"></div>
-		</div>
 	</div>
-	<div class="menu">
-		<?php if (count($model -> doctors)): ?>
-		<div data-word="doctors_list" class="item <?php echo ($word == 'main') ? 'active' : '' ; ?>">Доктора <span class="amount">(<?php echo count($model -> doctors); ?>)</span></div>
-		<?php endif; ?>
-		<?php if ($info): ?>
-		<div data-word="info" class="item <?php echo ($word == 'info') ? 'active' : '' ; ?>">О клинике</div>
-		<?php endif; ?>
-		<div data-word="prices" class="item <?php echo ($word == 'prices') ? 'active' : '' ; ?>">Цены</div>
-		<div data-word="reviews" class="item <?php echo ($word == 'reviews') ? 'active' : '' ; ?>">Отзывы <span class="amount">(<?php echo count($comments = $model -> getApprovedComments()); ?>)</span></div>
-	</div>
-</div>
-<div class="content_block_no_padding">
-	<div id="doctors_list" style="display:<?php echo $word == 'main' ? 'block' : 'none' ;?>">
-		<?php foreach($model -> doctors as $doctor) {
-			$this -> renderPartial('/doctors/_single_doctors', array('data' => $doctor));
-		} ?>
-	</div>
-	<div id="info" style="display:<?php echo $word == 'info' ? 'block' : 'none' ;?>">
-		<?php echo $info; ?>
-	</div>
-	<div id="prices" style="display:<?php echo $word == 'prices' ? 'block' : 'none' ;?>">
-		<?php $this -> renderPartial('/clinics/_priceList', array('prices' => $model -> getPriceValues(),'clinic' => $model)); ?>
-	</div>
-	<div id="reviews" style="display:<?php echo $word == 'reviews' ? 'block' : 'none' ;?>">
-		<?php
-		echo Yii::app() -> getModule('clinics') -> getObjectsReviewsPool(get_class($model)) -> showObjectCommentsWidget($model -> id);
-		//$this -> renderPartial('//clinics/_clinic_reviews', array('model' => $model));
-		?>
-	</div>
-</div>
 </div>

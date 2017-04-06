@@ -212,6 +212,17 @@ return array(
 								'rateit.css'
 							],
 							'depends' => ['jquery']
+						],
+						'owl' => [
+							'baseUrl' => 'libs/owl-carousel/',
+							'js' => [
+								'owl.carousel.min.js'
+							],
+							'css' => [
+								'assets/owl.carousel.min.css',
+								'assets/owl.theme.default.min.css',
+							],
+							'depends' => ['jquery']
 						]
 				]
 		),

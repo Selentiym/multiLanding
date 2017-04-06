@@ -29,6 +29,8 @@
  * @property string $video
  * @property string $keywords
  * @property string $description
+ * @property integer $experience
+ * @property string $rewards
  *
  */
  

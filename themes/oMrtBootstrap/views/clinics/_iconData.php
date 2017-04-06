@@ -18,9 +18,14 @@
                 </div>
             <?php endif; ?>
 <?php if ($model -> working_hours) : ?>
+
     <div class="time ">
-        <i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-        <div class="text"><?php echo $model -> working_hours; ?></div>
+        <div class="row no-gutters align-items-center">
+            <div class="col-auto"><i class="fa fa-clock-o fa-lg fa-fw" aria-hidden="true"></i>&nbsp;</div>
+            <div class="col">
+                <div class="text"><?php echo $model -> working_hours; ?></div>
+            </div>
+        </div>
     </div>
 <?php endif; ?>
 

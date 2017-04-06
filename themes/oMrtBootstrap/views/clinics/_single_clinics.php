@@ -12,8 +12,9 @@
 		<?php $this -> renderPartial('/clinics/_iconData', ['model' => $model, 'data' => $data, 'price' => $price]); ?>
 	</div>
 	<div class="right-pane">
-		<img class="d-flex align-self-start mr-3" src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt="">
+		<img class="d-flex align-self-start mr-3 img-fluid" src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt="">
 		<div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+		<div class="mb-1"><a href="<?php echo $model -> getUrl(); ?>#reviews">Читать отзывы</a></div>
 		<?php $this -> renderPartial('/clinics/_buttons',['model' => $model]); ?>
 	</div>
 </li>

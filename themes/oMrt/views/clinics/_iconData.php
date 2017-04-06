@@ -14,7 +14,8 @@
                     <?php
                     $t = $model -> getFirstTriggerValue($verb);
                     $val = $t -> getParameterValueByVerbiage($verb.'Comment');
-                    echo  $val -> value; ?>"><?php echo ($data[$verb] ? '<b>' : ''). $temp . ($data[$verb] ? '</b>' : ''); ?></div>
+                    echo  $val -> value; ?>">
+                    <?php echo ($data[$verb] ? '<b>' : ''). $temp . ($data[$verb] ? '</b>' : ''); ?></div>
                 </div>
             <?php endif; ?>
 <?php if ($model -> working_hours) : ?>
