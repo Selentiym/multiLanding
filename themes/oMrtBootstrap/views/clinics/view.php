@@ -128,6 +128,7 @@ $cs -> registerScript('Order','
 				</div>
 				<div class="col-12 col-md-8 pt-5" style="height:400px;">
 					<div id="map" style="width:100%;height:100%;"></div>
+					<div><h6>Как добраться</h6><?php echo $model -> path; ?></div>
 				</div>
 			</div>
 

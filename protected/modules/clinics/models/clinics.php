@@ -32,6 +32,7 @@
  * @property string $description
  * @property bool $partner
  * @property bool $ignore_clinic
+ * @property string $path
  *
  *
  *
