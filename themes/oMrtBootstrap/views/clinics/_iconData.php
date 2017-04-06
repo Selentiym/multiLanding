@@ -105,13 +105,15 @@ if ($model -> metro_station) : ?>
     <i class="fa fa-mobile fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
     <div class="text p-adr"><?php echo $model -> phone ? $model -> phone : 'нужный телефон'; ?></div>
 </div>
-<?php if (($model -> mrt)||($model -> getFirstTriggerValue('field'))) : ?>
+<?php if (($model -> mrt)||($model -> getFirstTriggerValue('field'))||($model -> getFirstTriggerValue('magnetType'))) : ?>
     <div class="row no-gutters align-items-center">
         <div class="col-auto">
         <i class="fa fa-life-ring fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
         </div>
         <div class="col">
-        <div class="text p-adr"><?php echo $model -> mrt . ' ' . ($data['field']||$data['magnetType'] ? '<b>': '') . $model -> getConcatenatedTriggerValueString('field') . ' ' . ($data['field']||$data['magnetType'] ? '</b>': ''); ?></div>
+        <div class="text p-adr">
+            <?php
+            echo $model -> mrt . ' ' . ($data['field']||$data['magnetType'] ? '<b>': '') . $model -> getConcatenatedTriggerValueString('field') . ' '. $model -> getConcatenatedTriggerValueString('magnetType') . ($data['field']||$data['magnetType'] ? '</b>': ''); ?></div>
         </div>
     </div>
 <?php endif; ?>
@@ -129,18 +131,18 @@ if ($model -> metro_station) : ?>
     </div>
 <?php endif; ?>
     <?php if($price) : ?>
-        <div class="d-flex price justify-content-between p-2 rounded mt-2">
-            <div>
-                <?php echo $price -> name; ?>
-            </div>
-            <div>
-                <?php echo $model -> getPriceValue($price -> id) -> value; ?>
-            </div>
-            <?php
-            if ($price = $data['research']) {
-                echo "<b>".$price -> name.'</b> '.$model -> getPriceValue($price -> id) -> value;
-            }
-            ?>
-        </div>
+<!--        <div class="d-flex price justify-content-between p-2 rounded mt-2">-->
+<!--            <div>-->
+<!--                --><?php //echo $price -> name; ?>
+<!--            </div>-->
+<!--            <div>-->
+<!--                --><?php //echo $model -> getPriceValue($price -> id) -> value; ?>
+<!--            </div>-->
+<!--            --><?php
+//            if ($price = $data['research']) {
+//                echo "<b>".$price -> name.'</b> '.$model -> getPriceValue($price -> id) -> value;
+//            }
+//            ?>
+<!--        </div>-->
     <?php endif; ?>
 </div>

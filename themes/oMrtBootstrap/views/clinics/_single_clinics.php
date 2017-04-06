@@ -10,6 +10,11 @@
 	<div class="media-body">
 		<h3 class="mt-0"><a href="<?php echo $model -> getUrl(); ?>"><?php echo $model -> name; ?></a></h3>
 		<?php $this -> renderPartial('/clinics/_iconData', ['model' => $model, 'data' => $data, 'price' => $price]); ?>
+		<?php
+		if ($price) {
+			$this->renderPartial('/clinics/_priceList', ['model' => $model, 'blocks' => [ObjectPriceBlock::model()->findByPk($price->id_block)], 'price' => $price]);
+		}
+		?>
 	</div>
 	<div class="right-pane">
 		<img class="d-flex align-self-start mr-3 img-fluid" src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt="">
