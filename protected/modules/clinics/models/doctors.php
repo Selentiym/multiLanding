@@ -406,6 +406,7 @@ class doctors extends BaseModel
 	public function FillFieldsFromArray($model, $post_arr)
 	{
 		$model->attributes=$post_arr['doctors'];
+		$model -> education = $post_arr['doctors']['education'];
 		//print_r($post_arr['doctors']);
 		//$model -> rewards = $_POST["doctors"]["rewards"];
 		//$model -> rewards = $_POST["doctors"]["rewards"];

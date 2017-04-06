@@ -7,7 +7,7 @@
         'enableAjaxValidation'=>false,
         'htmlOptions'=>array('enctype'=>'multipart/form-data'),
     ));
-    Yii::app() -> getClientScript() -> registerCoreScript('bootstrap') -> registerCss('icon-remove-css','
+    Yii::app() -> getClientScript() -> registerCoreScript('font-awesome') -> registerCss('icon-remove-css','
     .icon-remove {
         background-color:red;
     }
@@ -159,7 +159,7 @@
                 if (!empty($model->logo)) {
                     //$logo = Yii::app()->baseUrl.'/images/clinics/' . $model->id . '/' .$model->logo;
                     $logo = $model -> giveImageFolderRelativeUrl() . $model->logo;
-                    echo '<div id="logo">' . CHtml::ajaxLink('<i class="icon-remove"></i>', CController::createUrl('admin/propDelete/' . $model->id), array('type'=> 'POST', 'data'=>array('model' => 'clinic', 'prop' => 'logo'), 'success' => 'js: $("#logo").hide()'))
+                    echo '<div id="logo">' . CHtml::ajaxLink('<i class="fa fa-remove"></i>', $this -> createUrl('admin/propDelete',['id' => $model->id]), array('type'=> 'POST', 'data'=>array('model' => 'clinic', 'prop' => 'logo'), 'success' => 'js: $("#logo").hide()'))
                      . CHtml::image($logo, CHtml::encode('Логотип'),
                         array('style' => 'max-width:172px;max-height:200px; padding: 8px 0px 8px 15px;')) . '</div>';
                 }
@@ -219,7 +219,7 @@
                     foreach ($pictures as $picture) {
                         $counter++;
                         $picture_display = $model -> giveImageFolderRelativeUrl() . $picture;
-                        echo '<div id="picture' . $counter. '">' . CHtml::ajaxLink('<i class="icon-remove"></i>', CController::createUrl('admin/propDelete/' . $model->id), array('type'=> 'POST', 'data'=>array('model' => 'clinic', 'prop' => 'img',  'prop_value' => $picture), 'success' => 'js: $("#picture' . $counter . '").hide()')) 
+                        echo '<div id="picture' . $counter. '">' . CHtml::ajaxLink('<i class="fa fa-remove"></i>', $this -> createUrl('admin/propDelete',['id' => $model->id]), array('type'=> 'POST', 'data'=>array('model' => 'clinic', 'prop' => 'img',  'prop_value' => $picture), 'success' => 'js: $("#picture' . $counter . '").hide()'))
                         . CHtml::image($picture_display, $picture, array('style' => 'max-width:172px;max-height:200px; padding: 8px 0px 8px 15px;', )) . '</div>';
                     }
                     echo '</div>';
