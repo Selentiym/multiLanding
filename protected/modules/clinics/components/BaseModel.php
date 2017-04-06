@@ -683,13 +683,13 @@ class BaseModel extends CTModel
 		if (parent::beforeSave()) {
 			try {
 				if (!$this -> map_coordinates) {
-					try {
-						$this -> parseCoords();
-					} catch (HttpException $e) {
-						new CustomFlash('Warning','clinics','no coords','Координаты не найдены!',true);
-					}
+					$this -> parseCoords();
 				}
-			} catch (Exception $e) {}
+			}
+			catch (HttpException $e) {
+				new CustomFlash('Warning','clinics','no coords','Координаты не найдены!',true);
+			}
+			catch (Exception $e) {}
 			//Пытаемся найти ближайшее метро.
 			try {
 				//throw new Exception('no way to find nearest metro');

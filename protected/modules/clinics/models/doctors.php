@@ -407,6 +407,7 @@ class doctors extends BaseModel
 	{
 		$model->attributes=$post_arr['doctors'];
 		$model -> education = $post_arr['doctors']['education'];
+		$model -> curses = $post_arr['doctors']['curses'];
 		//print_r($post_arr['doctors']);
 		//$model -> rewards = $_POST["doctors"]["rewards"];
 		//$model -> rewards = $_POST["doctors"]["rewards"];
