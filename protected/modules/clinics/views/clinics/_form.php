@@ -6,7 +6,13 @@
         // See class documentation of CActiveForm for details on this.
         'enableAjaxValidation'=>false,
         'htmlOptions'=>array('enctype'=>'multipart/form-data'),
-    )); ?>
+    ));
+    Yii::app() -> getClientScript() -> registerCoreScript('bootstrap') -> registerCss('icon-remove-css','
+    .icon-remove {
+        background-color:red;
+    }
+    ');
+    ?>
     
     <?php if(Yii::app()->user->hasFlash('successfullSave')): ?>
         <div class="alert-success">
@@ -225,7 +231,7 @@
                 'name' => 'images',
                 'accept' => 'jpeg|jpg|gif|png', // useful for verifying files
                 'duplicate' => CHtml::encode('Такой файл уже добавлен'), 
-                'denied' => Chtml::encode('Недопустимый формат файла'), 
+                'denied' => Chtml::encode('Недопустимый формат файла')
                 ));
             ?>
             <?php echo $form->error($model,'pictures'); ?>
