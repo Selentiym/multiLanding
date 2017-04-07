@@ -5,8 +5,18 @@
  * Date: 23.02.2017
  * Time: 13:24
  *
- * @type ClinicsModule $mod
+ * @param $icon
+ * @param $text
+ * @param string $class
+ * @internal param ClinicsModule $mod
  */
+function icon($icon, $text, $class = ''){
+echo '
+<div class="row no-gutters align-items-center">
+    <div class="col-auto"><i class="'.$class.' fa fa-'.$icon.' fa-lg fa-fw" aria-hidden="true"></i>&nbsp;</div>
+    <div class="col"><div class="text">'.$text.'</div></div>
+</div>';
+}
 $mod = Yii::app() -> getModule('clinics');
 $triggers = $_GET;
 $modelName = 'clinics';
@@ -40,13 +50,20 @@ $cs->registerScript("map_init","
 
         allClinics = new ymaps.Map('map', {
             center: ".($triggers['area'] == 'spb' ? '[59.939095, 30.315868]' : '[55.755814, 37.617635]') ." ,
-            zoom: 10
+            zoom: 10,
+            id: 'map'
         }, {
             searchControlProvider: 'yandex#search'
         });
         ".$toAdd."
-        $('#map').on('show.bs.collapse', function(){
+        $('#map').on('shown.bs.collapse', function(){
+            $('#map').height(300);
+            $(window).trigger('resize');
+            console.log(allClinics);
             allClinics.redraw();
+            if (typeof allClinics.redraw == 'function') {
+                allClinics.redraw();
+            }
         });
     });
 ",CClientScript::POS_READY);
@@ -299,12 +316,43 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
             </form>
             <div id="mapContainer" class="hidden-sm-down mb-3">
                 <h2 class="mb-3">Клиники на карте</h2>
-<!--                <div><button class="btn" data-toggle="collapse" data-target="#map">Показать на карте</button></div>-->
-                <div class=""  id="map" style="width:100%; height:300px">
+                <div><button class="btn" data-toggle="collapse" data-target="#map">Показать на карте</button></div>
+                <div class="collapse"  id="map" style="width:100%; height:300px">
                 </div>
             </div>
             <div id="clinicsList">
                 <ul class="list-unstyled">
+                    <?php if (count($objects) == 0): ?>
+                    <li class="media clinic mb-3 single-clinic pt-3">
+                        К сожалению клиник, удовлетворяющих всем критериям поиска, не найденно.
+                        Вы можете обратиться к специалистам "Общегородской Службы Записи", где вам помогут найти подходящий диагностический центр.
+                    </li>
+                    <?php endif; ?>
+                    <li class="media clinic mb-3 single-clinic pt-3">
+                        <div class="media-body small_info">
+                            <h3 class="mt-0"><a href="#">Бесплатная общегородская служба записи на МРТ и КТ диагностику</a></h3>
+                            <?php
+                                icon('clock-o','пн-вс:круглосуточно');
+                                icon('phone','Телефон');
+                            ?>
+                            <p>Пройти МРТ и КТ можно во всех районах города.</p>
+                            <div class="row">
+                                <div class="col-12"><?php icon('child','МРТ и КТ детям (с наркозом и без)'); ?></div>
+                                <div class="col-12"><?php icon('hand-stop-o','Без ограничений по весу'); ?></div>
+                                <div class="col-12"><?php icon('clock-o','Круглосуточно'); ?></div>
+                                <div class="col-12"><?php icon('money','Горячие предложения на МРТ и КТ диагностику (Акции и скидки по городу)'); ?></div>
+                                <div class="col-12"><?php icon('user-md','Бесплатная консультация врача (диагност, невролог, травматолог)'); ?></div>
+                                <div class="col-12"><?php icon('life-ring','МРТ 0.2-0.4 Тесла, 1.5 Тесла, 3 Тесла, КТ 16 срезов, 64 среза, 128 срезов'); ?></div>
+                                <div class="col-12"><?php icon('paint-brush','Исследования с контрастом'); ?></div>
+                            </div>
+                        </div>
+                        <div class="right-pane">
+                            <img class="d-flex align-self-start mr-3 img-fluid" src="<?php echo Yii::app() -> theme -> baseUrl; ?>/images/logo.png" alt="Общегородская служба записи">
+                            <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+<!--                            <div class="mb-1"><a href="--><?php //echo $model -> getUrl(); ?><!--#reviews">Читать отзывы</a></div>-->
+                            <?php $this -> renderPartial('/clinics/_buttons',['model' => $model]); ?>
+                        </div>
+                    </li>
                     <?php foreach($objects as $clinic){
                         $this -> renderPartial('/clinics/_single_clinics',['model' => $clinic,'price' => $research]);
 //                        break;
