@@ -42,7 +42,7 @@ $cs -> registerScript('implementLinks',"
         inputObject.mrtElements = [$('select[name=magnetType]'),$('select[name=field]')];
         console.log(inputObject);
         function mrtChange () {
-            alert('mrtChange');
+            !alert('mrtChange');
             var ktVal = inputObject.ktInput.val();
             var mrtVal = inputObject.mrtInput.val();
             if (mrtVal) {
@@ -363,6 +363,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     </div>
                     <div class="col-12 col-md-4">
                         <?php
+                            echo Triggers::triggerHtml('city',$triggers);
                             echo Triggers::triggerHtml('district',$triggers);
                             echo Triggers::triggerHtml('street',$triggers);
                             //echo Triggers::triggerHtml('street',$triggers);
