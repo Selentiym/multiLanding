@@ -9,6 +9,8 @@
  * @type ClinicsModule $mod
  */
 $cs = Yii::app()->getClientScript();
+
+$cs -> registerMetaTag('c05418a51fe33efa','yandex-verification');
 $mod = Yii::app() -> getModule('clinics');
 $articles = $mod -> getRootArticles();
 $count = count($articles);
