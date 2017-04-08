@@ -55,7 +55,7 @@ return SiteDispatcher::mergeArray(
                     '<area:(spb|msc)>' => 'home/landing',
                     '<modelName:(clinics|doctors)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
                     'article' => 'home/articles',
-                    'article/<verbiage:\w+>' => 'home/articleView',
+                    'article/<verbiage:[\w-]+>' => 'home/articleView',
                     [
                         'class' => 'application.components.urlRules.ModelAttributeUrlRule',
                         'modelClass' => 'ObjectPrice',
