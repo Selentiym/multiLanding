@@ -74,7 +74,7 @@ class Article extends BaseModel {
 	public function rules()
 	{
 		return array(
-			array('name, verbiage, text, show_objects', 'required', 'except' => 'createDescendant'),
+			array('name, verbiage, show_objects', 'required', 'except' => 'createDescendant'),
 			array('parent_id, level', 'required'),
             array('verbiage',
                 'match', 'not' => true, 'pattern' => '/[^a-zA-Z0-9_-]/',
