@@ -75,6 +75,7 @@ class Objects extends CTModel
 	 */
 	public static function getNumber($modelName)
 	{
+
 		$criteria = new CDbCriteria;
 		$criteria -> compare('name', strtolower($modelName));
 		if ($obj = Objects::model() -> find($criteria)) {

@@ -28,6 +28,75 @@ $objects = $mod -> getClinics($_GET,null,null,$criteria);
 
 $cs = Yii::app()->getClientScript();
 
+$cs -> registerScript('implementLinks',"
+    (function(){
+        var inputObject = {};
+        inputObject.mrtInput = $('input[name=mrt]');
+        inputObject.ktInput = $('input[name=kt]');
+        inputObject.ktElements = [$('select[name=slices]')];
+        inputObject.mrtElements = [$('select[name=magnetType]'),$('select[name=field]')];
+        console.log(inputObject);
+        function mrtChange () {
+            alert('mrtChange');
+            var ktVal = inputObject.ktInput.val();
+            var mrtVal = inputObject.mrtInput.val();
+            if (mrtVal) {
+                showMrtElements();
+                if (!ktVal) {
+                    hideKtElements();
+                }
+            } else if ((!mrtVal)&&(!ktVal)) {
+                showMrtElements();
+                showKtElements();
+            } else {
+                hideMrtElements();
+            }
+        }
+        function ktChange () {
+            var ktVal = inputObject.ktInput.val();
+            var mrtVal = inputObject.mrtInput.val();
+            if (ktVal) {
+                showKtElements();
+                if (!mrtVal) {
+                    hideMrtElements();
+                }
+            } else if ((!mrtVal)&&(!ktVal)) {
+                showMrtElements();
+                showKtElements();
+            } else {
+                hideKtElements();
+            }
+        }
+        function hideMrtElements(){
+            hideElements(inputObject.mrtElements);
+        }
+        function hideKtElements(){
+            hideElements(inputObject.ktElements);
+        }
+        function showMrtElements(){
+            showElements(inputObject.mrtElements);
+        }
+        function showKtElements(){
+            showElements(inputObject.ktElements);
+        }
+        function hideElements(els){
+            for (var i = 0; i < els; i++) {
+                inputObject[els[i]].select2('destroy');
+                inputObject[els[i]].hide();
+            }
+        }
+        function showElements(els){
+            for (var i = 0; i < els; i++) {
+                inputObject[els[i]].show();
+            }
+        }
+        inputObject.mrtInput.change(mrtChange);
+        inputObject.ktInput.change(ktChange);
+        mrtChange();
+        ktChange();
+    })();
+",CClientScript::POS_READY);
+
 $cs -> registerCoreScript('select2');
 $cs -> registerCoreScript('rateit');
 
@@ -256,7 +325,9 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-4"><?php echo CHtml::DropDownListChosen2(
+                    <div class="col-12 col-md-4">
+                        <?php
+                        echo CHtml::DropDownListChosen2(
                             'research',
                             'research',
                             CHtml::listData(ObjectPrice::model() -> findAll(['order' => 'id_block ASC']),'verbiage','name'),
@@ -265,13 +336,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                             $triggers['research'] ? [$triggers['research']] : [],
                             [],
                             true
-                        ); ?></div>
-                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('magnetType',$triggers); ?></div>
-                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('city',$triggers); ?></div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        <?php
+                        );
                         echo CHtml::DropDownListChosen2(
                             'metro',
                             'metro',
@@ -284,31 +349,75 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                         );
                         ?>
                     </div>
-                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('field',$triggers); ?></div>
-                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('district',$triggers); ?></div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-md-8 flex-last flex-md-first">
-                        <div class="row">
-                            <div class="col">
-                                <?php echo Triggers::triggerHtml('contrast',$triggers); ?>
-                            </div>
-
-                            <div class="col">
-                                <?php echo Triggers::triggerHtml('children',$triggers); ?>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <?php echo Triggers::triggerHtml('time',$triggers); ?>
-                            </div>
-                            <div class="col">
-                                <?php echo Triggers::triggerHtml('doctor',$triggers); ?>
-                            </div>
-                        </div>
+                    <div class="col-12 col-md-4">
+                        <?php
+                            echo Triggers::triggerHtml('magnetType',$triggers);
+                            echo Triggers::triggerHtml('field',$triggers);
+                            echo Triggers::triggerHtml('slices',$triggers);
+                        ?>
                     </div>
-                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('street',$triggers); ?></div>
+                    <div class="col-12 col-md-4">
+                        <?php
+                            echo Triggers::triggerHtml('district',$triggers);
+                            echo Triggers::triggerHtml('street',$triggers);
+                            //echo Triggers::triggerHtml('street',$triggers);
+                        ?>
+                    </div>
                 </div>
+<!--                <div class="row">-->
+<!--                    <div class="col-12 col-md-4">--><?php //echo CHtml::DropDownListChosen2(
+//                            'research',
+//                            'research',
+//                            CHtml::listData(ObjectPrice::model() -> findAll(['order' => 'id_block ASC']),'verbiage','name'),
+//                            //$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
+//                            ['style' => 'width:100%', 'empty_line' => true, 'placeholder' => 'Исследование'],
+//                            $triggers['research'] ? [$triggers['research']] : [],
+//                            [],
+//                            true
+//                        ); ?><!--</div>-->
+<!--                    <div class="col-12 col-md-4">--><?php //echo Triggers::triggerHtml('magnetType',$triggers); ?><!--</div>-->
+<!--                    <div class="col-12 col-md-4">--><?php //echo Triggers::triggerHtml('city',$triggers); ?><!--</div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-12 col-md-4">-->
+<!--                        --><?php
+//                        echo CHtml::DropDownListChosen2(
+//                            'metro',
+//                            'metro',
+//                            CHtml::listData(Metro::model() -> findAllByAttributes(['city' => $triggers['area']],['order' => 'name ASC']),'id','name'),
+//                            //$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
+//                            ['style' => 'width:100%', 'empty_line' => true, 'placeholder' => 'Метро'],
+//                            $triggers['metro'] ? [$triggers['metro']] : [],
+//                            [],
+//                            true
+//                        );
+//                        ?>
+<!--                    </div>-->
+<!--                    <div class="col-12 col-md-4">--><?php //echo Triggers::triggerHtml('field',$triggers); ?><!--</div>-->
+<!--                    <div class="col-12 col-md-4">--><?php //echo Triggers::triggerHtml('district',$triggers); ?><!--</div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-12 col-md-8 flex-last flex-md-first">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col">-->
+<!--                                --><?php //echo Triggers::triggerHtml('contrast',$triggers); ?>
+<!--                            </div>-->
+<!---->
+<!--                            <div class="col">-->
+<!--                                --><?php //echo Triggers::triggerHtml('children',$triggers); ?>
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="row">-->
+<!--                            <div class="col">-->
+<!--                                --><?php //echo Triggers::triggerHtml('time',$triggers); ?>
+<!--                            </div>-->
+<!--                            <div class="col">-->
+<!--                                --><?php //echo Triggers::triggerHtml('doctor',$triggers); ?>
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-12 col-md-4">--><?php //echo Triggers::triggerHtml('street',$triggers); ?><!--</div>-->
+<!--                </div>-->
                 <div class="row no-gutters">
                     <div class="col-auto"><button type="submit" class="btn">Найти</button></div>
                     <div class="col-auto ml-3"><a href="<?php echo $this -> createUrl('home/clinics',['area' => $triggers['area']],'&',true); ?>"><button type="button" class="btn" >Сбросить</button></a></div>

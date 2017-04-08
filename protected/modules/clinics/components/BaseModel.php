@@ -18,7 +18,7 @@ class BaseModel extends CTModel
 	/**
 	 * @var array SFields specific fields. Those will not be taken into account in the default search function.
 	 */
-	public $SFields = array('metro','research','submitted','price','street','sortBy', 'mrt', 'kt');//,'speciality');
+	public $SFields = array('metro','research','submitted','price','street','sortBy');//,'speciality');
 	/**
 	 * @var integer type. Stores id of the object's type.
 	 */
@@ -44,7 +44,9 @@ class BaseModel extends CTModel
 		}
 	}
 	public function relations() {
-		return [];
+		return [
+			'prices' => [self::HAS_MANY, 'ObjectPriceValue', 'id_object', 'with' => 'price', 'condition' => 'price.object_type = ' . Objects::getNumber(get_class($this))]
+		];
 	}
 	/**
 	 * @arg array search a search array that specifies which filterform will be displayed
@@ -898,10 +900,11 @@ class BaseModel extends CTModel
 	 * @return ObjectPriceValue[]
 	 */
 	public function getPriceValues() {
-		$criteria = new CDbCriteria();
-		$criteria -> addInCondition('id_price', CHtml::giveAttributeArray(ObjectPrice::model() -> findAllByAttributes(['object_type' => Objects::getNumber(get_class($this))]),'id'));
-		$criteria -> compare('id_object', $this -> id);
-		return ObjectPriceValue::model() -> findAll($criteria);
+		return $this -> prices;
+//		$criteria = new CDbCriteria();
+//		$criteria -> addInCondition('id_price', CHtml::giveAttributeArray(ObjectPrice::model() -> findAllByAttributes(['object_type' => Objects::getNumber(get_class($this))]),'id'));
+//		$criteria -> compare('id_object', $this -> id);
+//		return ObjectPriceValue::model() -> findAll($criteria);
 	}
 
 	/**

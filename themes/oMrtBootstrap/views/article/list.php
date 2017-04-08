@@ -29,11 +29,13 @@ $this -> renderPartial('/article/_navBar',[]);
     <div class="row">
         <div class="col-12 col-md-10 mx-auto">
             <h1>Все об МРТ и КТ</h1>
-            <div class="col-12 col-md-6">
-                <?php $this -> renderPartial('/article/renderList', array('articles' => $first_column)); ?>
-            </div>
-            <div class="col-12 col-md-6">
-                <?php $this -> renderPartial('/article/renderList', array('articles' => $second_column)); ?>
+            <div class="row justify-content-between">
+                <div class="col-12 col-md-5">
+                    <?php $this -> renderPartial('/article/renderList', array('articles' => $first_column)); ?>
+                </div>
+                <div class="col-12 col-md-5">
+                    <?php $this -> renderPartial('/article/renderList', array('articles' => $second_column)); ?>
+                </div>
             </div>
         </div>
     </div>

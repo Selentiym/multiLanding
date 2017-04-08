@@ -96,7 +96,7 @@ class Article extends BaseModel {
 	{
 		return array(
 			'parent' => array(self::BELONGS_TO, 'Article', 'parent_id'),
-			'researches' => array(self::HAS_MANY, 'ArticleResearch', 'id_article'),
+			'researches' => array(self::HAS_MANY, 'ArticleResearch', 'id_article')
 		);
 	}
 

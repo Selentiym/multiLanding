@@ -50,6 +50,10 @@ class ClinicsModule extends UWebModule {
      */
 	public function getClinics (array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
 		$order = $triggers['sortBy'];
+		if (!$criteria instanceof CDbCriteria) {
+			$criteria = new CDbCriteria();
+		}
+		$criteria->with = 'prices';
 		return $this -> getObjects('clinics',$triggers,$order,$limit,$criteria);
 	}
 	public function getArticles (array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
