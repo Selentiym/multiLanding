@@ -11,6 +11,8 @@
 $cs = Yii::app()->getClientScript();
 
 $cs -> registerMetaTag('c05418a51fe33efa','yandex-verification');
+$cs -> registerMetaTag('fa27ede9b02e532c5b752c4cb14f0a21','wmail-verification');
+
 $mod = Yii::app() -> getModule('clinics');
 $articles = $mod -> getRootArticles();
 $count = count($articles);
