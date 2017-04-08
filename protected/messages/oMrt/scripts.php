@@ -14,7 +14,7 @@ return array (
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-90805348-1', 'auto');
+  ga('create', 'UA-97038486-1', 'auto');
   ga('send', 'pageview');
 
 </script>
@@ -25,13 +25,13 @@ return array (
     (function (d, w, c) {
         (w[c] = w[c] || []).push(function() {
             try {
-
-                w.yaCounter40204894 = new Ya.Metrika({
-                    id:40204894,
+                w.yaCounter44058669 = new Ya.Metrika({
+                    id:44058669,
                     clickmap:true,
                     trackLinks:true,
                     accurateTrackBounce:true,
-                    webvisor:true
+                    webvisor:true,
+                    trackHash:true
                 });
             } catch(e) { }
         });
@@ -48,7 +48,7 @@ return array (
         } else { f(); }
     })(document, window, "yandex_metrika_callbacks");
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/40204894" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<noscript><div><img src="https://mc.yandex.ru/watch/44058669" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 '
 );

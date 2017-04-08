@@ -30,7 +30,8 @@ $triggers = $_GET;
 </head>
 
 <body>
-
+<?php echo Yii::t('scripts', 'yandexCounter'); ?>
+<?php echo Yii::t('scripts', 'GA'); ?>
 <header class="container-fluid">
     <div class="row align-items-start justify-content-between text-center">
         <div class="col-md-12 col-9 d-flex justify-content-between justify-content-sm-end pt-3 p-md-3 align-items-center">
