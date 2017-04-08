@@ -60,7 +60,8 @@ $triggers = $_GET;
                         <a class="nav-link" href="<?php echo Yii::app() -> controller -> createUrl('home/clinics',['area' => 'msc']); ?>">МРТ в Москве</a>
                     </li>
                     <li class="nav-item <?php echo ( $triggers['area'] != 'spb' && $triggers['area'] != 'msc' ) ? 'active' : ''; ?>">
-                        <a class="nav-link" href="<?php echo Yii::app() -> controller -> createUrl('home/articles'); ?>">Все о МРТ и КТ</a>
+<!--                        <a class="nav-link" href="--><?php //echo Yii::app() -> controller -> createUrl('home/articles'); ?><!--">Все о МРТ и КТ</a>-->
+                        <a class="nav-link" href="<?php echo "/"; ?>">Все о МРТ и КТ</a>
                     </li>
                 </ul>
             </div>
