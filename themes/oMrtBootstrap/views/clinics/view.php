@@ -111,8 +111,8 @@ $cs -> registerScript('Order','
 <nav class="breadcrumb bg-faded no-gutters">
 	<a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl($this->id.'/'.$this->defaultAction); ?>">Главная</a>
 	<?php $area = $mod -> renderParameter($triggersPrepared, 'area','value'); ?>
-	<a class="breadcrumb-item col-auto" href="<?php $this -> createUrl('home/clinics',['area' => $triggers['area']]); ?>"><?php echo ($area) ? $area : 'Поиск клиник' ; ?></a>
-	<a class="breadcrumb-item col-auto" href="<?php $this -> createUrl('home/modelView',['modelName' => get_class($model)]); ?>"><?php echo $model -> name ; ?></a>
+	<a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl('home/clinics',['area' => $triggers['area']]); ?>"><?php echo ($area) ? $area : 'Поиск клиник' ; ?></a>
+	<a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl('home/modelView',['modelName' => get_class($model)]); ?>"><?php echo $model -> name ; ?></a>
 </nav>
 
 <div class="container-fluid clinic clinic-full">
@@ -126,8 +126,8 @@ $cs -> registerScript('Order','
 					<?php $this -> renderPartial('/clinics/_buttons',['model' => $model]); ?>
 					</div>
 				</div>
-				<div class="col-12 col-md-8 pt-5" style="height:400px;">
-					<div id="map" style="width:100%;height:100%;"></div>
+				<div class="col-12 col-md-8 pt-5" >
+					<div id="map" style="height:400px;"></div>
 					<div><h6>Как добраться</h6><?php echo $model -> path; ?></div>
 				</div>
 			</div>

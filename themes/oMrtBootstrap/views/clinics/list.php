@@ -19,6 +19,11 @@ echo '
 }
 $mod = Yii::app() -> getModule('clinics');
 $triggers = $_GET;
+$model = clinics::model() -> findByAttributes(['verbiage' => 'service']);
+if (!$model) {
+    $model = clinics::model();
+    $model -> partner = true;
+}
 $modelName = 'clinics';
 $criteria = new CDbCriteria();
 $criteria -> addCondition("`ignore_clinic`=0");
@@ -363,6 +368,10 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                             //echo Triggers::triggerHtml('street',$triggers);
                         ?>
                     </div>
+                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('time',$triggers); ?></div>
+                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('contrast',$triggers); ?></div>
+                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('doctor',$triggers); ?></div>
+                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('children',$triggers); ?></div>
                 </div>
 <!--                <div class="row">-->
 <!--                    <div class="col-12 col-md-4">--><?php //echo CHtml::DropDownListChosen2(
@@ -432,17 +441,19 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
             <div id="clinicsList">
                 <ul class="list-unstyled">
                     <?php if (count($objects) == 0): ?>
-                    <li class="media clinic mb-3 single-clinic pt-3">
+                    <li class="clinic mb-3 single-clinic pt-3">
                         К сожалению клиник, удовлетворяющих всем критериям поиска, не найденно.
                         Вы можете обратиться к специалистам "Общегородской Службы Записи", где вам помогут найти подходящий диагностический центр.
                     </li>
                     <?php endif; ?>
-                    <li class="media clinic mb-3 single-clinic pt-3">
-                        <div class="media-body small_info">
+
+
+                    <li class="clinic mb-3 single-clinic pt-3 d-flex row">
+                        <div class="col-12 col-md-9 small_info">
                             <h3 class="mt-0"><a href="#">Бесплатная общегородская служба записи на МРТ и КТ диагностику</a></h3>
                             <?php
-                                icon('clock-o','пн-вс:круглосуточно');
-                                icon('phone','Телефон');
+                            icon('clock-o','пн-вс:круглосуточно');
+                            icon('phone','Телефон');
                             ?>
                             <p>Пройти МРТ и КТ можно во всех районах города.</p>
                             <div class="row">
@@ -455,11 +466,27 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                                 <div class="col-12"><?php icon('paint-brush','Исследования с контрастом'); ?></div>
                             </div>
                         </div>
-                        <div class="right-pane">
-                            <img class="d-flex align-self-start mr-3 img-fluid" src="<?php echo Yii::app() -> theme -> baseUrl; ?>/images/logo.png" alt="Общегородская служба записи">
-                            <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-<!--                            <div class="mb-1"><a href="--><?php //echo $model -> getUrl(); ?><!--#reviews">Читать отзывы</a></div>-->
+                        <div class="right-pane col-12 col-md-3 flex-first flex-md-unordered">
+                            <img class="mr-3 img-fluid" src="<?php echo Yii::app() -> theme -> baseUrl; ?>/images/logo.png" alt="Общегородская служба записи" />
+                            <div><div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
                             <?php $this -> renderPartial('/clinics/_buttons',['model' => $model]); ?>
+                        </div>
+
+                        <div class="col-12">
+                            <p>Обращаясь в общегородскую службу записи на МРТ и КТ обследования, всегда можно получить:</p>
+                            <ul>
+                                <li>консультацию по поводу прохождения МРТ/КТ-обследований, относящуюся к общим вопросам о противопоказаниях, особенностях диагностики и т.д.;</li>
+                                <li>- помощь в выборе клиники в своем районе, которая будет располагать всеми необходимыми возможностями;</li>
+                                <li>- консультацию о возможностях отдельного диагностического центра: оборудования, врачей и прочих характеристик, которые могут быть полезны клиенту;</li>
+                                <li>- помощь в записи на обследование в выбранную клинику на конкретное время, в том числе в ночное время суток.</li>
+                            </ul>
+                            <div class="collapse" id="moreAboutService">
+                            <p>База данных службы записи содержит только проверенные центры, которые оказывают сертифицированные услуги и прошли аттестацию независимыми медицинскими аудиторами. Обращаясь в эти клиники, клиент может быть уверен в качестве оказанной услуги.</p>
+                            <p>Каждый из медицинских центров, предлагаемых службой записи, оборудован современным высокоинформативным оборудованием, которое не причиняет вреда здоровью, а штат клиник укомплектован грамотными опытными специалистами.</p>
+                            <p>Записаться на прием через службу записи - бесплатно. Просто позвоните, и вам помогут подобрать клинику, прояснить все сложные моменты, запишут на обследование. Услуги центра ничего не стоят, оплату за обследование пациент вносит непосредственно в клинике.</p>
+                            <p>В отдельных центрах при записи через службу можно пройти диагностику даже дешевле, чем при самостоятельном выборе этой же клиники: этому способствуют партнерские скидки. Помимо того, при записи всегда будут учитываться особенности клиента: группа (студенты, медицинские работники, инвалиды), время записи (существуют скидки на обследование, например, в ночное время), прочие возможные основания для получения скидки. Общегородская служба записи на МРТ и КТ обследования постарается сделать все, чтобы клиент получил качественную услугу по максимально сниженной стоимости.</p>
+                            </div>
+                            <button class="btn" data-toggle="collapse" data-target="#moreAboutService">Подробнее</button>
                         </div>
                     </li>
                     <?php foreach($objects as $clinic){
@@ -479,11 +506,6 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     } else {
                         echo "<p>Где можно сделать $rVin?</p>";
                     }
-                    $num = $mod -> getClinics([
-                        'mrt' => $triggers['mrt'],
-                        'kt' => $triggers['kt'],
-                        'research' => $triggers['research'],
-                    ]);
                     echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research','area','city']). ' '.$cityName.'</p>';
                     echo "<p>Сколько стоит {$r}?</p>";
                     echo "<p>Средняя цена на $rVin равна {$mod->averagePrice($triggers)}</p>";
@@ -615,11 +637,6 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 } else {
                     echo "<p>Где можно сделать $rVin?</p>";
                 }
-                $num = $mod -> getClinics([
-                    'mrt' => $triggers['mrt'],
-                    'kt' => $triggers['kt'],
-                    'research' => $triggers['research'],
-                ]);
                 echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research','area','city']). ' '.$cityName.'</p>';
                 echo "<p>Сколько стоит {$r}?</p>";
                 echo "<p>Средняя цена на $rVin равна {$mod->averagePrice($triggers)}</p>";

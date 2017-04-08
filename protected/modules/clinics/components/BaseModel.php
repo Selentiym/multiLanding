@@ -84,7 +84,10 @@ class BaseModel extends CTModel
 		}
        return $filterForm; 
 	}
-	
+	private static function addTriggerCondition(CDbCriteria $criteria, $id){
+		$criteria -> addCondition("triggers LIKE '%;$id;%' OR triggers LIKE '%;$id' OR triggers LIKE '$id;%' OR triggers = '$id'");
+		return $criteria;
+	}
 	/**
 	 * @param array $search a search array that specifies what is being searched
 	 * @param string $order - a field to be ordered by
@@ -92,9 +95,7 @@ class BaseModel extends CTModel
 	 * @param CDbCriteria $initialCrit
 	 * @return array of model objects that fit the search options
 	 */
-	public function userSearch($search,$order='rating',$limit=-1, CDbCriteria $initialCrit = null)
-	{
-		//$objects = $this -> model() -> findAll('rating DESC');
+	public function userSearch($search,$order='rating',$limit=-1, CDbCriteria $initialCrit = null) {
 		//Если поле сортировки не задано, сортируем по рейтингу
 		if ((!$order)&&($order !== false)) {
 			$order='rating';
@@ -108,68 +109,31 @@ class BaseModel extends CTModel
 		if (!in_array($order, array('priceUp','priceDown'))&&($order)) {
 			$criteria -> order = $order.' DESC';
 		}
-		$objects = $this -> model() -> findAll($criteria);
-		$objects_filtered = array();
-		//print_r($search);
 		$search = array_filter($search);
-		//var_dump($search);
-		$filter = array();
 		foreach ($search as $key => $option) {
 			//если поле не относится к особым, тогда сохраняем условие на него.
-			if (!in_array($key, $this -> SFields))
-			{
+			if (!in_array($key, $this -> SFields)) {
 				if (trim($option) != "") {
-					$filter[] = $option;
+					$criteria = self::addTriggerCondition($criteria, trim($option));
+					//$filter[] = $option;
 				}
 			}
 		}
-		$count = count($filter);
+		$objects = $this -> model() -> findAll($criteria);
+		$objects_filtered = array();
 		$count_success = 0;
 		foreach ($objects as $object) {
 			if ($object == $this) {
 				continue;
 			}
-			$triggers_array = array_map('trim', explode(';', $object->triggers));
-			$triggers_array[] = '';
-			//$object -> triggers = $triggers_array;
-			//$this -> triggers_array = $triggers_array;
-			
 			if (!($object -> SFilter($search)))
 			{
 				continue;
 			}
-			
-			/*if (empty($filter)) {
-				$objects_filtered[] = $object;
-				continue;
-			} */
-			//echo $object -> name.' ';print_r($triggers_array);
-			/* common filters */
-			if (!empty($filter)) {
-				//echo $object -> verbiage.'<br/>';
-				//var_dump($filter);
-				//var_dump($triggers_array);
-				//break;
-				$common = array_intersect($filter, $triggers_array);
-				if (count($common) != $count)
-					continue;                           
-			}
-			/* speciality */
-			//если специальность не входит в список триггеров, то пропускаем этот объект.
-			/*if ((!in_array($spec_id, $triggers_array))&&($spec_id != -1)){
-				echo $spec_id;
-				continue;
-			}*/
-			//echo "<br/>spec_search";
-			/*if (!empty($triggers_array)) {
-				foreach ($triggers_array as $trigger)
-					$triggers .= $trigger->trigger->name . ':&nbsp;&nbsp; ' .  $trigger->value . '<br/> ';
-			}*/
-			
 			$object -> getReadyToDisplay();
 			$count_success ++;
 			$objects_filtered[] = $object;
-			if ($count_success == $limit) {
+			if (($limit > 0)&&($count_success >= $limit)) {
 				break;
 			}
 		}
