@@ -42,7 +42,7 @@ $cs -> registerScript('implementLinks',"
         inputObject.mrtElements = [$('select[name=magnetType]'),$('select[name=field]')];
         console.log(inputObject);
         function mrtChange () {
-            !alert('mrtChange');
+            //alert('mrtChange');
             var ktVal = inputObject.ktInput.val();
             var mrtVal = inputObject.mrtInput.val();
             if (mrtVal) {
