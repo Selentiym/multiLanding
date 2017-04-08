@@ -63,7 +63,9 @@ Yii::app()->clientScript->registerScript('search', "
 </p>
 
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php
+$model -> attributes = $_GET['doctors'];
+$this->widget('zii.widgets.grid.CGridView', array(
     'id'=>'doctors-grid',
     'dataProvider'=>$model->search(),
     'filter'=>$model,
