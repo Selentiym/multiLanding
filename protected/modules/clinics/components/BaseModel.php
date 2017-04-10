@@ -966,12 +966,25 @@ class BaseModel extends CTModel
 		}
 		$fromSite = $this -> parsePrices();
 		$allPrices = ObjectPrice::model() -> findAllByAttributes(['object_type' => Objects::getNumber(get_class($this))]);
+		$enc = "utf-8";
 		foreach ($allPrices as $price) {
 			/**
 			 * @type ObjectPrice $price
 			 */
-			$key = $price -> name2 ? $price -> name2: $price -> name;
-			$p = $fromSite[$key];
+
+			$toRun = array_filter(array_map(function($key)use($enc){
+						return mb_strtolower(trim($key),$enc);
+					},explode(';',$price -> name2)));
+			array_unshift($toRun,mb_strtolower($price -> name, $enc));
+			$p = false;
+			foreach ($toRun as $key) {
+				if ($fromSite[$key]) {
+					$p = $fromSite[$key];
+					if ($p > 0) {
+						break;
+					}
+				}
+			}
 			if ($p) {
 				$obj = new ObjectPriceValue();
 				$obj->id_object = $this->id;
@@ -1045,7 +1058,12 @@ class BaseModel extends CTModel
 			}
 			$rez = array_merge($rezMrt, $rezKt);
 		}
-		return $rez;
+		$rezGood = [];
+		$enc = "utf-8";
+		foreach ($rez as $key => $val) {
+			$rezGood[mb_strtolower(trim($key),$enc)] = $val;
+		}
+		return $rezGood;
 	}
 
 	/**

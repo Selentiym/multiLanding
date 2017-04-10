@@ -55,7 +55,7 @@
 
             <div>
                 <?php echo $form->labelEx($model,'name2'); ?>
-                <?php echo $form->textField($model,'name2',array('size'=>50,'maxlength'=>50)); ?>
+                <?php echo $form->textArea($model,'name2',array('style'=>'width:300px;height:200px;')); ?>
                 <?php echo $form->error($model,'name2'); ?>
             </div>
 
