@@ -31,6 +31,9 @@
  * @property string $description
  * @property integer $experience
  * @property string $rewards
+ * @property string $curses
+ * @property string $education
+ * @property string $short
  *
  */
  

@@ -6,20 +6,29 @@
 if ((file_exists($doctor -> giveImageFolderAbsoluteUrl() . $doctor -> logo)&&($doctor -> logo))) {
     $url = $doctor -> giveImageFolderRelativeUrl() . $doctor -> logo;
 } else {
-    $url = 'error';
+    $url = Yii::app() -> getTheme() -> baseUrl.'/images/doctor-no-logo.png';
 }
 ?>
 <div class="doctor-carousel text-center item">
     <div>
-        <img style="max-height: 200px;" class="rounded-circle" src="<?php echo $url; ?>"/>
+        <img class="rounded-circle mx-auto" style="width:auto; max-height:200px;" src="<?php echo $url; ?>"/>
     </div>
     <div class="text-el">
         <div class="name-el"><?php echo $doctor -> name; ?></div>
+        <?php if ($doctor -> education): ?>
+        <div>Образование: <?php echo $doctor -> education; ?></div>
+        <?php endif; ?>
+        <?php if ($doctor -> curses): ?>
+        <div>Курсы повышения квалификации: <?php echo $doctor -> curses; ?></div>
+        <?php endif; ?>
         <?php if ($doctor -> experience): ?>
         <div>Стаж работы: <?php echo $doctor -> experience; ?></div>
         <?php endif; ?>
         <?php if ($doctor -> rewards): ?>
         <div>Титулы и достижения: <?php echo $doctor -> rewards; ?></div>
+        <?php endif; ?>
+        <?php if ($doctor -> text): ?>
+        <div class="text-left"><?php echo $doctor -> text; ?></div>
         <?php endif; ?>
     </div>
 </div>

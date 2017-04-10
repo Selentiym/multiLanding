@@ -26,17 +26,20 @@ console.log(owl2);
 		autoHeight : true,
 		autoWidth: false,
 		stopOnHover : true,
-		touchDrag : true,
 		autoPlay : true,
+		nav:true,
+		navText:["",""],
+		navCpntainer:"#navCarousel",
+		rewind:true,
+		touchDrag : true,
+		mouseDrag:true,
 		responsive: {
 			0: {
-				items:2
+				items:1,
+
 			},
 			768: {
-				items:4
-			},
-			1028 : {
-				items:6
+				items:2,
 			}
 		},
 
