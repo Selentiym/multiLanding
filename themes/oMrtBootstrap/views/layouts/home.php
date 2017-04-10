@@ -9,6 +9,7 @@ $cs = Yii::app() -> getClientScript();
 $cs -> registerCoreScript('bootstrap4css');
 $cs -> registerCoreScript('bootstrap4js');
 $cs -> registerCoreScript('font-awesome');
+$cs -> registerCoreScript('scrollToTopActivate');
 
 $cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/styles.css');
 

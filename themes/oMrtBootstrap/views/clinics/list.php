@@ -10,13 +10,7 @@
  * @param string $class
  * @internal param ClinicsModule $mod
  */
-function icon($icon, $text, $class = ''){
-echo '
-<div class="row no-gutters align-items-center">
-    <div class="col-auto"><i class="'.$class.' fa fa-'.$icon.' fa-lg fa-fw" aria-hidden="true"></i>&nbsp;</div>
-    <div class="col"><div class="text">'.$text.'</div></div>
-</div>';
-}
+
 $mod = Yii::app() -> getModule('clinics');
 $triggers = $_GET;
 $model = clinics::model() -> findByAttributes(['verbiage' => 'service']);

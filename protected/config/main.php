@@ -121,6 +121,23 @@ return array(
 							'baseUrl' => '',
 							'js' => ['libs/jquery/jquery.min.js']
 						],
+						'scrollToTop' => [
+							'baseUrl' => 'libs/scrollToTop/',
+							'js' => [
+								'smartScrollToTop.min.js'
+							],
+							'depends' => ['jquery']
+						],
+						'scrollToTopActivate' => [
+							'baseUrl' => 'libs/scrollToTop/',
+							'js' => [
+								'activate.js'
+							],
+							'css' => [
+								'totop.css'
+							],
+							'depends' => ['scrollToTop']
+						],
 						'simplePopup' => [
 								'baseUrl' => 'libs/simplePopup/',
 								'js' => [

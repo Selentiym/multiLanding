@@ -56,8 +56,14 @@ if ($temp = $model -> getFirstTriggerValueString($verb)) : ?>
 
 <?php if ($model -> address) : ?>
     <div class="address ">
-        <i class="fa fa-map-marker fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-        <div class="text p-adr"><?php echo $model -> address;?></div>
+        <?php
+        $text = '';
+        if($expanded) {
+            $text .= "Клиника располагается по адресу: ";
+        }
+        $text .= $model -> getFullAddress();
+        icon('map-marker', $text);
+        ?>
     </div>
 <?php endif; ?>
 
@@ -130,19 +136,4 @@ if ($model -> metro_station) : ?>
         <div class="col"><div class="text p-adr"><?php echo $model -> restrictions; ?></div></div>
     </div>
 <?php endif; ?>
-    <?php if($price) : ?>
-<!--        <div class="d-flex price justify-content-between p-2 rounded mt-2">-->
-<!--            <div>-->
-<!--                --><?php //echo $price -> name; ?>
-<!--            </div>-->
-<!--            <div>-->
-<!--                --><?php //echo $model -> getPriceValue($price -> id) -> value; ?>
-<!--            </div>-->
-<!--            --><?php
-//            if ($price = $data['research']) {
-//                echo "<b>".$price -> name.'</b> '.$model -> getPriceValue($price -> id) -> value;
-//            }
-//            ?>
-<!--        </div>-->
-    <?php endif; ?>
 </div>

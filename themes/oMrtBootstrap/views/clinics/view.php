@@ -125,8 +125,20 @@ $cs -> registerScript('Order','
 		<div class="col-12 col-lg-10 mx-auto">
 			<div class="row d-flex">
 				<div class="col-12 col-md-4">
-					<h1><?php echo $model -> name; ?></h1>
-					<?php $this -> renderPartial('/clinics/_iconData',['model' => $model, 'data' => $triggers]); ?>
+					<?php
+						$phrase = '';
+						if ($model -> getFirstTriggerValue('mrt')) {
+							$phrase = "МРТ";
+						}
+						if ($model -> getFirstTriggerValue('kt')) {
+							if ($phrase) {
+								$phrase .= ' и ';
+							}
+							$phrase .= "КТ";
+						}
+					?>
+					<h1><?php echo "Центр $phrase " . $model -> name; ?></h1>
+					<?php $this -> renderPartial('/clinics/_iconData',['model' => $model, 'data' => $triggers, 'expanded' => true]); ?>
 					<div class="text-center">
 					<?php $this -> renderPartial('/clinics/_buttons',['model' => $model]); ?>
 					</div>

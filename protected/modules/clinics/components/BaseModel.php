@@ -693,7 +693,7 @@ class BaseModel extends CTModel
 		}
 	}
 	public function parseCoords() {
-		$coords = getCoordinates($this -> getFirstTriggerValueString('area').', ' . $this->address);
+		$coords = getCoordinates($this->getFullAddress());
 		$this->map_coordinates = $coords['lat'] . ', ' . $coords['long'];
 	}
 	public function parseMetros() {
@@ -1076,6 +1076,17 @@ class BaseModel extends CTModel
 		}
 		$criteria -> compare('approved',1);
 		return $this -> getModule() -> getObjectsReviewsPool('clinics') -> getComments($this -> id, $criteria);
+	}
+	public function getFullAddress() {
+		$text = $this -> getFirstTriggerValueString('prigorod');
+		if (!$text) {
+			$text = $this -> getFirstTriggerValueString('area');
+		}
+		if ($text) {
+			return $text . ', ' . $this->address;
+		} else {
+			return $this -> address;
+		}
 	}
 }
 ?>
