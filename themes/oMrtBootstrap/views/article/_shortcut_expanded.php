@@ -7,5 +7,5 @@
 	<div class="d-flex w-100 justify-content-between">
 		<h4 class="mb-1"><?php echo $article -> name; ?></h4>
 	</div>
-	<p class="mb-1"><?php echo CHtml::cutText(strip_tags($article->text), 20,'..');?></p>
+	<p class="mb-1"><?php echo $article -> description;?></p>
 </a>

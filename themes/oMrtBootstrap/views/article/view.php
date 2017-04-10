@@ -11,9 +11,6 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 
 <div class="row no-gutters">
 	<div class="col-12 col-md-10 p-3 mx-auto article">
-		<h2>
-			<?php echo $model->name; ?>
-		</h2>
 		<div>
 			<?php
 			$text = $model -> text;
