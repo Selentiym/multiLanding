@@ -69,11 +69,10 @@ return SiteDispatcher::mergeArray(
                         'modelClass' => 'ObjectPrice',
                         'attribute' => 'verbiage',
                         'attributeInPattern' => 'research',
-                        'route' => 'home/<modelName>',
+                        'route' => 'home/<modelName>Link',
                         'pattern' => '<modelName:(clinics|doctors)>/<research:\w+>'
                     ],
                     'clinics-<area:(spb|msc)>' => 'home/clinics',
-                    'clinics' => 'home/clinics',
                 ),
             ),
             'dbClinics'=>array(

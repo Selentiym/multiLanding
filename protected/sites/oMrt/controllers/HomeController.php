@@ -48,6 +48,11 @@ class HomeController extends CController {
                 'view' => '/clinics/list',
                 'guest' => true,
             ),
+            'clinicsLink'=>array(
+                'class'=>'application.controllers.actions.FileViewAction',
+                'view' => '/clinics/redirect',
+                'guest' => true,
+            ),
             'modelView' => [
                 'class'=>'application.controllers.actions.ModelViewAction',
                 'view' => function($model){
