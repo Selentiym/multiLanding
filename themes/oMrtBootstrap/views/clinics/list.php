@@ -286,9 +286,9 @@ if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
 }
 $keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
-$cityName = $fr('city', 'cityNameRod');
-$cityName = $cityName ? $cityName : $fr('area','areaNameRod');
-$description = $rRod. " можно пройти в ".clinicWord(count($objects))." ".$cityName.", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
+$geoName = $fr('area', 'areaNameRod');
+//$geoName = $geoName ? $geoName : $fr('area','areaNameRod');
+$description = $rRod. " можно пройти в ".clinicWord(count($objects))." ".$geoName.", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
 /**
  * @type ObjectPrice $research
  */
@@ -363,10 +363,10 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     </div>
                     <div class="col-12 col-md-4">
                         <?php
-                            echo Triggers::triggerHtml('city',$triggers);
+
                             echo Triggers::triggerHtml('district',$triggers);
                             echo Triggers::triggerHtml('street',$triggers);
-                            //echo Triggers::triggerHtml('street',$triggers);
+                            echo Triggers::triggerHtml('prigorod',$triggers);
                         ?>
                     </div>
                     <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('time',$triggers); ?></div>
@@ -428,7 +428,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
 <!--                    </div>-->
 <!--                    <div class="col-12 col-md-4">--><?php //echo Triggers::triggerHtml('street',$triggers); ?><!--</div>-->
 <!--                </div>-->
-                <div class="row no-gutters">
+                <div class="row no-gutters justify-content-center">
                     <div class="col-auto"><button type="submit" class="btn">Найти</button></div>
                     <div class="col-auto ml-3"><a href="<?php echo $this -> createUrl('home/clinics',['area' => $triggers['area']],'&',true); ?>"><button type="button" class="btn" >Сбросить</button></a></div>
                 </div>
@@ -502,12 +502,12 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 <div class="card-block">
                     <h1 class="card-title"><?php echo $h1; ?></h1>
                     <?php
-                    if ($triggers['city']) {
-                        echo "<p>Где можно сделать $rVin в {$fr('city','cityNamePredl')}?</p>";
+                    if ($triggers['area']) {
+                        echo "<p>Где можно сделать $rVin в {$fr('area','areaNamePredl')}?</p>";
                     } else {
                         echo "<p>Где можно сделать $rVin?</p>";
                     }
-                    echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research','area','city']). ' '.$cityName.'</p>';
+                    echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research','area']). ' '.$geoName.'</p>';
                     echo "<p>Сколько стоит {$r}?</p>";
                     echo "<p>Средняя цена на $rVin равна {$mod->averagePrice($triggers)}</p>";
                     if ($street) {
@@ -633,12 +633,12 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 <?php echo $h1; ?>
             </h1>
             <?php
-                if ($triggers['city']) {
-                    echo "<p>Где можно сделать $rVin в {$fr('city','cityNamePredl')}?</p>";
+                if ($triggers['area']) {
+                    echo "<p>Где можно сделать $rVin в {$fr('area','areaNamePredl')}?</p>";
                 } else {
                     echo "<p>Где можно сделать $rVin?</p>";
                 }
-                echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research','area','city']). ' '.$cityName.'</p>';
+                echo "<p>Пройти диагностику $r можно в ".echoClinicsNumber(['mrt','kt','research','area']). ' '.$geoName.'</p>';
                 echo "<p>Сколько стоит {$r}?</p>";
                 echo "<p>Средняя цена на $rVin равна {$mod->averagePrice($triggers)}</p>";
                 if ($street) {

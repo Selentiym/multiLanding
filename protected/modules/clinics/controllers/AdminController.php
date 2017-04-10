@@ -1369,10 +1369,16 @@ class AdminController extends Controller
     {
         $this->render('view');
 
-        echo md5('abc'.'unique salt');
+
+//        $trigger = Triggers::model() -> findByPk(17);
+//        foreach ($trigger -> trigger_values as $v) {
+//            echo $v -> id. " ". $v -> value. " ". $v -> verbiage ."<br/>";
+//        }
+
+
         //васька 59.942525, 30.278247
         //март 59.941344, 30.257154
-        echo DistanceSpherical(30.278247, 59.942525,30.257154,59.941344);
+//        echo DistanceSpherical(30.278247, 59.942525,30.257154,59.941344);
 //        $a = Article::model() -> findByPk(3);
 //        //$a -> text = "<search:nameOne>";
 //        echo $a -> prepareText(['search' => 2]);

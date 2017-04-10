@@ -221,9 +221,14 @@ class Triggers extends CTModel {
 				$cr->with = 'child';
 				//$cr -> ('child.id_trigger='.$this -> id);
 				$dep = TriggerValueDependency::model()->findAll($cr);
-				$options = array_map(function ($d) {
-					return $d->child;
-				}, $dep);
+				$options = [];
+				foreach ($dep as $d) {
+					$tv = $d->child;
+					$a = $tv -> attributes;
+					if ($tv -> trigger_id == $this -> id) {
+						$options[] = $tv;
+					}
+				}
 			} else {
 				$options = $this->trigger_values;
 			}
