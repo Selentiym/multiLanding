@@ -16,19 +16,19 @@ if ((file_exists($doctor -> giveImageFolderAbsoluteUrl() . $doctor -> logo)&&($d
     <div class="text-el">
         <div class="name-el"><?php echo $doctor -> name; ?></div>
         <?php if ($doctor -> education): ?>
-        <div>Образование: <?php echo $doctor -> education; ?></div>
+        <div class="font-weight-bold">Образование: <?php echo $doctor -> education; ?></div>
         <?php endif; ?>
         <?php if ($doctor -> curses): ?>
-        <div>Курсы повышения квалификации: <?php echo $doctor -> curses; ?></div>
+        <div class="font-weight-bold">Курсы повышения квалификации: <?php echo $doctor -> curses; ?></div>
         <?php endif; ?>
         <?php if ($doctor -> experience): ?>
-        <div>Стаж работы: <?php echo $doctor -> experience; ?></div>
+        <div class="font-weight-bold">Стаж работы: <?php echo $doctor -> experience; ?></div>
         <?php endif; ?>
         <?php if ($doctor -> rewards): ?>
-        <div>Титулы и достижения: <?php echo $doctor -> rewards; ?></div>
+        <div class="font-weight-bold"><?php echo $doctor -> rewards; ?></div>
         <?php endif; ?>
         <?php if ($doctor -> text): ?>
-        <div class="text-left"><?php echo $doctor -> text; ?></div>
+        <div class="text-left font-italic"><?php echo $doctor -> text; ?></div>
         <?php endif; ?>
     </div>
 </div>
