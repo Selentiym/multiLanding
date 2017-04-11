@@ -40,7 +40,8 @@ return array(
 
 	'controllerMap'=>array(
 		'form' => 'application.sites.common.controllers.FormController',
-		'error' => 'application.sites.common.controllers.ErrorController'
+		'error' => 'application.sites.common.controllers.ErrorController',
+		'seo' => 'application.sites.common.controllers.SeoController'
 	),
 
 	// application components
@@ -59,6 +60,8 @@ return array(
 			'urlFormat'=>'path',
 			'showScriptName' => false,
 			'rules'=>array(
+				'robots.txt' => 'seo/robots',
+				'sitemap.xml' => 'seo/sitemap',
 				'gii'=>'gii',
 				'gii/<controller:\w+>'=>'gii/<controller>',
 				'gii/<controller:\w+>/<action:\w+>'=>'gii/<controller>/<action>',

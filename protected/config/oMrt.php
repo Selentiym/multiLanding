@@ -48,6 +48,8 @@ return SiteDispatcher::mergeArray(
             'urlManager'=>array(
                 //'urlFormat' => null,
                 'rules' => array(
+                    'robots.txt' => 'seo/robots',
+                    'sitemap.xml' => 'seo/sitemap',
                     //'clinics' => 'home/clinics',
                     '<module:(clinics)>/admin' => '<module>/admin/login',
                     '<module:(taskgen)>/task/<action:(getText)>' => '<module>/task/<action>',

@@ -73,6 +73,110 @@ class HomeController extends CController {
         ];
     }
 
+    public function actionRemakeSitemap(){
+        require_once(Yii::getPathOfAlias('webroot.vendor') . DIRECTORY_SEPARATOR . 'autoload.php');
+
+        $sitemap = new samdark\sitemap\Sitemap(SiteDispatcher::getFilesDir().'/sitemap.xml');
+        function fullUrl($fromRoot) {
+            static $root = false;
+            if (!$root) {
+                $root = "http://".$_SERVER['HTTP_HOST'];
+            }
+            return $root.$fromRoot;
+        }
+        //Добавляем все клиники
+        foreach (clinics::model() -> findAll() as $clinic) {
+            $sitemap -> addItem(fullUrl($this -> createUrl('home/modelView',['modelName' => "clinics", 'verbiage' => $clinic -> verbiage])),time(),null,1.0);
+        }
+        //Добавляем все статьи
+        $crit = new CDbCriteria();
+        $crit -> compare('id_type',Article::getTypeId('text'));
+        foreach (Article::model() -> findAll($crit) as $article) {
+            $sitemap -> addItem(fullUrl($this -> createUrl('home/articleView',['verbiage' => $article -> verbiage])),time(),null,1.0);
+        }
+
+//        $triggers = [
+//            'district' => ['distr1', 'distr2'],
+//            'metro' => [2,1],
+//            'research' => ['mrt','kt']
+//        ];
+
+        $controller = $this;
+        function cartesianSitemap($toUse, &$sitemap, &$controller, $alreadyUsed = []) {
+            /**
+             * @type samdark\sitemap\Sitemap $sitemap
+             */
+            //Если мы на нижнем уровне, то записаваем нацонец-таки в фсайтмап результат
+            if (empty($toUse)) {
+                $sitemap->addItem(fullUrl($controller -> createUrl('home/clinics', $alreadyUsed)),time(),null,0.9);
+                return;
+            }
+            //Если же нет, то получаем очередной ключ
+            $key = key($toUse);
+            if (!$key) {
+                throw new Exception('Invalid key. Got "'.$key.'"');
+            }
+            //И пробегаем по всем вариантам значений в этом измерении,
+            //добавив к уже имеющейся комбинации дополнительное условие
+            $toLoop = array_shift($toUse);
+            $alreadyUsed = array_filter($alreadyUsed);
+            foreach ($toLoop as $value) {
+                cartesianSitemap($toUse,$sitemap, $controller,array_merge($alreadyUsed,[$key => $value]));
+            }
+        }
+        //Делаем siteMap по Питерским триггерам
+        $triggers = [];
+
+        $districts = [
+            false,
+            'admiralteyskiy', 'petrogradskiy', 'kalininskiy',
+            'central-nyy', 'krasnosel-skiy', 'kirovskiy', 'moskovskiy',
+            'krasnogvardeyskiy', 'frunzenskiy', 'nevskiy', 'vyborgskiy',
+            'primorskiy', 'vasileostrovskiy'
+        ];
+
+        $metros = [
+            false, 21, 23, 63, 58, 64, 3, 53, 59, 60, 51, 50, 61, 65, 47, 24, 36, 31, 22, 39
+        ];
+
+        $research = [
+            false,
+            'mrtMozg', 'mrtHyp', 'mrtOrbit','mrtBackSpine','mrtChestSpine','mrtNeckSpine',
+            'mrtAbdomen', 'MRTkidney', 'MRTliver', 'mrtPelvis','mrtHipJoint','mrtKneeJoint',
+            'mrtShoulderJoint','MRTmolochniejelezi','mrtBrainVessels','ktBrainVessels',
+            'ktMozg','ktNose','ktAbdomen','KTkidney','KTliver','ktPelvis','ktLungs'
+        ];
+
+        $triggers = [
+            'district' => $districts,
+            'metro' => $metros,
+            'research' => $research
+        ];
+        cartesianSitemap($triggers, $sitemap, $controller,['area' => 'spb']);
+        //Делаем сайтмап по Московским триггерам
+        $districts = [
+            false, 'severnoe-tushino','yuzhnoe-tushino','perovo','kurkino','lyublino',
+            'mar-ino','bibirevo','vyhino-zhulebino','sokol-niki','novogireevo','strogino',
+            'biryulevo-vostochnoe','biryulevo-zapadnoe','otradnoe','novo-peredelkino','yasenevo',
+            'novokosino'
+        ];
+
+        $metros = [
+            false, 215, 223, 229, 132, 163, 143, 161, 210, 134, 77, 136, 218, 303, 145, 84, 152, 227, 307, 70, 116, 146
+        ];
+        $triggers = [
+            'research' => $research,
+        ];
+
+        $subs = [
+            'Lyberczi', 'Mytichi', 'Odinchovo','Podolsk','Vidnoe','Zelenograd','SergievPosad','balashiha','Kolomna',
+            'Orehovo-Zuevo','Himki','Voskresensk','Domodedovo','Schelkovo','Krasnogorsk','Dolgoprudnyi','Dubna',
+            'Ramenskoe','Korolev','Naro-Fominsk'
+        ];
+
+        $sitemap -> write();
+    }
+
     /**
      * So that the search params were preserved
      * @param string $route

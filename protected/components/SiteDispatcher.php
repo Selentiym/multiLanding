@@ -147,4 +147,16 @@ class SiteDispatcher
         }
         return $res;
     }
+
+    /**
+     * @return bool|string
+     */
+    public static function getFilesDir(){
+        $id = Yii::app() -> params["siteId"];
+        if ($id) {
+            return Yii::getPathOfAlias("application.sites.$id");
+        } else {
+            return false;
+        }
+    }
 }
