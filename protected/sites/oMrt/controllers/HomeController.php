@@ -164,15 +164,28 @@ class HomeController extends CController {
         $metros = [
             false, 215, 223, 229, 132, 163, 143, 161, 210, 134, 77, 136, 218, 303, 145, 84, 152, 227, 307, 70, 116, 146
         ];
-        $triggers = [
-            'research' => $research,
-        ];
 
         $subs = [
             'Lyberczi', 'Mytichi', 'Odinchovo','Podolsk','Vidnoe','Zelenograd','SergievPosad','balashiha','Kolomna',
             'Orehovo-Zuevo','Himki','Voskresensk','Domodedovo','Schelkovo','Krasnogorsk','Dolgoprudnyi','Dubna',
             'Ramenskoe','Korolev','Naro-Fominsk'
         ];
+
+        //Все, кроме пригородов
+        $triggers = [
+            'research' => $research,
+            'metro' => $metros,
+            'district' => $districts
+        ];
+        cartesianSitemap($triggers,$sitemap, $controller,['area' => 'msc']);
+
+        //Все, кроме районов
+        $triggers = [
+            'research' => $research,
+            'metro' => $metros,
+            'prigorod' => $subs
+        ];
+        cartesianSitemap($triggers,$sitemap, $controller,['area' => 'msc']);
 
         $sitemap -> write();
     }

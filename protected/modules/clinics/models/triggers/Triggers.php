@@ -10,6 +10,7 @@
  * @property string $type
  * @property string $logo
  * @property int $id_parent
+ * @property bool $showIfNullParent
  *
  * @property Triggers $parent
  * @property Triggers[] $children
@@ -59,7 +60,7 @@ class Triggers extends CTModel {
 			array('logo', 'file', 'types'=>'jpg, jpeg, gif, png', 'maxSize' => 1048576, 'allowEmpty'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, verbiage, type, id_parent', 'safe'),
+			array('id, name, verbiage, type, id_parent, showIfNullParent', 'safe'),
 		);
 	}
 	protected function beforeSave()
@@ -106,6 +107,7 @@ class Triggers extends CTModel {
 			'name' => CHtml::encode('Название'),
             'verbiage' => CHtml::encode('Обозначение (латинскими буквами)'),
 			'logo' => CHtml::encode('Логотип'),
+			'showIfNullParent' => CHtml::encode('Активен при не выбранном родителе'),
 		);
 	}
 
@@ -209,8 +211,10 @@ class Triggers extends CTModel {
 		$options = [];
 		$p = $this -> parent;
 		if ((!$data[$p->verbiage])&&($p)) {
-			if (!isset($htmlOptions['disabled'])) {
-				$htmlOptions['disabled'] = 'disabled';
+			if (!$this -> showIfNullParent) {
+				if (!isset($htmlOptions['disabled'])) {
+					$htmlOptions['disabled'] = 'disabled';
+				}
 			}
 		}
 		if (!$htmlOptions['disabled']) {

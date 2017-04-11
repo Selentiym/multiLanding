@@ -38,6 +38,12 @@
                 <?php echo $form->error($model,'type'); ?>
             </div>
 
+            <div>
+                <?php echo $form->labelEx($model,'showIfNullParent'); ?>
+                <?php echo $form -> checkBox($model,'showIfNullParent'); ?>
+                <?php echo $form->error($model,'showIfNullParent'); ?>
+            </div>
+
 
 
             <div id="parents_block">
