@@ -43,29 +43,29 @@ function Trigger(params){
     me.element.change(me.changeCallback);
     me.parentChanged = function(newVal){
         //alert(newVal + ' \n' + me.url);
-        if (newVal) {
-            $.post(me.url, {
-                newVal: newVal,
-                parent: me.parent.verbiage
-            }, null, "JSON").done(function (data) {
-                if (typeof me.beforeDataUpdate == 'function') {
-                    me.beforeDataUpdate.call(me, data);
-                }
-                if (typeof me.dataUpdate == 'function') {
-                    me.dataUpdate.call(me, data);
-                } else {
-                    me.element.html(data.html);
-                }
-                if (typeof me.afterDataUpdate == 'function') {
-                    me.afterDataUpdate.call(me, data);
-                }
-                me.changeCallback();
-            });
-        } else {
-            me.element.val('');
-            me.element.attr('disabled','disabled');
+        //if (newVal) {
+        $.post(me.url, {
+            newVal: newVal,
+            parent: me.parent.verbiage
+        }, null, "JSON").done(function (data) {
+            if (typeof me.beforeDataUpdate == 'function') {
+                me.beforeDataUpdate.call(me, data);
+            }
+            if (typeof me.dataUpdate == 'function') {
+                me.dataUpdate.call(me, data);
+            } else {
+                me.element.html(data.html);
+            }
+            if (typeof me.afterDataUpdate == 'function') {
+                me.afterDataUpdate.call(me, data);
+            }
             me.changeCallback();
-        }
+        });
+        //} else {
+        //    me.element.val('');
+        //    me.element.attr('disabled','disabled');
+        //    me.changeCallback();
+        //}
     };
     Triggers.objs[me.verbiage] = me;
     return me;

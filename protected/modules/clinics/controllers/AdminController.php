@@ -2029,4 +2029,25 @@ class AdminController extends Controller
             }
         }
     }
+    public function actionLoadAO(){
+        $trigger = Triggers::model() -> findByPk(18);
+        $mod = Yii::app() -> getModule('clinics');
+        /**
+         * @type ClinicsModule $mod
+         * @type TriggerValues $ao
+         */
+        foreach ($trigger -> trigger_values as $ao) {
+            echo $ao -> value.":<br/>";
+            foreach ($ao -> dependencies as $dep) {
+                $distr = $dep->parent;
+                foreach ($mod->getClinics(['district' => $distr->verbiage]) as $c) {
+                    //echo $c->name . " " . $c->triggers;
+                    $c->addTriggerValue($ao -> id);
+                    //echo " ".$c -> triggers."<br/>";
+                    $c -> setScenario('noPrices');
+                    $c -> save();
+                }
+            }
+        }
+    }
 }

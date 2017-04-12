@@ -357,8 +357,11 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     </div>
                     <div class="col-12 col-md-4">
                         <?php
-
-                            echo Triggers::triggerHtml('district',$triggers);
+                            $d = Triggers::triggerHtml('district',$triggers);
+                            if ($triggers['area'] == 'msc') {
+                                echo Triggers::triggerHtml('okrug',$triggers);
+                            }
+                            echo $d;
                             echo Triggers::triggerHtml('street',$triggers);
                             echo Triggers::triggerHtml('prigorod',$triggers);
                         ?>

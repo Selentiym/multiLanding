@@ -754,4 +754,9 @@ class clinics extends BaseModel
 			return false;
 		}
 	}
+	public function addTriggerValue($id){
+		$had = explode(';',$this -> triggers);
+		$had[] = $id;
+		$this -> triggers = implode(';', $had);
+	}
 }
