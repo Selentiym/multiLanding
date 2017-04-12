@@ -137,7 +137,10 @@ $cs -> registerScript('Order','
 							$phrase .= "КТ";
 						}
 					?>
-					<h1><?php echo "Центр $phrase " . $model -> name; ?></h1>
+					<h1 class="mb-0 pb-1 text-center" style="font-size:1.5rem"><strong><?php echo $model -> name; ?></strong></h1>
+					<?php if ($model -> getFirstTriggerValue('finance') -> verbiage == 'commercial'): ?>
+					<h2 class="text-center mt-0"><?php echo "Центр $phrase диагностики"; ?></h2>
+					<?php endif; ?>
 					<?php $this -> renderPartial('/clinics/_iconData',['model' => $model, 'data' => $triggers, 'expanded' => true]); ?>
 					<div class="text-center">
 					<?php $this -> renderPartial('/clinics/_buttons',['model' => $model]); ?>
