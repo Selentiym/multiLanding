@@ -35,11 +35,15 @@ class ButtonTrigger extends Triggers {
                 } else {
                     el.val('');
                 }
+                el.trigger('change');
             });
         ",CClientScript::POS_READY);
         //Рендерим кнопку
         $htmlOptions['id'] = $id.'Button';
-        $children = $dopParameters['noChildren'] ? '' : $this -> getChildrenHtml($data, $htmlOptions['id']);
+        $children = $this -> getChildrenHtml($data, $id);
+        if ($dopParameters['noChildren']) {
+            $children = '';
+        }
         return CHtml::tag('div',$htmlOptions, $mainVal -> value) .
             $children .
             CHtml::hiddenField($htmlOptions['name'],$initialValue);

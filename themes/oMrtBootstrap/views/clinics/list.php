@@ -28,17 +28,24 @@ $objects = $mod -> getClinics($_GET,null,null,$criteria);
 $cs = Yii::app()->getClientScript();
 
 $cs -> registerScript('implementLinks',"
+    var body = $('body');
+
+//    body.on('change.triggers', function(e, extra){
+//        console.log(extra);
+//        alert('changed');
+//    });
+
+
     (function(){
         var inputObject = {};
         inputObject.mrtInput = $('input[name=mrt]');
         inputObject.ktInput = $('input[name=kt]');
-        inputObject.ktElements = [$('select[name=slices]')];
-        inputObject.mrtElements = [$('select[name=magnetType]'),$('select[name=field]')];
+        inputObject.ktElements = [Triggers.objs['slices'].element];
+        inputObject.mrtElements = [Triggers.objs['magnetType'].element,Triggers.objs['field'].element];
         console.log(inputObject);
         function mrtChange () {
-            //alert('mrtChange');
-            var ktVal = inputObject.ktInput.val();
-            var mrtVal = inputObject.mrtInput.val();
+            var mrtVal = Triggers.objs['mrt'].element.val();
+            var ktVal = Triggers.objs['kt'].element.val();
             if (mrtVal) {
                 showMrtElements();
                 if (!ktVal) {
@@ -52,8 +59,8 @@ $cs -> registerScript('implementLinks',"
             }
         }
         function ktChange () {
-            var ktVal = inputObject.ktInput.val();
-            var mrtVal = inputObject.mrtInput.val();
+            var mrtVal = Triggers.objs['mrt'].element.val();
+            var ktVal = Triggers.objs['kt'].element.val();
             if (ktVal) {
                 showKtElements();
                 if (!mrtVal) {
@@ -79,21 +86,64 @@ $cs -> registerScript('implementLinks',"
             showElements(inputObject.ktElements);
         }
         function hideElements(els){
-            for (var i = 0; i < els; i++) {
-                inputObject[els[i]].select2('destroy');
-                inputObject[els[i]].hide();
+            for (var i = 0; i < els.length; i++) {
+
+                els[i].prop('disabled',true);
+                try{
+                    if (els[i].data('select2')) {
+                        els[i].select2('destroy');
+                    }
+                } catch (e) {}
+                els[i].hide();
             }
         }
         function showElements(els){
-            for (var i = 0; i < els; i++) {
-                inputObject[els[i]].show();
+            for (var i = 0; i < els.length; i++) {
+                els[i].prop('disabled',false);
+                els[i].show();
+                try {
+                    els[i].select2({});
+                } catch (e) {}
             }
         }
-        inputObject.mrtInput.change(mrtChange);
-        inputObject.ktInput.change(ktChange);
+//        inputObject.mrtInput.change(mrtChange);
+//        inputObject.ktInput.change(ktChange);
+//        mrtChange();
+//        ktChange();
+        body.on('mrtChange.triggers', mrtChange);
+        body.on('ktChange.triggers', ktChange);
         mrtChange();
         ktChange();
     })();
+    var group = ['metro','district','prigorod','okrug'];
+    var i;
+    var metro = new Trigger({
+        url:false,
+        verbiage:'metro',
+        childrenVerbs:[],
+        elementId:'metro',
+    });
+
+    function createHandlerForGeo(saveI){
+        return function(e,extra){
+            console.log(extra);
+            for(var j=0;j < group.length; j++) {
+                var str = group[j];
+                var el = Triggers.objs[str].element;
+                if (extra.newVal) {
+                    if (saveI != j) {
+                        el.prop('disabled',true);
+                    }
+                } else {
+                    el.prop('disabled', false);
+                }
+            }
+        }
+    }
+    for (i = 0; i < group.length; i++) {
+        body.on(group[i] + 'Change', createHandlerForGeo(i));
+    }
+
 ",CClientScript::POS_READY);
 
 $cs -> registerCoreScript('select2');
@@ -150,9 +200,6 @@ $cs -> registerScript('Order','
 		return false;
 	});
 ',CClientScript::POS_READY);
-
-$noDisplay = ['mrt', 'kt'];
-
 
 $keys = [];
 $triggersPrepared = Article::prepareTriggers($triggers);

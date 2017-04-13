@@ -4,7 +4,7 @@
 
 Triggers = {};
 Triggers.objs = [];
-
+var $body = $('body');
 function Trigger(params){
     if (typeof params != 'object') {
         params = {};
@@ -39,11 +39,24 @@ function Trigger(params){
         for (var i = 0; i < me.children.length; i++) {
             me.children[i].parentChanged(val);
         }
+        //$body.trigger('change.'+me.verbiage+'.triggers',{
+        $body.trigger('change.triggers',{
+            trigger: me,
+            newVal: val
+        });
+        //alert(me.verbiage + 'changed');
+        $body.trigger(me.verbiage + 'Change',{
+            trigger: me,
+            newVal: val
+        });
     };
     me.element.change(me.changeCallback);
     me.parentChanged = function(newVal){
         //alert(newVal + ' \n' + me.url);
         //if (newVal) {
+        if (!me.url) {
+            return;
+        }
         $.post(me.url, {
             newVal: newVal,
             parent: me.parent.verbiage
