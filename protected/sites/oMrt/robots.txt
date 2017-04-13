@@ -1,2 +1,4 @@
-Sitemap:http://о-мрт.рф/sitemapSPB.xml
-Sitemap:http://о-мрт.рф/sitemapMSC.xml
+User-agent: *
+Allow: /
+Sitemap: http://о-мрт.рф/sitemapSPB.xml
+Sitemap: http://о-мрт.рф/sitemapMSC.xml

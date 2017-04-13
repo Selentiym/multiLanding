@@ -72,6 +72,104 @@ class HomeController extends CController {
             ),
         ];
     }
+    
+    private function research($area = null){
+        return [
+            false,
+            'mrtMozg', 'mrtHyp', 'mrtOrbit','mrtBackSpine','mrtChestSpine','mrtNeckSpine',
+            'mrtAbdomen', 'MRTkidney', 'MRTliver', 'mrtPelvis','mrtHipJoint','mrtKneeJoint',
+            'mrtShoulderJoint','MRTmolochniejelezi','mrtBrainVessels','ktBrainVessels',
+            'ktMozg','ktNose','ktAbdomen','KTkidney','KTliver','ktPelvis','ktLungs'
+        ];
+    }
+    private function district($area) {
+        if ($area == 'spb') {
+            return [
+                false,
+                'admiralteyskiy', 'petrogradskiy', 'kalininskiy',
+                'central-nyy', 'krasnosel-skiy', 'kirovskiy', 'moskovskiy',
+                'krasnogvardeyskiy', 'frunzenskiy', 'nevskiy', 'vyborgskiy',
+                'primorskiy', 'vasileostrovskiy'
+            ];
+        }
+        if ($area == 'msc') {
+            return [
+                false, 'severnoe-tushino','yuzhnoe-tushino','perovo','kurkino','lyublino',
+                'mar-ino','bibirevo','vyhino-zhulebino','sokol-niki','novogireevo','strogino',
+                'biryulevo-vostochnoe','biryulevo-zapadnoe','otradnoe','novo-peredelkino','yasenevo',
+                'novokosino'
+            ];
+        }
+        return false;
+    }
+    private function metro($area){
+        if ($area == 'msc') {
+            return [
+                false, 21, 23, 63, 58, 64, 3, 53, 59, 60, 51, 50, 61, 65, 47, 24, 36, 31, 22, 39
+            ];
+        }
+        if ($area == 'spb') {
+            return [
+                false, 21, 23, 63, 58, 64, 3, 53, 59, 60, 51, 50, 61, 65, 47, 24, 36, 31, 22, 39
+            ];
+        }
+        return [false];
+    }
+
+    private function siteMapSPB() {
+        
+    }
+    private function cartesianSitemap($toUse, &$sitemap, $alreadyUsed = []) {
+        /**
+         * @type samdark\sitemap\Sitemap $sitemap
+         */
+        //Если мы на нижнем уровне, то записаваем нацонец-таки в фсайтмап результат
+        if (empty($toUse)) {
+            $sitemap->addItem($this -> fullUrl($this -> createUrl('home/clinics', $alreadyUsed)),null,null,0.9);
+            return;
+        }
+        //Если же нет, то получаем очередной ключ
+        $key = key($toUse);
+        if (!$key) {
+            throw new Exception('Invalid key. Got "'.$key.'"');
+        }
+        //И пробегаем по всем вариантам значений в этом измерении,
+        //добавив к уже имеющейся комбинации дополнительное условие
+        $toLoop = array_shift($toUse);
+        $alreadyUsed = array_filter($alreadyUsed);
+        foreach ($toLoop as $value) {
+            $this -> cartesianSitemap($toUse,$sitemap, array_merge($alreadyUsed,[$key => $value]));
+        }
+    }
+
+    private function suburbs($area){
+        if ($area == 'spb') {
+            $trigger = Triggers::model() -> findByPk(17);
+            $rez = [];
+            foreach ($trigger -> trigger_values as $val) {
+                if (current($val -> dependencies) -> parent -> verbiage == 'spb') {
+                    $rez[] = $val -> verbiage;
+                }
+            }
+            array_unshift($rez, false);
+            return $rez;
+        }
+        if ($area == 'msc') {
+            return [
+                false, 'Lyberczi', 'Mytichi', 'Odinchovo','Podolsk','Vidnoe','Zelenograd','SergievPosad','balashiha','Kolomna',
+                'Orehovo-Zuevo','Himki','Voskresensk','Domodedovo','Schelkovo','Krasnogorsk','Dolgoprudnyi','Dubna',
+                'Ramenskoe','Korolev','Naro-Fominsk'
+            ];
+        }
+        return [false];
+    }
+    private function fullUrl($fromRoot) {
+        static $root = false;
+        if (!$root) {
+            $root = "http://".$_SERVER['HTTP_HOST'];
+        }
+        return $root.$fromRoot;
+    }
 
     public function actionRemakeSitemap(){
         require_once(Yii::getPathOfAlias('webroot.vendor') . DIRECTORY_SEPARATOR . 'autoload.php');
@@ -79,129 +177,71 @@ class HomeController extends CController {
          * @type ClinicsModule $mod
          */
         $mod = Yii::app() -> getModule('clinics');
+
+        //Заготовили общие триггеры, которые всегда перемножаются
+        $common = [
+            'research' => $this -> research(),
+            'field' => [false,'strong','extraStrong'],
+            'magnetType' => [false,'opened','closed'],
+            'children' => [false,'yes'],
+            'contrast' => [false, 'withConstrast']
+        ];
+
         $sitemap = new samdark\sitemap\Sitemap(SiteDispatcher::getFilesDir().'/sitemapSPB.xml');
-        function fullUrl($fromRoot) {
-            static $root = false;
-            if (!$root) {
-                $root = "http://".$_SERVER['HTTP_HOST'];
-            }
-            return $root.$fromRoot;
-        }
-        //Добавляем все клиники СПб
-        foreach ($mod -> getClinics(['area' => 'spb']) as $clinic) {
-            $sitemap -> addItem(fullUrl($this -> createUrl('home/modelView',['modelName' => "clinics", 'verbiage' => $clinic -> verbiage,'area'=> 'spb'])),null,null,1.0);
-        }
+
+
         //Добавляем все статьи
         $crit = new CDbCriteria();
         $crit -> compare('id_type',Article::getTypeId('text'));
         foreach (Article::model() -> findAll($crit) as $article) {
-            $sitemap -> addItem(fullUrl($this -> createUrl('home/articleView',['verbiage' => $article -> verbiage])),time(),null,1.0);
+            $sitemap -> addItem($this -> fullUrl($this -> createUrl('home/articleView',['verbiage' => $article -> verbiage])),null,null,1.0);
+        }
+        //Делаем sitemap по Питеру
+        //Добавляем все клиники СПб
+        foreach ($mod -> getClinics(['area' => 'spb']) as $clinic) {
+            $sitemap -> addItem($this -> fullUrl($this -> createUrl('home/modelView',['modelName' => "clinics", 'verbiage' => $clinic -> verbiage,'area'=> 'spb'])),null,null,1.0);
         }
 
-//        $triggers = [
-//            'district' => ['distr1', 'distr2'],
-//            'metro' => [2,1],
-//            'research' => ['mrt','kt']
-//        ];
-
-        $controller = $this;
-        function cartesianSitemap($toUse, &$sitemap, &$controller, $alreadyUsed = []) {
-            /**
-             * @type samdark\sitemap\Sitemap $sitemap
-             */
-            //Если мы на нижнем уровне, то записаваем нацонец-таки в фсайтмап результат
-            if (empty($toUse)) {
-                $sitemap->addItem(fullUrl($controller -> createUrl('home/clinics', $alreadyUsed)),time(),null,0.9);
-                return;
-            }
-            //Если же нет, то получаем очередной ключ
-            $key = key($toUse);
-            if (!$key) {
-                throw new Exception('Invalid key. Got "'.$key.'"');
-            }
-            //И пробегаем по всем вариантам значений в этом измерении,
-            //добавив к уже имеющейся комбинации дополнительное условие
-            $toLoop = array_shift($toUse);
-            $alreadyUsed = array_filter($alreadyUsed);
-            foreach ($toLoop as $value) {
-                cartesianSitemap($toUse,$sitemap, $controller,array_merge($alreadyUsed,[$key => $value]));
-            }
-        }
-        //Делаем siteMap по Питерским триггерам
-        $triggers = [];
-
-        $districts = [
-            false,
-            'admiralteyskiy', 'petrogradskiy', 'kalininskiy',
-            'central-nyy', 'krasnosel-skiy', 'kirovskiy', 'moskovskiy',
-            'krasnogvardeyskiy', 'frunzenskiy', 'nevskiy', 'vyborgskiy',
-            'primorskiy', 'vasileostrovskiy'
-        ];
-
-        $metros = [
-            false, 21, 23, 63, 58, 64, 3, 53, 59, 60, 51, 50, 61, 65, 47, 24, 36, 31, 22, 39
-        ];
-
-        $research = [
-            false,
-            'mrtMozg', 'mrtHyp', 'mrtOrbit','mrtBackSpine','mrtChestSpine','mrtNeckSpine',
-            'mrtAbdomen', 'MRTkidney', 'MRTliver', 'mrtPelvis','mrtHipJoint','mrtKneeJoint',
-            'mrtShoulderJoint','MRTmolochniejelezi','mrtBrainVessels','ktBrainVessels',
-            'ktMozg','ktNose','ktAbdomen','KTkidney','KTliver','ktPelvis','ktLungs'
-        ];
-
-        $triggers = [
-            'district' => $districts,
-            'metro' => $metros,
-            'research' => $research
-        ];
-        cartesianSitemap($triggers, $sitemap, $controller,['area' => 'spb']);
+        //Общее + районы
+        $this -> cartesianSitemap([
+                'district' => array_filter($this -> district('spb'))
+            ]+$common, $sitemap, ['area' => 'spb']);
+        //Общее + метро
+        $this -> cartesianSitemap([
+                'metro' => array_filter($this -> metro('spb'))
+            ]+$common, $sitemap, ['area' => 'spb']);
+        //Общее + пригороды
+        $this -> cartesianSitemap([
+                'prigorod' => array_filter($this -> suburbs('spb'))
+            ]+$common, $sitemap, ['area' => 'spb']);
         $sitemap -> write();
+        unset($sitemap);
+
 
         //Делаем сайтмап по Московским триггерам
         $sitemap = new \samdark\sitemap\Sitemap(SiteDispatcher::getFilesDir().'/sitemapMSC.xml');
         //Добавляем все клиники МСК
         foreach ($mod -> getClinics(['area' => 'msc']) as $clinic) {
-            $sitemap -> addItem(fullUrl($this -> createUrl('home/modelView',['modelName' => "clinics", 'verbiage' => $clinic -> verbiage,'area'=> 'msc'])),null,null,1.0);
+            $sitemap -> addItem($this -> fullUrl($this -> createUrl('home/modelView',['modelName' => "clinics", 'verbiage' => $clinic -> verbiage,'area'=> 'msc'])),null,null,1.0);
         }
-
-        $districts = [
-            false, 'severnoe-tushino','yuzhnoe-tushino','perovo','kurkino','lyublino',
-            'mar-ino','bibirevo','vyhino-zhulebino','sokol-niki','novogireevo','strogino',
-            'biryulevo-vostochnoe','biryulevo-zapadnoe','otradnoe','novo-peredelkino','yasenevo',
-            'novokosino'
-        ];
-
-        $metros = [
-            false, 215, 223, 229, 132, 163, 143, 161, 210, 134, 77, 136, 218, 303, 145, 84, 152, 227, 307, 70, 116, 146
-        ];
-
-        $subs = [
-            'Lyberczi', 'Mytichi', 'Odinchovo','Podolsk','Vidnoe','Zelenograd','SergievPosad','balashiha','Kolomna',
-            'Orehovo-Zuevo','Himki','Voskresensk','Domodedovo','Schelkovo','Krasnogorsk','Dolgoprudnyi','Dubna',
-            'Ramenskoe','Korolev','Naro-Fominsk'
-        ];
-
+        //Общее + районы
+        $this -> cartesianSitemap([
+                'district' => array_filter($this -> district('msc'))
+            ]+$common, $sitemap, ['area' => 'msc']);
+        //Общее + метро
+        $this -> cartesianSitemap([
+                'metro' => array_filter($this -> metro('msc'))
+            ]+$common, $sitemap, ['area' => 'msc']);
+        //Общее + пригороды
+        $this -> cartesianSitemap([
+                'prigorod' => array_filter($this -> suburbs('msc'))
+            ]+$common, $sitemap, ['area' => 'msc']);
         $aos = array_map(function($val){ return $val -> verbiage;},Triggers::model() -> findByPk(18) -> trigger_values);
         array_unshift($aos,false);
-        //Все, кроме пригородов
-        $triggers = [
-            'research' => $research,
-            'metro' => $metros,
-            'district' => $districts,
-            'okrug' => $aos
-        ];
-        cartesianSitemap($triggers,$sitemap, $controller,['area' => 'msc']);
-
-        //Все, кроме районов
-        $triggers = [
-            'research' => $research,
-            'metro' => $metros,
-            'prigorod' => $subs
-        ];
-
-        cartesianSitemap($triggers,$sitemap, $controller,['area' => 'msc']);
-
+        //Общее + Административные округа
+        $this -> cartesianSitemap([
+                'okrug' => array_filter($aos)
+            ]+$common, $sitemap, ['area' => 'msc']);
         $sitemap -> write();
     }
 
