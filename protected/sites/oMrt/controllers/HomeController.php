@@ -94,9 +94,9 @@ class HomeController extends CController {
         }
         if ($area == 'msc') {
             return [
-                false, 'severnoe-tushino','yuzhnoe-tushino','perovo','kurkino','lyublino',
+                false, 'perovo','kurkino','lyublino',
                 'mar-ino','bibirevo','vyhino-zhulebino','sokol-niki','novogireevo','strogino',
-                'biryulevo-vostochnoe','biryulevo-zapadnoe','otradnoe','novo-peredelkino','yasenevo',
+                'otradnoe','yasenevo',
                 'novokosino'
             ];
         }
@@ -105,7 +105,7 @@ class HomeController extends CController {
     private function metro($area){
         if ($area == 'msc') {
             return [
-                false, 21, 23, 63, 58, 64, 3, 53, 59, 60, 51, 50, 61, 65, 47, 24, 36, 31, 22, 39
+                false, 215, 132, 143, 161, 210, 134, 77, 303, 145, 84, 152, 227, 307, 70, 116, 146
             ];
         }
         if ($area == 'spb') {
