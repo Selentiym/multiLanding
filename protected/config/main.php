@@ -62,6 +62,7 @@ return array(
 			'rules'=>array(
 				'robots.txt' => 'seo/robots',
 				'sitemap.xml' => 'seo/sitemap',
+				'sitemap<name:\w+>.xml' => 'seo/sitemap',
 				'gii'=>'gii',
 				'gii/<controller:\w+>'=>'gii/<controller>',
 				'gii/<controller:\w+>/<action:\w+>'=>'gii/<controller>/<action>',

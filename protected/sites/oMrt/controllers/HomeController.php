@@ -75,8 +75,11 @@ class HomeController extends CController {
 
     public function actionRemakeSitemap(){
         require_once(Yii::getPathOfAlias('webroot.vendor') . DIRECTORY_SEPARATOR . 'autoload.php');
-
-        $sitemap = new samdark\sitemap\Sitemap(SiteDispatcher::getFilesDir().'/sitemap.xml');
+        /**
+         * @type ClinicsModule $mod
+         */
+        $mod = Yii::app() -> getModule('clinics');
+        $sitemap = new samdark\sitemap\Sitemap(SiteDispatcher::getFilesDir().'/sitemapSPB.xml');
         function fullUrl($fromRoot) {
             static $root = false;
             if (!$root) {
@@ -84,9 +87,9 @@ class HomeController extends CController {
             }
             return $root.$fromRoot;
         }
-        //Добавляем все клиники
-        foreach (clinics::model() -> findAll() as $clinic) {
-            $sitemap -> addItem(fullUrl($this -> createUrl('home/modelView',['modelName' => "clinics", 'verbiage' => $clinic -> verbiage])),time(),null,1.0);
+        //Добавляем все клиники СПб
+        foreach ($mod -> getClinics(['area' => 'spb']) as $clinic) {
+            $sitemap -> addItem(fullUrl($this -> createUrl('home/modelView',['modelName' => "clinics", 'verbiage' => $clinic -> verbiage,'area'=> 'spb'])),null,null,1.0);
         }
         //Добавляем все статьи
         $crit = new CDbCriteria();
@@ -153,7 +156,15 @@ class HomeController extends CController {
             'research' => $research
         ];
         cartesianSitemap($triggers, $sitemap, $controller,['area' => 'spb']);
+        $sitemap -> write();
+
         //Делаем сайтмап по Московским триггерам
+        $sitemap = new \samdark\sitemap\Sitemap(SiteDispatcher::getFilesDir().'/sitemapMSC.xml');
+        //Добавляем все клиники МСК
+        foreach ($mod -> getClinics(['area' => 'msc']) as $clinic) {
+            $sitemap -> addItem(fullUrl($this -> createUrl('home/modelView',['modelName' => "clinics", 'verbiage' => $clinic -> verbiage,'area'=> 'msc'])),null,null,1.0);
+        }
+
         $districts = [
             false, 'severnoe-tushino','yuzhnoe-tushino','perovo','kurkino','lyublino',
             'mar-ino','bibirevo','vyhino-zhulebino','sokol-niki','novogireevo','strogino',
@@ -171,11 +182,14 @@ class HomeController extends CController {
             'Ramenskoe','Korolev','Naro-Fominsk'
         ];
 
+        $aos = array_map(function($val){ return $val -> verbiage;},Triggers::model() -> findByPk(18) -> trigger_values);
+        array_unshift($aos,false);
         //Все, кроме пригородов
         $triggers = [
             'research' => $research,
             'metro' => $metros,
-            'district' => $districts
+            'district' => $districts,
+            'okrug' => $aos
         ];
         cartesianSitemap($triggers,$sitemap, $controller,['area' => 'msc']);
 
@@ -185,6 +199,7 @@ class HomeController extends CController {
             'metro' => $metros,
             'prigorod' => $subs
         ];
+
         cartesianSitemap($triggers,$sitemap, $controller,['area' => 'msc']);
 
         $sitemap -> write();

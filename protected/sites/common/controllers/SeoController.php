@@ -18,13 +18,13 @@ class SeoController extends CController {
             //throw new CHttpException(404,'Robots.txt file is not present');
         }
     }
-    public function actionSitemap(){
+    public function actionSitemap($name = ''){
         header('Content-Type: application/xml');
-        $filename = SiteDispatcher::getFilesDir().'/sitemap.xml';
+        $filename = SiteDispatcher::getFilesDir()."/sitemap$name.xml";
         if (file_exists($filename)) {
             readfile($filename);
         } else {
-            throw new CHttpException(404,'No sitemap.xml found.');
+            throw new CHttpException(404,"No sitemap$name.xml found.");
         }
     }
 }
