@@ -2,20 +2,38 @@
 /**
  * @type Article $model
  */
-	Yii::app()->clientScript->registerScript('PreviewScript','
-		$("#previewButton").click(function(){
-			var form = $("#Article-form");
-			var save_action = (form.attr("action")) ? form.attr("action") : "";
-			var save_target = (form.attr("target")) ? form.attr("target") : "";
-			form.attr("action","'.$this -> createUrl("//home/articlePreview").'");
-			form.attr("target","_blank");
-			//alert(form);
-			form.submit();
-			form.attr("action",save_action);
-			form.attr("target",save_target);
-		});
-	', CClientScript::POS_READY );
-	set_time_limit(500);
+Yii::app()->clientScript->registerScript('PreviewScript','
+    $("#previewButton").click(function(){
+        var form = $("#Article-form");
+        var save_action = (form.attr("action")) ? form.attr("action") : "";
+        var save_target = (form.attr("target")) ? form.attr("target") : "";
+        form.attr("action","'.$this -> createUrl("//home/articlePreview").'");
+        form.attr("target","_blank");
+        //alert(form);
+        form.submit();
+        form.attr("action",save_action);
+        form.attr("target",save_target);
+    });
+    $block = $("#priceBlocks");
+    $block.chosen({
+        allow_single_deselect:true
+    });
+    $block.val();
+    $researches = $("#researches");
+    $block.on("change",function(e, params){
+        var str = params.selected;
+        var was = $researches.val();
+        var toAdd = str.split(";");
+        var toBe = was.concat(toAdd);
+        console.log(was);
+        console.log(toAdd);
+        console.log(toBe);
+        $researches.chosen("destroy");
+        $researches.val(toBe);
+        $researches.chosen();
+        $block.val(null);
+    });
+', CClientScript::POS_READY );
 ?>
 <div class="row-fluid">
 
@@ -108,6 +126,13 @@
             <?php
                 echo CHtml::label('Исследования, с которыми связана статья','researches');
                 echo CHtml::activeDropDownList($model,'research_input',CHtml::listData(ObjectPrice::model() -> findAllByAttributes(['object_type' => Objects::getNumber('clinics')]),'verbiage','name'),['multiple' => 'multiple', 'id' => 'researches'],CHtml::giveAttributeArray($model -> researches, 'verbiage_research'),json_encode(['placeholder' => 'Исследования, описанные в статье']));
+                echo "<select id='priceBlocks'>";
+                echo "<option value=''>Выберите блок, чтобы доавить его в список</option>";
+                foreach (ObjectPriceBlock::model() -> findAll() as $block) {
+                    echo "<option value='".implode(';',CHtml::giveAttributeArray($block->prices,'verbiage'))."'>{$block->name}(".count($block->prices).")</option>";
+                }
+                echo "</select>";
+
             ?>
         </div>
 		<div>
