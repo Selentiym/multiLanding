@@ -1,6 +1,7 @@
 <?php
 /**
  * @type Article $model
+ * @var HomeController $this
  */
 $this->setPageTitle($model->title);
 Yii::app() -> getClientScript() -> registerMetaTag($model -> description,'description');
@@ -20,6 +21,26 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 				$text = '<p class="textErrors">Внимание! В тексте могут быть ошибки отображения. Не обращайте на это внимания. В ближайшее время проблема будет решена.</p>'.$text;
 			}
 			echo $text;
+			?>
+		</div>
+		<div class="prices">
+			<?php $this -> renderPartial('/prices/_price_group',[
+					'id' => 'spbPrices',
+					'name' => 'Цены в Санкт-Петербурге',
+					'prices' => $model -> getPrices(),
+					'model' => false,
+					'show' => false,
+					'triggers' => ['area' => 'spb']
+				]); ?>
+			<?php $this -> renderPartial('/prices/_price_group',[
+					'id' => 'mscPrices',
+					'name' => 'Цены в Москве',
+					'prices' => $model -> getPrices(),
+					'model' => false,
+					'show' => false,
+					'triggers' => ['area' => 'msc']
+			]);
+			return;
 			?>
 		</div>
 		<div class="children">

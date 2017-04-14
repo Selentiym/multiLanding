@@ -40,13 +40,22 @@ $id = str2url($block -> name).$model -> verbiage;
 
 <!-- data-parent="#prices-accordion" -->
 
-<div data-toggle="collapse" data-target="#collapse<?php echo $id; ?>"  role="tabpanel" id="heading<?php echo $id; ?>" class="w-100 price-block p-3 mb-1">
-    <div>
-        <?php echo $block -> name; ?>
-    </div>
-</div>
-<div class="collapse <?php echo $show; ?>" id="collapse<?php echo $id; ?>">
-    <?php foreach ($block -> prices as $price) {
-        $this -> renderPartial('//prices/_single_price_clinics',['price' => $price,'model' => $model]);
-    } ?>
-</div>
+<?php $this -> renderPartial('/prices/_price_group', [
+    'id' => $id,
+    'name' => $block -> name,
+    'prices' => $block -> prices,
+    'model' => $model,
+    'show' => $show
+]); ?>
+
+<!--<div data-toggle="collapse" data-target="#collapse--><?php //echo $id; ?><!--"  role="tabpanel" id="heading--><?php //echo $id; ?><!--" class="w-100 price-block p-3 mb-1">-->
+<!--    <div  class="d-flex justify-content-between">-->
+<!--        --><?php //echo $block -> name; ?>
+<!--        <i class="fa arrow"></i>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="collapse --><?php //echo $show; ?><!--" id="collapse--><?php //echo $id; ?><!--">-->
+<!--    --><?php //foreach ($block -> prices as $price) {
+//        $this -> renderPartial('//prices/_single_price_clinics',['price' => $price,'model' => $model]);
+//    } ?>
+<!--</div>-->

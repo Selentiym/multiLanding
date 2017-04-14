@@ -418,60 +418,6 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('doctor',$triggers); ?></div>
                     <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('children',$triggers); ?></div>
                 </div>
-<!--                <div class="row">-->
-<!--                    <div class="col-12 col-md-4">--><?php //echo CHtml::DropDownListChosen2(
-//                            'research',
-//                            'research',
-//                            CHtml::listData(ObjectPrice::model() -> findAll(['order' => 'id_block ASC']),'verbiage','name'),
-//                            //$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
-//                            ['style' => 'width:100%', 'empty_line' => true, 'placeholder' => 'Исследование'],
-//                            $triggers['research'] ? [$triggers['research']] : [],
-//                            [],
-//                            true
-//                        ); ?><!--</div>-->
-<!--                    <div class="col-12 col-md-4">--><?php //echo Triggers::triggerHtml('magnetType',$triggers); ?><!--</div>-->
-<!--                    <div class="col-12 col-md-4">--><?php //echo Triggers::triggerHtml('city',$triggers); ?><!--</div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-12 col-md-4">-->
-<!--                        --><?php
-//                        echo CHtml::DropDownListChosen2(
-//                            'metro',
-//                            'metro',
-//                            CHtml::listData(Metro::model() -> findAllByAttributes(['city' => $triggers['area']],['order' => 'name ASC']),'id','name'),
-//                            //$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
-//                            ['style' => 'width:100%', 'empty_line' => true, 'placeholder' => 'Метро'],
-//                            $triggers['metro'] ? [$triggers['metro']] : [],
-//                            [],
-//                            true
-//                        );
-//                        ?>
-<!--                    </div>-->
-<!--                    <div class="col-12 col-md-4">--><?php //echo Triggers::triggerHtml('field',$triggers); ?><!--</div>-->
-<!--                    <div class="col-12 col-md-4">--><?php //echo Triggers::triggerHtml('district',$triggers); ?><!--</div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-12 col-md-8 flex-last flex-md-first">-->
-<!--                        <div class="row">-->
-<!--                            <div class="col">-->
-<!--                                --><?php //echo Triggers::triggerHtml('contrast',$triggers); ?>
-<!--                            </div>-->
-<!---->
-<!--                            <div class="col">-->
-<!--                                --><?php //echo Triggers::triggerHtml('children',$triggers); ?>
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="row">-->
-<!--                            <div class="col">-->
-<!--                                --><?php //echo Triggers::triggerHtml('time',$triggers); ?>
-<!--                            </div>-->
-<!--                            <div class="col">-->
-<!--                                --><?php //echo Triggers::triggerHtml('doctor',$triggers); ?>
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-12 col-md-4">--><?php //echo Triggers::triggerHtml('street',$triggers); ?><!--</div>-->
-<!--                </div>-->
                 <div class="row no-gutters justify-content-center">
                     <div class="col-auto"><button type="submit" class="btn">Найти</button></div>
                     <div class="col-auto ml-3"><a href="<?php echo $this -> createUrl('home/clinics',['area' => $triggers['area']],'&',true); ?>"><button type="button" class="btn" >Сбросить</button></a></div>

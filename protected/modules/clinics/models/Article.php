@@ -26,6 +26,7 @@ class Article extends BaseModel {
 		3 => 'dynamic',
 		4 => 'commercial'
 	];
+	public $SFields = array('metro','research','submitted','price','street','sortBy','area');//,'speciality');
 	/**
 	 * @property array children - an array of Article objects that are children to this one.
 	 */
@@ -96,10 +97,12 @@ class Article extends BaseModel {
 	{
 		return array(
 			'parent' => array(self::BELONGS_TO, 'Article', 'parent_id'),
-			'researches' => array(self::HAS_MANY, 'ArticleResearch', 'id_article')
+			'researches' => array(self::HAS_MANY, 'ArticleResearch', 'id_article','with' => 'price')
 		);
 	}
-
+	public function getPrices(){
+		return array_map(function($res){ return $res -> price;},$this -> researches);
+	}
 	public function scopes(){
 		return array(
 			'root' => array('condition' => 'parent_id = 0'),

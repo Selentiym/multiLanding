@@ -110,3 +110,11 @@ nav {
     color:white;
     font-weight:bold;
 }
+
+.price-block .arrow::after {
+    display: flex;
+    content:"\f0d8";
+}
+.price-block.collapsed .arrow::after {
+    content:"\f0d7";
+}
