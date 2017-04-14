@@ -84,6 +84,9 @@ function generateText($triggers){
     if ($triggers['prigorod']) {
         $geo = $fr('prigorod','prigorodPredl');
     }
+    if ($triggers['okrug']) {
+        $geo = $fr('okrug','aoPredl').' Москвы';
+    }
     if (!$geo) {
         $geo = $fr('area','areaNamePredl');
     }
@@ -94,7 +97,7 @@ function generateText($triggers){
 
 
     echo "<p>Сколько стоит {$r}?</p>";
-    echo "<p>Средняя цена на $rVin равна в Санкт-Петербурге и Москве{$mod->averagePrice($triggers)}руб</p>";
+    echo "<p>Средняя цена на $rVin равна в Москве и Санкт-Петербурге {$mod->averagePrice($triggers)}руб</p>";
     if ($street) {
         echo "<p>Где можно сделать $r в непосредственной близости от адреса: {$street}?</p>";
         echo "Пройти $rVin можно в ".echoMedCentersNumber(['district','street'])." в непосредственной близости от адреса: {$street}";
