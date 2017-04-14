@@ -16,7 +16,10 @@ $triggers = $_GET;
                 <?php $triggers['area'] = 'msc'; ?>
                 <a href="<?php echo $this -> createUrl('home/clinics',$triggers); ?>"><button class="btn">Искать в Москве и пригородах</button></a>
                 <div>
-
+                    <?php
+                        $_GET['area'] = 'msc';
+                        generateText($_GET);
+                    ?>
                 </div>
             </div>
             <div class="col-12 col-md-6">
@@ -24,7 +27,10 @@ $triggers = $_GET;
                 <?php $triggers['area'] = 'spb'; ?>
                 <a href="<?php echo $this -> createUrl('home/clinics',$triggers); ?>"><button class="btn">Искать в Санкт-Петербурге и пригородах</button></a>
                 <div>
-
+                    <?php
+                        $_GET['area'] = 'spb';
+                        generateText($_GET);
+                    ?>
                 </div>
             </div>
         </div>

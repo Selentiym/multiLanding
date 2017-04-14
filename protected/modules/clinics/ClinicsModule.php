@@ -9,7 +9,11 @@ class ClinicsModule extends UWebModule {
 	 * @var iCommentPool|null
 	 */
 	public $doctorsComments = null;
-
+	/**
+	 * @var string[] stores already rendered parameters, has to be
+	 * refreshed when a new trigger set is taken
+	 */
+	private $_rendered = [];
 	public function init()
 	{
 		parent::init();
@@ -192,7 +196,7 @@ class ClinicsModule extends UWebModule {
 		return round($sum / $c);
 	}
 	public function renderParameter ($triggers, $trigger_verb, $field){
-		static $rendered;
+		$rendered = $this -> _rendered;
 		if (!isset($rendered)) {
 			$rendered = [];
 		}
@@ -200,5 +204,8 @@ class ClinicsModule extends UWebModule {
 			$rendered[$trigger_verb][$field] = Article::renderParameter($triggers, $trigger_verb, $field);
 		}
 		return $rendered[$trigger_verb][$field];
+	}
+	public function refreshRendered($newArr = []){
+		$this -> _rendered = $newArr;
 	}
 }
