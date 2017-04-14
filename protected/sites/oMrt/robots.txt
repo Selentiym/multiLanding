@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Host: http://xn----xtbekk.xn--p1ai/
 Sitemap: http://о-мрт.рф/sitemapSPB.xml
 Sitemap: http://о-мрт.рф/sitemapMSC.xml
