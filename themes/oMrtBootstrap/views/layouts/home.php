@@ -46,7 +46,7 @@ $triggers = $_GET;
                     Режим работы 8.00-21.00
                 </div>
                 <div class="pr-1 col-12 col-md-auto font-weight-bold ">
-                    <i class="fa fa-phone" aria-hidden="true"></i> Телефон
+                    <i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:7812<?php echo Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a>
                 </div>
             </div>
         </div>
@@ -81,11 +81,11 @@ $triggers = $_GET;
         <div class="row justify-content-around align-items-center">
             <div class="col-6 col-md-3 mb-3 mb-md-0"><?php echo date('Y'); ?>, все права защищены</div>
             <div class="col-12 col-md-3 flex-last flex-md-unordered">
-                <button class="btn">Записаться на МРТ/КТ</button>
+                <button class="btn signUpButton">Записаться на МРТ/КТ</button>
             </div>
             <div class="col-6 col-md-3 mb-3 mb-md-0">
                 <span>Звоните круглосуточно</span><br/>
-                <span>Телефон</span>
+                <span><a href="tel:7812<?php echo Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></span>
             </div>
         </div>
     </div>

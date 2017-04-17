@@ -38,9 +38,8 @@ return SiteDispatcher::mergeArray(
         ],
         'components'=>array(
             'phone' => [
-                'class' => 'application.components.CallTrackerPhoneComponent',
-                'moduleId' => 'tracker',
-                'number' => null
+                'class' => 'application.components.constantPhoneComponent',
+                'number' => '7 (812) 407-29-86'
             ],
             'bootstrap'=>array(
                 'class'=>'application.extensions.bootstrap.components.Bootstrap'
