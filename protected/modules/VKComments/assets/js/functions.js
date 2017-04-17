@@ -50,6 +50,9 @@ function VKCommentsModuleWidget(params){
         }).done(function(data){
             if ((data)&&(toReplace)) {
                 toReplace.replaceWith(data);
+                me.element.find(".showMoreReviews").click(function(){
+                    me.addMoreReviews();
+                });
                 me.page ++;
             }
         });

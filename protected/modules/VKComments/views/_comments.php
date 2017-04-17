@@ -12,5 +12,5 @@ foreach($reviews as $rev){
     $this -> renderPartial('/_single_review',['model' => $rev]);
 }
 if ($showButton) {
-    echo "<div id='showMoreReviews'>Показать еще</div>";
+    echo "<div class='showMoreReviews flat_button addpost_button send_post' style='text-align:center;mergin-top:10px;'>Показать еще</div>";
 }

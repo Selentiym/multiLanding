@@ -70,7 +70,7 @@ Yii::app() -> getClientScript() -> registerScript('VKComments'.$id,"
                             <?php
                             //$this -> renderPartial('//landingLike/commentsPage',['page' => 0]);
                             ?>
-                            <div class='showMoreReviews'>Показать еще</div>
+                            <div class='showMoreReviews flat_button addpost_button send_post' style='text-align:center;mergin-top:10px;'>Показать еще</div>
                         </div>
                     </div>
                 </div>
