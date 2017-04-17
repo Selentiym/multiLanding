@@ -53,7 +53,22 @@ function translateVerbiages ($verbs) {
 }
 function countClinics ($condition){
     return count(Yii::app() -> getModule('clinics') -> getClinics($condition));
-};
+}
+function generateGeo($fr, &$triggers, $form = 'Predl'){
+
+    $geo = false;
+    //$geoName = $fr('area', 'areaNameRod');
+    if ($triggers['prigorod']) {
+        $geo = $fr('prigorod','prigorod'.$form);
+    }
+    if ($triggers['okrug']) {
+        $geo = $fr('okrug','ao'.$form).' Москвы';
+    }
+    if (!$geo) {
+        $geo = $fr('area','areaName'.$form);
+    }
+    return $geo;
+}
 function generateText($triggers){
     $fr = encapsulateTriggersForRender($triggers);
 
@@ -79,25 +94,15 @@ function generateText($triggers){
     $slices = preg_replace('/[^\d]/','',$fr('slices','value'));
     $field = $fr('field','value');
 
-    $geo = false;
-    //$geoName = $fr('area', 'areaNameRod');
-    if ($triggers['prigorod']) {
-        $geo = $fr('prigorod','prigorodPredl');
-    }
-    if ($triggers['okrug']) {
-        $geo = $fr('okrug','aoPredl').' Москвы';
-    }
-    if (!$geo) {
-        $geo = $fr('area','areaNamePredl');
-    }
+    $geo = generateGeo($fr, $triggers);
 
     $mod = Yii::app() -> getModule('clinics');
     echo "<p>Где можно сделать $rVin в {$geo}?</p>";
-    echo "<p>В $geo диагностику $r можно пройти в ".echoClinicsNumber(['mrt','kt','research','area']).'</p>';
+    echo "<p>В $geo диагностику $r можно пройти в ".echoClinicsNumber(['mrt','kt','research','area','prigorod','okrug']).'</p>';
 
 
     echo "<p>Сколько стоит {$r}?</p>";
-    echo "<p>Средняя цена на $rVin равна в Москве и Санкт-Петербурге {$mod->averagePrice($triggers)}руб</p>";
+    echo "<p>Средняя цена на $rVin в Москве и Санкт-Петербурге равна {$mod->averagePrice($triggers)}руб</p>";
     if ($street) {
         echo "<p>Где можно сделать $r в непосредственной близости от адреса: {$street}?</p>";
         echo "Пройти $rVin можно в ".echoMedCentersNumber(['district','street'])." в непосредственной близости от адреса: {$street}";

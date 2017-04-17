@@ -126,12 +126,18 @@ $cs -> registerScript('implementLinks',"
 
     function createHandlerForGeo(saveI){
         return function(e,extra){
-            console.log(extra);
+            var flag = false;
+            for( var k=0; k < group.length; k++) {
+                var trig = Triggers.objs[group[k]];
+                if (trig) {
+                    flag = flag||(trig.element.val());
+                }
+            }
             for(var j=0;j < group.length; j++) {
                 var str = group[j];
                 var el = Triggers.objs[str].element;
-                if (extra.newVal) {
-                    if (saveI != j) {
+                if (flag) {
+                    if (!el.val()) {
                         el.prop('disabled',true);
                     }
                 } else {
@@ -142,6 +148,7 @@ $cs -> registerScript('implementLinks',"
     }
     for (i = 0; i < group.length; i++) {
         body.on(group[i] + 'Change', createHandlerForGeo(i));
+        body.trigger(group[i] + 'Change',{});
     }
 
 ",CClientScript::POS_READY);
@@ -177,11 +184,10 @@ $cs->registerScript("map_init","
         $('#map').on('shown.bs.collapse', function(){
             $('#map').height(300);
             $(window).trigger('resize');
-            console.log(allClinics);
-            allClinics.redraw();
-            if (typeof allClinics.redraw == 'function') {
-                allClinics.redraw();
-            }
+            allClinics.container.fitToViewport()
+//            if (typeof allClinics.redraw == 'function') {
+//                allClinics.redraw();
+//            }
         });
     });
 ",CClientScript::POS_READY);
@@ -284,9 +290,9 @@ if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
 }
 $keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
-$geoName = $fr('area', 'areaNameRod');
+$geoName = generateGeo($fr,$triggers);
 //$geoName = $geoName ? $geoName : $fr('area','areaNameRod');
-$description = $rRod. " можно пройти в ".count($objects). ' ' . clinicWord(count($objects))." ".$geoName.", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
+$description = "В ".$geoName." ".$rRod. " можно пройти в ".count($objects). ' ' . clinicWord(count($objects)).", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
 /**
  * @type ObjectPrice $research
  */

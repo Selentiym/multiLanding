@@ -31,6 +31,7 @@ function Trigger(params){
     });
     me.changeCallback = function(){
         var val = me.element.val();
+        console.log('changed '+me.verbiage);
         if (me.element.is('input[type=checkbox]')) {
             if (!me.element.is(':checked')) {
                 val = me.uncheckedValue;
@@ -40,10 +41,10 @@ function Trigger(params){
             me.children[i].parentChanged(val);
         }
         //$body.trigger('change.'+me.verbiage+'.triggers',{
-        $body.trigger('change.triggers',{
-            trigger: me,
-            newVal: val
-        });
+        //$body.trigger('change.triggers',{
+        //    trigger: me,
+        //    newVal: val
+        //});
         //alert(me.verbiage + 'changed');
         $body.trigger(me.verbiage + 'Change',{
             trigger: me,
@@ -81,5 +82,6 @@ function Trigger(params){
         //}
     };
     Triggers.objs[me.verbiage] = me;
+    //me.changeCallback();
     return me;
 }
