@@ -40,7 +40,6 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 					'show' => false,
 					'triggers' => ['area' => 'msc']
 			]);
-			return;
 			?>
 		</div>
 		<div class="children">

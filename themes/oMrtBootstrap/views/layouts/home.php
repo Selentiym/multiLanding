@@ -36,7 +36,8 @@ $triggers = $_GET;
 <?php echo Yii::t('scripts', 'GA'); ?>
 <header class="container-fluid">
     <div class="row align-items-start justify-content-between text-center">
-        <div class="col-md-12 col-9 d-flex justify-content-between justify-content-sm-end pt-3 p-md-3 align-items-center">
+        <div class="col-md-12 d-flex justify-content-around justify-content-md-end pt-3 p-md-3 align-items-center">
+            <div class="mr-auto"><a href="/"><img class="img-fluid" style="max-height:70px" src="<?php echo Yii::app() -> theme -> baseUrl; ?>/images/logo.png" alt="Логотип" /></a></div>
             <div class="d-flex pr-4 align-items-center">
                 <i class="fa fa-phone fa-2x" style="color:green" aria-hidden="true"></i><div class="d-inline-block ">Запись на<br/> МРТ/КТ</div>
             </div>
@@ -49,7 +50,7 @@ $triggers = $_GET;
                 </div>
             </div>
         </div>
-        <nav class="navbar navbar-toggleable-md col-md-12 col-3  navbar-inverse p-3 flex-first flex-md-last">
+        <nav class="navbar navbar-toggleable-md col-12  navbar-inverse p-3 flex-md-last">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -63,7 +64,7 @@ $triggers = $_GET;
                     </li>
                     <li class="nav-item <?php echo ( $triggers['area'] != 'spb' && $triggers['area'] != 'msc' ) ? 'active' : ''; ?>">
 <!--                        <a class="nav-link" href="--><?php //echo Yii::app() -> controller -> createUrl('home/articles'); ?><!--">Все о МРТ и КТ</a>-->
-                        <a class="nav-link" href="<?php echo "/"; ?>">Все о МРТ и КТ</a>
+                        <a class="nav-link" href="<?php echo "/"; ?>">Все о МРТ, КТ и ПЭТ</a>
                     </li>
                 </ul>
             </div>
