@@ -23,6 +23,9 @@ button {
 a {
     color: #57ae8a;
 }
+.mainColor {
+    color: #57ae8a;
+}
 .article-right .card {
     background-color: #dbdcd2;
 }
@@ -117,4 +120,8 @@ nav {
 }
 .price-block.collapsed .arrow::after {
     content:"\f0d7";
+}
+#error404container {
+    background-image: url('../images/lost.jpg');
+    background-size: 100%;
 }

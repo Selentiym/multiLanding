@@ -123,6 +123,9 @@ return SiteDispatcher::mergeArray(
                 'password' => 'kicker',
                 'charset' => 'utf8',
             ),
+            'errorHandler' => [
+                'errorAction' => 'home/error'
+            ]
         ),
         'params'=>array(
             'siteId' => 'oMrt',

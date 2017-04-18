@@ -17,7 +17,7 @@
 		?>
 	</div>
 	<div class="right-pane col-12 col-md-3 flex-first flex-md-last">
-		<img class="mr-3 img-fluid" src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt="">
+		<a href="<?php echo $model -> getUrl(); ?>"><img class="mr-3 img-fluid" src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt=""></a>
 		<div><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
 		<div class="mb-1"><a href="<?php echo $model -> getUrl(); ?>#reviews">Читать отзывы</a></div>
 		<?php $this -> renderPartial('/clinics/_buttons',['model' => $model]); ?>

@@ -299,4 +299,9 @@ class HomeController extends CController {
             echo $this->createUrl($data['action'], $params);
         }
     }
+    public function actionError(){
+        $this -> layout = false;
+        if($error=Yii::app()->errorHandler->error)
+            $this->render('/system/error404', $error);
+    }
 }
