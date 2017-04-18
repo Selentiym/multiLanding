@@ -1694,51 +1694,51 @@ class AdminController extends Controller
 //            }
 //        }
 //    }
-    public function actionParseStreets() {
-        $empty = [];
-        $select = Triggers::model() -> findByAttributes(['verbiage' => 'district']) -> getHtml($empty, [], ['noChildren' => true]);
-        echo "<form method='post'>
-<textarea name='str'></textarea>
-<input type='submit' value='распарсить' name='go'>$select
-</form>";
-
-        $data = $_POST;
-        if ($data['go']) {
-            $str = $data['str'];
-            $str = strip_tags($str,'<td>');
-            $str = substr($str,4);
-            $str = substr($str,0,-5);
-            $streets = explode('</td><td>',$str);
-            sort($streets);
-            var_dump($streets);
-            $i = 0;
-            $inDatabase = TriggerValueDependency::model() -> findByAttributes(['verbiage_parent'=>$data['district']]);
-            if (!$inDatabase) {
-                foreach ($streets as $street) {
-                    $val = new TriggerValues();
-                    $val -> value = $street;
-                    $val -> verbiage = str2url($street);
-                    $val -> trigger_id = 8;
-                    if (!$val -> save()) {
-                        var_dump($val -> getErrors());
-                        continue;
-                    }
-                    $dep = new TriggerValueDependency();
-                    $dep -> verbiage_child = $val -> verbiage;
-                    $dep -> verbiage_parent = $data['district'];
-                    if (!$dep -> save()) {
-                        var_dump($dep -> getErrors());
-                        continue;
-                    }
-
-                    echo "Saved: $i ".$val -> verbiage." to ".$dep -> verbiage_parent."<br/>".PHP_EOL;
-                    $i ++;
-                }
-            } else {
-                echo $data['district']." already has dependencies!";
-            }
-        }
-    }
+//    public function actionParseStreets() {
+//        $empty = [];
+//        $select = Triggers::model() -> findByAttributes(['verbiage' => 'district']) -> getHtml($empty, [], ['noChildren' => true]);
+//        echo "<form method='post'>
+//<textarea name='str'></textarea>
+//<input type='submit' value='распарсить' name='go'>$select
+//</form>";
+//
+//        $data = $_POST;
+//        if ($data['go']) {
+//            $str = $data['str'];
+//            $str = strip_tags($str,'<td>');
+//            $str = substr($str,4);
+//            $str = substr($str,0,-5);
+//            $streets = explode('</td><td>',$str);
+//            sort($streets);
+//            var_dump($streets);
+//            $i = 0;
+//            $inDatabase = TriggerValueDependency::model() -> findByAttributes(['verbiage_parent'=>$data['district']]);
+//            if (!$inDatabase) {
+//                foreach ($streets as $street) {
+//                    $val = new TriggerValues();
+//                    $val -> value = $street;
+//                    $val -> verbiage = str2url($street);
+//                    $val -> trigger_id = 8;
+//                    if (!$val -> save()) {
+//                        var_dump($val -> getErrors());
+//                        continue;
+//                    }
+//                    $dep = new TriggerValueDependency();
+//                    $dep -> verbiage_child = $val -> verbiage;
+//                    $dep -> verbiage_parent = $data['district'];
+//                    if (!$dep -> save()) {
+//                        var_dump($dep -> getErrors());
+//                        continue;
+//                    }
+//
+//                    echo "Saved: $i ".$val -> verbiage." to ".$dep -> verbiage_parent."<br/>".PHP_EOL;
+//                    $i ++;
+//                }
+//            } else {
+//                echo $data['district']." already has dependencies!";
+//            }
+//        }
+//    }
     private function findObject($id, $modelName, $scenario = null){
         $model = $modelName::model();
         $model -> setScenario($scenario);
@@ -2049,5 +2049,66 @@ class AdminController extends Controller
                 }
             }
         }
+    }
+    public function actionParseMoscowStreets(){
+        require_once(Yii::getPathOfAlias('application.components.simple_html_dom') . '.php');
+        $districts = TriggerValues::model() -> findAllByAttributes(['trigger_id' => 7]);
+        $distrs = [];
+        foreach ($districts as $d) {
+            if (current($d -> dependencies) -> parent -> verbiage == 'msc') {
+                $distrs[mb_strtolower($d -> value)] = $d -> value;
+            }
+        }
+//        var_dump($distrs);
+        $url = "http://mosopen.ru/streets";
+        function curlGetUrl($url){
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.52 Safari/537.17');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            $page = curl_exec($ch);
+            curl_close($ch);
+            return $page;
+        }
+        $page = curlGetUrl($url);
+        $page = substr($page,strpos($page,'<table class='));
+        $page = substr($page,0,strpos($page,'<div id="regions_by_dis'));
+        $page = strip_tags($page,'<a>');
+        //$html = str_get_html($page);
+//        echo $page;
+        preg_match_all('/(https?|ftp|telnet):\/\/((?:[a-z0-9@:.-]|%[0-9A-F]{2}){3,})(?::(\d+))?((?:\/(?:[a-z0-9-._~!$&\'()*+,;=:@]|%[0-9A-F]{2})*)*)(?:\?((?:[a-z0-9-._~!$&\'()*+,;=:\/?@]|%[0-9A-F]{2})*))?(?:#((?:[a-z0-9-._~!$&\'()*+,;=:\/?@]|%[0-9A-F]{2})*))?/i',$page, $matches);
+//        var_dump($matches);
+        foreach ($matches[0] as $m) {
+            $string = curlGetUrl($m);
+            $string = substr($string,strpos($string,'context_top'));
+
+            $heading = substr($string,strpos($string,'<h1>'));
+            $heading = substr($heading,0,strpos($string,'/h1>'));
+            $html = str_get_html($heading);
+            if ($html) {
+                $distrName = current($html->find('h1'))->plaintext;
+            } else {
+                echo "Error in ".$heading;
+            }
+            $distrName = mb_strtolower(trim(str_replace(['район',"Район"],'',$distrName)));
+            if ($distrs[$distrName]) {
+                $found ++;
+            } else {
+                $notFound ++;
+                echo "<p>Not found: ".$distrName."</p>";
+            }
+            //
+//            $string = substr($string,strpos($string,'<div class="double_block clearfix">'));
+//            $string = substr($string,0,strpos($string,'<div class="separator">'));
+//            //$string = substr($string,0,strpos($string,''));
+//            $string = strip_tags($string,'<a>');
+//            $html = str_get_html('<html><body>'.$string.'</body></html>');
+//            foreach ($html -> find('a') as $link) {
+//                echo $link -> plaintext;
+//            }
+        }
+        echo "<p>Found: $found and not found $notFound</p>";
+        //var_dump($page);
     }
 }
