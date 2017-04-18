@@ -11,8 +11,10 @@ $word = 'prices';
 $this->setPageTitle($model->title);
 
 $cs = Yii::app() -> getClientScript();
-$cs -> registerMetaTag($model -> description,'description');
-$cs -> registerMetaTag($model -> keywords,'keywords');
+//Ниже оно генерится
+//$cs -> registerMetaTag($model -> description,'description');
+//Ниже проставляются
+//$cs -> registerMetaTag($model -> keywords,'keywords');
 $cs -> registerCoreScript('rateit');
 $theme = Yii::app() -> theme -> baseUrl;
 $cs -> registerScript($theme.'/js/map.js', CClientScript::POS_END);
@@ -111,6 +113,20 @@ $cs -> registerScript('Order','
 		', CClientScript::POS_READY);
 	}
 	//$this -> renderPartial('//home/searchForm', array('filterForm' => $filterForm, 'modelName' => $modelName, 'fromPage' => $fromPage,'page' => $page));
+$r = false;
+if ($model -> giveMinMrtPrice()) {
+	$r = "МРТ";
+}
+if ($model -> giveMinKtPrice()) {
+	if ($r) {
+		$r .= ' и КТ';
+	} else {
+		$r = 'КТ';
+	}
+}
+$descr = "Где можно сделать $r в ".$model -> getFirstTriggerValue('district') -> getParameterValueByVerbiage('districtPredl') -> value . " или возле метро ".$model -> getSortedMetroString()." - Клиника {$r}: $model->name, ".$model ->getFullAddress();
+$cs -> registerMetaTag($descr,'description');
+$cs -> registerMetaTag($r.' головного мозга, позвоночника, суставов, малого таза, брюшной полости, легких, носовых пазух, с контрастом','keywords');
 ?>
 
 <nav class="breadcrumb bg-faded no-gutters">
@@ -194,7 +210,7 @@ $cs -> registerScript('Order','
 								echo '
 
 								<div class="carousel-item '.$active.'">
-									<img class="d-block img-fluid" src="'.$model->giveImageFolderRelativeUrl() . '/' . $im.'">
+									<img class="d-block img-fluid" src="'.$model->giveImageFolderRelativeUrl() . '/' . $im.'" alt="Фотография Центра '.$r.' '.$model -> name.'">
 								</div>
 								';
 								$active = '';
