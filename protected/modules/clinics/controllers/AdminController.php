@@ -2056,9 +2056,11 @@ class AdminController extends Controller
         $distrs = [];
         foreach ($districts as $d) {
             if (current($d -> dependencies) -> parent -> verbiage == 'msc') {
-                $distrs[mb_strtolower($d -> value)] = $d -> value;
+                $distrs[mb_strtolower($d -> value)] = $d;
             }
         }
+        $distrs['савёлки'] = $distrs['савёловский'];
+        $distrs['хорошёво-мневники'] = $distrs['хорошёво-мнёвники'];
 //        var_dump($distrs);
         $url = "http://mosopen.ru/streets";
         function curlGetUrl($url){
@@ -2091,24 +2093,46 @@ class AdminController extends Controller
             } else {
                 echo "Error in ".$heading;
             }
-            $distrName = mb_strtolower(trim(str_replace(['район',"Район"],'',$distrName)));
+            $distrName = trim(mb_strtolower(str_replace(['район',"Район"],'',$distrName)));
+
             if ($distrs[$distrName]) {
+                $this -> parseStreetsForDistrict($distrs[$distrName], $string);
                 $found ++;
             } else {
                 $notFound ++;
                 echo "<p>Not found: ".$distrName."</p>";
             }
             //
-//            $string = substr($string,strpos($string,'<div class="double_block clearfix">'));
-//            $string = substr($string,0,strpos($string,'<div class="separator">'));
-//            //$string = substr($string,0,strpos($string,''));
-//            $string = strip_tags($string,'<a>');
-//            $html = str_get_html('<html><body>'.$string.'</body></html>');
-//            foreach ($html -> find('a') as $link) {
-//                echo $link -> plaintext;
-//            }
+            echo $distrName;
+            break;
         }
         echo "<p>Found: $found and not found $notFound</p>";
         //var_dump($page);
+    }
+    public function parseStreetsForDistrict(TriggerValues $district, $string){
+        $string = substr($string,strpos($string,'<div class="double_block clearfix">'));
+        $string = substr($string,0,strpos($string,'<div class="separator">'));
+        //$string = substr($string,0,strpos($string,''));
+        $string = strip_tags($string,'<a>');
+        $html = str_get_html('<html><body>'.$string.'</body></html>');
+        foreach ($html -> find('a') as $link) {
+            $val = new TriggerValues();
+            $val -> value = $link -> plaintext;
+            $val -> verbiage = str2url($val -> value);
+            $val -> trigger_id = 8;
+            $saved = false;
+            if (!$val -> save()) {
+                $val -> verbiage = $val -> verbiage . '2';
+                $saved = true;
+            }
+            if ($saved || $val -> save()) {
+                $dep = new TriggerValueDependency();
+                $dep -> verbiage_child = $val -> verbiage;
+                $dep -> verbiage_parent = $district -> verbiage;
+                $dep -> save();
+            }
+            var_dump($val -> getErrors());
+        }
+        echo "<br/>";
     }
 }
