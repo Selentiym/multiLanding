@@ -16,6 +16,7 @@ $cs = Yii::app() -> getClientScript();
 //Ниже проставляются
 //$cs -> registerMetaTag($model -> keywords,'keywords');
 $cs -> registerCoreScript('rateit');
+$cs -> registerCoreScript('bootstrap4collapseFix');
 $theme = Yii::app() -> theme -> baseUrl;
 $cs -> registerScript($theme.'/js/map.js', CClientScript::POS_END);
 
@@ -136,7 +137,7 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 	<a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl('home/modelView',['modelName' => get_class($model)]); ?>"><?php echo $model -> name ; ?></a>
 </nav>
 
-<div class="container-fluid clinic clinic-full">
+<div class="container-fluid clinic clinic-full" id="clinic" role="tablist">
 	<div class="row">
 		<div class="col-12 col-lg-10 mx-auto">
 			<div class="row d-flex">
@@ -172,11 +173,12 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 				<div>Значки</div>
 				<div><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
 			</div>
-			<div class="row buttons text-center">
+
+			<div class="row buttons text-center" role="tablist">
 				<?php
 					function createBigButton($id, $text){
 						echo '
-						<div class="col p-4" data-toggle="collapse" data-parent="#clinic" data-target="#'.$id.'">
+						<div class="col p-4 tabControl" data-toggle="collapse" data-tablist-id="clinic"  data-target="#'.$id.'">
 							'.$text.'
 						</div>';
 					}
@@ -187,7 +189,7 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 				?>
 			</div>
 			<div id="clinic-tabs" role="tablist">
-				<div class="collapse p-3"  id="description">
+				<div class="collapse p-3"  id="description" >
 					<div class="mb-3">
 						<?php echo $model -> text; ?>
 					</div>
@@ -227,7 +229,7 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 						</a>
 					</div>
 				</div>
-				<div class="collapse p-3"  id="doctors">
+				<div class="collapse p-3"  id="doctors" >
 
 						<?php
 						if (!empty($model -> doctors)) {
@@ -241,12 +243,12 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 						}
 						?>
 				</div>
-				<div class="collapse p-3"  id="prices">
+				<div class="collapse p-3"  id="prices" >
 					<?php
 						$this -> renderPartial('/clinics/_priceList',['model' => $model,'blocks' => ObjectPriceBlock::model()->findAll(['order' => 'num ASC'])]);
 					?>
 				</div>
-				<div class="collapse p-3 mx-auto" id="reviews">
+				<div class="collapse p-3 mx-auto" id="reviews" >
 					<?php
 						echo Yii::app() -> getModule('clinics') -> getObjectsReviewsPool(get_class($model)) -> showObjectCommentsWidget($model -> id);
 					?>

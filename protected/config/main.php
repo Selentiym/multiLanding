@@ -224,6 +224,15 @@ return array(
 								'jquery'
 							]
 						],
+						'bootstrap4collapseFix' => [
+							'baseUrl' => 'libs/bootstrap4/',
+							'js' => [
+								'js/collapseFix.js',
+							],
+							'depends' => [
+								'bootstrap4js'
+							]
+						],
 						'rateit' => [
 							'baseUrl' => 'libs/rateit/',
 							'js' => [

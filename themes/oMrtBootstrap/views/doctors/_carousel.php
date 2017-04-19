@@ -9,7 +9,7 @@ if ((file_exists($doctor -> giveImageFolderAbsoluteUrl() . $doctor -> logo)&&($d
     $url = Yii::app() -> getTheme() -> baseUrl.'/images/doctor-no-logo.png';
 }
 ?>
-<div class="doctor-carousel text-center item">
+<div class="p-3 doctor-carousel text-center item">
     <div>
         <img class="rounded-circle mx-auto" style="width:auto; max-height:200px;" src="<?php echo $url; ?>"/>
     </div>
