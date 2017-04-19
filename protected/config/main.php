@@ -233,6 +233,12 @@ return array(
 								'bootstrap4js'
 							]
 						],
+						'maskedInput' => [
+							'baseUrl' => 'libs/maskedInput/',
+							'js' => [
+								'jquery.maskedinput.min.js'
+							],
+						],
 						'rateit' => [
 							'baseUrl' => 'libs/rateit/',
 							'js' => [

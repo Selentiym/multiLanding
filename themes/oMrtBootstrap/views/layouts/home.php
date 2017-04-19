@@ -10,6 +10,42 @@ $cs -> registerCoreScript('bootstrap4css');
 $cs -> registerCoreScript('bootstrap4js');
 $cs -> registerCoreScript('font-awesome');
 $cs -> registerCoreScript('scrollToTopActivate');
+$cs -> registerCoreScript('maskedInput');
+
+$cs -> registerScript('initiate_popup_forms','
+    $(".signUpForm #phone").mask("+7(999)999-99-99");
+    $(".signUpButton").attr("data-target","#signUpFormModal").attr("data-toggle","modal").attr("data-keyboard","true");
+    $(".signUpButton").modal({
+        keyboard:true,
+        show:false,
+        focus:true
+    });
+    $("form.signUpForm").submit(function(e){
+    var toSubmit = $(this).find("[type=\'submit\']");
+    toSubmit.attr("disabled",true);
+    toSubmit.addClass("loading");
+    var toAlert = true;
+    setTimeout(function () {
+        if (toAlert) {
+            toSubmit.attr("disabled",false);
+            toSubmit.removeClass("loading");
+            alert("По какой-то причине ответ от сервера не пришел. Проверьте интернет-соединение и попробуйте еще раз, пожалуйста.");
+        }
+    }, 10000);
+    $.get("'.$this -> createUrl('/form/submit').'",$(this).serialize()).done(function(date){
+            alert("Ваша заявка успешно принята!");
+        }).fail(function(){
+            alert("Возникла ошибка при отправке. Пожалуйста, попробуйте еще раз или воспользуйтесь одним из указанных телефонных номеров.");
+        }).always(function () {
+            toAlert = false;
+            toSubmit.attr("disabled",false);
+            toSubmit.removeClass("loading");
+        });
+
+    return false;
+});
+
+',CClientScript::POS_READY);
 
 $cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/styles.css');
 
@@ -85,11 +121,41 @@ $triggers = $_GET;
             </div>
             <div class="col-6 col-md-3 mb-3 mb-md-0">
                 <span>Звоните круглосуточно</span><br/>
-                <span><a href="tel:7812<?php echo Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></span>
+                <span><a href="tel:8812<?php echo Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></span>
             </div>
         </div>
     </div>
 </footer>
+
+
+<div class="modal fade" id="signUpFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mainColor" id="exampleModalLabel">Записаться на МРТ или КТ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="signUpForm" id="signUpForm">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="recipient-name" class="form-control-label">Ваше имя:</label>
+                    <input type="text" class="form-control" id="recipient-name" name="name" placeholder="Введите имя">
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="form-control-label">Ваш телефон:</label>
+                    <input type="tel" name="phone" class="form-control" id="phone" placeholder="Введите номер телефона">
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="submit" class="btn">Записаться</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
 
