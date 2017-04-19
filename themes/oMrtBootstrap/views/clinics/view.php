@@ -254,6 +254,12 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 					?>
 				</div>
 			</div>
+<!--			<div class="row"></div>-->
+			<div id="clinicsList" class="col-12 col-md-8 p-3 mx-auto">
+				<ul class="list-unstyled">
+					<?php $this -> renderPartial('//clinics/_service'); ?>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>
