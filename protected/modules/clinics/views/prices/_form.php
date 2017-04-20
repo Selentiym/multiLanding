@@ -68,7 +68,7 @@
             <div>
                 <?php
                 echo $form->labelEx($model,'id_article');
-                echo CHtml::activeDropDownList($model,'id_article',['' => 'Не выбрано'] + CHtml::listData(Article::model() -> findAll(),'id','name'), [],[$model -> id_article],'');
+                echo CHtml::activeDropDownList($model,'id_article',['' => 'Не выбрано'] + CHtml::listData(Article::model() -> findAllByAttributes(['id_type' => Article::getTypeId('commercial')]),'id','name'), [],[$model -> id_article],'');
                 echo $form->error($model,'id_article');
                 ?>
             </div>
