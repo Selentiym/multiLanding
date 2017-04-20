@@ -21,40 +21,9 @@ $('.search-form form').submit(function(){
 </p>
 
 <?php
-$model -> attributes = $_GET[get_class($model)];
-$this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'articles-grid',
-	'dataProvider'=>$model->search(),
-    'enablePagination' => true,
-    'summaryText' => '',
-	'filter'=>$model,
-	'columns'=>array(
-        array('name' => 'id', 'header' => $model->getAttributeLabel('id')),
-        array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
-        array('name' => 'verbiage', 'header' => $model->getAttributeLabel('verbiage')),
-        array('name' => 'parent_id', 'header' => $model->getAttributeLabel('parent_id'), 'value' => '($data->parent_id == 0)? CHtml::encode("0 (Корневая статья)"): Article::model() -> findByPk($data->parent_id) -> name'),
-        array('name' => 'id_type', 'header' => 'Тип', 'value' => 'Article::getTypeName($data->id_type)'),
-        array(
-            'class'=>'CButtonColumn',
-            'template'=>'{update}&nbsp;{delete}',
-            'deleteConfirmation'=>"js:'Вы действительно хотите удалить статью <'+$(this).parent().parent().children(':nth-child(2)').text()+'>?'",
-            'buttons'=>array
-            (
-                'update' => array
-                (
-                    'label'=> CHtml::encode('Редактировать'),
-                    'url'=>function($data){return $this->createUrl("admin/ArticleUpdate", array("id"=>$data->id));},
-                ),
-                'delete' => array
-                (
-                    'label'=> CHtml::encode('Удалить'),
-                    'url'=>function($data){return $this->createUrl("admin/ArticleDelete", array("id"=>$data->id));},
-                ),
-            ),
 
-        ),
-	),
-));
+$model -> attributes = $_GET[get_class($model)];
+
 
 $this->widget('application.extensions.tree.Tree',
     array(
@@ -89,6 +58,43 @@ $this->widget('application.extensions.tree.Tree',
             }'
         ]
     ));
+
+
+
+$this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'articles-grid',
+	'dataProvider'=>$model->search(),
+    'enablePagination' => true,
+    'summaryText' => '',
+	'filter'=>$model,
+	'columns'=>array(
+        array('name' => 'id', 'header' => $model->getAttributeLabel('id')),
+        array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
+        array('name' => 'verbiage', 'header' => $model->getAttributeLabel('verbiage')),
+        array('name' => 'parent_id', 'header' => $model->getAttributeLabel('parent_id'), 'value' => '($data->parent_id == 0)? CHtml::encode("0 (Корневая статья)"): Article::model() -> findByPk($data->parent_id) -> name'),
+        array('name' => 'id_type', 'header' => 'Тип', 'value' => 'Article::getTypeName($data->id_type)'),
+        array(
+            'class'=>'CButtonColumn',
+            'template'=>'{update}&nbsp;{delete}',
+            'deleteConfirmation'=>"js:'Вы действительно хотите удалить статью <'+$(this).parent().parent().children(':nth-child(2)').text()+'>?'",
+            'buttons'=>array
+            (
+                'update' => array
+                (
+                    'label'=> CHtml::encode('Редактировать'),
+                    'url'=>function($data){return $this->createUrl("admin/ArticleUpdate", array("id"=>$data->id));},
+                ),
+                'delete' => array
+                (
+                    'label'=> CHtml::encode('Удалить'),
+                    'url'=>function($data){return $this->createUrl("admin/ArticleDelete", array("id"=>$data->id));},
+                ),
+            ),
+
+        ),
+	),
+));
+
 
 
 ?>

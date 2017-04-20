@@ -225,6 +225,9 @@ class Article extends BaseModel {
 		));
 		$pag = $prov -> getPagination();
 		$prov -> getData();
+		if (!$_GET['page']) {
+			$_GET['page'] = 1;
+		}
 		if (!isset($_GET["page"])) {
 			$pag -> setCurrentPage($pag -> getPageCount() - 1);
 			//$_GET["page"] = $pag -> getPageCount() - 1;
