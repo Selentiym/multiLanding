@@ -12,6 +12,7 @@
  * @property string $verbiage
  * @property integer $object_type
  * @property integer $id_article
+ * @property integer $id_replace_price
  *
  * @property ObjectPriceBlock $block
  * @property PriceType $type
@@ -43,7 +44,7 @@ class ObjectPrice extends CTModel
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, id_type, id_block, name, object_type', 'safe', 'on'=>'search'),
-			array('id, id_type, id_block, name, name2,object_type, verbiage, id_article', 'safe'),
+			array('id, id_type, id_block, name, name2,object_type, verbiage, id_article, id_replace_price', 'safe'),
 		);
 	}
 
@@ -59,6 +60,7 @@ class ObjectPrice extends CTModel
 			'block' => array(self::BELONGS_TO, 'ObjectPriceBlock', 'id_block'),
 			'values' => array(self::HAS_MANY, 'ObjectPriceValue','id_price'),
 			'article' => array(self::BELONGS_TO, 'Article','id_article'),
+			'replacement' => array(self::BELONGS_TO, 'ObjectPrice','id_replace_price'),
 		);
 	}
 
