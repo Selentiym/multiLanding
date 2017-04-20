@@ -45,7 +45,8 @@ class BaseModel extends CTModel
 	}
 	public function relations() {
 		return [
-			'prices' => [self::HAS_MANY, 'ObjectPriceValue', 'id_object', 'with' => 'price', 'condition' => 'price.object_type = ' . Objects::getNumber(get_class($this))]
+			'prices' => [self::HAS_MANY, 'ObjectPriceValue', 'id_object', 'with' => 'price', 'condition' => 'price.object_type = ' . Objects::getNumber(get_class($this))],
+			'priceLink' => [self::HAS_ONE, 'ObjectPriceValue','id_object','with' => 'price', 'together' => true, 'condition' => 'id_price=:pid']
 		];
 	}
 	/**
@@ -119,7 +120,18 @@ class BaseModel extends CTModel
 				}
 			}
 		}
+
+		$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
+		if ($price) {
+			$criteria -> with = ['priceLink', 'priceLink.price' => ['alias' => 'priceVal']];
+			$criteria -> together = true;
+			$criteria->params = [':pid' => $price->id];
+			$criteria -> addCondition('priceVal.value IS NOT NULL');
+		}
 		$objects = $this -> model() -> findAll($criteria);
+		echo count($objects);
+		//var_dump($objects);
+		return;
 		$objects_filtered = array();
 		$count_success = 0;
 		foreach ($objects as $object) {

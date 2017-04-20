@@ -46,6 +46,8 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 			<?php
 				$children = empty($model -> giveChildren()) ? [] : $model -> giveChildren();
 				$this -> renderPartial('/article/renderList',['articles' => $children]);
+
+			Yii::app() -> getModule('clinics') -> getClinics(['research' => 'KTcherep','area'=>'spb']);
 			?>
 		</div>
 	</div>
