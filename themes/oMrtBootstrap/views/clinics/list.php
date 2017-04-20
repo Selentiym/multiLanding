@@ -447,7 +447,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
             if (!empty($articles)) {
                 echo "<div class='card'><div class='card-block'><div class='card-title'><h3>Полезные статьи</h3></div>";
                 foreach ($articles as $article) {
-                    $url = $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage]);
+                    $url = $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage],null,false,true);
                     echo "
                         <div><a href='$url'>{$article->name}</a></div>
                     ";
@@ -573,7 +573,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
         <div id="spec_list">
             <?php
             foreach ($articles as $article) {
-                $url = $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage]);
+                $url = $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage], null,false,true);
                 echo "
                 <div class='speciality_shortcut' >
                     <span><a href='$url'>{$article->name}</a></span>
