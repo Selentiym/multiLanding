@@ -709,7 +709,9 @@ class BaseModel extends CTModel
 	public function afterSave() {
 		parent::afterSave();
 		if ($this -> getScenario() != 'noPrices') {
+			ob_start();
 			$this -> savePrices();
+			ob_end_clean();
 		}
 	}
 	public function preparePrices($prices){
@@ -971,7 +973,9 @@ class BaseModel extends CTModel
 			/**
 			 * @type ObjectPrice $price
 			 */
-
+			if ($this -> getPriceValue($price -> id)) {
+				echo "Price ".$price -> name. " already exists, continue <br/>";
+			}
 			$toRun = array_filter(array_map(function($key)use($enc){
 						return mb_strtolower(trim($key),$enc);
 					},explode(';',$price -> name2)));
@@ -992,6 +996,9 @@ class BaseModel extends CTModel
 				$obj->value = $p;
 				if (!$obj -> save()) {
 					$err = $obj -> getErrors();
+					var_dump($err);
+				} else {
+					echo $price->name." saved, value=".$obj -> value."<br/>";
 				}
 			}
 		}

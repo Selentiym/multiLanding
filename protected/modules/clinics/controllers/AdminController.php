@@ -2135,4 +2135,14 @@ class AdminController extends Controller
         }
         echo "<br/>";
     }
+    public function actionReloadPrices(){
+        foreach($this -> getModule() -> getClinics($_GET) as $c){
+            /**
+             * @type clinics $c
+             */
+            echo "<strong>$c->name</strong><br/>";
+            //$c -> setScenario('noPrices');
+            $c -> savePrices();
+        }
+    }
 }

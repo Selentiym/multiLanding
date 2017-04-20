@@ -125,3 +125,6 @@ nav {
     background-image: url('../images/lost.jpg');
     background-size: 100%;
 }
+body h2 {
+    font-weight:bold;
+}
