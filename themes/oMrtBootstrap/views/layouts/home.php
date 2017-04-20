@@ -82,7 +82,7 @@ $triggers = $_GET;
                     Режим работы 8.00-21.00
                 </div>
                 <div class="pr-1 col-12 col-md-auto font-weight-bold ">
-                    <i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:7812<?php echo Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a>
+                    <i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:8812<?php echo Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a>
                 </div>
             </div>
         </div>
