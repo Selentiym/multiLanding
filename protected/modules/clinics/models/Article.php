@@ -727,6 +727,11 @@ class Article extends BaseModel {
 			$article -> id_taskgen = $task -> id;
 			if ($article -> save()) {
 				$article->copyChildrenFromTaskgen($task);
+			} else {
+				$article -> verbiage = $this -> verbiage.'_'.$article -> verbiage;
+				if ($article -> save()) {
+					$article->copyChildrenFromTaskgen($task);
+				}
 			}
 		}
 
