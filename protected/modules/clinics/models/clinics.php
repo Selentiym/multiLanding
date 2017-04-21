@@ -759,4 +759,20 @@ class clinics extends BaseModel
 		$had[] = $id;
 		$this -> triggers = implode(';', $had);
 	}
+	/**
+	 * @param mixed[] $search a search array that specifies what is being searched
+	 * @param CDbCriteria $criteria
+	 * @param string $order
+	 * @return CDbCriteria
+	 */
+	public function SFilter($search, $criteria, $order =''){
+		$criteria = parent::SFilter($search, $criteria);
+		if (($order)&&($search['research'])) {
+			$sortArr = array('priceUp' => 'ASC','priceDown' => 'DESC');
+			if ($modifier = $sortArr[$order]) {
+				$criteria->order = "pr.value $modifier";
+			}
+		}
+		return $criteria;
+	}
 }

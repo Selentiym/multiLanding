@@ -136,7 +136,7 @@ class BaseModel extends CTModel
 			$saveCrit = clone $criteria;
 			$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
 		}
-		$criteria = $this -> SFilter($search, $criteria);
+		$criteria = $this -> SFilter($search, $criteria, $order);
 
 		$objects_filtered = $this -> model() -> findAll($criteria);
 		//Поиск с другим исследованием
@@ -144,7 +144,7 @@ class BaseModel extends CTModel
 //			$search['research'] = ;
 			if ($price -> replacement) {
 				$search['research'] = $price->replacement;
-				$saveCrit = $this->SFilter($search, $saveCrit);
+				$saveCrit = $this->SFilter($search, $saveCrit, $order);
 				$objects_filtered = $this->model()->findAll($saveCrit);
 			}
 		}
@@ -229,11 +229,10 @@ class BaseModel extends CTModel
 	/**
 	 * @param mixed[] $search a search array that specifies what is being searched
 	 * @param CDbCriteria $criteria
-	 * @return boolean true if this object satisfies searching criteria and false if not
-	 * (unlike search function this one should be overridden in every descendant and
-	 * contains options that are specific)
+	 * @param string $order
+	 * @return CDbCriteria
 	 */
-	public function SFilter($search, $criteria)
+	public function SFilter($search, $criteria, $order = '')
 	{
 		//фильтруем по станциям метро и районам. В родителе, потому что у всех есть эти поля.
 		/*if ($search['metro'] != 0) {

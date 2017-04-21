@@ -769,11 +769,11 @@ class Article extends BaseModel {
 	}
 	/**
 	 * @param mixed[] $search a search array that specifies what is being searched
-	 * @return boolean true if this object satisfies searching criteria and false if not
-	 * (unlike search function this one should be overridden in every descendant and
-	 * contains options that are specific)
+	 * @param CDbCriteria $criteria
+	 * @param string $order
+	 * @return CDbCriteria
 	 */
-	public function SFilter($search, $criteria) {
+	public function SFilter($search, $criteria, $order = '') {
 		if ($search['research']) {
 			//$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
 			$criteria->with = ['priceLink' => ['alias' => 'pr']];

@@ -380,6 +380,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('contrast',$triggers); ?></div>
                     <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('doctor',$triggers); ?></div>
                     <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('children',$triggers); ?></div>
+                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('sortBy',$triggers); ?></div>
                 </div>
                 <div class="row no-gutters justify-content-center">
                     <div class="col-auto"><button type="submit" class="btn">Найти</button></div>
