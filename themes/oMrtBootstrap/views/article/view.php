@@ -7,6 +7,8 @@ $this->setPageTitle($model->title);
 Yii::app() -> getClientScript() -> registerMetaTag($model -> description,'description');
 Yii::app() -> getClientScript() -> registerMetaTag($model -> keywords,'keywords');
 
+Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/articleView',['verbiage' => $model -> verbiage],'&',false,true));
+
 $this->renderPartial('/article/_navBar', array('article' => $model));
 ?>
 
@@ -46,8 +48,6 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 			<?php
 				$children = empty($model -> giveChildren()) ? [] : $model -> giveChildren();
 				$this -> renderPartial('/article/renderList',['articles' => $children]);
-
-			Yii::app() -> getModule('clinics') -> getClinics(['research' => 'KTcherep','area'=>'spb']);
 			?>
 		</div>
 	</div>

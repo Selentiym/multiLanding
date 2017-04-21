@@ -5,10 +5,17 @@
  * @type ClinicsModule $mod
  */
 $triggers = $_GET;
+
+if ($a=$model -> getFirstTriggerValue('area') -> verbiage) {
+	$triggers['area'] = $a;
+}
+
 $triggersPrepared = Article::prepareTriggers($triggers);
 $mod = Yii::app() -> getModule('clinics');
 $word = 'prices';
 $this->setPageTitle($model->title);
+
+Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/modelView',['verbiage' => $model -> verbiage, 'modelName' => 'clinics'],'&',false,true));
 
 $cs = Yii::app() -> getClientScript();
 //Ниже оно генерится

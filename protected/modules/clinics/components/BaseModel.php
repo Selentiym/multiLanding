@@ -921,7 +921,7 @@ class BaseModel extends CTModel
 	 * @return string
      */
 	public function getUrl() {
-		return  Yii::app() -> controller -> createUrl('/home/modelView',['verbiage' => $this -> verbiage, 'modelName' => get_class($this)],null,false,true);
+		return  Yii::app() -> controller -> createUrl('/home/modelView',['verbiage' => $this -> verbiage, 'modelName' => get_class($this),'area' => $this -> getFirstTriggerValue('area') -> verbiage],null,false,true);
 	}
 
 	/**
