@@ -61,6 +61,9 @@ class ClinicsModule extends UWebModule {
 		return $this -> getObjects('clinics',$triggers,$order,$limit,$criteria);
 	}
 	public function getArticles (array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
+		if (count($triggers) <= 1) {
+			return Article::model() -> root() -> findAllByAttributes(['id_type' => Article::getTypeId('text')]);
+		}
 		return $this -> getObjects('Article',$triggers,$order,$limit,$criteria);
 	}
 	/**
