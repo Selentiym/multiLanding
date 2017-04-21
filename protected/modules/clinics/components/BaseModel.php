@@ -97,9 +97,10 @@ class BaseModel extends CTModel
 	 * @param string $order - a field to be ordered by
 	 * @param integer $limit - a limit of objects to be found
 	 * @param CDbCriteria $initialCrit
+	 * @param bool $strictResearch
 	 * @return array of model objects that fit the search options
 	 */
-	public function userSearch($search,$order='rating',$limit=-1, CDbCriteria $initialCrit = null) {
+	public function userSearch($search,$order='rating',$limit=-1, CDbCriteria $initialCrit = null, $strictResearch = false) {
 		//Если поле сортировки не задано, сортируем по рейтингу
 		if ((!$order)&&($order !== false)) {
 			$order='rating';
@@ -109,6 +110,7 @@ class BaseModel extends CTModel
 		} else {
 			$criteria = new CDbCriteria();
 		}
+
 		//По цене будет отдельная сортировка
 		if (!in_array($order, array('priceUp','priceDown'))&&($order)) {
 			$criteria -> order = $order.' DESC';
@@ -129,10 +131,23 @@ class BaseModel extends CTModel
 				$criteria = self::addSeparatedFieldCondition('metro',$criteria, trim($m));
 			}
 		}
-
+		if ($search['research']) {
+			//Далее будет использована для поиска по другому исследованию
+			$saveCrit = clone $criteria;
+			$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
+		}
 		$criteria = $this -> SFilter($search, $criteria);
 
 		$objects_filtered = $this -> model() -> findAll($criteria);
+		//Поиск с другим исследованием
+		if (($search['research'])&&(count($objects_filtered)==0)&&(!$strictResearch)&&($price instanceof ObjectPrice)) {
+//			$search['research'] = ;
+			if ($price -> replacement) {
+				$search['research'] = $price->replacement;
+				$saveCrit = $this->SFilter($search, $saveCrit);
+				$objects_filtered = $this->model()->findAll($saveCrit);
+			}
+		}
 		//var_dump($objects);
 //		$objects_filtered = array();
 //		$count_success = 0;
@@ -196,6 +211,7 @@ class BaseModel extends CTModel
 //			$rez['objects'] = array_merge($toSort, $toEnd);
 //		}
 		//$rez['description'] = Description::model() -> giveModelByTriggerArray($filter, get_class($this));
+
 		return $rez;
 	}
 	
@@ -223,8 +239,11 @@ class BaseModel extends CTModel
 		/*if ($search['metro'] != 0) {
 			$ok &= (!($search['metro']))||((in_array($search['metro'], array_map('trim', explode(';', $this->metro_station)))));
 		}*/
-
-		$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
+		if (!$search['research'] instanceof ObjectPrice) {
+			$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
+		} else {
+			$price = $search['research'];
+		}
 		if ($price) {
 			$criteria -> with = ['priceLink'=>['alias' => 'pr']];
 			$criteria -> together = true;

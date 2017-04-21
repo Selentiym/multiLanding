@@ -98,7 +98,7 @@ class Article extends BaseModel {
 		return array(
 			'parent' => array(self::BELONGS_TO, 'Article', 'parent_id'),
 			'researches' => array(self::HAS_MANY, 'ArticleResearch', 'id_article','with' => 'price'),
-			'priceLink' => [self::HAS_ONE, 'ArticleResearch','id_article','together' => true, 'condition' => 'verbiage_research=::pverbiage']
+			'priceLink' => [self::HAS_ONE, 'ArticleResearch','id_article','together' => true, 'condition' => 'verbiage_research=:pverbiage']
 		);
 	}
 	public function getPrices(){
@@ -778,7 +778,10 @@ class Article extends BaseModel {
 			//$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
 			$criteria->with = ['priceLink' => ['alias' => 'pr']];
 			$criteria->together = true;
-			$criteria->params = [':pverbiage' => $search['research']];
+			if ($search['research'] instanceof ObjectPrice) {
+				$search['research'] = $search['research'] -> verbiage;
+			}
+			$criteria->params = array_merge($criteria->params,[':pverbiage' => $search['research']]);
 			$criteria->addCondition('pr.id IS NOT NULL');
 		}
 		//$criteria -> order = 'pr.value desc';

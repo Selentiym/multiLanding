@@ -16,6 +16,7 @@
  *
  * @property ObjectPriceBlock $block
  * @property PriceType $type
+ * @property ObjectPrice $replacement
  */
 class ObjectPrice extends CTModel
 {
