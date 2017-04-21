@@ -2136,18 +2136,13 @@ class AdminController extends Controller
         echo "<br/>";
     }
     public function actionReloadPrices(){
-        $clinic = clinics::model() -> findByAttributes(['verbiage' => 'medem']);
-        $clinic -> savePrices();
-        $clinic = clinics::model() -> findByAttributes(['verbiage' => 'szmed']);
-        $clinic -> savePrices();
-
-//        foreach($this -> getModule() -> getClinics($_GET) as $c){
-//            /**
-//             * @type clinics $c
-//             */
-//            echo "<strong>$c->name</strong><br/>";
-//            //$c -> setScenario('noPrices');
-//            $c -> savePrices();
-//        }
+        foreach($this -> getModule() -> getClinics($_GET) as $c){
+            /**
+             * @type clinics $c
+             */
+            echo "<strong>$c->name</strong><br/>";
+            //$c -> setScenario('noPrices');
+            $c -> savePrices();
+        }
     }
 }
