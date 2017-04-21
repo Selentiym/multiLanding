@@ -97,7 +97,8 @@ class Article extends BaseModel {
 	{
 		return array(
 			'parent' => array(self::BELONGS_TO, 'Article', 'parent_id'),
-			'researches' => array(self::HAS_MANY, 'ArticleResearch', 'id_article','with' => 'price')
+			'researches' => array(self::HAS_MANY, 'ArticleResearch', 'id_article','with' => 'price'),
+			'priceLink' => [self::HAS_ONE, 'ArticleResearch','id_article','together' => true, 'condition' => 'verbiage_research=::pverbiage']
 		);
 	}
 	public function getPrices(){
@@ -772,17 +773,26 @@ class Article extends BaseModel {
 	 * (unlike search function this one should be overridden in every descendant and
 	 * contains options that are specific)
 	 */
-	public function SFilter($search) {
-		unset($search['mrt']);
-		unset($search['kt']);
-		unset($search['metro']);
-		if ($res = $search['research']) {
-			if (!ArticleResearch::model() -> findByAttributes(['id_article' => $this -> id,'verbiage_research' => $res])) {
-				return false;
-			}
-			unset($search['research']);
+	public function SFilter($search, $criteria) {
+		if ($search['research']) {
+			//$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
+			$criteria->with = ['priceLink' => ['alias' => 'pr']];
+			$criteria->together = true;
+			$criteria->params = [':pverbiage' => $search['research']];
+			$criteria->addCondition('pr.id IS NOT NULL');
 		}
-		return parent::SFilter($search);
+		//$criteria -> order = 'pr.value desc';
+//		return $criteria;
+//		unset($search['mrt']);
+//		unset($search['kt']);
+//		unset($search['metro']);
+//		if ($res = $search['research']) {
+//			if (!ArticleResearch::model() -> findByAttributes(['id_article' => $this -> id,'verbiage_research' => $res])) {
+//				return false;
+//			}
+//			unset($search['research']);
+//		}
+//		return parent::SFilter($search);
 	}
 	public function getReadyToDisplay() {
 		return;

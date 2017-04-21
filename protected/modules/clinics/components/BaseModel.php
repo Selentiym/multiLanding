@@ -86,7 +86,10 @@ class BaseModel extends CTModel
        return $filterForm; 
 	}
 	private static function addTriggerCondition(CDbCriteria $criteria, $id){
-		$criteria -> addCondition("triggers LIKE '%;$id;%' OR triggers LIKE '%;$id' OR triggers LIKE '$id;%' OR triggers = '$id'");
+		return self::addSeparatedFieldCondition('triggers',$criteria,$id);
+	}
+	private static function addSeparatedFieldCondition($field,CDbCriteria $criteria, $id){
+		$criteria -> addCondition("$field LIKE '%;$id;%' OR $field LIKE '%;$id' OR $field LIKE '$id;%' OR $field = '$id'");
 		return $criteria;
 	}
 	/**
@@ -121,78 +124,77 @@ class BaseModel extends CTModel
 			}
 		}
 
-		$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
-		if ($price) {
-			$criteria -> with = ['priceLink', 'priceLink.price' => ['alias' => 'priceVal']];
-			$criteria -> together = true;
-			$criteria->params = [':pid' => $price->id];
-			$criteria -> addCondition('priceVal.value IS NOT NULL');
+		if ($search['metro']) {
+			foreach ($search['metro'] as $m) {
+				$criteria = self::addSeparatedFieldCondition('metro',$criteria, trim($m));
+			}
 		}
-		$objects = $this -> model() -> findAll($criteria);
-		echo count($objects);
+
+		$criteria = $this -> SFilter($search, $criteria);
+
+		$objects_filtered = $this -> model() -> findAll($criteria);
 		//var_dump($objects);
-		return;
-		$objects_filtered = array();
-		$count_success = 0;
-		foreach ($objects as $object) {
-			if ($object == $this) {
-				continue;
-			}
-			if (!($object -> SFilter($search)))
-			{
-				continue;
-			}
-			$object -> getReadyToDisplay();
-			$count_success ++;
-			$objects_filtered[] = $object;
-			if (($limit > 0)&&($count_success >= $limit)) {
-				break;
-			}
-		}
+//		$objects_filtered = array();
+//		$count_success = 0;
+//		foreach ($objects as $object) {
+//			if ($object == $this) {
+//				continue;
+//			}
+//			if (!($object -> SFilter($search)))
+//			{
+//				continue;
+//			}
+//			$object -> getReadyToDisplay();
+//			$count_success ++;
+//			$objects_filtered[] = $object;
+//			if (($limit > 0)&&($count_success >= $limit)) {
+//				break;
+//			}
+//		}
 		$rez['objects'] = $objects_filtered;
-		if (($order == 'priceUp')||($order=='priceDown')) {
-			$toEnd = [];
-			$toSort = [];
-			foreach ($objects_filtered as $obj) {
-				if (!$obj->giveMinMrtPrice()) {
-					$toEnd[] = $obj;
-				} else {
-					$toSort[] = $obj;
-				}
-			}
-			if ($price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']])) {
-				$getPrice = function ($o) use ($price) {
-					/**
-					 * @type BaseModel $o
-					 */
-					return $o->getPriceValue($price -> id)->value;
-				};
-			} else {
-				$getPrice = function($o) {
-					/**
-					 * @type BaseModel $o
-					 */
-					return $o -> giveMinMrtPrice() -> value;
-				};
-			}
-			$toSortExtended = [];
-			foreach ($toSort as $obj) {
-				$toSortExtended[] = ['obj' => $obj, 'price' => (float)$getPrice($obj)];
-			}
-			if ($order == 'priceDown') {
-				usort($toSortExtended, function ($o1, $o2){
-					return $o2['price'] - $o1['price'];
-				});
-			}
-			if ($order == 'priceUp') {
-				usort($toSortExtended, function ($o1, $o2){
-					return $o1['price'] - $o2['price'];
-				});
-			}
-			$toSort = array_map(function($data){return $data['obj'];},$toSortExtended);
-			//За одно возвращаем модель описания к заданному поиску.
-			$rez['objects'] = array_merge($toSort, $toEnd);
-		}
+//		if (($order == 'priceUp')||($order=='priceDown')) {
+//			$toEnd = [];
+//			$toSort = [];
+//			foreach ($objects_filtered as $obj) {
+//				if (!$obj->giveMinMrtPrice()) {
+//					$toEnd[] = $obj;
+//				} else {
+//					$toSort[] = $obj;
+//				}
+//			}
+//			if ($price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']])) {
+//				$getPrice = function ($o) use ($price) {
+//					/**
+//					 * @type BaseModel $o
+//					 */
+//					return $o->getPriceValue($price -> id)->value;
+//				};
+//			} else {
+//				$getPrice = function($o) {
+//					/**
+//					 * @type BaseModel $o
+//					 */
+//					return $o -> giveMinMrtPrice() -> value;
+//				};
+//			}
+//			$toSortExtended = [];
+//			foreach ($toSort as $obj) {
+//				$toSortExtended[] = ['obj' => $obj, 'price' => (float)$getPrice($obj)];
+//			}
+//			if ($order == 'priceDown') {
+//				usort($toSortExtended, function ($o1, $o2){
+//					return $o2['price'] - $o1['price'];
+//				});
+//			}
+//			if ($order == 'priceUp') {
+//				usort($toSortExtended, function ($o1, $o2){
+//					return $o1['price'] - $o2['price'];
+//				});
+//			}
+//			$toSort = array_map(function($data){return $data['obj'];},$toSortExtended);
+//			//За одно возвращаем модель описания к заданному поиску.
+//			$rez['objects'] = array_merge($toSort, $toEnd);
+//		}
 		//$rez['description'] = Description::model() -> giveModelByTriggerArray($filter, get_class($this));
 		return $rez;
 	}
@@ -210,49 +212,65 @@ class BaseModel extends CTModel
 	}*/
 	/**
 	 * @param mixed[] $search a search array that specifies what is being searched
+	 * @param CDbCriteria $criteria
 	 * @return boolean true if this object satisfies searching criteria and false if not
 	 * (unlike search function this one should be overridden in every descendant and
 	 * contains options that are specific)
 	 */
-	public function SFilter($search)
+	public function SFilter($search, $criteria)
 	{
 		//фильтруем по станциям метро и районам. В родителе, потому что у всех есть эти поля.
-		$ok = true;
 		/*if ($search['metro'] != 0) {
 			$ok &= (!($search['metro']))||((in_array($search['metro'], array_map('trim', explode(';', $this->metro_station)))));
 		}*/
-		if (!empty($search['mrt'])) {
-			if (!$this -> giveMinMrtPrice()) {
-				return false;
-			}
+
+		$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
+		if ($price) {
+			$criteria -> with = ['priceLink'=>['alias' => 'pr']];
+			$criteria -> together = true;
+			$criteria->params = [':pid' => $price->id];
+			$criteria -> addCondition('pr.value IS NOT NULL');
+			//$criteria -> order = 'pr.value desc';
 		}
-		if (!empty($search['kt'])) {
-			if (!$this -> giveMinKtPrice()) {
-				return false;
-			}
-		}
-		if (!empty($search['metro'])) {
-			//Если хотя бы одна станция выбрана, то пробегаем по всем выбранным и смотрим, есть ли хоть какая-нибудь.
-			$check = false;
-			$metroArr = array_filter(array_map('trim', explode(';', $this->metro_station)));
-			//print_r($metroArr);
-			//print_r($search['metro']);
-			foreach($search['metro'] as $id) {
-				if (in_array($id, $metroArr)) {
-					//Если есть, то замечательно.
-					$check = true;
-					break;
-				}
-			}
-			$ok &= $check;
-		}
+		return $criteria;
+		//TODO implement mrt or kt search via triggers
+
+//		if (!empty($search['mrt'])) {
+//			if (!$this -> giveMinMrtPrice()) {
+//				return false;
+//			}
+//		}
+//		if (!empty($search['kt'])) {
+//			if (!$this -> giveMinKtPrice()) {
+//				return false;
+//			}
+//		}
+
+		//already conditioned via sql
+
+//		if (!empty($search['metro'])) {
+//			//Если хотя бы одна станция выбрана, то пробегаем по всем выбранным и смотрим, есть ли хоть какая-нибудь.
+//			$check = false;
+//			$metroArr = array_filter(array_map('trim', explode(';', $this->metro_station)));
+//			//print_r($metroArr);
+//			//print_r($search['metro']);
+//			foreach($search['metro'] as $id) {
+//				if (in_array($id, $metroArr)) {
+//					//Если есть, то замечательно.
+//					$check = true;
+//					break;
+//				}
+//			}
+//			$ok &= $check;
+//		}
+		//already searched via sql
 		//$triggers_array = array_map('trim', explode(';', $this->triggers));
-		if ($search['research']) {
-			$p = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
-			if ($p instanceof ObjectPrice) {
-				$ok &= ObjectPriceValue::model() -> findByAttributes(['id_price' => $p -> id, 'id_object' => $this -> id]) instanceof ObjectPriceValue;
-			}
-		}
+//		if ($search['research']) {
+//			$p = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
+//			if ($p instanceof ObjectPrice) {
+//				$ok &= ObjectPriceValue::model() -> findByAttributes(['id_price' => $p -> id, 'id_object' => $this -> id]) instanceof ObjectPriceValue;
+//			}
+//		}
 		return $ok;
 	}
 	/**
