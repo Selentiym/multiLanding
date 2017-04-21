@@ -782,7 +782,7 @@ class Article extends BaseModel {
 			$criteria->addCondition('pr.id IS NOT NULL');
 		}
 		//$criteria -> order = 'pr.value desc';
-//		return $criteria;
+		return $criteria;
 //		unset($search['mrt']);
 //		unset($search['kt']);
 //		unset($search['metro']);
