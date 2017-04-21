@@ -153,7 +153,7 @@ $cs -> registerScript('implementLinks',"
 
 ",CClientScript::POS_READY);
 
-$cs -> registerCoreScript('select2');
+$cs -> registerCoreScript('select2_4');
 $cs -> registerCoreScript('rateit');
 
 $cs->registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");

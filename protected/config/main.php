@@ -189,6 +189,17 @@ return array(
 							'position' => CClientScript::POS_END,
 							'depends' => ['jquery']
 						],
+						'select2_4' => [
+							'baseUrl' => 'libs/select2_4/',
+							'js' => [
+								'js/select2.full.min.js'
+							],
+							'css' => [
+								'css/select2.min.css'
+							],
+							'position' => CClientScript::POS_END,
+							'depends' => ['jquery']
+						],
 						'tether' => [
 							'baseUrl' => 'libs/tether',
 							'js' => [
