@@ -10,7 +10,7 @@
  */
 $cs = Yii::app()->getClientScript();
 
-Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/article',[],'&',false,true));
+Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/articles',[],'&',false,true));
 
 $cs -> registerMetaTag('c05418a51fe33efa','yandex-verification');
 $cs -> registerMetaTag('fa27ede9b02e532c5b752c4cb14f0a21','wmail-verification');

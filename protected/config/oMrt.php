@@ -47,7 +47,7 @@ return SiteDispatcher::mergeArray(
             'urlManager'=>array(
                 //'urlFormat' => null,
                 'rules' => array(
-                    '' => 'home/article',
+                    '' => 'home/articles',
                     'robots.txt' => 'seo/robots',
                     'sitemap<name:(SPB|MSC)>.xml' => 'seo/sitemap',
                     //'clinics' => 'home/clinics',
