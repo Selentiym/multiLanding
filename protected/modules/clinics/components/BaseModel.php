@@ -1034,7 +1034,8 @@ class BaseModel extends CTModel
 		}
 	}
 	public function parsePrices(){
-		static $rez;
+		//static $rez;
+		$rez = [];
 		if (!$this -> external_link) {
 			return [];
 		}
