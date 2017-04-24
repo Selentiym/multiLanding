@@ -132,7 +132,14 @@ if ($model -> giveMinKtPrice()) {
 		$r = 'КТ';
 	}
 }
-$descr = "Где можно сделать $r в ".$model -> getFirstTriggerValue('district') -> getParameterValueByVerbiage('districtPredl') -> value . " или возле метро ".$model -> getSortedMetroString()." - Клиника {$r}: $model->name, ".$model ->getFullAddress();
+if ($val = $model -> getFirstTriggerValue('district')) {
+	$descr = "Где можно сделать $r в ".$val -> getParameterValueByVerbiage('districtPredl') -> value . " или возле метро ".$model -> getSortedMetroString()." - Клиника {$r}: $model->name, ".$model ->getFullAddress();
+} elseif ($val = $model -> getFirstTriggerValue('prigorod')) {
+	$descr = "Где можно сделать $r в ".$val -> getParameterValueByVerbiage('prigorodPredl') -> value . " - Клиника {$r}: $model->name, ".$model ->getFullAddress();
+} else {
+	$descr = "Где можно сделать $r - Клиника {$r}: $model->name, ".$model ->getFullAddress();
+}
+
 $cs -> registerMetaTag($descr,'description');
 $cs -> registerMetaTag($r.' головного мозга, позвоночника, суставов, малого таза, брюшной полости, легких, носовых пазух, с контрастом','keywords');
 ?>
