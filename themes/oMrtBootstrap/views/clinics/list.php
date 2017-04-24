@@ -524,7 +524,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 }
                 $service = Yii::app() -> getModule('clinics') -> getClassModel('clinics') -> findByAttributes(['verbiage' => 'service']);
                 if ($service instanceof clinics) {
-                    $this->renderPartial('/clinics/_single_clinics', ['model' => $service, 'data' => $data]);
+                    $this->renderPartial('/clinics/_single_clinics', ['model' => $service, 'data' => $data,'price' => $research]);
                 }
                 $a = ArticleRule::getArticle('dynamic');
                 //$a = ;
@@ -537,7 +537,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
 
                 if (!empty($objects)) {
                     foreach($objects as $object) {
-                        $this -> renderPartial('/clinics/_single_clinics',['model' => $object, 'data' => $data]);
+                        $this -> renderPartial('/clinics/_single_clinics',['model' => $object, 'data' => $data,'price' => $research]);
                     }
                 } else {
                     echo "<div class='single_object'>Не найдено ни одной клиники. Тут будет отдельная страничка.</div>";

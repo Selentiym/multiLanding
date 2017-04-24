@@ -121,6 +121,11 @@ nav {
 .price-block.collapsed .arrow::after {
     content:"\f0d7";
 }
+.single-price.highlighted {
+    background-color: #57ae8a;
+    color:white;
+    font-weight: bold;
+}
 #error404container {
     background-image: url('../images/lost.jpg');
     background-size: 100%;

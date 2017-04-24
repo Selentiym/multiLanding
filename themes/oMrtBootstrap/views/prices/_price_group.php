@@ -20,7 +20,7 @@
     </div>
 </div>
 <div class="collapse <?php echo $show; ?>" id="collapse<?php echo $id; ?>">
-    <?php foreach ($prices as $price) {
-        $this -> renderPartial('//prices/_single_price_clinics',['price' => $price,'model' => $model,'triggers' => $triggers]);
+    <?php foreach ($prices as $name => $price) {
+        $this -> renderPartial('//prices/_single_price_clinics',['price' => $price,'model' => $model,'triggers' => $triggers, 'name' => $name,'mainPrice' => $mainPrice]);
     } ?>
 </div>

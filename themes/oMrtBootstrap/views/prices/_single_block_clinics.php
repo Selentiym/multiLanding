@@ -45,7 +45,8 @@ $id = str2url($block -> name).$model -> verbiage;
     'name' => $block -> name,
     'prices' => $block -> prices,
     'model' => $model,
-    'show' => $show
+    'show' => $show,
+    'mainPrice' => $mainPrice
 ]); ?>
 
 <!--<div data-toggle="collapse" data-target="#collapse--><?php //echo $id; ?><!--"  role="tabpanel" id="heading--><?php //echo $id; ?><!--" class="w-100 price-block p-3 mb-1">-->

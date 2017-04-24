@@ -9,10 +9,28 @@ if (!$blocks) {
 
 	foreach($blocks as $block) {
 		$temp = [];
-		$prices = $block -> prices ? $block -> prices : [];
-		foreach ($prices as $price) {
-			if ($model -> getPriceValue($price -> id)) {
-				$temp[] = $price;
+		$prs = $block -> prices ? $block -> prices : [];
+		foreach ($prs as $pr) {
+			if ($pr -> id == $price -> id) {
+				if ($model -> getPriceValue($pr -> id)) {
+					array_unshift($temp, $pr);
+					$temp[$pr -> id] = $pr;
+					continue;
+				}
+				if ($model -> getPriceValue($pr -> id_replace_price)) {
+					$repl = $pr -> replacement;
+					$name = $pr -> nameRod;
+					if (!$name) {
+						$name = $pr -> name;
+					}
+					$delId = $repl -> id;
+					unset($temp[$delId]);
+					$temp = array_merge([$repl -> name.' (включает '.$name.')' => $repl],$temp);
+					continue;
+				}
+			}
+			if (($pr -> id != $delId)&&($model -> getPriceValue($pr -> id))) {
+				$temp[$pr->id] = $pr;
 			}
 		}
 		$block -> prices = $temp;
