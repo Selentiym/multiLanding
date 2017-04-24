@@ -51,6 +51,13 @@ return array(
         ],
         'userAgent' => false
     ],
+    'mrtKtMozg' => [
+        'host' => [
+            'мрт-и-кт-головного-мозга-и-головы.рф',
+            'http://xn---------6nfoeebbd5cikyukcktubcbchb7a6de53a.xn--p1ai/',
+        ],
+        'userAgent' => false
+    ],
     'newDesign' => [
         'host' => [
             'domain',
