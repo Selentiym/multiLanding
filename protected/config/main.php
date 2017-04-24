@@ -277,21 +277,32 @@ return array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'error/index',
 		),
-		'log'=>array(
-			'class'=>'CLogRouter',
-			'routes'=>array(
-				array(
-					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
-				),
-				// uncomment the following to show log messages on web pages
-				/*
-				array(
-					'class'=>'CWebLogRoute',
-				),
-				*/
-			),
-		),
+		'log' => [
+			'class' => 'CLogRouter',
+			'routes' => [
+				'db' => [
+					'class' => 'CWebLogRoute',
+					'categories' => 'system.db.CDbCommand',
+					'showInFireBug' => true
+				]
+			]
+		]
+//		'log'=>array(
+//			'class'=>'CLogRouter',
+//			'routes'=>array(
+//				array(
+//					'class'=>'CFileLogRoute',
+//					'levels'=>'error, warning',
+//					'showInFireBug' => true
+//				),
+//				// uncomment the following to show log messages on web pages
+//				/*
+//				array(
+//					'class'=>'CWebLogRoute',
+//				),
+//				*/
+//			),
+//		),
 	),
 
 	// application-level parameters that can be accessed

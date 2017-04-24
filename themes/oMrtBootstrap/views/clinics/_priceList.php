@@ -14,7 +14,7 @@ if (!$blocks) {
 			if ($pr -> id == $price -> id) {
 				if ($model -> getPriceValue($pr -> id)) {
 					array_unshift($temp, $pr);
-					$temp[$pr -> id] = $pr;
+//					$temp[$pr -> id] = $pr;
 					continue;
 				}
 				if ($model -> getPriceValue($pr -> id_replace_price)) {

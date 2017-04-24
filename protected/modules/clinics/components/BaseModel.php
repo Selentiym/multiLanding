@@ -45,8 +45,9 @@ class BaseModel extends CTModel
 	}
 	public function relations() {
 		return [
-			'prices' => [self::HAS_MANY, 'ObjectPriceValue', 'id_object', 'with' => 'price', 'condition' => 'price.object_type = ' . Objects::getNumber(get_class($this))],
-			'priceLink' => [self::HAS_ONE, 'ObjectPriceValue','id_object','with' => 'price', 'together' => true, 'condition' => 'id_price=:pid']
+			'prices' => [self::HAS_MANY, 'ObjectPriceValue', 'id_object', 'with' => ['price' => ['alias' => 'priceForList']], 'condition' => 'priceForList.object_type = ' . Objects::getNumber(get_class($this))],
+			'priceLink' => [self::HAS_ONE, 'ObjectPriceValue','id_object','with' => ['price' => ['together' => true]], 'condition' => 'price.object_type = ' . Objects::getNumber(get_class($this)).' AND pr.id_price=:pid'],
+			'toCountPrices' => [self::HAS_MANY, 'ObjectPriceValue','id_object','condition' => 'toCountPrices.id_price IN (:pids)']
 		];
 	}
 	/**
@@ -244,9 +245,16 @@ class BaseModel extends CTModel
 			$price = $search['research'];
 		}
 		if ($price) {
-			$criteria -> with = ['priceLink'=>['alias' => 'pr']];
+			if (empty($criteria -> with)) {
+				$criteria -> with = ['priceLink'=>['alias' => 'pr']];
+			} else {
+				$criteria -> with = array_merge($criteria -> with,['priceLink'=>['alias' => 'pr']]);
+			}
 			$criteria -> together = true;
-			$criteria->params = [':pid' => $price->id];
+			if (empty($criteria -> params)) {
+				$criteria -> params = [];
+			}
+			$criteria->params = array_merge($criteria -> params, [':pid' => $price->id]);
 			$criteria -> addCondition('pr.value IS NOT NULL');
 			//$criteria -> order = 'pr.value desc';
 		}

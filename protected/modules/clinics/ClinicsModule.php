@@ -57,7 +57,10 @@ class ClinicsModule extends UWebModule {
 		if (!$criteria instanceof CDbCriteria) {
 			$criteria = new CDbCriteria();
 		}
-		$criteria->with = 'prices';
+		if (empty($criteria->with)) {
+			$criteria->with = [];
+		}
+		$criteria->with = array_merge($criteria->with,['prices']);
 		return $this -> getObjects('clinics',$triggers,$order,$limit,$criteria);
 	}
 	public function getArticles (array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
@@ -173,12 +176,10 @@ class ClinicsModule extends UWebModule {
 		return in_array($name, ['clinicsComments','doctorsComments']) || parent::_isAllowedToEvaluate($name);
 	}
 
-	/**
-	 *
-	 */
 	public function averagePrice($triggers) {
+		$ids = [];
 		if ($v = $triggers['research']) {
-			$prices = [ObjectPrice::model() -> findByAttributes(['verbiage' => $v])];
+			$ids = [ObjectPrice::model() -> findByAttributes(['verbiage' => $v]) -> id];
 		} else {
 			$prices = [];
 			if ($triggers['mrt']) {
@@ -187,23 +188,72 @@ class ClinicsModule extends UWebModule {
 			if ($triggers['kt']) {
 				$prices = array_merge($prices, ObjectPrice::model() -> findAllByAttributes(['id_type' => PriceType::getId('kt')]));
 			}
-			if (empty($prices)) {
-				$prices = ObjectPrice::model() -> findAll();
+			foreach ($prices as $p) {
+				$ids[] = $p -> id;
 			}
 		}
-		$c = 0;
+		$ids = array_filter($ids);
+		if (empty($ids)) {
+			$prices = ObjectPrice::model() -> findAll();
+			foreach ($prices as $p) {
+				$ids[] = $p -> id;
+			}
+		}
+		if (empty($ids)){
+			return false;
+		}
+		$criteria = new CDbCriteria();
+		$criteria -> with = ['toCountPrices' => ['together' => 'true'], 'prices' => ['select' => false]];
+		$criteria -> params = [':pids' => implode(',',$ids)];
+		Yii::beginProfile('countAverage');
+		$clinics = $this -> getClinics($triggers,null,-1,$criteria);
 		$sum = 0;
-		foreach ($prices as $p) {
-			foreach ($p -> values as $value) {
-				$sum += $value -> value;
+		$c = 0;
+		foreach ($clinics as $clinic) {
+			$found = $clinic -> toCountPrices;
+			foreach ($clinic -> toCountPrices as $price) {
+				$sum += $price -> value;
 				$c ++;
 			}
 		}
+		Yii::endProfile('countAverage');
 		if ($c == 0) {
 			return 0;
 		}
 		return round($sum / $c);
 	}
+
+	/**
+	 *
+	 */
+//	public function averagePrice($triggers) {
+//		if ($v = $triggers['research']) {
+//			$prices = [ObjectPrice::model() -> findByAttributes(['verbiage' => $v])];
+//		} else {
+//			$prices = [];
+//			if ($triggers['mrt']) {
+//				$prices = array_merge($prices, ObjectPrice::model() -> findAllByAttributes(['id_type' => PriceType::getId('mrt')]));
+//			}
+//			if ($triggers['kt']) {
+//				$prices = array_merge($prices, ObjectPrice::model() -> findAllByAttributes(['id_type' => PriceType::getId('kt')]));
+//			}
+//			if (empty($prices)) {
+//				$prices = ObjectPrice::model() -> findAll();
+//			}
+//		}
+//		$c = 0;
+//		$sum = 0;
+//		foreach ($prices as $p) {
+//			foreach ($p -> values as $value) {
+//				$sum += $value -> value;
+//				$c ++;
+//			}
+//		}
+//		if ($c == 0) {
+//			return 0;
+//		}
+//		return round($sum / $c);
+//	}
 	public function renderParameter ($triggers, $trigger_verb, $field){
 		$rendered = $this -> _rendered;
 		if (!isset($rendered)) {

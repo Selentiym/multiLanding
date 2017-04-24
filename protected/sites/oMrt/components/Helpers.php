@@ -101,8 +101,10 @@ function generateText($triggers){
     echo "<p>В $geo диагностику $r можно пройти в ".echoClinicsNumber(['mrt','kt','research','area','prigorod','okrug']).'</p>';
 
 
-    echo "<p>Сколько стоит {$r}?</p>";
-    echo "<p>Средняя цена на $rVin в Москве и Санкт-Петербурге равна {$mod->averagePrice($triggers)}руб</p>";
+    if ($research) {
+        echo "<p>Сколько стоит {$r}?</p>";
+        echo "<p>Средняя цена на $rVin в {$geo} с учетом всех параметров равна {$mod->averagePrice($triggers)}руб</p>";
+    }
     if ($street) {
         echo "<p>Где можно сделать $r в непосредственной близости от адреса: {$street}?</p>";
         echo "Пройти $rVin можно в ".echoMedCentersNumber(['district','street'])." в непосредственной близости от адреса: {$street}";
