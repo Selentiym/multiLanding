@@ -142,3 +142,6 @@ nav {
 body h2 {
     font-weight:bold;
 }
+#articlePopup .modal-dialog {
+    max-width: 70%!important;
+}

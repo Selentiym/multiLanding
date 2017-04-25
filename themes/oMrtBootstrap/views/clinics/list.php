@@ -437,14 +437,17 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     if ($a) {
                         echo $a -> description;
                     } ?>
-                    <button type="button" class="btn" data-toggle="modal" data-target="#articlePopup">Подробнее</button>
+                    <div class="text-center"><button type="button" class="btn" data-toggle="modal" data-target="#articlePopup">Подробнее</button></div>
                     <div class="modal fade" id="articlePopup" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <?php
-                                if ($a) {
-                                    echo $a -> prepareTextByVerbiage($triggers);
-                                } ?>
+                            <div class="modal-content p-3">
+                                <div class="modal-header"></div>
+                                <div class="modal-body">
+                                    <?php
+                                    if ($a) {
+                                        echo $a -> prepareTextByVerbiage($triggers);
+                                    } ?>
+                                </div>
                             </div>
                         </div>
                     </div>
