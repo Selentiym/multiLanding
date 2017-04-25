@@ -103,7 +103,7 @@ function generateText($triggers){
 
 //    if ($research) {
         echo "<p>Сколько стоит {$r}?</p>";
-        echo "<p>Средняя цена на $rVin в {$geo} с учетом всех параметров равна {$mod->averagePrice($triggers)}руб</p>";
+        echo "<p>Средняя цена на $rVin в {$geo} с учетом всех параметров равна <strong>{$mod->averagePrice($triggers)}руб</strong></p>";
 //    }
     if ($street) {
         echo "<p>Где можно сделать $r в непосредственной близости от адреса: {$street}?</p>";

@@ -26,14 +26,23 @@ a {
 .mainColor {
     color: #57ae8a;
 }
+.article-right .card:nth-child(2n+1) {
+    /*background-color: #57ae8a;*/
+    background-color: #cdebde;
+}
+.article-right .card:nth-child(2n) {
+    background-color: #f7f7f9;
+    /*background-color: #cdebde;*/
+}
+.article-right h1, .article-right h2, .article-right h3,.article-right h4, .article-right h5, .article-right h6 {
+    font-size:1rem;
+}
 .article-right .card {
-    background-color: #dbdcd2;
+    margin-bottom: 20px;
 }
-.article-right h1 {
-    font-size:1rem;
-}
-.article-right h3 {
-    font-size:1rem;
+.article-name {
+    color: #57ae8a;
+    font-weight: bold;
 }
 footer {
     background-color: #dbdcd2;
