@@ -20,6 +20,7 @@
  */
 class ObjectPrice extends CTModel
 {
+	private $_cachedPrice;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -133,5 +134,11 @@ class ObjectPrice extends CTModel
 	 */
 	public function getArticle() {
 		return $this -> article;
+	}
+	public function setCachedPrice($val) {
+		$this -> _cachedPrice = $val;
+	}
+	public function  getCachedPrice() {
+		return $this -> _cachedPrice;
 	}
 }

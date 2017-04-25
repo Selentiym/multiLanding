@@ -32,7 +32,7 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 					'prices' => $model -> getPrices(),
 					'model' => false,
 					'show' => false,
-					'triggers' => ['area' => 'spb']
+					'triggers' => ['area' => 'spb', 'sortBy' => 'priceUp']
 				]); ?>
 			<?php $this -> renderPartial('/prices/_price_group',[
 					'id' => 'mscPrices',
@@ -40,7 +40,7 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 					'prices' => $model -> getPrices(),
 					'model' => false,
 					'show' => false,
-					'triggers' => ['area' => 'msc']
+					'triggers' => ['area' => 'msc', 'sortBy' => 'priceUp']
 			]);
 			?>
 		</div>

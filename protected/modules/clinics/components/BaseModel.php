@@ -93,6 +93,24 @@ class BaseModel extends CTModel
 		$criteria -> addCondition("$field LIKE '%;$id;%' OR $field LIKE '%;$id' OR $field LIKE '$id;%' OR $field = '$id'");
 		return $criteria;
 	}
+	public function setAliasedCondition($search, CDbCriteria $criteria = null, $alias = ''){
+		$search = array_filter($search);
+		foreach ($search as $key => $option) {
+			//если поле не относится к особым, тогда сохраняем условие на него.
+			if (!in_array($key, $this -> SFields)) {
+				if (trim($option) != "") {
+					$criteria = self::addSeparatedFieldCondition($alias.'triggers',$criteria, trim($option));
+					//$filter[] = $option;
+				}
+			}
+		}
+
+		if ($search['metro']) {
+			foreach ($search['metro'] as $m) {
+				$criteria = self::addSeparatedFieldCondition($alias.'metro',$criteria, trim($m));
+			}
+		}
+	}
 	/**
 	 * @param array $search a search array that specifies what is being searched
 	 * @param string $order - a field to be ordered by
@@ -116,22 +134,7 @@ class BaseModel extends CTModel
 		if (!in_array($order, array('priceUp','priceDown'))&&($order)) {
 			$criteria -> order = $order.' DESC';
 		}
-		$search = array_filter($search);
-		foreach ($search as $key => $option) {
-			//если поле не относится к особым, тогда сохраняем условие на него.
-			if (!in_array($key, $this -> SFields)) {
-				if (trim($option) != "") {
-					$criteria = self::addTriggerCondition($criteria, trim($option));
-					//$filter[] = $option;
-				}
-			}
-		}
-
-		if ($search['metro']) {
-			foreach ($search['metro'] as $m) {
-				$criteria = self::addSeparatedFieldCondition('metro',$criteria, trim($m));
-			}
-		}
+		self::setAliasedCondition($search, $criteria,'');
 		if ($search['research']) {
 			//Далее будет использована для поиска по другому исследованию
 			$saveCrit = clone $criteria;
@@ -149,70 +152,7 @@ class BaseModel extends CTModel
 				$objects_filtered = $this->model()->findAll($saveCrit);
 			}
 		}
-		//var_dump($objects);
-//		$objects_filtered = array();
-//		$count_success = 0;
-//		foreach ($objects as $object) {
-//			if ($object == $this) {
-//				continue;
-//			}
-//			if (!($object -> SFilter($search)))
-//			{
-//				continue;
-//			}
-//			$object -> getReadyToDisplay();
-//			$count_success ++;
-//			$objects_filtered[] = $object;
-//			if (($limit > 0)&&($count_success >= $limit)) {
-//				break;
-//			}
-//		}
 		$rez['objects'] = $objects_filtered;
-//		if (($order == 'priceUp')||($order=='priceDown')) {
-//			$toEnd = [];
-//			$toSort = [];
-//			foreach ($objects_filtered as $obj) {
-//				if (!$obj->giveMinMrtPrice()) {
-//					$toEnd[] = $obj;
-//				} else {
-//					$toSort[] = $obj;
-//				}
-//			}
-//			if ($price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']])) {
-//				$getPrice = function ($o) use ($price) {
-//					/**
-//					 * @type BaseModel $o
-//					 */
-//					return $o->getPriceValue($price -> id)->value;
-//				};
-//			} else {
-//				$getPrice = function($o) {
-//					/**
-//					 * @type BaseModel $o
-//					 */
-//					return $o -> giveMinMrtPrice() -> value;
-//				};
-//			}
-//			$toSortExtended = [];
-//			foreach ($toSort as $obj) {
-//				$toSortExtended[] = ['obj' => $obj, 'price' => (float)$getPrice($obj)];
-//			}
-//			if ($order == 'priceDown') {
-//				usort($toSortExtended, function ($o1, $o2){
-//					return $o2['price'] - $o1['price'];
-//				});
-//			}
-//			if ($order == 'priceUp') {
-//				usort($toSortExtended, function ($o1, $o2){
-//					return $o1['price'] - $o2['price'];
-//				});
-//			}
-//			$toSort = array_map(function($data){return $data['obj'];},$toSortExtended);
-//			//За одно возвращаем модель описания к заданному поиску.
-//			$rez['objects'] = array_merge($toSort, $toEnd);
-//		}
-		//$rez['description'] = Description::model() -> giveModelByTriggerArray($filter, get_class($this));
-
 		return $rez;
 	}
 	

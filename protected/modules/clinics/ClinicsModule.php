@@ -75,17 +75,8 @@ class ClinicsModule extends UWebModule {
 		}
 		return $this -> getObjects('Article',$triggers,$order,$limit,$criteria);
 	}
-	/**
-	 * @param string $class
-	 * @param array $triggers consisting of pairs ['trigger_verbiage' => 'trigger_value_verbiage']
-	 * or of pairs ['trigger_verbiage' => 'trigger_value_id']
-	 * @param string $order
-	 * @param int $limit
-	 * @param CDbCriteria $criteria additional criteria to be filtered by
-	 * @return $class[] that correspond to the specified condition
-	 */
-	protected function getObjects($class,array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
-		$triggers = array_map(function($val){
+	public static function prepareTriggers($triggers){
+		return array_map(function($val){
 			if ((int) $val) {
 				return $val;
 			}
@@ -98,6 +89,18 @@ class ClinicsModule extends UWebModule {
 		if ($triggers['metro']) {
 			$triggers['metro'] = [$triggers['metro']];
 		}
+	}
+	/**
+	 * @param string $class
+	 * @param array $triggers consisting of pairs ['trigger_verbiage' => 'trigger_value_verbiage']
+	 * or of pairs ['trigger_verbiage' => 'trigger_value_id']
+	 * @param string $order
+	 * @param int $limit
+	 * @param CDbCriteria $criteria additional criteria to be filtered by
+	 * @return $class[] that correspond to the specified condition
+	 */
+	protected function getObjects($class,array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
+		$triggers = $this -> prepareTriggers($triggers);
 		return $class::model() -> userSearch($triggers, $order, $limit, $criteria)['objects'];
 	}
 
@@ -203,25 +206,71 @@ class ClinicsModule extends UWebModule {
 			return false;
 		}
 		$criteria = new CDbCriteria();
-		$criteria -> with = ['toCountPrices' => ['together' => 'true'], 'prices' => ['select' => false]];
-		$criteria -> params = [':pids' => implode(',',$ids)];
-		Yii::beginProfile('countAverage');
-		$clinics = $this -> getClinics($triggers,null,-1,$criteria);
+		$criteria -> addInCondition('price.id',$ids);
+		$criteria -> with = ['price' => ['together' => true]];
+
+		$values = ObjectPriceValue::searchPriceValues($triggers,$criteria);
+
+//		Yii::beginProfile('countAverage');
 		$sum = 0;
 		$c = 0;
-		foreach ($clinics as $clinic) {
-			$found = $clinic -> toCountPrices;
-			foreach ($clinic -> toCountPrices as $price) {
-				$sum += $price -> value;
-				$c ++;
-			}
+		foreach ($values as $price) {
+			$sum += $price -> value;
+//			echo $price -> price -> name.": ".$price -> value."<br/>";
+			$c ++;
 		}
-		Yii::endProfile('countAverage');
+//		Yii::endProfile('countAverage');
 		if ($c == 0) {
 			return 0;
 		}
 		return round($sum / $c);
 	}
+//	public function averagePrice($triggers) {
+//		$ids = [];
+//		if ($v = $triggers['research']) {
+//			$ids = [ObjectPrice::model() -> findByAttributes(['verbiage' => $v]) -> id];
+//		} else {
+//			$prices = [];
+//			if ($triggers['mrt']) {
+//				$prices = array_merge($prices, ObjectPrice::model() -> findAllByAttributes(['id_type' => PriceType::getId('mrt')]));
+//			}
+//			if ($triggers['kt']) {
+//				$prices = array_merge($prices, ObjectPrice::model() -> findAllByAttributes(['id_type' => PriceType::getId('kt')]));
+//			}
+//			foreach ($prices as $p) {
+//				$ids[] = $p -> id;
+//			}
+//		}
+//		$ids = array_filter($ids);
+//		if (empty($ids)) {
+//			$prices = ObjectPrice::model() -> findAll();
+//			foreach ($prices as $p) {
+//				$ids[] = $p -> id;
+//			}
+//		}
+//		if (empty($ids)){
+//			return false;
+//		}
+//		$criteria = new CDbCriteria();
+//		$criteria -> with = ['toCountPrices' => ['together' => 'true'], 'prices' => ['select' => false]];
+//		$criteria -> params = [':pids' => implode(',',$ids)];
+//		Yii::beginProfile('countAverage');
+//		$clinics = $this -> getClinics($triggers,null,-1,$criteria);
+//		$sum = 0;
+//		$c = 0;
+//		foreach ($clinics as $clinic) {
+//			$found = $clinic -> toCountPrices;
+//			foreach ($clinic -> toCountPrices as $price) {
+//				$sum += $price -> value;
+//				$c ++;
+//			}
+//		}
+//		Yii::endProfile('countAverage');
+//		if ($c == 0) {
+//			return 0;
+//		}
+//		return round($sum / $c);
+//	}
 
 	/**
 	 *

@@ -47,6 +47,10 @@ class ObjectPriceValue extends CTModel
 		// class name for the relations automatically generated below.
 		return array(
 			'price' => array(self::BELONGS_TO, 'ObjectPrice', 'id_price'),
+			'clinic' => [self::BELONGS_TO, 'clinics', 'id_object'],
+			'doctor' => [self::BELONGS_TO, 'doctors', 'id_object'],
+//			'doctor' => [self::BELONGS_TO, 'clinics', 'id_object', 'with' => ['price' => ['together' => true]], 'condition' => 'price.object_type='.Objects::getNumber('doctors')],
+//			'doctor' => [self::BELONGS_TO, 'doctors', 'id_object']
 		);
 	}
 
@@ -134,5 +138,23 @@ class ObjectPriceValue extends CTModel
 			return true;
 		}
 		return false;
+	}
+
+	private static function addSeparatedFieldCondition($field,CDbCriteria $criteria, $id){
+		$criteria -> addCondition("$field LIKE '%;$id;%' OR $field LIKE '%;$id' OR $field LIKE '$id;%' OR $field = '$id'");
+		return $criteria;
+	}
+	public static function searchPriceValues($triggers, CDbCriteria $criteria = null){
+		$search = ClinicsModule::prepareTriggers($triggers);
+		if (!is_a($criteria, 'CDbCriteria')) {
+			$criteria = new CDbCriteria();
+		}
+		if (empty($criteria -> with)) $criteria -> with = [];
+		if (empty($criteria -> params)) $criteria -> params = [];
+		$search = array_filter($search);
+		$criteria -> with = array_merge($criteria -> with, ['clinic' => ['select' => false]]);
+		clinics::model() -> setAliasedCondition($search,$criteria,'clinic.');
+		$m = ObjectPriceValue::model();
+		return $m -> findAll($criteria);
 	}
 }

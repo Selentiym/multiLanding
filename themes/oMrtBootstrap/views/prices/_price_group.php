@@ -11,6 +11,41 @@
  * @type clinics $model
  * @type bool $show
  */
+if (empty($prices)) {
+    return;
+}
+if (!$model) {
+    $ids = [];
+    foreach ($prices as $price) {
+        $ids[] = $price -> id;
+    }
+    if (!empty($ids)) {
+        $criteria = new CDbCriteria();
+        $criteria -> addInCondition('price.id',$ids);
+        $criteria -> with = ['price' => ['together' => true]];
+        $values = [];
+        foreach (ObjectPriceValue::searchPriceValues(['area' => 'spb'],$criteria) as $pv) {
+            /**
+             * @type ObjectPriceValue $pv
+             */
+            $values[$pv -> id_price][] = $pv;
+        }
+        foreach ($prices as $pr) {
+            $min = -1;
+            if (empty($values[$pr -> id])) {
+                $values[$pr -> id] = [];
+            }
+            foreach ($values[$pr -> id] as $pv) {
+                if (($pv -> value < $min) || ($min < 0)) {
+                    $min = $pv -> value;
+                }
+            }
+            if ($min > 0) {
+                $pr -> setCachedPrice($min);
+            }
+        }
+    }
+}
 ?>
 
 <div data-toggle="collapse" data-target="#collapse<?php echo $id; ?>"  role="tabpanel" id="heading<?php echo $id; ?>" class="w-100 price-block p-3 mb-1">
