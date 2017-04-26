@@ -24,7 +24,8 @@ class Article extends BaseModel {
 		1 => 'text',
 		2 => 'service',
 		3 => 'dynamic',
-		4 => 'commercial'
+		4 => 'commercial',
+		5 => 'tomography',
 	];
 	public $SFields = array('metro','research','submitted','price','street','sortBy','area');//,'speciality');
 	/**

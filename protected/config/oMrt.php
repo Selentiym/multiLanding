@@ -13,6 +13,9 @@ return SiteDispatcher::mergeArray(
         'theme' => 'oMrt/oMrtBootstrap',
         'language' => 'oMrt',
         'defaultController' => 'home',
+        'import' => [
+            'application.sites.catalogCommon.HomeControllerCatalogCommon'
+        ],
         'modules'=>array(
             'clinics' => [
                 'class' => 'application.modules.clinics.ClinicsModule',
@@ -58,7 +61,8 @@ return SiteDispatcher::mergeArray(
                     '<modelName:(clinics|doctors)>-<area:(spb|msc)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
                     '<modelName:(clinics|doctors)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
                     'article' => 'home/articles',
-                    'article/<verbiage:[\w-]+>' => 'home/articleView',
+                    'tomography' => 'home/tomography',
+                    'article/<verbiage:[\w-_]+>' => 'home/articleView',
                     [
                         'class' => 'application.components.urlRules.ModelAttributeUrlRule',
                         'modelClass' => 'ObjectPrice',
