@@ -107,7 +107,7 @@ class BaseModel extends CTModel
 
 		if ($search['metro']) {
 			foreach ($search['metro'] as $m) {
-				$criteria = self::addSeparatedFieldCondition($alias.'metro',$criteria, trim($m));
+				$criteria = self::addSeparatedFieldCondition($alias.'metro_station',$criteria, trim($m));
 			}
 		}
 	}

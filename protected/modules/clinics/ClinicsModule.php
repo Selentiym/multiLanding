@@ -73,10 +73,10 @@ class ClinicsModule extends UWebModule {
 		if (count($copy) == 0) {
 			return Article::model() -> root() -> findAllByAttributes(['id_type' => Article::getTypeId('text')]);
 		}
-		return $this -> getObjects('Article',$triggers,$order,$limit,$criteria);
+		return $this -> getObjects('Article',$copy,$order,$limit,$criteria);
 	}
 	public static function prepareTriggers($triggers){
-		return array_map(function($val){
+		$triggers = array_map(function($val){
 			if ((int) $val) {
 				return $val;
 			}
@@ -89,6 +89,7 @@ class ClinicsModule extends UWebModule {
 		if ($triggers['metro']) {
 			$triggers['metro'] = [$triggers['metro']];
 		}
+		return $triggers;
 	}
 	/**
 	 * @param string $class
