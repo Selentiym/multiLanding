@@ -28,7 +28,10 @@ Yii::app() -> getModule('taskgen') -> giveProjectTree([
             class:"button download",
             title:"Итеративно копирует всех потомков выбранной в таскгене статьи в потомки данной (редактируемой в этой админке) статьи"
         });
+        var textToCheck = "I am fully aware of the consequences of my actions";
         branch.downloadButton.click(function(){
+        if (prompt("Вы собираетесь итеративно скопировать структуру и тексты статей из модуля написания текстов на сайт. Процесс лавиннообразный и необратимый, повторный запуск итеративного копирования может привести к непредвиденным результатам, а также к нарушении структуры статей на сайте. Использовать кнопку с особой осторожностью. Не использовать, если не уверены. Чтобы запустить процедуру копирования, введите в строке текст \'"+textToCheck+"\'") == textToCheck) {
+            alert("Копирование запущено, может занять некоторое время, если загружается много статей.");
             $.post("'.$this -> createUrl("admin/copyDescendants").'/?id=" + branch.id,
                         {articleId: '.$model -> id.'}, null,"json"
                     ).done(function(data){
@@ -37,6 +40,9 @@ Yii::app() -> getModule('taskgen') -> giveProjectTree([
                             alert("Загрузка успешна!");
                         }
                     });
+                    } else {
+                        alert("Копирование НЕ запущено.");
+                    }
         });
         branch.buttonContainer.append(branch.downloadButton);
     }'
