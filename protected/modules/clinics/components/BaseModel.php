@@ -962,7 +962,10 @@ class BaseModel extends CTModel
 		if (!$this -> external_link) {
 			return false;
 		}
-		$fromSite = $this -> parsePrices();
+		@$fromSite = $this -> parsePrices();
+		if (!$fromSite) {
+			return false;
+		}
 		$allPrices = ObjectPrice::model() -> findAllByAttributes(['object_type' => Objects::getNumber(get_class($this))]);
 		$enc = "utf-8";
 		foreach ($allPrices as $price) {

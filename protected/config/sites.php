@@ -55,6 +55,7 @@ return array(
         'host' => [
             'мрт-и-кт-головного-мозга-и-головы.рф',
             'http://xn---------6nfoeebbd5cikyukcktubcbchb7a6de53a.xn--p1ai/',
+            'andrei.cq97848.tmweb.ru',
         ],
         'userAgent' => false
     ],

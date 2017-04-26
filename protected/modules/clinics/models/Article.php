@@ -800,4 +800,25 @@ class Article extends BaseModel {
 	public function getReadyToDisplay() {
 		return;
 	}
+
+	/**
+	 * @return bool|string
+	 */
+	public function getImageUrl(){
+		$dom = new DOMDocument();
+		if ($this->text) {
+			if ($dom -> loadHTML($this -> text)) {
+				foreach ($dom -> getElementsByTagName('img') as $node) {
+					/**
+					 * @type DOMElement $node;
+					 */
+					$src = $node -> getAttribute('src');
+					if ($src) {
+						return $src;
+					}
+				}
+			}
+		}
+		return false;
+	}
 }

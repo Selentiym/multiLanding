@@ -14,6 +14,25 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 
 <div class="row no-gutters">
 	<div class="col-12 col-md-10 p-3 mx-auto article">
+		<div class="prices">
+			<?php $this -> renderPartial('/prices/_price_group',[
+					'id' => 'spbPrices',
+					'name' => 'Цены в Санкт-Петербурге',
+					'prices' => $model -> getPrices(),
+					'model' => false,
+					'show' => false,
+					'triggers' => ['area' => 'spb', 'sortBy' => 'priceUp']
+			]); ?>
+			<?php $this -> renderPartial('/prices/_price_group',[
+					'id' => 'mscPrices',
+					'name' => 'Цены в Москве',
+					'prices' => $model -> getPrices(),
+					'model' => false,
+					'show' => false,
+					'triggers' => ['area' => 'msc', 'sortBy' => 'priceUp']
+			]);
+			?>
+		</div>
 		<div>
 			<?php
 			$text = $model -> text;
@@ -23,25 +42,6 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 				$text = '<p class="textErrors">Внимание! В тексте могут быть ошибки отображения. Не обращайте на это внимания. В ближайшее время проблема будет решена.</p>'.$text;
 			}
 			echo $text;
-			?>
-		</div>
-		<div class="prices">
-			<?php $this -> renderPartial('/prices/_price_group',[
-					'id' => 'spbPrices',
-					'name' => 'Цены в Санкт-Петербурге',
-					'prices' => $model -> getPrices(),
-					'model' => false,
-					'show' => false,
-					'triggers' => ['area' => 'spb', 'sortBy' => 'priceUp']
-				]); ?>
-			<?php $this -> renderPartial('/prices/_price_group',[
-					'id' => 'mscPrices',
-					'name' => 'Цены в Москве',
-					'prices' => $model -> getPrices(),
-					'model' => false,
-					'show' => false,
-					'triggers' => ['area' => 'msc', 'sortBy' => 'priceUp']
-			]);
 			?>
 		</div>
 		<div class="children">
