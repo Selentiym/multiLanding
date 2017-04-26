@@ -962,7 +962,7 @@ class BaseModel extends CTModel
 		if (!$this -> external_link) {
 			return false;
 		}
-		@$fromSite = $this -> parsePrices();
+		$fromSite = $this -> parsePrices();
 		if (!$fromSite) {
 			return false;
 		}
@@ -1014,16 +1014,18 @@ class BaseModel extends CTModel
 			//$html = file_get_html('http://mrt-catalog.ru/clinic/16');
 			$both = current($html->find('#myTabContent'));
 			$mrtNode = $both->childNodes(0);
+			$mrt = [];
 			if ($mrtNode) {
-				$mrt = $mrtNode->childNodes(0)->childNodes();
-			} else {
-				$mrt = [];
+				if ($n = $mrtNode->childNodes(0)) {
+					$mrt = $n->childNodes();
+				}
 			}
 			$ktNode = $both->childNodes(1);
+			$kt = [];
 			if ($ktNode) {
-				$kt = $ktNode->childNodes(0)->childNodes();
-			} else {
-				$kt = [];
+				if ($n = $ktNode->childNodes(0)) {
+					$kt = $ktNode->childNodes(0)->childNodes();
+				}
 			}
 			$rezMrt = [];
 			foreach ($mrt as $item) {
