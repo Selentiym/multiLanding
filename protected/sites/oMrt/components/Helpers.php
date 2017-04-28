@@ -52,6 +52,9 @@ function translateVerbiages ($verbs) {
     return $condition;
 }
 function countClinics ($condition){
+    if (!$condition['prigorod']) {
+        $condition['isCity'] = 'city';
+    }
     return count(Yii::app() -> getModule('clinics') -> getClinics($condition));
 }
 function generateGeo($fr, &$triggers, $form = 'Predl'){

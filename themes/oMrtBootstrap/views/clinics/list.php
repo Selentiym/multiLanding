@@ -23,7 +23,10 @@ $criteria = new CDbCriteria();
 $criteria -> addCondition("`ignore_clinic`=0");
 //comment
 $objects = [];
-$objects = $mod -> getClinics($_GET,null,null,$criteria);
+if (!$triggers['prigorod']) {
+    $triggers['isCity'] = 'city';
+}
+$objects = $mod -> getClinics($triggers,null,null,$criteria);
 
 $cs = Yii::app()->getClientScript();
 

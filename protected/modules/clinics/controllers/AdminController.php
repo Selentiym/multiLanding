@@ -2145,4 +2145,27 @@ class AdminController extends Controller
             $c -> savePrices();
         }
     }
+    public function actionSetCityTrigger(){
+        $TV = TriggerValues::model() -> findByAttributes(['verbiage' => 'city']);
+        if (!$TV) {
+            echo "No trigger value found";
+            return;
+        }
+        $count = 0;
+        foreach (clinics::model() -> findAll(['with' => 'prices']) as $clinic) {
+            /**
+             * @type clinics $clinic
+             */
+            if (!$clinic -> getFirstTriggerValue('prigorod')) {
+                $has = explode(';',$clinic -> triggers);
+                $has[] = $TV -> id;
+                $clinic -> triggers = implode(';', $has);
+                $clinic -> setScenario('noPrices');
+                if ($clinic -> save()) {
+                    $count ++;
+                }
+            }
+        }
+        echo $count;
+    }
 }
