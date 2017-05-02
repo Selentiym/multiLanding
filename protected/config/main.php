@@ -209,6 +209,15 @@ return array(
 								'jquery'
 							]
 						],
+						'toggler' => [
+							'baseUrl' => 'libs/toggler',
+							'js' => [
+								'toggler.js'
+							],
+							'depends' => [
+								'jquery'
+							]
+						],
 						'bootstrap4reboot' => [
 							'baseUrl' => 'libs/bootstrap4/',
 							'css' => [
@@ -222,6 +231,15 @@ return array(
 							],
 							'depends' => [
 								'bootsrtap4reboot'
+							]
+						],
+						'bootstrapBreakpointJS' => [
+							'baseUrl' => 'libs/bootstrapBreakpointJS',
+							'js' => [
+								'script.js'
+							],
+							'depends' => [
+								'bootstrap4css'
 							]
 						],
 						'bootstrap4js' => [

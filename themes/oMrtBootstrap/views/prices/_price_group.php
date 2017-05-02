@@ -48,13 +48,14 @@ if (!$model) {
 }
 ?>
 
-<div data-toggle="collapse" data-target="#collapse<?php echo $id; ?>"  role="tabpanel" id="heading<?php echo $id; ?>" class="w-100 price-block p-3 mb-1">
+<!--<div data-toggle="collapse" data-target="#collapse--><?php //echo $id; ?><!--"  role="tabpanel" id="heading--><?php //echo $id; ?><!--" class="w-100 price-block p-3 mb-1">-->
+<div role="tabpanel" id="heading<?php echo $id; ?>" class="w-100 price-block p-3 mb-1 classToggler" data-target="#collapse<?php echo $id; ?>" data-class="opened">
     <div  class="d-flex justify-content-between">
         <?php echo $name; ?>
         <i class="fa arrow"></i>
     </div>
 </div>
-<div class="collapse <?php echo $show; ?>" id="collapse<?php echo $id; ?>">
+<div class="hidden-with-preview<?php echo $show; ?>" id="collapse<?php echo $id; ?>">
     <?php foreach ($prices as $name => $price) {
         $this -> renderPartial('//prices/_single_price_clinics',['price' => $price,'model' => $model,'triggers' => $triggers, 'name' => $name,'mainPrice' => $mainPrice]);
     } ?>

@@ -145,3 +145,24 @@ body h2 {
 #articlePopup .modal-dialog {
     max-width: 70%!important;
 }
+.hidden-with-preview .to-hide-item{
+    display: none;!important;
+    -moz-transition: display 4s;
+    -webkit-transition: display 4s;
+    -o-transition: display 4s;
+    transition: display 4s ease 0.2s;
+}
+.hidden-with-preview .to-hide-item:first-child {
+    display: flex;!important;
+    -moz-transition: display 4s;
+    -webkit-transition: display 4s;
+    -o-transition: display 4s;
+    transition: display 4s ease 0.2s;
+}
+.hidden-with-preview.opened .to-hide-item {
+    display: flex;!important;
+    -moz-transition: display 4s;
+    -webkit-transition: display 4s;
+    -o-transition: display 4s;
+    transition: display 4s ease 0.2s;
+}

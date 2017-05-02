@@ -4,17 +4,25 @@
  * @var HomeController $this
  */
 $this->setPageTitle($model->title);
-Yii::app() -> getClientScript() -> registerMetaTag($model -> description,'description');
-Yii::app() -> getClientScript() -> registerMetaTag($model -> keywords,'keywords');
+$cs = Yii::app() -> getClientScript();
+$cs -> registerMetaTag($model -> description,'description');
+$cs -> registerMetaTag($model -> keywords,'keywords');
 
-Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/articleView',['verbiage' => $model -> verbiage],'&',false,true));
+$cs -> registerLinkTag('canonical', null, $this -> createUrl('home/articleView',['verbiage' => $model -> verbiage],'&',false,true));
+$cs -> registerCoreScript('toggler');
+$cs -> registerCoreScript('bootstrapBreakpointJS');
+$cs -> registerScript('showOnMedium','
+	if (isBreakpoint("md")) {
+		$(".hidden-with-preview").addClass("opened");
+	}
+',CClientScript::POS_READY);
 
 $this->renderPartial('/article/_navBar', array('article' => $model));
 ?>
 
 <div class="row no-gutters">
-	<div class="col-12 col-md-10 p-3 mx-auto article">
-		<div class="prices">
+	<div class="col-12 p-3 mx-auto article row">
+		<div class="prices col-md-3">
 			<?php $this -> renderPartial('/prices/_price_group',[
 					'id' => 'spbPrices',
 					'name' => 'Цены в Санкт-Петербурге',
@@ -33,7 +41,7 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 			]);
 			?>
 		</div>
-		<div>
+		<div class="col-md-9">
 			<?php
 			$text = $model -> text;
 			try {

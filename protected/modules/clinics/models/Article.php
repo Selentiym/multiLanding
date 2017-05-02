@@ -27,7 +27,7 @@ class Article extends BaseModel {
 		4 => 'commercial',
 		5 => 'tomography',
 	];
-	public $SFields = array('metro','research','submitted','price','street','sortBy','area');//,'speciality');
+		public $SFields = array('metro','research','submitted','price','street','sortBy','area');//,'speciality');
 	/**
 	 * @property array children - an array of Article objects that are children to this one.
 	 */
