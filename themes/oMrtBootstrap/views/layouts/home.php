@@ -74,15 +74,15 @@ $triggers = $_GET;
     <div class="row align-items-start justify-content-between text-center">
         <div class="col-md-12 d-flex justify-content-around justify-content-md-end pt-3 p-md-3 align-items-center">
             <div class="mr-auto"><a href="/"><img class="img-fluid" style="max-height:70px" src="<?php echo Yii::app() -> theme -> baseUrl; ?>/images/logo.png" alt="Логотип" /></a></div>
-            <div class="d-flex pr-4 align-items-center">
+            <div class="d-flex pr-4 align-items-center hidden-sm-down">
                 <i class="fa fa-phone fa-2x" style="color:green" aria-hidden="true"></i><div class="d-inline-block ">Запись на<br/> МРТ/КТ</div>
             </div>
             <div class="row align-items-center pr-1 pr-md-3">
                 <div class="pr-2 col-12 col-md-auto ">
                     Режим работы 8.00-21.00
                 </div>
-                <div class="pr-1 col-12 col-md-auto font-weight-bold ">
-                    <i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:8812<?php echo Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a>
+                <div class="pr-1 col-12 col-md-auto font-weight-bold align-items-center d-flex">
+                    <i class="fa fa-phone" aria-hidden="true"></i> <div class="ml-1"><a href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a><br/><a href="tel:<?php echo Yii::app() -> phoneMSC -> getUnformatted(); ?>"><?php echo Yii::app() -> phoneMSC -> getFormatted(); ?></a></div>
                 </div>
             </div>
         </div>
@@ -125,7 +125,8 @@ $triggers = $_GET;
             </div>
             <div class="col-6 col-md-3 mb-3 mb-md-0">
                 <span>Звоните круглосуточно</span><br/>
-                <span><a href="tel:8812<?php echo Yii::app() -> phone -> getShort(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></span>
+                <span><a href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></span>,
+                <span><a href="tel:<?php echo Yii::app() -> phoneMSC -> getUnformatted(); ?>"><?php echo Yii::app() -> phoneMSC -> getFormatted(); ?></a></span>
             </div>
         </div>
     </div>

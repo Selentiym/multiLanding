@@ -25,4 +25,12 @@ class constantPhoneComponent extends CComponent implements iPhoneComponent {
     public function getShort() {
         return substr(preg_replace('/[^\d]/', '', $this -> getFormatted('')), -7);
     }
+
+    /**
+     * @return string has to return a short number consisting of eleven digits
+     * without any other symbols
+     */
+    public function getUnformatted() {
+        return substr(preg_replace('/[^\d]/', '', $this -> getFormatted('')), -11);
+    }
 }
