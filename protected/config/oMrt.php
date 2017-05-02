@@ -134,7 +134,8 @@ return SiteDispatcher::mergeArray(
         ),
         'params'=>array(
             'siteId' => 'oMrt',
-            'formLine' => -9
+            'formLine' => -9,
+            'dd.credentials' => 'partner.2751:JhZdjiuk'
         ),
     )
 );

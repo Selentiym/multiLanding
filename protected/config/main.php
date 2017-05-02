@@ -288,6 +288,25 @@ return array(
 								'assets/owl.theme.default.min.css',
 							],
 							'depends' => ['jquery']
+						],
+						'jedittable' => [
+							'baseUrl' => 'libs/jedittable',
+							'js' => [
+								'jquery.jeditable.mini.js'
+							],
+							'depends' => [
+								'jquery'
+							]
+						],
+						'bootstrap-editable' => [
+							'baseUrl' => 'libs/bootstrap-editable',
+							'js' => [
+								'js/bootstrap-editable.min.js'
+							],
+							'css' => [
+								'css/bootstrap-editable.css'
+							],
+							'depends' => ['jquery']
 						]
 				]
 		),

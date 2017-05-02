@@ -2168,4 +2168,109 @@ class AdminController extends Controller
         }
         echo $count;
     }
+    public function actionLoadPartnersFromDocDoc($area){
+        $ids = [
+            'spb' => 2,
+            'msc' => 1
+        ];
+        $clinics = $this -> getClinicsFromDocDoc($ids[$area],0);
+        $data = [];
+
+        foreach ($clinics as $clinic) {
+            $mrtOrKtCount = 0;
+            if (isset($clinic['Diagnostics'])) {
+                foreach ($clinic['Diagnostics'] as $diagnostic) {
+                    $mrtOrKtCount += substr_count($diagnostic['Name'],'магнитно-резонансная томография');
+                    $mrtOrKtCount += substr_count($diagnostic['Name'],'компьютерная томография');
+                }
+                if ($mrtOrKtCount > 0) {
+                    $data[] = $clinic;
+                }
+            }
+        }
+
+        $ourClinics = $this -> getModule() -> getClinics(['area' => $area]);
+
+        $ourClinicsAndDocdoc = [];
+        $ourClinicsNotDocdoc = [];
+        $ourClinicsAbsentDocdoc = [];
+        foreach ($ourClinics as $ourClinic) {
+            $clinic_item['docdoc_id'] = '';
+            $clinic_item['docdoc_name'] = '';
+            $clinic_item['docdoc_adress'] = '';
+            $clinic_item['our_id'] = $ourClinic->id;
+            $clinic_item['our_name'] = $ourClinic->name;
+            $clinic_item['our_address'] = $ourClinic->address;
+            $clinic_item['our_docdoc_id'] = $ourClinic->docdoc_id;
+            $crossing = false;
+            foreach ($data as $key => $clinic) {
+                if ((string)$ourClinic->docdoc_id == (string)$clinic['Id']) {
+                    $clinic_item['docdoc_id'] = $clinic['Id'];
+                    $clinic_item['docdoc_name'] = $clinic['Name'];
+                    $clinic_item['docdoc_adress'] = $clinic['Street'] . ' ' . $clinic['House'];
+                    $crossing = true;
+                    unset($data[$key]);
+                }
+            }
+            if ($crossing) {
+                $ourClinicsAndDocdoc[] = $clinic_item;
+            } else {
+                if (!is_null($ourClinic->docdoc_id)) {
+                    $ourClinicsAbsentDocdoc[] = $clinic_item;
+                } else {
+                    $ourClinicsNotDocdoc[] = $clinic_item;
+                }
+            }
+        }
+
+        return $this->render('/docdoc/index',
+            [
+                'ourClinicsAndDocdoc' => $ourClinicsAndDocdoc,
+                'ourClinicsNotDocdoc' => $ourClinicsNotDocdoc,
+                'ourClinicsAbsentDocdoc' => $ourClinicsAbsentDocdoc,
+                'data' => $data,
+            ]);
+    }
+    public function actionEditOurClinic(){
+        $pk = Html::encode($_POST['pk']);
+        $property = Html::encode($_POST['name']);
+        $value = Html::encode($_POST['value']);
+        $type = isset($_POST['type']) ? Html::encode($_POST['type']) : 'text';
+
+        if (empty($value)) {
+            $value = null;
+        } else if ($type == 'number') {
+            $value = $value == null ? null : intval($value);
+            if (!is_numeric($value)) {
+                throw new Exception($value . ' не число');
+            }
+        }
+
+        $clinic = clinics::model() -> findByPk($pk);
+
+        $clinic -> $property = $value == null ? null : $value;
+        $clinic -> setScenario('noPrices');
+        $clinic -> save();
+    }
+    private function getClinicsFromDocDoc($cityId, $shift, $clinicsArray = []) {
+        $clinicsRequest = 'https://' . Yii::app()->params['dd.credentials'] . '@back.docdoc.ru/api/rest/1.0.4/json/clinic/list/start/' . $shift . '/count/100/city/' . $cityId . '/order/name';
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $clinicsRequest);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result=curl_exec($ch);
+        curl_close($ch);
+
+        $resultArray = json_decode($result, true);
+        $clinics = $resultArray['ClinicList'];
+        if (count($clinics) > 0 ) {
+            $clinicsArray = array_merge($clinicsArray, $clinics);
+//            return $clinicsArray;
+            return self::getClinicsFromDocDoc($cityId, $shift+count($clinics), $clinicsArray);
+        } else {
+            return $clinicsArray;
+        }
+    }
 }
