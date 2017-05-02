@@ -102,7 +102,7 @@ $triggers = $_GET;
 <!--                        <a class="nav-link" href="--><?php //echo Yii::app() -> controller -> createUrl('home/articles'); ?><!--">Все о МРТ и КТ</a>-->
                         <a class="nav-link" href="<?php echo "/"; ?>">Все о МРТ, КТ и ПЭТ</a>
                     </li>
-                    <li class="ml-auto mr-3 nav-item <?php echo ( $isTom ) ? 'active' : ''; ?>">
+                    <li class="nav-item <?php echo ( $isTom ) ? 'active' : ''; ?>">
 <!--                        <a class="nav-link" href="--><?php //echo Yii::app() -> controller -> createUrl('home/articles'); ?><!--">Все о МРТ и КТ</a>-->
                         <a class="nav-link" href="<?php echo $this -> createUrl('home/tomography'); ?>">Томография</a>
                     </li>
