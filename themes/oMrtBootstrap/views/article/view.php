@@ -23,7 +23,7 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 <div class="row no-gutters">
 	<div class="col-12 p-3 mx-auto article row">
 		<div class="prices col-md-3">
-			<?php $this -> renderPartial('/prices/_price_group',[
+			<?php $this -> renderPartial('/prices/_price_group_article',[
 					'id' => 'spbPrices',
 					'name' => 'Цены в Санкт-Петербурге',
 					'prices' => $model -> getPrices(),
@@ -31,7 +31,7 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 					'show' => false,
 					'triggers' => ['area' => 'spb', 'sortBy' => 'priceUp']
 			]); ?>
-			<?php $this -> renderPartial('/prices/_price_group',[
+			<?php $this -> renderPartial('/prices/_price_group_article',[
 					'id' => 'mscPrices',
 					'name' => 'Цены в Москве',
 					'prices' => $model -> getPrices(),
