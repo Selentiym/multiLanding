@@ -64,16 +64,7 @@ class ClinicsModule extends UWebModule {
 		return $this -> getObjects('clinics',$triggers,$order,$limit,$criteria);
 	}
 	public function getArticles (array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
-		$copy = $triggers;
-		unset($copy['area']);
-		unset($copy['district']);
-		unset($copy['metro']);
-		unset($copy['street']);
-		unset($copy['orderBy']);
-		if (count($copy) == 0) {
-			return Article::model() -> root() -> findAllByAttributes(['id_type' => Article::getTypeId('text')]);
-		}
-		return $this -> getObjects('Article',$copy,$order,$limit,$criteria);
+		return $this -> getObjects('Article',$triggers,$order,$limit,$criteria);
 	}
 	public static function prepareTriggers($triggers){
 		$triggers = array_map(function($val){

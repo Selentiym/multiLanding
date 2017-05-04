@@ -433,7 +433,19 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 </div>
             </div>
             <?php endif; ?>
-            <?php if ($research&&($a = $research -> getArticle())): ?>
+            <?php
+                if ($research&&($a = $research -> getArticle())) {
+                    //Лучше всего, если выбрано исследование
+                } else {
+                    //Если не
+                    if ($triggers['mrt']) {
+                        $a = Article::model() -> findByAttributes(['verbiage' => 'chto-takoe-mrt']);
+                    } elseif ($triggers['kt']) {
+                        $a = Article::model() -> findByAttributes(['verbiage' => 'chto-takoe-kt']);
+                    }
+                }
+                if ($a instanceof Article):
+            ?>
             <div class="card">
                 <div class="card-block">
                     <?php
@@ -461,9 +473,33 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
             <?php endif; ?>
 
             <?php
-            $criteria = new CDbCriteria();
-            $criteria -> compare('id_type', Article::getTypeId('text'));
-            $articles = $mod -> getArticles($triggers, false, null, $criteria);
+
+            $copy = $triggers;
+            unset($copy['area']);
+            unset($copy['district']);
+            unset($copy['metro']);
+            unset($copy['street']);
+            unset($copy['orderBy']);
+            unset($copy['isCity']);
+            if (count($copy) == 0) {
+                $articles = Article::model() -> root() -> findAllByAttributes(['id_type' => Article::getTypeId('text')]);
+            } elseif (count($copy) == 1) {
+                if ($copy['mrt']) {
+                    $parentVerb = 'mrt';
+                }
+                if ($copy['kt']) {
+                    $parentVerb = 'kt';
+                }
+                $parent = Article::model() -> findByAttributes(['verbiage' => $parentVerb]);
+                if ($parent) {
+                    $articles = Article::model()->findAllByAttributes(['parent_id' => $parent->id]);
+                }
+            }
+            if (!$articles) {
+                $criteria = new CDbCriteria();
+                $criteria -> compare('id_type', Article::getTypeId('text'));
+                $articles = $mod -> getArticles($copy, false, null, $criteria);
+            }
             if (!empty($articles)) {
                 echo "<div class='card'><div class='card-block'><div class='card-title'><h3>Полезные статьи</h3></div>";
                 foreach ($articles as $article) {
