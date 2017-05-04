@@ -28,7 +28,18 @@ if (!$model) {
     <div class="right-pane col-12 col-md-3 flex-first flex-md-unordered">
         <img class="mr-3 img-fluid" src="<?php echo Yii::app() -> theme -> baseUrl; ?>/images/logo_old.png" alt="Общегородская служба записи" />
         <div><div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
-        <?php $this -> renderPartial('/clinics/_buttons',['model' => $model]); ?>
+        <button class="btn signUpButton">Записаться</button>
+        <div class="mb-1">Или по телефону</div>
+        <?php
+        if ($triggers['area'] == 'msc') {
+            $phone = Yii::app() -> phoneMSC;
+        } else {
+            $phone = Yii::app() -> phone;
+        }
+        ?>
+        <div class="phone">
+            <a href="tel:<?php echo $phone -> getUnformatted(); ?>"><?php echo $phone -> getFormatted(); ?></a>
+        </div>
     </div>
 
     <div class="col-12">

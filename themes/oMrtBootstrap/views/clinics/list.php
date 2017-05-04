@@ -404,7 +404,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                         Вы можете обратиться к специалистам "Общегородской Службы Записи", где вам помогут найти подходящий диагностический центр.
                     </li>
                     <?php endif; ?>
-                    <?php $this -> renderPartial('//clinics/_service'); ?>
+                    <?php $this -> renderPartial('/clinics/_service',['triggers' => $triggers]); ?>
                     <?php foreach($objects as $clinic){
                         $this -> renderPartial('/clinics/_single_clinics',['model' => $clinic,'price' => $research]);
 //                        break;
