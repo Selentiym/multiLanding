@@ -61,7 +61,9 @@ console.log(owl2);
 		"#reviews":"#reviews"
 	};
 	$(links[anchor]).collapse("show");
-	window.location.hash(links[anchor]);
+	if (links[anchor]) {
+		window.location.hash=links[anchor];
+	}
 //	alert(anchor);
 ',CClientScript::POS_READY);
 
