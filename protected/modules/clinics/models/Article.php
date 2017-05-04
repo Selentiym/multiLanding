@@ -803,21 +803,41 @@ class Article extends BaseModel {
 	}
 
 	/**
-	 * @return bool|string
+	 * @param $tagName
+	 * @return DOMElement[]|false
 	 */
-	public function getImageUrl(){
+	public function parseTags($tagName){
 		$dom = new DOMDocument();
 		if ($this->text) {
+			$rez = [];
 			if ($dom -> loadHTML($this -> text)) {
-				foreach ($dom -> getElementsByTagName('img') as $node) {
+				foreach ($dom -> getElementsByTagName($tagName) as $node) {
 					/**
 					 * @type DOMElement $node;
 					 */
-					$src = $node -> getAttribute('src');
-					if ($src) {
-						return $src;
-					}
+					$rez[] = $node;
 				}
+			}
+			return $rez;
+		}
+		return false;
+	}
+
+	/**
+	 * @return bool|string
+	 */
+	public function getImageUrl(){
+		$nodes = $this -> parseTags('img');
+		if (empty(array_filter($nodes))) {
+			return false;
+		}
+		foreach ($nodes as $node) {
+			/**
+			 * @type DOMElement $node;
+			 */
+			$src = $node -> getAttribute('src');
+			if ($src) {
+				return $src;
 			}
 		}
 		return false;

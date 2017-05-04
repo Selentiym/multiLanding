@@ -451,18 +451,34 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     <?php
                     if ($a) {
                         echo $a -> description;
+                        $url = $a -> getImageUrl();
+                        if (file_exists($url)) {
+                            echo "<img src='$url' alt='$a->name'/>";
+                        }
                     } ?>
                     <div class="text-center"><button type="button" class="btn" data-toggle="modal" data-target="#articlePopup">Подробнее</button></div>
                     <div class="modal fade" id="articlePopup" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content p-3">
-                                <div class="modal-header"></div>
+                                <?php
+                                if ($a) : ?>
+                                <div class="modal-header">
+                                    <h2>
+                                    <?php
+                                        preg_match('~\<h1\>(.*)\</h1\>~ui',$a -> text, $matches);
+                                        $heading = $matches[1];
+                                        preg_replace('~\<h1\>(.*)\</h1\>~ui','',$a -> text);
+                                        echo $heading;
+                                    ?>
+                                    </h2>
+                                </div>
                                 <div class="modal-body">
                                     <?php
-                                    if ($a) {
+                                        $a -> text = preg_replace('~\<h1\>.*\</h1\>~ui','',$a -> text);
                                         echo $a -> prepareTextByVerbiage($triggers);
-                                    } ?>
+                                     ?>
                                 </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
