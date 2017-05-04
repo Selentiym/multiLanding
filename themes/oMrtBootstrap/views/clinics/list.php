@@ -115,6 +115,25 @@ $cs -> registerScript('implementLinks',"
 //        ktChange();
         body.on('mrtChange.triggers', mrtChange);
         body.on('ktChange.triggers', ktChange);
+        var mrtButton = $('#mrtButton');
+        var ktButton = $('#ktButton');
+        function clickButton(button, neededState) {
+            if ((button.hasClass('pressed')) ^ (neededState)) {
+                button.trigger('click');
+            }
+        }
+        $('#research').on('change',function(e){
+//            var el = $(e.params.data.element);
+            var el = $(this).find(':selected');
+            var type = el.attr('data-type');
+            if (type==1) {
+                clickButton(mrtButton, true);
+                clickButton(ktButton, false);
+            } else if (type==2) {
+                clickButton(ktButton,true);
+                clickButton(mrtButton, false);
+            }
+        });
         mrtChange();
         ktChange();
     })();
@@ -338,17 +357,26 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 </div>
                 <div class="row">
                     <div class="col-12 col-md-4">
+
+                        <select id="research" name="research">
+                            <option value="">Исследование</option>
                         <?php
-                        echo CHtml::DropDownListChosen2(
-                            'research',
-                            'research',
-                            CHtml::listData(ObjectPrice::model() -> findAll(['order' => 'id_block ASC']),'verbiage','name'),
-                            //$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
-                            ['style' => 'width:100%', 'empty_line' => true, 'placeholder' => 'Исследование'],
-                            $triggers['research'] ? [$triggers['research']] : [],
-                            [],
-                            true
-                        );
+                            $cs -> registerScript('researchSelectScript','var $sel = $("#research"); $sel.select2(); $sel.trigger("change")',CClientScript::POS_READY);
+                            foreach (ObjectPrice::model() -> findAll(['order' => 'id_block ASC']) as $price) {
+                                $selected = $triggers['research'] == $price->verbiage ? " selected=selected" : "";
+                                echo "<option value='$price->verbiage'$selected data-type='$price->id_type'>$price->name</option>";
+                            }
+//                        echo CHtml::DropDownListChosen2(
+//                            'research',
+//                            'research',
+//                            CHtml::listData(ObjectPrice::model() -> findAll(['order' => 'id_block ASC']),'verbiage','name'),
+//                            //$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
+//                            ['style' => 'width:100%', 'empty_line' => true, 'placeholder' => 'Исследование'],
+//                            $triggers['research'] ? [$triggers['research']] : [],
+//                            [],
+//                            true
+//                        );
+                        echo "</select>";
                         echo CHtml::DropDownListChosen2(
                             'metro',
                             'metro',
@@ -453,7 +481,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                         echo $a -> description;
                         $url = $a -> getImageUrl();
                         if ($url) {
-                            echo "<img style='width:90%' class='mx-auto' src='$url' alt='$a->name'/>";
+                            echo "<img style='width:90%;margin:5px auto; display:block;' class='mx-auto' src='$url' alt='$a->name'/>";
                         }
                     } ?>
                     <div class="text-center"><button type="button" class="btn" data-toggle="modal" data-target="#articlePopup">Подробнее</button></div>
