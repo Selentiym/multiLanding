@@ -56,6 +56,13 @@ console.log(owl2);
 		},
 
 	});
+	var anchor = window.location.hash;
+	var links = {
+		"#reviews":"#reviews"
+	};
+	$(links[anchor]).collapse("show");
+	window.location.hash(links[anchor]);
+//	alert(anchor);
 ',CClientScript::POS_READY);
 
 $modelName = get_class($model);
