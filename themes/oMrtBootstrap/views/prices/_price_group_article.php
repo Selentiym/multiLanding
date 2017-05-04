@@ -14,6 +14,9 @@
 if (empty($prices)) {
     return;
 }
+if ($show) {
+    $show = ' showDefault';
+}
 if (!$model) {
     $ids = [];
     foreach ($prices as $price) {

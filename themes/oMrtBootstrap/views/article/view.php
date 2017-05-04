@@ -13,11 +13,41 @@ $cs -> registerCoreScript('toggler');
 $cs -> registerCoreScript('bootstrapBreakpointJS');
 $cs -> registerScript('showOnMedium','
 	if (isBreakpoint("md")) {
-		$(".hidden-with-preview").addClass("opened");
+		var toShow = $(".hidden-with-preview.showDefault");
+		toShow.addClass("opened");
+		toShow.removeClass("showDefault");
 	}
 ',CClientScript::POS_READY);
 
 $this->renderPartial('/article/_navBar', array('article' => $model));
+
+$cityCodes = array(
+		'Санкт-Петербург' => 'spb',
+//		'Воронеж' => 'vrn',
+//		'Екатеринбург' => 'ekb',
+//		'Ижевск' => 'izh',
+//		'Казань' => 'kazan',
+//		'Краснодар' => 'krd',
+//		'Московская область' => 'mo',
+//		'Нижний Новгород' => 'nn',
+//		'Новосибирск' => 'nsk',
+//		'Пермь' => 'perm',
+//		'Ростов-на-Дону' => 'rnd',
+//		'Самара' => 'samara',
+//		'Уфа' => 'ufa',
+//		'Челябинск' => 'chlb'
+);
+if ($_GET['ip']) {
+	$geo = new Geo(array('ip' => $_GET['ip']));
+} else {
+	$geo = new Geo();
+}
+$cityFromIp = $geo -> get_value('city');
+$code = $cityCodes[$cityFromIp];
+if (!$code) { $code = 'msc'; }
+
+
+
 ?>
 
 <div class="row no-gutters">
@@ -28,7 +58,7 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 					'name' => 'Цены в Санкт-Петербурге',
 					'prices' => $model -> getPrices(),
 					'model' => false,
-					'show' => false,
+					'show' => $code == 'spb',
 					'triggers' => ['area' => 'spb', 'sortBy' => 'priceUp']
 			]); ?>
 			<?php $this -> renderPartial('/prices/_price_group_article',[
@@ -36,7 +66,7 @@ $this->renderPartial('/article/_navBar', array('article' => $model));
 					'name' => 'Цены в Москве',
 					'prices' => $model -> getPrices(),
 					'model' => false,
-					'show' => false,
+					'show' => $code == 'msc',
 					'triggers' => ['area' => 'msc', 'sortBy' => 'priceUp']
 			]);
 			?>
