@@ -103,11 +103,34 @@ function generateText($triggers){
     echo "<p>Где можно сделать $rVin в {$geo}?</p>";
     echo "<p>В $geo диагностику $r можно пройти в ".echoClinicsNumber(['mrt','kt','research','area','prigorod','okrug']).'</p>';
 
-
-//    if ($research) {
+    if (($research)||(($triggers['mrt'])xor($triggers['kt']))) {
         echo "<p>Сколько стоит {$r}?</p>";
-        echo "<p>Средняя цена на $rVin в {$geo} с учетом всех параметров равна <strong>{$mod->averagePrice($triggers)}руб</strong></p>";
-//    }
+        if ($pr = $mod->averagePrice($triggers)) {
+            $prText = "равна <strong>{$pr}руб</strong>";
+        } else {
+            $prText = "не определена";
+        }
+        echo "<p>Средняя цена на $rVin в {$geo} с учетом всех параметров $prText</p>";
+    } else {
+        $copy = $triggers;
+        $copy['mrt'] = 'mrt';
+        if ($pr = $mod->averagePrice($copy)) {
+            $prText = "равна <strong>{$pr}руб</strong>";
+        } else {
+            $prText = "не определена";
+        }
+        echo "<p>Сколько стоит МРТ?</p>";
+        echo "<p>Средняя цена на МРТ в {$geo} с учетом всех параметров $prText</p>";
+        $copy['kt'] = 'kt';
+        unset($copy['mrt']);
+        if ($pr = $mod->averagePrice($copy)) {
+            $prText = "равна <strong>{$pr}руб</strong>";
+        } else {
+            $prText = "не определена";
+        }
+        echo "<p>Сколько стоит КТ?</p>";
+        echo "<p>Средняя цена на КТ в {$geo} с учетом всех параметров $prText</p>";
+    }
     if ($street) {
         echo "<p>Где можно сделать $r в непосредственной близости от адреса: {$street}?</p>";
         echo "Пройти $rVin можно в ".echoMedCentersNumber(['district','street'])." в непосредственной близости от адреса: {$street}";

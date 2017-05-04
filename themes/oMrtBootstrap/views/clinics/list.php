@@ -452,8 +452,8 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     if ($a) {
                         echo $a -> description;
                         $url = $a -> getImageUrl();
-                        if (file_exists($url)) {
-                            echo "<img src='$url' alt='$a->name'/>";
+                        if ($url) {
+                            echo "<img style='width:90%' class='mx-auto' src='$url' alt='$a->name'/>";
                         }
                     } ?>
                     <div class="text-center"><button type="button" class="btn" data-toggle="modal" data-target="#articlePopup">Подробнее</button></div>
