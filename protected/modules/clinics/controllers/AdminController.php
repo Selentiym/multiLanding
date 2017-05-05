@@ -1382,6 +1382,7 @@ class AdminController extends Controller
 //        $a = Article::model() -> findByPk(3);
 //        //$a -> text = "<search:nameOne>";
 //        echo $a -> prepareText(['search' => 2]);
+
     }
 
     public function actionfileUpload()

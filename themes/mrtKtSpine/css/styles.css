@@ -1,0 +1,135 @@
+#searchForm div.row{
+    margin-bottom:1rem;
+}
+#searchForm .button {
+    padding:0.5rem 0.75rem;
+    margin:0.25rem;
+    cursor:pointer;
+    border-radius:5px;
+}
+#searchForm .button.pressed {
+    background-color: #57ae8a;
+}
+#searchForm select {
+    width:100%;
+}
+#searchForm #formHead {
+    border-bottom:1px solid #57ae8a;
+}
+button {
+    background-color: #57ae8a;
+    cursor:pointer;
+}
+a {
+    color: #57ae8a;
+}
+.mainColor {
+    color: #57ae8a;
+}
+.article-right .card {
+    background-color: #dbdcd2;
+}
+.article-right h1 {
+    font-size:1rem;
+}
+.article-right h3 {
+    font-size:1rem;
+}
+footer {
+    background-color: #dbdcd2;
+}
+#mapContainer {
+    text-align:center;
+}
+.clinic .right-pane {
+    width:30%;
+    text-align:center;
+}
+.clinic .text {
+    display: inline-block;
+}
+.clinic .small_info i{
+    color: #57ae8a;
+}
+.clinic h3 {
+    font-size:1.2rem;
+}
+.clinic .price {
+    background-color: #57ae8a;
+}
+nav {
+    background-color: #57ae8a;
+}
+.single-clinic {
+    border-top:1px solid #57ae8a;
+}
+.row.buttons > div {
+    font-size:1.25rem;
+    cursor:pointer;
+    background-color:#eaeaea;
+}
+.row.buttons > div[aria-expanded='true'] {
+    background-color:#57ae8a;
+}
+
+.doctor-carousel img{
+    /*max-height:200px;*/
+}
+
+.doctor-carousel .text-el {
+    color:#949494;
+}
+.doctor-carousel .text-el .name-el {
+    color:black;
+}
+
+.price-block {
+    background-color: #cdebde;
+    cursor:pointer;
+}
+.single-price {
+    background-color: #f2f2f2;
+}
+#reviews {
+    max-width:700px;
+}
+#clinic-carousel img {
+    max-height: 500px;
+    margin: 0 auto;
+}
+#clinic-carousel .carousel-control-prev,#clinic-carousel .carousel-control-next {
+}
+#clinic-carousel {
+    background-color: #f2f2f2;
+}
+.article h1, .article h2{
+    text-align: center;
+    margin-bottom:1rem;
+}
+.article h4 {
+    color:#57ae8a;
+}
+.btn {
+    color:white;
+    font-weight:bold;
+}
+
+.price-block .arrow::after {
+    display: flex;
+    content:"\f0d8";
+}
+.price-block.collapsed .arrow::after {
+    content:"\f0d7";
+}
+.single-price.highlighted {
+    background-color: #57ae8a;
+    color:white;
+    font-weight: bold;
+}
+#error404container {
+    background-image: url('../images/lost.jpg');
+    background-size: 100%;
+}
+body h2 {
+    font-weight:bold;
+}

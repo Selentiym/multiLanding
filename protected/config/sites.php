@@ -59,6 +59,12 @@ return array(
         ],
         'userAgent' => false
     ],
+    'mrtKtSpine' => [
+        'host' => [
+            'spine.cq97848.tmweb.ru',
+        ],
+        'userAgent' => false
+    ],
     'newDesign' => [
         'host' => [
             'domain',
