@@ -79,7 +79,7 @@ return SiteDispatcher::mergeArray(
                 'tablePrefix' => 'tbl_',
                 'emulatePrepare' => true,
                 'username' => 'cq97848_taskgen',
-                'password' => 'kicker1995',
+                'password' => 'kicker',
                 'charset' => 'utf8',
             ),
         ),
