@@ -169,6 +169,6 @@ body h2 {
 #priceUpButton{
     background-color:#f0ff7d;
 }
-#priceUpButton .active{
+#priceUpButton.active{
     background-color: #adff1d;
 }
