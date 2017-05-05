@@ -166,3 +166,9 @@ body h2 {
     -o-transition: display 4s;
     transition: display 4s ease 0.2s;
 }
+#priceUpButton{
+    background-color:#f0ff7d;
+}
+#priceUpButton .active{
+    background-color: #adff1d;
+}

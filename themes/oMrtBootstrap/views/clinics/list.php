@@ -172,6 +172,16 @@ $cs -> registerScript('implementLinks',"
         body.on(group[i] + 'Change', createHandlerForGeo(i));
         body.trigger(group[i] + 'Change',{});
     }
+    var sortByField = $('#sortBy');
+    $('#priceUpButton').click(function(){
+        var val = sortByField.val();
+        if (!val) {
+            sortByField.val('priceUp');
+        } else {
+            sortByField.val('');
+        }
+        $('#searchForm').submit();
+    });
 
 ",CClientScript::POS_READY);
 
@@ -411,18 +421,20 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('contrast',$triggers); ?></div>
                     <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('doctor',$triggers); ?></div>
                     <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('children',$triggers); ?></div>
-                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('sortBy',$triggers); ?></div>
+
                 </div>
                 <div class="row no-gutters justify-content-center">
                     <div class="col-auto"><button type="submit" class="btn">Найти</button></div>
                     <div class="col-auto ml-3"><a href="<?php echo $this -> createUrl('home/clinics',['area' => $triggers['area']],'&',true); ?>"><button type="button" class="btn" >Сбросить</button></a></div>
                 </div>
+                <?php echo Triggers::triggerHtml('sortBy',$triggers); ?>
             </form>
             <div id="mapContainer" class="hidden-sm-down mb-3">
                 <h2 class="mb-3">Клиники на карте</h2>
                 <div><button class="btn" data-toggle="collapse" data-target="#map">Показать на карте</button></div>
                 <div class="collapse"  id="map" style="width:100%; height:300px">
                 </div>
+                <div style="text-align:left" class="col-12 my-1 ml-2">Сортировка по цене: <button id="priceUpButton" type="button" style="font-weight:bold;padding:4px;" class="rounded <?php echo $triggers['sortBy']=='priceUp' ? "active" : ""; ?>" data-toggle="button" aria-pressed="<?php echo $triggers['sortBy']=='priceUp' ? "true" : "false"; ?>" autocomplete="off">по возр.</button></div>
             </div>
             <div id="clinicsList">
                 <ul class="list-unstyled">
