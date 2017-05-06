@@ -485,22 +485,16 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 </div>
             </div>
             <?php endif; ?>
-            <?php
-                if ($research&&($a = $research -> getArticle())) {
-                    //Лучше всего, если выбрано исследование
-                } else {
-                    //Если не
-                    if ($triggers['mrt']) {
-                        $a = Article::model() -> findByAttributes(['verbiage' => 'chto-takoe-mrt']);
-                    } elseif ($triggers['kt']) {
-                        $a = Article::model() -> findByAttributes(['verbiage' => 'chto-takoe-kt']);
-                    }
-                }
-                if ($a instanceof Article) {
-                    $this -> renderPartial('/article/_popup_article', ['a' => $a, 'triggers' => $triggers]);
-                } ?>
 
             <?php
+
+            $extraArticles = ArticleRule::getAllArticles('commercial', $triggers);
+            if (!empty($extraArticles)) {
+                foreach ($extraArticles as $article) {
+                    $this -> renderPartial('/article/_popup_article', ['a' => $article, 'triggers' => $triggers]);
+                }
+            }
+
             $copy = $triggers;
             unset($copy['area']);
             unset($copy['district']);
@@ -536,13 +530,6 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     ";
                 }
                 echo "</div></div>";
-            }
-
-            $extraArticles = ArticleRule::getAllArticles('commercial', $triggers);
-            if (!empty($extraArticles)) {
-                foreach ($extraArticles as $article) {
-                    $this -> renderPartial('/article/_popup_article', ['a' => $article, 'triggers' => $triggers]);
-                }
             }
             ?>
         </div>
