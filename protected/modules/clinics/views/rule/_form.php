@@ -23,6 +23,16 @@ $cs = Yii::app()->getClientScript();
 $cs-> registerCoreScript('select2');
 $cs-> registerCssFile($baseTheme.'/css/objects_list.css');
 $cs -> registerScript('add_select2s','$("#search_speciality").select2();$("#search_metro").select2();',CClientScript::POS_READY);
+$cs -> registerCss('buttonPressed','
+.button {
+    padding:5px;
+    border-radius:5px;
+    display:inline-block;
+}
+.button.pressed {
+    background-color:#777;
+}
+');
 ?>
 <div class="row-fluid">
     <hr><br/>

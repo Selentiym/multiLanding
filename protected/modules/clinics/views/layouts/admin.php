@@ -6,17 +6,6 @@
 $mod = $this -> getModule();
 $themeUrl = Yii::app() -> getTheme() -> baseUrl;
 $cs = Yii::app() -> getClientScript();
-//$cs -> registerCssFile($themeUrl.'/css/styles.css');
-$cs -> registerCss('buttonPressed','
-.button {
-    padding:5px;
-    border-radius:5px;
-    display:inline-block;
-}
-.button.pressed {
-    background-color:#777;
-}
-');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
