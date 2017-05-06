@@ -189,6 +189,7 @@ $cs -> registerCoreScript('select2_4');
 $cs -> registerCoreScript('rateit');
 
 $cs->registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");
+//$extraArticles = ArticleRule::getAllArticles('commercial', $triggers);
 $toAdd = '';
 foreach ($objects as $clinic) {
     $variab = 'v'.str_replace('-','',$clinic -> verbiage);
@@ -463,6 +464,17 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
 
                 </div>
             </div>
+<!--            --><?php //if ($triggers['contrast']): ?>
+<!--            <div class="card mb-3">-->
+<!--                <div class="card-block">-->
+<!--                    --><?php
+//                    contrastText($triggers);
+//                    //echo "Пройти диагностику $r можно в ".$countClinics(['mrt','kt','research','area']). " медцентрах.";
+//                    ?>
+<!---->
+<!--                </div>-->
+<!--            </div>-->
+<!--            --><?php //endif; ?>
             <?php if ($a = ArticleRule::getArticle('dynamic')): ?>
             <div class="card">
                 <div class="card-block">
@@ -484,52 +496,11 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                         $a = Article::model() -> findByAttributes(['verbiage' => 'chto-takoe-kt']);
                     }
                 }
-                if ($a instanceof Article):
-            ?>
-            <div class="card">
-                <div class="card-block">
-                    <?php
-                    if ($a) {
-                        echo $a -> description;
-                        $url = $a -> getImageUrl();
-                        if ($url) {
-                            echo "<img style='width:90%;margin:5px auto; display:block;' class='mx-auto' src='$url' alt='$a->name'/>";
-                        }
-                    } ?>
-                    <div class="text-center"><button type="button" class="btn" data-toggle="modal" data-target="#articlePopup">Подробнее</button></div>
-                    <div class="modal fade" id="articlePopup" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content p-3">
-                                <?php
-                                if ($a) : ?>
-                                <div class="modal-header">
-                                    <h2>
-                                    <?php
-                                        preg_match('~\<h1\>(.*)\</h1\>~ui',$a -> text, $matches);
-                                        $heading = $matches[1];
-                                        preg_replace('~\<h1\>(.*)\</h1\>~ui','',$a -> text);
-                                        echo $heading;
-                                    ?>
-                                    </h2>
-                                </div>
-                                <div class="modal-body">
-                                    <?php
-                                        $a -> text = preg_replace('~\<h1\>.*\</h1\>~ui','',$a -> text);
-                                        echo $a -> prepareTextByVerbiage($triggers);
-                                     ?>
-                                </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--                    <button class="btn" data-toggle="collapse" data-target="#moreDynamic">Подробнее</button>-->
-                </div>
-            </div>
-            <?php endif; ?>
+                if ($a instanceof Article) {
+                    $this -> renderPartial('/article/_popup_article', ['a' => $a, 'triggers' => $triggers]);
+                } ?>
 
             <?php
-
             $copy = $triggers;
             unset($copy['area']);
             unset($copy['district']);
@@ -565,6 +536,13 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     ";
                 }
                 echo "</div></div>";
+            }
+
+            $extraArticles = ArticleRule::getAllArticles('commercial', $triggers);
+            if (!empty($extraArticles)) {
+                foreach ($extraArticles as $article) {
+                    $this -> renderPartial('/article/_popup_article', ['a' => $article, 'triggers' => $triggers]);
+                }
             }
             ?>
         </div>

@@ -842,4 +842,11 @@ class Article extends BaseModel {
 		}
 		return false;
 	}
+	public function getHeading(){
+		preg_match('~\<h1\>(.*)\</h1\>~ui',$this -> text, $matches);
+		$heading = $matches[1];
+		preg_replace('~\<h1\>(.*)\</h1\>~ui','',$this -> text);
+		$this -> text = preg_replace('~\<h1\>.*\</h1\>~ui','',$this -> text);
+		echo $heading;
+	}
 }

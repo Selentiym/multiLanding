@@ -223,10 +223,11 @@ class ArticleRule extends UClinicsModuleModel implements iRule
 
 	/**
 	 * @param string $typeName
-	 * @return Article|bool
+	 * @param mixed[] $triggers
+	 * @return Article[]
 	 * @throws Exception
 	 */
-	public static function getArticle($typeName){
+	public static function getAllArticles($typeName, $triggers, $stopOnFirst = false){
 		$id = Article::getTypeId($typeName);
 		if (!$id) {
 			throw new Exception("There is no type of articles called $typeName.");
@@ -235,16 +236,28 @@ class ArticleRule extends UClinicsModuleModel implements iRule
 		$c -> compare('id_object_type', $id);
 		$c -> compare('active', 1);
 		$c -> order = 'num ASC';
-		$toShow = false;
+		$rez = [];
 		foreach (ArticleRule::model() -> findAll($c) as $rule) {
 			/**
 			 * @type ArticleRule $rule
 			 */
-			if ($rule -> apply($_GET)) {
-				$toShow = $rule -> article;
-				break;
+			if ($rule -> apply($triggers)) {
+				$rez[] = $rule -> article;
+				if ($stopOnFirst) {
+					break;
+				}
 			}
 		}
-		return $toShow;
+		return $rez;
+	}
+
+	/**
+	 * @param string $typeName
+	 * @return Article|bool
+	 * @throws Exception
+	 */
+	public static function getArticle($typeName){
+		$rez = self::getAllArticles($typeName, $_GET, true);
+		return current($rez);
 	}
 }

@@ -79,6 +79,6 @@ class ArticleRuleExpressionEvaluator extends aLogicalExpressionEvaluator {
         if (!isset(self::$_allowedData)) {
             self::$_allowedData = CHtml::giveAttributeArray(ArticleRule::model() -> findAll(), 'verbiage');
         }
-        return in_array($str, self::$_allowedData)||in_array($str,['mrtResearch','ktResearch']);
+        return in_array($str, self::$_allowedData)||in_array($str,['mrtResearch','ktResearch',self::SELF]);
     }
 }
