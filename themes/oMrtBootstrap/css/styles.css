@@ -132,7 +132,11 @@ nav {
 }
 .single-price.highlighted {
     background-color: #57ae8a;
-    color:white;
+    color:white;!important;
+    font-weight: bold;
+}
+.single-price.highlighted a{
+    color:white;!important;
     font-weight: bold;
 }
 #error404container {

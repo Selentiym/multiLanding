@@ -56,6 +56,32 @@ if (!$model) {
             <p>Записаться на прием через службу записи - бесплатно. Просто позвоните, и вам помогут подобрать клинику, прояснить все сложные моменты, запишут на обследование. Услуги центра ничего не стоят, оплату за обследование пациент вносит непосредственно в клинике.</p>
             <p>В отдельных центрах при записи через службу можно пройти диагностику даже дешевле, чем при самостоятельном выборе этой же клиники: этому способствуют партнерские скидки. Помимо того, при записи всегда будут учитываться особенности клиента: группа (студенты, медицинские работники, инвалиды), время записи (существуют скидки на обследование, например, в ночное время), прочие возможные основания для получения скидки. Общегородская служба записи на МРТ и КТ обследования постарается сделать все, чтобы клиент получил качественную услугу по максимально сниженной стоимости.</p>
         </div>
-        <button class="btn" data-toggle="collapse" data-target="#moreAboutService">Подробнее</button>
+        <button class="btn my-2" data-toggle="collapse" data-target="#moreAboutService">Подробнее</button>
+        <?php
+        if ($price) {
+            $copy = [
+                'area' => $triggers['area'],
+                'research' => $triggers['research'],
+                'sortBy' => 'priceUp'
+            ];
+
+            $servicePrices = ObjectPriceBlock::model()->findByPk($price->id_block) -> prices;
+            if (!empty($servicePrices)) {
+                $criteria = new CDbCriteria();
+                $criteria -> compare('partner', 1);
+                $this -> renderPartial('/prices/_price_group_article',[
+                    'id' => 'spbPrices',
+                    'name' => $price -> block -> name,
+                    'prices' => $servicePrices,
+                    'model' => false,
+                    'show' => true,
+                    'triggers' => $copy,
+                    'criteria' => $criteria,
+                    'mainPrice' => $price
+                ]);
+            }
+//            $this->renderPartial('/clinics/_priceList', ['model' => $model, 'blocks' => [ObjectPriceBlock::model()->findByPk($price->id_block)], 'price' => $price]);
+        }
+        ?>
     </div>
 </li>

@@ -157,4 +157,7 @@ class ObjectPriceValue extends CTModel
 		$m = ObjectPriceValue::model();
 		return $m -> findAll($criteria);
 	}
+	public function __toString() {
+		return (string)$this -> value;
+	}
 }

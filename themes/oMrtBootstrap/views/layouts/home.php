@@ -11,6 +11,16 @@ $cs -> registerCoreScript('bootstrap4js');
 $cs -> registerCoreScript('font-awesome');
 $cs -> registerCoreScript('scrollToTopActivate');
 $cs -> registerCoreScript('maskedInput');
+$cs -> registerCoreScript('toggler');
+
+$cs -> registerCoreScript('bootstrapBreakpointJS');
+$cs -> registerScript('showOnMedium','
+	if (isBreakpoint("md")) {
+		var toShow = $(".hidden-with-preview.showDefault");
+		toShow.addClass("opened");
+		toShow.removeClass("showDefault");
+	}
+',CClientScript::POS_READY);
 
 $cs -> registerScript('initiate_popup_forms','
     $(".signUpForm #phone").mask("+7(999)999-99-99");
@@ -100,7 +110,7 @@ $triggers = $_GET;
                     </li>
                     <li class="nav-item <?php echo ( $triggers['area'] != 'spb' && (!$isTom) && $triggers['area'] != 'msc' ) ? 'active' : ''; ?>">
 <!--                        <a class="nav-link" href="--><?php //echo Yii::app() -> controller -> createUrl('home/articles'); ?><!--">Все о МРТ и КТ</a>-->
-                        <a class="nav-link" href="<?php echo "/"; ?>">Все о МРТ, КТ и ПЭТ</a>
+                        <a class="nav-link" href="<?php echo Yii::app() -> baseUrl."/"; ?>">Все о МРТ, КТ и ПЭТ</a>
                     </li>
                     <li class="nav-item <?php echo ( $isTom ) ? 'active' : ''; ?>">
 <!--                        <a class="nav-link" href="--><?php //echo Yii::app() -> controller -> createUrl('home/articles'); ?><!--">Все о МРТ и КТ</a>-->

@@ -22,8 +22,14 @@ $highLight = (($mainPrice -> id)&&(($price->id==$mainPrice->id)||($price->id==$m
     <?php else:
         $triggers['research'] = $price -> verbiage;
 //        $triggers['modelName'] = 'clinics';
+        $cached = $price -> getCachedPrice();
+        if (($cached -> id_price == $price -> id)||(!$cached)) {
+            $showName = $price -> name;
+        } else {
+            $showName = $price -> replacement -> name. ' (включает '.$price -> name.')';
+        }
         ?>
-        <div class="col text-left"><?php echo CHtml::link($price -> name,$this -> createUrl('home/clinics',$triggers,'&',false,true)); ?></div>
+        <div class="col text-left"><?php echo CHtml::link($showName,$this -> createUrl('home/clinics',$triggers,'&',false,true)); ?></div>
         <?php if ($price -> getCachedPrice()) :?>
         <div class="col-auto font-weight-bold mr-2">от <?php
             echo CHtml::link($price -> getCachedPrice(),$this -> createUrl('home/clinics',$triggers,'&',false,true));

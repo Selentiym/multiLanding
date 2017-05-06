@@ -9,15 +9,6 @@ $cs -> registerMetaTag($model -> description,'description');
 $cs -> registerMetaTag($model -> keywords,'keywords');
 
 $cs -> registerLinkTag('canonical', null, $this -> createUrl('home/articleView',['verbiage' => $model -> verbiage],'&',false,true));
-$cs -> registerCoreScript('toggler');
-$cs -> registerCoreScript('bootstrapBreakpointJS');
-$cs -> registerScript('showOnMedium','
-	if (isBreakpoint("md")) {
-		var toShow = $(".hidden-with-preview.showDefault");
-		toShow.addClass("opened");
-		toShow.removeClass("showDefault");
-	}
-',CClientScript::POS_READY);
 
 $this->renderPartial('/article/_navBar', array('article' => $model));
 
