@@ -14,7 +14,7 @@ $vk = $model -> getVkAccount();
 <div class="_post post wcomments_post">
     <div class="_post_content">
         <a target="_blank" class="post_image" href="<?php echo $vk -> genUrl(); ?>">
-            <img src="<?php echo $vk -> photo; ?>" class="post_img">
+            <img src="<?php echo $vk -> photo; ?>" alt="<?php echo $vk->last_name. ' ' . $vk -> first_name; ?>" class="post_img">
         </a>
         <div class="post_content">
             <div class="wcomments_post_content">
