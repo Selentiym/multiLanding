@@ -44,7 +44,9 @@ class ButtonTrigger extends Triggers {
         if ($dopParameters['noChildren']) {
             $children = '';
         }
-        return CHtml::tag('div',$htmlOptions, $mainVal -> value) .
+        $optionsForDiv = $htmlOptions;
+        unset($optionsForDiv['name']);
+        return CHtml::tag('div',$optionsForDiv, $mainVal -> value) .
             $children .
             CHtml::hiddenField($htmlOptions['name'],$initialValue);
     }

@@ -48,12 +48,6 @@ $cs = Yii::app()->getClientScript();
 $cs -> registerScript('implementLinks',"
     var body = $('body');
 
-//    body.on('change.triggers', function(e, extra){
-//        console.log(extra);
-//        alert('changed');
-//    });
-
-
     (function(){
         var inputObject = {};
         inputObject.mrtInput = $('input[name=mrt]');
@@ -124,10 +118,6 @@ $cs -> registerScript('implementLinks',"
                 } catch (e) {}
             }
         }
-//        inputObject.mrtInput.change(mrtChange);
-//        inputObject.ktInput.change(ktChange);
-//        mrtChange();
-//        ktChange();
         body.on('mrtChange.triggers', mrtChange);
         body.on('ktChange.triggers', ktChange);
         var mrtButton = $('#mrtButton');
@@ -138,7 +128,6 @@ $cs -> registerScript('implementLinks',"
             }
         }
         $('#research').on('change',function(e){
-//            var el = $(e.params.data.element);
             var el = $(this).find(':selected');
             var type = el.attr('data-type');
             if (type==1) {
@@ -228,17 +217,10 @@ $cs->registerScript("map_init","
             $('#map').height(300);
             $(window).trigger('resize');
             allClinics.container.fitToViewport()
-//            if (typeof allClinics.redraw == 'function') {
-//                allClinics.redraw();
-//            }
         });
     });
 ",CClientScript::POS_READY);
 
-//$cs->registerCssFile(Yii::app()->theme->baseUrl.'/css/clinicsView.css');
-//$cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/rateit.css');
-
-//$cs->registerScriptFile(Yii::app()->theme -> baseUrl.'/js/jquery.rateit.min.js?' . time(), CClientScript::POS_END);
 $cs -> registerCoreScript('prettyFormUrl');
 $cs -> registerCoreScript('font-awesome');
 $cs -> registerScript('Order','

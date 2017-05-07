@@ -31,11 +31,11 @@ $id = str2url($priceBlock -> name);
 
     <div id="collapse<?php echo $id; ?>" class="collapse<?php echo $show; ?>" role="tabpanel" aria-labelledby="heading<?php echo $id; ?>">
         <div class="card-block">
-            <ul class="list-group">
+            <div class="list-group">
             <?php foreach ($priceBlock -> prices as $price) {
                 $this -> renderPartial('/prices/_single_price', ['price' => $price, 'mainPrice' => $mainPrice]);
             } ?>
-            </ul>
+            </div>
         </div>
     </div>
 </div>
