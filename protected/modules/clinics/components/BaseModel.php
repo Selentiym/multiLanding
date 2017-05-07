@@ -132,7 +132,11 @@ class BaseModel extends CTModel
 
 		//По цене будет отдельная сортировка
 		if (!in_array($order, array('priceUp','priceDown'))&&($order)) {
-			$criteria -> order = $order.' DESC';
+			if ($criteria -> order) {
+				$criteria -> order .= ", $order DESC";
+			} else {
+				$criteria->order = $order . ' DESC';
+			}
 		}
 		self::setAliasedCondition($search, $criteria,'');
 		if ($search['research']) {

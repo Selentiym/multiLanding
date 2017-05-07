@@ -23,6 +23,7 @@ if (!$model) {
 $modelName = 'clinics';
 $criteria = new CDbCriteria();
 $criteria -> addCondition("`ignore_clinic`=0");
+$criteria -> order = 'partner DESC';
 //comment
 $objects = [];
 if (!$triggers['prigorod']) {

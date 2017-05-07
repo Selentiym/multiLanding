@@ -770,7 +770,11 @@ class clinics extends BaseModel
 		if (($order)&&($search['research'])) {
 			$sortArr = array('priceUp' => 'ASC','priceDown' => 'DESC');
 			if ($modifier = $sortArr[$order]) {
-				$criteria->order = "pr.value $modifier";
+				if ($criteria->order) {
+					$criteria->order .= ", pr.value $modifier";
+				} else {
+					$criteria->order = "pr.value $modifier";
+				}
 			}
 		}
 		return $criteria;
