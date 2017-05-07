@@ -12,6 +12,8 @@
  */
 
 $mod = Yii::app() -> getModule('clinics');
+$page = $_GET['page'] ? $_GET['page'] : 1;
+unset($_GET['page']);
 $triggers = $_GET;
 $model = clinics::model() -> findByAttributes(['verbiage' => 'service']);
 if (!$model) {
@@ -26,8 +28,20 @@ $objects = [];
 if (!$triggers['prigorod']) {
     $triggers['isCity'] = 'city';
 }
-$objects = $mod -> getClinics($triggers,null,null,$criteria);
-
+$forPartnerCriteria = clone $criteria;
+$forPartnerCriteria -> compare('partner', 1);
+$partnerCount = count($mod -> getClinics($triggers, null, null, $forPartnerCriteria));
+$pageSize = max($partnerCount + 4, 20);
+$allObjects = $mod -> getClinics($triggers,null,null,$criteria);
+$start = $page >= 1 ? $pageSize * ($page - 1) : 0;
+if ($start > count($allObjects)) {
+    $start = 0;
+    $page = 1;
+}
+$objects = array_slice($allObjects,$start,$pageSize);
+//$criteria -> offset = $page >= 1 ? $pageSize * ($page - 1) : 0 ;
+//$criteria -> limit = $pageSize;
+//$objects = $mod -> getClinics($triggers,null,null,$criteria);
 $cs = Yii::app()->getClientScript();
 
 $cs -> registerScript('implementLinks',"
@@ -191,7 +205,7 @@ $cs -> registerCoreScript('rateit');
 $cs->registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");
 //$extraArticles = ArticleRule::getAllArticles('commercial', $triggers);
 $toAdd = '';
-foreach ($objects as $clinic) {
+foreach ($allObjects as $clinic) {
     $variab = 'v'.str_replace('-','',$clinic -> verbiage);
     if ($clinic -> map_coordinates) {
         $toAdd .= "{$variab} = new ymaps.Placemark( ".json_encode(array_values($clinic -> getCoordinates()))." , {
@@ -325,7 +339,7 @@ $keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
 $geoName = generateGeo($fr,$triggers);
 //$geoName = $geoName ? $geoName : $fr('area','areaNameRod');
-$description = "В ".$geoName." ".$rRod. " можно пройти в ".count($objects). ' ' . clinicWord(count($objects)).", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
+$description = "В ".$geoName." ".$rRod. " можно пройти в ".count($allObjects). ' ' . clinicWord(count($allObjects)).", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
 /**
  * @type ObjectPrice $research
  */
@@ -451,6 +465,16 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
 //                        break;
                     } ?>
                 </ul>
+            </div>
+            <div class="pager">
+                <?php
+                    $copy = $triggers;
+                    unset($copy['isCity']);
+                    $this -> renderPartial('/pager',[
+                    'curPage' => $page,
+                    'totalPages' => ceil(count($allObjects) / $pageSize),
+                    'baseLink' => $this -> createUrl('home/clinics',array_merge($copy,['page'=>':pageNumber']))
+                ]) ?>
             </div>
         </div>
         <div class="col-md-3 article-right">

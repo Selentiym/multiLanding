@@ -66,7 +66,7 @@ footer {
 .clinic .price {
     background-color: #57ae8a;
 }
-nav {
+nav.navbar {
     background-color: #57ae8a;
 }
 .single-clinic {
@@ -175,4 +175,13 @@ body h2 {
 }
 #priceUpButton.active{
     background-color: #adff1d;
+}
+.pager nav .page-item .page-link{
+    color: #57ae8a;!important;
+}
+.pager nav li.page-item.active .page-link{
+    background-color: #57ae8a;!important;
+    color:white;!important;
+    font-weight:bold;!important;
+    border-color: #57ae8a;!important;
 }
