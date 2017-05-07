@@ -188,13 +188,8 @@ $cs -> registerScript('implementLinks',"
         body.trigger(group[i] + 'Change',{});
     }
     var sortByField = $('#sortBy');
-    $('#priceUpButton').click(function(){
-        var val = sortByField.val();
-        if (!val) {
-            sortByField.val('priceUp');
-        } else {
-            sortByField.val('');
-        }
+    $('#sortBySelect').change(function(){
+        sortByField.val($(this).val());
         $('#searchForm').submit();
     });
 
@@ -450,7 +445,20 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 <div><button class="btn" data-toggle="collapse" data-target="#map">Показать на карте</button></div>
                 <div class="collapse"  id="map" style="width:100%; height:300px">
                 </div>
-                <div style="text-align:left" class="col-12 my-1 ml-2">Сортировка по цене: <button id="priceUpButton" type="button" style="font-weight:bold;padding:4px;" class="rounded <?php echo $triggers['sortBy']=='priceUp' ? "active" : ""; ?>" data-toggle="button" aria-pressed="<?php echo $triggers['sortBy']=='priceUp' ? "true" : "false"; ?>" autocomplete="off">по возр.</button></div>
+                <div style="text-align:left" class="col-12 my-1 ml-2 form-inline">
+                    <div class="mx-2 form-group">
+                        <label for="sortBySelect">Сортировка по цене</label>
+                        <select class="form-control" id="sortBySelect">
+                            <?php
+                                $vals = ['' => 'нет','priceUp' => 'дешевле','priceDown' => 'дороже'];
+                                foreach ($vals as $val => $label) {
+                                    $selected = $val == $triggers['sortBy'] ? 'selected=selected' : '';
+                                    echo "<option value='$val' $selected>$label</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div id="clinicsList">
                 <ul class="list-unstyled">
