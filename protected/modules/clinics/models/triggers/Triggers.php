@@ -208,6 +208,8 @@ class Triggers extends CTModel {
 	public function getHtml(&$data = [], $htmlOptions = [], $dopParameters = []){
 		$name = $htmlOptions['name'] ? $htmlOptions['name'] : $this -> verbiage;
 		$id = $htmlOptions['id'] ? $htmlOptions['id'] : $this -> verbiage;
+		$htmlOptions = array_merge($htmlOptions, $dopParameters);
+		unset($htmlOptions['noChildren']);
 		$options = [];
 		$p = $this -> parent;
 		if ((!$data[$p->verbiage])&&($p)) {
@@ -345,7 +347,7 @@ class Triggers extends CTModel {
 	}
 	public static function triggerHtml($verbiage, &$triggers){
 		$t = self::model() -> findByAttributes(['verbiage' => $verbiage]);
-		return $t -> getHtml($triggers,['placeholder' => $t -> name,'empty_line' => true, 'class' => 'trigger_select'],['noChildren' => true]);
+		return $t -> getHtml($triggers,['class' => 'trigger_select'],['noChildren' => true, 'placeholder' => $t -> name,'empty_line' => true]);
 		//
 	}
 }
