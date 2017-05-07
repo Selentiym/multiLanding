@@ -7,8 +7,8 @@
  * @property integer $id
  * @property string $name
  */
-class Objects extends CTModel
-{
+class Objects extends CTModel {
+	private static $_data;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -73,31 +73,27 @@ class Objects extends CTModel
 	 * @arg string modelName - class name of a model which interests us
 	 * @return integer
 	 */
-	public static function getNumber($modelName)
-	{
-
-		$criteria = new CDbCriteria;
-		$criteria -> compare('name', strtolower($modelName));
-		if ($obj = Objects::model() -> find($criteria)) {
-			return $obj -> id;
-		} else {
-			return false;
-		}
+	public static function getNumber($modelName){
+		$temp = array_flip(self::getData());
+		return $temp[$modelName];
 	}
 	/**
 	 * Returnes the name corresponding to the given id of the object type
 	 * @arg integer number - id of an object type
 	 * @return string - corresponding modelName
 	 */
-	public static function getName($number)
-	{
-		$criteria = new CDbCriteria;
-		$criteria -> compare('id', $number);
-		if ($obj = Objects::model() -> find($criteria)) {
-			return $obj -> name;
-		} else {
-			return false;
+	public static function getName($number){
+		return self::getData()[$number];
+	}
+	public static function getData(){
+		if (empty(self::$_data)) {
+			$temp = [];
+			foreach (Objects::model()->findAll() as $o) {
+				$temp[$o -> id] = $o -> name;
+			}
+			self::$_data = $temp;
 		}
+		return self::$_data;
 	}
 	/**
 	 * Returns the static model of the specified AR class.
