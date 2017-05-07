@@ -43,7 +43,7 @@ Yii::app() -> getClientScript() -> registerScript('VKComments'.$id,"
                 <div class="_wcomments_form clear_fix">
                     <div class="wcomments_form" style="display:none">
                         <div class="box_error wcomments_post_error submit_post_error"></div>
-                        <a href="http://vk.com" class="wcomments_form_avatar vk_avatar_link"><img class="vk_avatar_round_small" src="http://vk.com/images/camera_50.png"></a>
+                        <a href="http://vk.com" class="wcomments_form_avatar vk_avatar_link"><img class="vk_avatar_round_small" src="http://vk.com/images/camera_50.png" alt="avatar"></a>
 <!--                        <div id="submit_post_box" class="wcomments_post_box shown clear_fix">-->
                         <div class="submit_post_box wcomments_post_box shown clear_fix">
                             <div class="_emoji_field_wrap">
