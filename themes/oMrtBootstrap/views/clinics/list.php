@@ -559,12 +559,27 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 $articles = $mod -> getArticles($copy, false, null, $criteria);
             }
             if (!empty($articles)) {
+                $decoratedArticles = 5;
+                $i = 0;
                 echo "<div class='card'><div class='card-block'><div class='card-title'><h3>Полезные статьи</h3></div>";
                 foreach ($articles as $article) {
                     $url = $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage],null,false,true);
-                    echo "
-                        <div><a class='article-name' href='$url'>{$article->name}</a></div>
-                    ";
+                    $imageUrl = $article -> getImageUrl();
+                    if ($i < $decoratedArticles) {
+                        echo "
+                            <div>
+                                <a class='article-name' href='$url'>
+                                    <h3 class='text-center'>{$article->name}</h3>
+                                    <img style='width:90%;margin:5px auto; display:block;' class='mx-auto' src='$imageUrl' alt='".addslashes($a->name)."'/>
+                                </a>
+                            </div>
+                        ";
+                    } else {
+                        echo "
+                            <div><a class='article-name' href='$url'><h3>{$article->name}</h3></a></div>
+                        ";
+                    }
+                    $i ++;
                 }
                 echo "</div></div>";
             }

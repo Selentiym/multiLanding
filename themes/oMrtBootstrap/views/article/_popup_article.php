@@ -14,7 +14,7 @@ $id = $a -> verbiage;
             echo $a -> description;
             $url = $a -> getImageUrl();
             if ($url) {
-                echo "<img style='width:90%;margin:5px auto; display:block;' class='mx-auto' src='$url' alt='$a->name'/>";
+                echo "<img style='width:90%;margin:5px auto; display:block;' class='mx-auto' src='$url' alt='".addslashes($a->name)."'/>";
             }
         } ?>
         <div class="text-center"><button type="button" class="btn" data-toggle="modal" data-target="#articlePopup<?php echo $id; ?>">Подробнее</button></div>
