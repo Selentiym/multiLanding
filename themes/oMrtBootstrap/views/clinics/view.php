@@ -235,7 +235,7 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 								echo '
 
 								<div class="carousel-item '.$active.'">
-									<img class="d-block img-fluid" src="'.$model->giveImageFolderRelativeUrl() . '/' . $im.'" alt="Фотография Центра '.$r.' '.addslashes($model -> name).'">
+									<img class="d-block img-fluid" src="'.$model->giveImageFolderRelativeUrl() . '/' . $im.'" alt="Фотография Центра '.$r.' '.htmlspecialchars($model -> name).'">
 								</div>
 								';
 								$active = '';
