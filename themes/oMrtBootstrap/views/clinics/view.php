@@ -235,7 +235,7 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 								echo '
 
 								<div class="carousel-item '.$active.'">
-									<img class="d-block img-fluid" src="'.$model->giveImageFolderRelativeUrl() . '/' . $im.'" alt="Фотография Центра '.$r.' '.$model -> name.'">
+									<img class="d-block img-fluid" src="'.$model->giveImageFolderRelativeUrl() . '/' . $im.'" alt="Фотография Центра '.$r.' '.addslashes($model -> name).'">
 								</div>
 								';
 								$active = '';
@@ -280,7 +280,7 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 <!--			<div class="row"></div>-->
 			<div id="clinicsList" class="col-12 col-md-8 p-3 mx-auto">
 				<ul class="list-unstyled">
-					<?php $this -> renderPartial('//clinics/_service'); ?>
+					<?php $this -> renderPartial('/clinics/_service'); ?>
 				</ul>
 			</div>
 		</div>
