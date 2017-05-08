@@ -42,16 +42,22 @@ $cs -> registerScript('initiate_popup_forms','
             alert("По какой-то причине ответ от сервера не пришел. Проверьте интернет-соединение и попробуйте еще раз, пожалуйста.");
         }
     }, 10000);
+    try {
+		if (typeof yaCounter != "undefined") {
+			yaCounter.reachGoal("formSent");
+		}
+	} catch (err) {
+		console.log(err);
+	}
     $.get("'.$this -> createUrl('/form/submit').'",$(this).serialize()).done(function(date){
-            alert("Ваша заявка успешно принята!");
-        }).fail(function(){
-            alert("Возникла ошибка при отправке. Пожалуйста, попробуйте еще раз или воспользуйтесь одним из указанных телефонных номеров.");
-        }).always(function () {
-            toAlert = false;
-            toSubmit.attr("disabled",false);
-            toSubmit.removeClass("loading");
-        });
-
+        alert("Ваша заявка успешно принята!");
+    }).fail(function(){
+        alert("Возникла ошибка при отправке. Пожалуйста, попробуйте еще раз или воспользуйтесь одним из указанных телефонных номеров.");
+    }).always(function () {
+        toAlert = false;
+        toSubmit.attr("disabled",false);
+        toSubmit.removeClass("loading");
+    });
     return false;
 });
 

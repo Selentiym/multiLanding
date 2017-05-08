@@ -33,6 +33,7 @@ return array (
                     webvisor:true,
                     trackHash:true
                 });
+                w.yaCounter = w.yaCounter44058669;
             } catch(e) { }
         });
 
