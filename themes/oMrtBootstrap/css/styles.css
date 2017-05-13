@@ -146,7 +146,7 @@ nav.navbar {
 body h2 {
     font-weight:bold;
 }
-#articlePopup .modal-dialog {
+.modal-dialog {
     max-width: 70%!important;
 }
 .hidden-with-preview .to-hide-item{
