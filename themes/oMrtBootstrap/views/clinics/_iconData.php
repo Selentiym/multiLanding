@@ -111,7 +111,7 @@ if ($model -> metro_station) : ?>
     <i class="fa fa-mobile fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
     <div class="text p-adr"><?php echo $model -> phone ? $model -> phone : 'нужный телефон'; ?></div>
 </div>
-<?php if (($model -> mrt)||($model -> getFirstTriggerValue('field'))||($model -> getFirstTriggerValue('magnetType'))) : ?>
+<?php if (($model -> mrt)||($model -> getFirstTriggerValue('field'))||($model -> getFirstTriggerValue('magnetType'))||($model -> getFirstTriggerValue('mrt'))) : ?>
     <div class="row no-gutters align-items-center">
         <div class="col-auto">
         <i class="fa fa-life-ring fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
@@ -119,15 +119,23 @@ if ($model -> metro_station) : ?>
         <div class="col">
         <div class="text p-adr">
             <?php
-            echo $model -> mrt . ' ' . ($data['field']||$data['magnetType'] ? '<b>': '') . $model -> getConcatenatedTriggerValueString('field') . ' '. $model -> getConcatenatedTriggerValueString('magnetType') . ($data['field']||$data['magnetType'] ? '</b>': ''); ?></div>
+            if (!$model -> mrt) {
+                $model -> mrt = 'томограф';
+            }
+            echo 'МРТ '.$model -> mrt . ' ' . ($data['field']||$data['magnetType'] ? '<b>': '') . $model -> getConcatenatedTriggerValueString('field') . ' '. $model -> getConcatenatedTriggerValueString('magnetType') . ($data['field']||$data['magnetType'] ? '</b>': ''); ?></div>
         </div>
     </div>
 <?php endif; ?>
 
-<?php if (($model -> kt)||($model -> getFirstTriggerValue('slices'))) : ?>
+<?php if (($model -> kt)||($model -> getFirstTriggerValue('slices'))||($model -> getFirstTriggerValue('kt'))) : ?>
     <div class="row no-gutters align-items-center">
         <div class="col-auto"><i class="fa fa-navicon fa-lg fa-fw" aria-hidden="true"></i>&nbsp;</div>
-        <div class="col"><div class="text p-adr"><?php echo $model -> kt.' '.($data['slices'] ? '<b>': '') . $model -> getConcatenatedTriggerValueString('slices') . ($data['slices'] ? '</b>': ''); ?></div></div>
+        <?php
+            if (!$model -> kt) {
+                $model -> kt = 'томограф';
+            }
+        ?>
+        <div class="col"><div class="text p-adr"><?php echo 'КТ '.$model -> kt.' '.($data['slices'] ? '<b>': '') . $model -> getConcatenatedTriggerValueString('slices') . ($data['slices'] ? '</b>': ''); ?></div></div>
     </div>
 <?php endif; ?>
 <?php if ($model -> restrictions) : ?>

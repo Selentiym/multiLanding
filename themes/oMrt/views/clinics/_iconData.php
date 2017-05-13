@@ -99,17 +99,49 @@ if ($model -> metro_station) : ?>
     <i class="fa fa-mobile fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
     <div class="text p-adr"><?php echo $model -> phone ? $model -> phone : 'нужный телефон'; ?></div>
 </div>
-<?php if ($model -> mrt) : ?>
+<?php if ($model -> getFirstTriggerValue('mrt')) : ?>
     <div class="tomogrMrt list-group-item">
         <i class="fa fa-life-ring fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-        <div class="text p-adr"><?php echo $model -> mrt . ' ' . ($data['field']||$data['magnetType'] ? '<b>': '') . $model -> getFirstTriggerValue('magnetType')->value. ' ' . $model -> getFirstTriggerValue('field')->value . ($data['field']||$data['magnetType'] ? '</b>': ''); ?></div>
+        <?php
+            $mrtText = '';
+            if ($model -> mrt) {
+                $mrtText = $model -> mrt;
+            } else {
+                $mrtText = 'МРТ томограф';
+            }
+            $mrtVal = $model -> getConcatenatedTriggerValueString('field');
+            if ($data['field']) {
+                $mrtText .= ', <strong>';
+                $mrtText .= $mrtVal;
+                $mrtText .= '</strong>';
+            } elseif($mrtVal){
+                $mrtText .= ', '.$mrtVal;
+            }
+        ?>
+        <div class="text p-adr"><?php echo $mrtText; ?></div>
     </div>
 <?php endif; ?>
 
-<?php if ($model -> kt) : ?>
+<?php if ($model -> getFirstTriggerValue('kt')) : ?>
     <div class="tomogrKt list-group-item">
         <i class="fa fa-navicon fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-        <div class="text p-adr"><?php echo $model -> kt.' '.($data['slices'] ? '<b>': '') . $model -> getFirstTriggerValue('slices')->value . ($data['slices'] ? '</b>': ''); ?></div>
+        <?php
+            $ktText = '';
+            if ($model -> kt) {
+                $ktText = $model -> kt;
+            } else {
+                $ktText = 'КТ томограф';
+            }
+            $ktVal = $model -> getConcatenatedTriggerValueString('slices');
+            if ($data['slices']) {
+                $ktText .= ', <strong>';
+                $ktText .= $ktVal;
+                $ktText .= '</strong>';
+            } elseif($ktVal){
+                $ktText .= ', '.$ktVal;
+            }
+        ?>
+        <div class="text p-adr"><?php echo $ktText; ?></div>
     </div>
 <?php endif; ?>
 </div>
