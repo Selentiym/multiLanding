@@ -1022,7 +1022,7 @@ class BaseModel extends CTModel
 				$str = $line -> innerText();
 				$arr = array_map('strip_tags',explode('</a>',$str));
 				$arr[1]=preg_replace('/[^\d]/','',$arr[1]);
-				$key = $arr[1];
+				$key = $arr[0];
 				$val = $arr[1];
 				$rez[mb_strtolower(trim($key),$enc)] = $val;
 			}
