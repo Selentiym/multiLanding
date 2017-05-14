@@ -1015,68 +1015,19 @@ class BaseModel extends CTModel
 		if (!$rez) {
 			require_once(Yii::getPathOfAlias('application.components.simple_html_dom') . '.php');
 			$html = file_get_html($this -> external_link);
-			//$html = file_get_html('http://mrt-catalog.ru/clinic/16');
-			$both = current($html->find('#myTabContent'));
-			$mrtNode = $both->childNodes(0);
-			$mrt = [];
-			if ($mrtNode) {
-				if ($n = $mrtNode->childNodes(0)) {
-					$mrt = $n->childNodes();
-				}
+			$enc = "utf-8";
+			$rez = [];
+			$lines = $html -> find('.price-table tr');
+			foreach ($lines as $line) {
+				$str = $line -> innerText();
+				$arr = array_map('strip_tags',explode('</a>',$str));
+				$arr[1]=preg_replace('/[^\d]/','',$arr[1]);
+				$key = $arr[1];
+				$val = $arr[1];
+				$rez[mb_strtolower(trim($key),$enc)] = $val;
 			}
-			$ktNode = $both->childNodes(1);
-			$kt = [];
-			if ($ktNode) {
-				if ($n = $ktNode->childNodes(0)) {
-					$kt = $ktNode->childNodes(0)->childNodes();
-				}
-			}
-			$rezMrt = [];
-			foreach ($mrt as $item) {
-				$priceArr = $item->find('span');
-				if ($priceArr) {
-					$price = preg_replace('/[^\d]/ui', '', trim(strip_tags(current($priceArr)->innerText())));
-					try {
-						// $html = $item -> __toString();
-						$temp = $item->find('a');
-						if (!empty($temp)) {
-							$text = current($temp)->innerText();
-						}
-
-					} catch (Exception $e) {
-					}
-					if ($text) {
-						$rezMrt[$text] = $price;
-					}
-				}
-			}
-			$rezKt = [];
-			foreach ($kt as $item) {
-				$priceArr = $item->find('span');
-				if ($priceArr) {
-					$price = preg_replace('/[^\d]/ui', '', trim(strip_tags(current($priceArr)->innerText())));
-					try {
-						// $html = $item -> __toString();
-						$temp = $item->find('a');
-						if (!empty($temp)) {
-							$text = current($temp)->innerText();
-						}
-
-					} catch (Exception $e) {
-					}
-					if ($text) {
-						$rezKt[$text] = $price;
-					}
-				}
-			}
-			$rez = array_merge($rezMrt, $rezKt);
 		}
-		$rezGood = [];
-		$enc = "utf-8";
-		foreach ($rez as $key => $val) {
-			$rezGood[mb_strtolower(trim($key),$enc)] = $val;
-		}
-		return $rezGood;
+		return $rez;
 	}
 
 	/**
