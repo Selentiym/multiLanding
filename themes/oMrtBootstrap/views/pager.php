@@ -56,5 +56,8 @@ if ($totalPages <= 1) {
                 <a class="page-link" href="<?php echo $genLink($curPage + 1); ?>">Следующая</a>
             </li>
         <?php endif; ?>
+        <li class="page-item<?php echo $curPage=='noPage' ? ' active' : ''; ?>">
+            <a class="page-link" href="<?php echo $genLink('noPage'); ?>">Показать все</a>
+        </li>
     </ul>
 </nav>

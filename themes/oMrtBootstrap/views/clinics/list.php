@@ -39,7 +39,11 @@ if ($start > count($allObjects)) {
     $start = 0;
     $page = 1;
 }
-$objects = array_slice($allObjects,$start,$pageSize);
+if ($page != 'noPage') {
+    $objects = array_slice($allObjects,$start,$pageSize);
+} else {
+    $objects = $allObjects;
+}
 //$criteria -> offset = $page >= 1 ? $pageSize * ($page - 1) : 0 ;
 //$criteria -> limit = $pageSize;
 //$objects = $mod -> getClinics($triggers,null,null,$criteria);
