@@ -2033,6 +2033,7 @@ class AdminController extends Controller
     public function actionLoadAO(){
         $trigger = Triggers::model() -> findByPk(18);
         $mod = Yii::app() -> getModule('clinics');
+        $aos = CHtml::giveAttributeArray($trigger -> trigger_values, 'id');
         /**
          * @type ClinicsModule $mod
          * @type TriggerValues $ao
@@ -2043,7 +2044,11 @@ class AdminController extends Controller
                 $distr = $dep->parent;
                 foreach ($mod->getClinics(['district' => $distr->verbiage]) as $c) {
                     //echo $c->name . " " . $c->triggers;
-                    $c->addTriggerValue($ao -> id);
+                    $trigger_arr = explode(';', $c -> triggers);
+                    $noAO = array_diff($trigger_arr, $aos);
+//                    $c->addTriggerValue($ao -> id);
+                    $noAO[] = $ao -> id;
+                    $c -> triggers = implode(';', $noAO);
                     //echo " ".$c -> triggers."<br/>";
                     $c -> setScenario('noPrices');
                     $c -> save();
