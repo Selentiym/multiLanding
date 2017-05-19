@@ -8,7 +8,12 @@
  * @type ObjectPrice $price
  * @type ObjectPrice $mainPrice
  */
-$url = $this -> createUrl('home/clinics',['research' => $price -> verbiage]);
+$temp = ['mrt' => false, 'kt' => false];
+$type = $price -> type -> alias;
+$temp[$type] = $type;
+unset ($temp['other']);
+$temp['research'] = $price -> verbiage;
+$url = $this -> createUrl('home/clinics',$temp);
 $active = ($mainPrice -> id == $price -> id) ? ' active' : '' ;
 ?>
 <a href="<?php echo $url; ?>" class="list-group-item list-group-item-action<?php echo $active; ?>">
