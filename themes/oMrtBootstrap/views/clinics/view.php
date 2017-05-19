@@ -193,7 +193,7 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 			</div>
 
 			<div class="d-flex justify-content-between p-3">
-				<div>Значки</div>
+				<div><!--Значки--></div>
 				<div><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
 			</div>
 
@@ -280,7 +280,7 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 <!--			<div class="row"></div>-->
 			<div id="clinicsList" class="col-12 col-md-8 p-3 mx-auto">
 				<ul class="list-unstyled">
-					<?php $this -> renderPartial('/clinics/_service'); ?>
+					<?php $this -> renderPartial('/clinics/_service',['triggers' => $triggers]); ?>
 				</ul>
 			</div>
 		</div>

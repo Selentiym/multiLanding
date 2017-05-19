@@ -779,4 +779,20 @@ class clinics extends BaseModel
 		}
 		return $criteria;
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getPhone(){
+		if ($this -> partner) {
+			if ($this->getFirstTriggerValue('area')->verbiage == 'msc') {
+				$phone = Yii::app()->phoneMSC -> getFormatted();
+			} else {
+				$phone = Yii::app()->phone -> getFormatted();
+			}
+		} else {
+			$phone = $this -> phone ? $this -> phone : '';
+		}
+		return $phone;
+	}
 }
