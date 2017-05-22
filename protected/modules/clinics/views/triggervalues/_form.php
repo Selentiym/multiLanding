@@ -9,6 +9,7 @@
         // There is a call to performAjaxValidation() commented in generated controller code.
         // See class documentation of CActiveForm for details on this.
         'enableAjaxValidation'=>false,
+        'htmlOptions'=>array('enctype'=>'multipart/form-data'),
     ));?>
 
         <div class="span6">
@@ -80,6 +81,20 @@
                 }
                 ?>
 
+            <input type="hidden" name="MAX_FILE_SIZE" value="20971520" />
+            <div>
+                <?php echo $form->labelEx($model,'logo'); ?>
+                <?php
+                if (!empty($model->logo)) {
+                    $logo = $model -> giveImageFolderRelativeUrl() .$model->logo;
+                    echo '<div id="logo">' . CHtml::ajaxLink('<i class="icon-remove"></i>', CController::createUrl('admin/propDelete/' . $model->id), array('type'=> 'POST', 'data'=>array('model' => 'trigger', 'prop' => 'logo'), 'success' => 'js: $("#logo").hide()'))
+                        . CHtml::image($logo, CHtml::encode('Логотип'),
+                            array('style' => 'max-width:172px;max-height:200px; padding: 8px 0px 8px 15px;')) . '</div>';
+                }
+                ?>
+                <?php echo $form->fileField($model, 'logo'); ?>
+                <?php echo $form->error($model,'logo'); ?>
+            </div>
             <div class="buttons">
                 <?php echo CHtml::submitButton($model->isNewRecord ? CHtml::encode('Создать') : CHtml::encode('Сохранить'),['name' => 'submitted']); ?>
             </div>

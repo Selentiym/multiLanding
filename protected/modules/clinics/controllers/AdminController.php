@@ -1115,15 +1115,24 @@ class AdminController extends Controller
         ));
     }
     
-    public function actiontriggerUpdate($id)
-    {
-        $model = Triggers::model()->findByPk($id);
-		
-		if($model===null)
+    public function actiontriggerUpdate($id){
+        $this -> ModelUpdate('Triggers', $id);
+    }
+
+    public function actionTriggerValueUpdate($id) {
+        $this -> ModelUpdate('TriggerValues', $id, function($model){
+            return $this -> createUrl('admin/triggervalues',['id' => $model -> trigger -> id]);
+        });
+    }
+
+    public function ModelUpdate($modelClass, $id, $urlAfterSuccess = null) {
+        $model = $modelClass::model()->findByPk($id);
+
+        if($model===null)
             throw new CHttpException(404, СHtml::encode('Запрошенная страница не существует'));
-		
-		$images_filePath = $model -> giveImageFolderAbsoluteUrl();
-		
+        $lower = strtolower($modelClass);
+        $images_filePath = $model -> giveImageFolderAbsoluteUrl();
+
         if (!file_exists($images_filePath))
             mkdir($images_filePath);
 
@@ -1140,20 +1149,28 @@ class AdminController extends Controller
                     if ($model->validate()) {
                         $model->logo->saveAs($fileName);
                         $model->logo = $image_unique_id;
-						@unlink($images_filePath.'/'.$logo_old);
+                        @unlink($images_filePath.'/'.$logo_old);
                     }
                     else
                         $model->logo = $logo_old;
                 }
-            }    
-                      
-            if($model->save())
-                $this->redirect($this -> createUrl('admin/triggers'));
+            }
+            if($model->save()) {
+                if (is_callable($urlAfterSuccess)) {
+                    $url = call_user_func($urlAfterSuccess, $model);
+                    $this->redirect($url);
+                } elseif ($urlAfterSuccess) {
+                    $this->redirect($this->createUrl($urlAfterSuccess));
+                } else {
+                    $this->redirect($this->createUrl('admin/' . $lower));
+                }
+            }
         }
-        $this->render('/triggers/update',array(
+        $this->render('/'.$lower.'/update',array(
             'model'=>$model,
         ));
     }
+
 
     public function actiontriggerDelete($id)
     {
@@ -1201,24 +1218,6 @@ class AdminController extends Controller
 		));
 	}
 
-	public function actiontriggerValueUpdate($id)
-	{
-		$model = TriggerValues::model()->findByPk($id);
-		
-		if($model===null)
-			throw new CHttpException(404, СHtml::encode('Запрошенная страница не существует'));
-
-		if(isset($_POST['TriggerValues']))
-		{
-			$model->attributes=$_POST['TriggerValues'];
-			if($model->save())
-				$this->redirect(array('admin/triggerValues', 'id'=>$model->trigger_id));
-		}
-		$this->render('/triggervalues/update',array(
-			'model'=>$model,
-
-		));
-	}
 
     public function actiontriggerValueDelete($id)
     {

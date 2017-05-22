@@ -8,6 +8,7 @@
  * @property integer $trigger_id
  * @property string $verbiage
  * @property string $value
+ * @property string $logo
  *
  * @property TriggerValues[] $dependencies
  * @property TriggerValues[] $children
