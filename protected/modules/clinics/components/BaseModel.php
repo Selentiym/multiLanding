@@ -27,7 +27,7 @@ class BaseModel extends CTModel
 	/**
 	 * @var ObjectPriceValue[]
 	 */
-	private $_priceValues;
+	protected $_priceValues;
 	
 	/** лишняя функция.
 	 * @arg array search a search array that specifies what is being searched

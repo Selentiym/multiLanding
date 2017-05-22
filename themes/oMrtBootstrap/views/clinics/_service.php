@@ -2,10 +2,9 @@
 /**
  *
  */
-if (!$model) {
-    $model = clinics::model();
-    $model -> partner = true;
-}
+clinics::$createService = true;
+$model = clinics::model() -> findByAttributes(['verbiage' => 'service']);
+$model -> partner = true;
 ?>
 <li class="clinic mb-3 single-clinic pt-3 d-flex row">
     <div class="col-12 col-md-9 small_info">
@@ -64,21 +63,24 @@ if (!$model) {
                 'research' => $triggers['research'],
                 'sortBy' => 'priceUp'
             ];
-
-            $servicePrices = ObjectPriceBlock::model()->findByPk($price->id_block) -> prices;
-            if (!empty($servicePrices)) {
-                $criteria = new CDbCriteria();
-                $criteria -> compare('partner', 1);
-                $this -> renderPartial('/prices/_price_group_article',[
-                    'id' => 'spbPrices',
-                    'name' => $price -> block -> name,
-                    'prices' => $servicePrices,
-                    'model' => false,
-                    'show' => true,
-                    'triggers' => $copy,
-                    'criteria' => $criteria,
-                    'mainPrice' => $price
-                ]);
+            if ($triggers['area'] == 'msc') {
+                $servicePrices = ObjectPriceBlock::model()->findByPk($price->id_block)->prices;
+                if (!empty($servicePrices)) {
+                    $criteria = new CDbCriteria();
+                    $criteria->compare('partner', 1);
+                    $this->renderPartial('/prices/_price_group_article', [
+                        'id' => 'spbPrices',
+                        'name' => $price->block->name,
+                        'prices' => $servicePrices,
+                        'model' => false,
+                        'show' => true,
+                        'triggers' => $copy,
+                        'criteria' => $criteria,
+                        'mainPrice' => $price
+                    ]);
+                }
+            } else {
+                $this->renderPartial('/clinics/_priceList', ['model' => $model, 'blocks' => [ObjectPriceBlock::model()->findByPk($price->id_block)], 'price' => $price]);
             }
 //            $this->renderPartial('/clinics/_priceList', ['model' => $model, 'blocks' => [ObjectPriceBlock::model()->findByPk($price->id_block)], 'price' => $price]);
         }

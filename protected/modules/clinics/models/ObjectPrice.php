@@ -135,10 +135,80 @@ class ObjectPrice extends CTModel
 	public function getArticle() {
 		return $this -> article;
 	}
+
+	/**
+	 * @param ObjectPriceValue $val
+	 */
 	public function setCachedPrice($val) {
 		$this -> _cachedPrice = $val;
 	}
+
+	/**
+	 * @return ObjectPriceValue
+	 */
 	public function  getCachedPrice() {
 		return $this -> _cachedPrice;
+	}
+	/**
+	 * @param ObjectPrice[]
+	 * @param mixed[]
+	 * @param CDbCriteria $criteria
+	 * @return ObjectPrice[] with the _cachedPrice set according to minimal price with gicen triggers
+	 */
+	public static function calculateMinValues($prices, $triggers = [], CDbCriteria $criteria = null){
+		$ids = [];
+		foreach ($prices as $price) {
+			/**
+			 * @type ObjectPrice $price
+			 */
+			$ids[] = $price -> id;
+			if ($price -> id_replace_price) {
+				$ids[] = $price -> id_replace_price;
+			}
+
+		}
+		if (!empty($ids)) {
+			if (!$criteria instanceof CDbCriteria) {
+				$criteria = new CDbCriteria();
+			}
+			$criteria -> addInCondition('price.id',$ids);
+			$criteria -> with = ['price' => ['together' => true]];
+			$values = [];
+			foreach (ObjectPriceValue::searchPriceValues($triggers,$criteria) as $pv) {
+				/**
+				 * @type ObjectPriceValue $pv
+				 */
+				$values[$pv -> id_price][] = $pv;
+			}
+			foreach ($prices as $pr) {
+				/**
+				 * @type ObjectPrice $pr
+				 */
+				$min = -1;
+				if (empty($values[$pr -> id])) {
+					$values[$pr -> id] = [];
+				}
+				//Находим минимум по ценам
+				foreach ($values[$pr -> id] as $pv) {
+					if (($pv -> value < $min) || ($min < 0)) {
+						$min = $pv;
+					}
+				}
+				//А потом по заменителям, если нужно
+				if ($min < 0) {
+					if (!empty($arr = $values[$pr -> id_replace_price])) {
+						foreach ($arr as $pv) {
+							if (($pv->value < $min) || ($min < 0)) {
+								$min = $pv;
+							}
+						}
+					}
+				}
+				if ($min > 0) {
+					$pr -> setCachedPrice($min);
+				}
+			}
+		}
+		return $prices;
 	}
 }

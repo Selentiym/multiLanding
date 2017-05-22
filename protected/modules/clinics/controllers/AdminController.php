@@ -772,6 +772,7 @@ class AdminController extends Controller
 
         $model = new PriceList('search'); //Pricelist::model()->findAllByAttributes(array('clinic_id' => $id ));
         $model->object_id = $id;
+        clinics::$createService = false;
         /**
          * @type clinics|doctors $object
          */

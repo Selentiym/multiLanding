@@ -40,8 +40,8 @@
  *
  */
  
-class clinics extends BaseModel
-{
+class clinics extends BaseModel {
+	public static $createService = true;
     public $districts_display;
     public $triggers_display;
 	public $additional;
@@ -91,7 +91,12 @@ class clinics extends BaseModel
 			array('doctorsInput, mrt, kt, external_link, restrictions, path', 'safe')
 		);
 	}
-
+	protected function instantiate($attributes) {
+		if (($attributes['verbiage'] == 'service')&&(self::$createService)) {
+			return new Service();
+		}
+		return new clinics(null);
+	}
     /**
      * @return array relational rules.
      */
@@ -106,7 +111,6 @@ class clinics extends BaseModel
 			'doctors' => array(self::MANY_MANY, 'doctors', '{{employments}}(id_clinic, id_doctor)')
         );
     }
-
 
     /**
 	 * @return array customized attribute labels (name=>label)
@@ -794,30 +798,5 @@ class clinics extends BaseModel
 			$phone = $this -> phone ? $this -> phone : '';
 		}
 		return $phone;
-	}
-	public function parsePrices(){
-		if ($this -> verbiage != 'service') {
-			return parent::parsePrices();
-		}
-		$rez = [];
-		if (!$this -> external_link) {
-			return [];
-		}
-		if (!$rez) {
-			require_once(Yii::getPathOfAlias('application.components.simple_html_dom') . '.php');
-			$html = file_get_html($this -> external_link);
-			$enc = "utf-8";
-			$rez = [];
-			$lines = $html -> find('tr.price-details');
-			foreach ($lines as $line) {
-				$str = $line -> innerText();
-				$arr = array_map('strip_tags',explode('</td>',$str));
-				$arr[1]=preg_replace('/[^\d]/','',$arr[1]);
-				$key = $arr[0];
-				$val = $arr[1];
-				$rez[mb_strtolower(trim($key),$enc)] = $val;
-			}
-		}
-		return $rez;
 	}
 }

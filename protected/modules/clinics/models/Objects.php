@@ -8,6 +8,7 @@
  * @property string $name
  */
 class Objects extends CTModel {
+	private static $_substitute = ['Service' => 'clinics'];
 	private static $_data;
 	/**
 	 * @return string the associated database table name
@@ -74,6 +75,7 @@ class Objects extends CTModel {
 	 * @return integer
 	 */
 	public static function getNumber($modelName){
+		$modelName = self::$_substitute[$modelName] ? self::$_substitute[$modelName] : $modelName;
 		$temp = array_flip(self::getData());
 		return $temp[$modelName];
 	}
