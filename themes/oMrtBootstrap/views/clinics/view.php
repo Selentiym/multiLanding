@@ -28,6 +28,10 @@ $theme = Yii::app() -> theme -> baseUrl;
 $cs -> registerScript($theme.'/js/map.js', CClientScript::POS_END);
 
 $cs -> registerCoreScript('owl');
+$cs -> registerCoreScript('bootstrap4js');
+$cs -> registerScript('iconPopovers','$(function () {
+  $(".triggerValueIcon").popover();
+})',CClientScript::POS_READY);
 
 $cs -> registerScript('start_carousel','
 var owl2 = $(".owl-carousel");
@@ -193,7 +197,23 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 			</div>
 
 			<div class="d-flex justify-content-between p-3">
-				<div><!--Значки--></div>
+				<div>
+<!--					<div tabindex="0" class="triggerValueIcon btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</div>-->
+					<?php
+						$vals=[];
+						foreach ($model -> giveTriggerValuesObjects() as $arr) {
+							$vals = array_merge($vals, $arr);
+						}
+						foreach ($vals as $triggerValue) {
+							if ($triggerValue -> logo) {
+								echo "<div tabindex='0' class='triggerValueIcon'
+								title='{$triggerValue -> value}'
+								data-toggle='popover' data-trigger='focus' data-content='{$triggerValue->comment}'>
+								<img src='".$triggerValue->giveImageFolderRelativeUrl()."/".$triggerValue->logo."' alt='{$triggerValue->value}'/></div>";
+							}
+						}
+					?>
+				</div>
 				<div><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
 			</div>
 

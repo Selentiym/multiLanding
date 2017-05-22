@@ -50,7 +50,7 @@ class TriggerValues extends CTModel {
 			array('value, verbiage', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, trigger_id, value, verbiage, dependency_array, children_array', 'safe'),
+			array('id, trigger_id, value, verbiage, dependency_array, children_array, comment', 'safe'),
 		);
 	}
 

@@ -34,6 +34,12 @@
                 <?php echo $form->error($model,'verbiage'); ?>
             </div>
 
+            <div>
+                <?php echo $form->labelEx($model,'comment'); ?>
+                <?php echo $form->textArea($model,'comment',array('size'=>60,'maxlength'=>255)); ?>
+                <?php echo $form->error($model,'comment'); ?>
+            </div>
+
 
                 <?php
                 /**
