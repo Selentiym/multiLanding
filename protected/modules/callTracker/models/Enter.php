@@ -191,25 +191,27 @@ class Enter extends aEnter
 	 */
 	public function collectDataFromRequest() {
 		$temp = parent::collectDataFromRequest();
-		$temp -> setScenario('fromRequest');
-		if (!strlen($_REQUEST['utm_term'])) {
-			unset ($_REQUEST['utm_term']);
+		if ($temp -> isNewRecord) {
+			$temp->setScenario('fromRequest');
+			if (!strlen($_REQUEST['utm_term'])) {
+				unset ($_REQUEST['utm_term']);
+			}
+			//Насколько я помню, от присовения request я ушел, тк там передавалась левая информация,
+			//которая мешала работе. Поэтому оба глобальных массива юзаю. Реально присвоятся только
+			//те ключи, когда задан элемент.
+			$term = $_GET["utm_term"];
+			if ($term) {
+				$temp->utm_term = $term;
+			}
+			if (!$temp->link) {
+				$temp->link = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+			}
+			if (!$temp->utm_content) {
+				$temp->utm_content = $_GET["utm_content"];
+			}
+			//Можно даже так
+			//$temp -> attributes = $_GET;
 		}
-		//Насколько я помню, от присовения request я ушел, тк там передавалась левая информация,
-		//которая мешала работе. Поэтому оба глобальных массива юзаю. Реально присвоятся только
-		//те ключи, когда задан элемент.
-		$term = $_GET["utm_term"];
-		if ($term) {
-			$temp->utm_term = $term;
-		}
-		if (!$temp -> link) {
-			$temp -> link = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-		}
-		if (!$temp -> utm_content) {
-			$temp->utm_content = $_GET["utm_content"];
-		}
-		//Можно даже так
-		//$temp -> attributes = $_GET;
 		return $temp;
 	}
 	public function getNumber() {
