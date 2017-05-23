@@ -64,16 +64,20 @@ class CallTrackerModule extends UWebModule
 
 		//Если не нужно выдвать номер
 		if ($_GET['nonumber'] != 'off') {
+			//Если через nonumber ничего не передано и раньше передано не было, то просто проходим
 			if (($_GET['nonumber']) || (Yii::app()->request->cookies['nonumber']->value)) {
+				//Есть что-то передано через nonumber, то не выдаем номер, а ставим заглушку.
 				$this->enter = aEnterFactory::getFactory() -> buildNew();
 				$fake = new phNumber();
 				$fake->number = 'debugMode!';
 				$this->enter->setNumber($fake);
 				Yii::app()->request->cookies['id_enter'] = new CHttpCookie('nonumber', 1);
+				//Не сохраняем ничего в базу, просто поставили заглушку
 				return;
 			}
 		} else {
-			//Сбрасываем всю информацию
+			//Если же nonumber четко равен off, то вырубаем заглушку, далее выберется
+			//заход+телефон по общим правилам
 			unset(Yii::app()->request->cookies['id_enter']);
 		}
 
@@ -100,14 +104,21 @@ class CallTrackerModule extends UWebModule
 			$num = $enter->obtainNumber();
 		}
 		$this -> enter = $enter;
+	}
 
-		//Сохраняем заход
-		$this -> enter -> save();
-
-		//Сохраняем ид захода, чтобы потом не забыть
-		$this -> setCachedId($this -> enter -> id);
-
-		$this -> loadScripts($this -> enter);
+	private function saveEnterData(){
+		//Не нужно что-либо сохранять о запросах к контреллеру трекера,
+		//тк либо они запускаются автоматически если уже был
+		//обычный пользовательский заход, либо они служебные
+		//и не нужно на них выделять номер и тд и тп
+		$c = Yii::app() -> controller;
+		if (!Yii::app() -> controller instanceof CTController) {
+			//Сохраняем заход
+			$this->enter->save();
+			//Сохраняем ид захода, чтобы потом не забыть
+			$this->setCachedId($this->enter->id);
+			$this->loadScripts($this->enter);
+		}
 	}
 
 	public function beforeControllerAction($controller, $action)
@@ -225,7 +236,11 @@ class CallTrackerModule extends UWebModule
 	 * @return CallTrackerModule
 	 */
 	public static function useTracker($id = 'tracker') {
-		return Yii::app() -> getModule($id);
+		$mod = Yii::app() -> getModule($id);
+		/**
+		 * @type CallTrackerModule $mod
+		 */
+		$mod -> saveEnterData();
 	}
 	public static function removeGarbage() {
 		$enters = aEnterFactory::getFactory() -> giveUnfinished();

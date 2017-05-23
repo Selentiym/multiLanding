@@ -5,6 +5,8 @@
  * Date: 15.08.2016
  * Time: 14:54
  */
+//Подключаем трекер, чтобы номер был получен корректно
+CallTrackerModule::useTracker();
 /**
  * @type CommonRule $model
  * @type CommonRule $rule
