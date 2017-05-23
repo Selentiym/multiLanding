@@ -976,9 +976,9 @@ class BaseModel extends CTModel
 			/**
 			 * @type ObjectPrice $price
 			 */
-			if ($this -> getPriceValue($price -> id)) {
-				echo "Price ".$price -> name. " already exists, continue <br/>";
-			}
+//			if ($this -> getPriceValue($price -> id)) {
+//				echo "Price ".$price -> name. " already exists, continue <br/>";
+//			}
 			$toRun = array_filter(array_map(function($key)use($enc){
 						return mb_strtolower(trim($key),$enc);
 					},explode(';',$price -> name2)));
@@ -993,7 +993,7 @@ class BaseModel extends CTModel
 				}
 			}
 			if ($p) {
-				$obj = new ObjectPriceValue();
+				$obj = new ObjectPriceValue('noUpdateIfDup');
 				$obj->id_object = $this->id;
 				$obj->id_price = $price -> id;
 				$obj->value = $p;

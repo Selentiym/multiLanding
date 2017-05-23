@@ -122,11 +122,14 @@ class ObjectPriceValue extends CTModel
 		return parent::model($className);
 	}
 	public function beforeSave() {
-		//Если уже существует данная ценаЮ то не создаем новую запись в таблице, а только обновляем старую.
+		//Если уже существует данная цена, то не создаем новую запись в таблице, а только обновляем старую.
 		if (true) {
 			if ($this -> isNewRecord) {
 				$dupl = $this -> findByAttributes(['id_object' => $this -> id_object, 'id_price' => $this -> id_price]);
 				if ($dupl) {
+					if ($this -> getScenario() == 'noUpdateIfDup') {
+						return false;
+					}
 					$dupl -> value = $this -> value;
 					if ($dupl -> save()) {
 						return false;

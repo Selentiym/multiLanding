@@ -603,11 +603,10 @@ class AdminController extends Controller
         ));
     }*/
 	
-	protected function objectInit($model)
-	{
+	protected function objectInit($model) {
+        $modelGlobalName = Objects::getName(Objects::getNumber(get_class($model)));
 		$modelName = get_class($model);
-		if (isset($_POST[$modelName]))
-		{
+		if (isset($_POST[$modelName])) {
 			$model -> FillFieldsFromArray($model, $_POST);
 			//Если ключом для сохранения файлов является id, и модель новая, то сохраняем модель, чтобы его получить
 			if (($model -> FolderKey() === 'id')&&($model -> isNewRecord))
@@ -619,7 +618,7 @@ class AdminController extends Controller
 			if ($model -> save())
 			{
 				if ($this->isSuperAdmin())
-					$this->redirect(array(strtolower($modelName)));
+					$this->redirect(array(strtolower($modelGlobalName)));
 				else {
 					Yii::app()->user->setFlash('successfullSave', CHtml::encode('Изменения сохранены'));
 					return; 

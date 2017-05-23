@@ -419,11 +419,11 @@ class clinics extends BaseModel {
 	//public function FillClinicFieldsFromArray($model, $post_arr)
 	public function FillFieldsFromArray($model, $post_arr)
 	{
-		$model->attributes=$post_arr['clinics'];
-		$model -> text = $post_arr['clinics']['text'];
-		//print_r($post_arr['clinics']);
-		$model -> partner = $post_arr['clinics']["partner"] > 0 ? 1 : 0;
-		$model -> ignore_clinic = $post_arr['clinics']["ignore_clinic"] > 0 ? 1 : 0;
+		$model->attributes=$post_arr[get_class($this)];
+		$model -> text = $post_arr[get_class($this)]['text'];
+		//print_r($post_arr[get_class($this)]);
+		$model -> partner = $post_arr[get_class($this)]["partner"] > 0 ? 1 : 0;
+		$model -> ignore_clinic = $post_arr[get_class($this)]["ignore_clinic"] > 0 ? 1 : 0;
 		//metro
 		if (!empty($post_arr['metro_station_array'])) {
 			$metro = implode(';', $post_arr['metro_station_array']);
@@ -448,8 +448,8 @@ class clinics extends BaseModel {
 			$model -> triggers = '';
 		}
 		//additional fields
-		if (isset($post_arr['clinics']['Additional']) && !empty($post_arr['clinics']['Additional'])) {
-			$model -> additional = $post_arr['clinics']['Additional'];
+		if (isset($post_arr[get_class($this)]['Additional']) && !empty($post_arr[get_class($this)]['Additional'])) {
+			$model -> additional = $post_arr[get_class($this)]['Additional'];
 		}
 	}
 	/** Function that saves files to corresponding folders and updates model's file data.
@@ -469,7 +469,7 @@ class clinics extends BaseModel {
 		{
 			@mkdir($images_filePath);
 		}
-		if(!empty($files_arr['clinics']['name']['logo'])){
+		if(!empty($files_arr[get_class($this)]['name']['logo'])){
 			$logo_old = $model->logo;
 			$model->logo = CUploadedFile::getInstance($model,'logo');
 			$image_unique_id = substr(md5(uniqid(mt_rand(), true)), 0, 5) . '.' .$model->logo->extensionName;
@@ -484,7 +484,7 @@ class clinics extends BaseModel {
 				$model->logo = $logo_old;
 		}
 
-		if(!empty($files_arr['clinics']['name']['audio'])) {
+		if(!empty($files_arr[get_class($this)]['name']['audio'])) {
 			$audio_old = $model->audio;
 			$model->audio = CUploadedFile::getInstance($model,'audio');
 			//$fileName = Yii::app()->basePath.'/../files/clinics/'.$model->id . '/' . $model->audio;
@@ -516,7 +516,7 @@ class clinics extends BaseModel {
 		}
 	}
     public function clinicInit($model, $post_arr = NULL , $files_arr = NULL)
-    {   //var_dump($post_arr['clinics']['Additional']); die();
+    {   //var_dump($post_arr[get_class($this)]['Additional']); die();
         if (!$post_arr)
 		{
 			return false;
@@ -525,12 +525,12 @@ class clinics extends BaseModel {
 		{
 			return false;
 		}
-		if(isset($post_arr['clinics']))
+		if(isset($post_arr[get_class($this)]))
         {
 			$this -> FillClinicFieldsFromArray($model, $post_arr);
 
 			if($model->save()) {
-				if(isset($files_arr['clinics'])) {
+				if(isset($files_arr[get_class($this)])) {
 					$this -> ClinicFilesOperationsFromArray($model, $files_array);
 				}
 				//Повторное сохранение, уже с изменениями в файлах.
