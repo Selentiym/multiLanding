@@ -80,6 +80,7 @@ $model -> partner = true;
                     ]);
                 }
             } else {
+                $model -> getPriceValuesArray(true, $triggers);
                 $this->renderPartial('/clinics/_priceList', ['model' => $model, 'blocks' => [ObjectPriceBlock::model()->findByPk($price->id_block)], 'price' => $price]);
             }
 //            $this->renderPartial('/clinics/_priceList', ['model' => $model, 'blocks' => [ObjectPriceBlock::model()->findByPk($price->id_block)], 'price' => $price]);

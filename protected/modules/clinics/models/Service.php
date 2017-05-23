@@ -35,7 +35,7 @@ class Service extends clinics {
             $toSearch = [];
             foreach ($objs as $price) {
                 //Проставляем найденные на mrt-catalog'е цены
-                if ($old[$price -> id] instanceof TriggerValues) {
+                if ($old[$price -> id] instanceof ObjectPriceValue) {
                     $this -> _priceValues[$price -> id] = $old[$price -> id];
                 } else {
                     $toSearch[$price -> id] = $price;
