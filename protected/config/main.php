@@ -289,6 +289,16 @@ return array(
 							],
 							'depends' => ['jquery']
 						],
+						'old-owl' => [
+							'baseUrl' => 'libs/old-owl/',
+							'js' => [
+								'owl.carousel.min.js'
+							],
+							'css' => [
+								'owl.carousel.css',
+							],
+							'depends' => ['jquery']
+						],
 						'jedittable' => [
 							'baseUrl' => 'libs/jedittable',
 							'js' => [

@@ -11,7 +11,7 @@ CallTrackerModule::useTracker();
  * @type CommonRule $model
  * @type CommonRule $rule
  */
-
+Yii::app() -> getClientScript() -> registerCoreScript('old-owl');
 $tel = [];
 //Костыль
 /*if (strpos($_SERVER['SERVER_NAME'],'rt-to-go')) {
@@ -53,7 +53,7 @@ $tel = [];
     <link rel="stylesheet" href="<?php echo $base; ?>/libs/bootstrap/bootstrap_col_5.css" />
     <link rel="stylesheet" href="<?php echo $base; ?>/libs/font-awesome-4.2.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="<?php echo $base; ?>/libs/fancybox/jquery.fancybox.css" />
-    <link rel="stylesheet" href="<?php echo $base; ?>/libs/owl-carousel/owl.carousel.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/libs/old-owl/owl.carousel.css" />
 <!--    <link rel="stylesheet" href="<?php echo Yii::app() -> baseUrl; ?>/css/fonts.css" />-->
 	<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=cyrillic,cyrillic-ext" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo $base; ?>/css/main.css" />
@@ -626,7 +626,7 @@ foreach(Section::model() -> findAll(array('order' => 'num ASC')) as $section) {
 <![endif]-->
 <script src="<?php echo $base; ?>/libs/jquery/jquery-1.11.1.min.js"></script>
 <script src="<?php echo $base; ?>/libs/fancybox/jquery.fancybox.pack.js"></script>
-<script src="<?php echo $base; ?>/libs/owl-carousel/owl.carousel.min.js"></script>
+<script src="<?php echo $base; ?>/libs/old-owl/owl.carousel.min.js"></script>
 <script src="<?php echo $base; ?>/libs/landing-nav/navigation.js"></script>
 <script src="<?php echo $base; ?>/js/common.js"></script>
 <script src="<?php echo Yii::app() -> baseUrl; ?>/js/flipclock.min.js"></script>
