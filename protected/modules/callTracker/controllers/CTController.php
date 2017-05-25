@@ -37,7 +37,9 @@ class CTController extends Controller
             //На всякий случай уточняем
             $enter -> active = 1;
             //Обновляем время последнего захода
-            $enter -> save();
+            if (!$enter -> getIsNewRecord()) {
+                $enter->save();
+            }
             //Подчищаем заходы. Имеет смысл делать именно здесь,
             // чтобы чистилось тем чаще, чем больше людей
             ob_start();
