@@ -222,6 +222,7 @@ class Enter extends aEnter
 	}
 	public function setNumber(aNumber $val) {
 		if (is_a($val, self::NUMBER_CLASS)) {
+			$this -> id_num = $val -> id;
 			$this->_cachedNumber = $val;
 		}
 	}

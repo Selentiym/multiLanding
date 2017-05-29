@@ -27,6 +27,12 @@ class CallTrackerModule extends UWebModule
 	 */
 	private $_assetsUrl;
 	/**
+	 * @var bool defines actions when no cached enter id found.
+	 * Since everything happens in CallTracker::init() method,
+	 * this attribute is static
+	 */
+	private static $_mustBeOld = false;
+	/**
 	 * What will be shown if the carousel is switched off
 	 * @var string
 	 */
@@ -100,8 +106,18 @@ class CallTrackerModule extends UWebModule
 			 */
 		} else {
 			$enter = $enter->collectDataFromRequest();
-
-			$num = $enter->obtainNumber();
+			//Если запись старая или нам это не важно, то выдаем обычный номер
+			if ((!self::$_mustBeOld)||(!$enter -> getIsNewRecord())) {
+				$num = $enter->obtainNumber();
+			} else {
+				//Выдаем резервный номер, если не удалось найти старую запись, а она должна быть,
+				//чтобы не занимать одним заходом все возможные номера карусели
+				$num = current(phNumber::model() -> getReserved());
+				if (!$num instanceof aNumber) {
+					throw new CallTrackerException('Could not find any reserved phNumber!');
+				}
+				$enter->setNumber($num);
+			}
 		}
 		$this -> enter = $enter;
 	}
@@ -233,9 +249,11 @@ class CallTrackerModule extends UWebModule
 
 	/**
 	 * @param $id
+	 * @param bool $mustBeOld
 	 * @return CallTrackerModule
 	 */
-	public static function useTracker($id = 'tracker') {
+	public static function useTracker($mustBeOld = false, $id = 'tracker') {
+		CallTrackerModule::$_mustBeOld = $mustBeOld;
 		$mod = Yii::app() -> getModule($id);
 		/**
 		 * @type CallTrackerModule $mod
