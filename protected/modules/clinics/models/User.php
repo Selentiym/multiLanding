@@ -16,8 +16,7 @@
  * @property string $institution
  * @property integer $invite_code
  */
-class User extends UClinicsModuleModel
-{
+class User extends UClinicsModuleModel {
 	/**
 	 * @return string the associated database table name
 	 */
@@ -133,5 +132,10 @@ class User extends UClinicsModuleModel
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+
+	protected function getDbType() {
+		return 'article';
 	}
 }
