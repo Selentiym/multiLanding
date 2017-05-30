@@ -15,7 +15,7 @@ if ($count == 0) {
     $blockName = "<b>$blockName</b>";
 }
 $type = $block -> category_name == 'mrt' ? 'mrt' : 'kt';
-CallTrackerModule::useTracker();
+CallTrackerModule::useTracker(true);
 $experiment = CallTrackerModule::getExperiment();
 /**
  * @type iExperiment $experiment

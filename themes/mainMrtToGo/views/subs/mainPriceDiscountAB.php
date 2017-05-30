@@ -2,7 +2,7 @@
 /**
  *
  */
-CallTrackerModule::useTracker();
+CallTrackerModule::useTracker(true);
 $experiment = CallTrackerModule::getExperiment();
 /**
  * @type iExperiment $experiment

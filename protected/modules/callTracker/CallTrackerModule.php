@@ -253,7 +253,7 @@ class CallTrackerModule extends UWebModule
 	 * @return CallTrackerModule
 	 */
 	public static function useTracker($mustBeOld = false, $id = 'tracker') {
-		CallTrackerModule::$_mustBeOld = $mustBeOld;
+		self::$_mustBeOld = $mustBeOld;
 		$mod = Yii::app() -> getModule($id);
 		/**
 		 * @type CallTrackerModule $mod
