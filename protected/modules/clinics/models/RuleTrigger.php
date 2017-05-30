@@ -9,8 +9,7 @@
  * @property string $triggerVerbiage
  * @property string $valueVerbiage
  */
-class RuleTrigger extends UModel
-{
+class RuleTrigger extends CTModel {
 	/**
 	 * @return string the associated database table name
 	 */
