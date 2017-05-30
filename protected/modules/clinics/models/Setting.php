@@ -48,4 +48,9 @@ class Setting extends UClinicsModuleModel
 	{
 		return parent::model($className);
 	}
+	//Так как может зависеть от конкретного сайта, настройки храним в
+	// изменяемой от сайта к сайту базе
+	protected function getDbType() {
+		return 'article';
+	}
 }

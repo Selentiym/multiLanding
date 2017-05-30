@@ -10,12 +10,15 @@ class ClinicsModule extends UWebModule {
 	 */
 	public $doctorsComments = null;
 	/**
+	 * @var mixed contains some kind of link to a CDbConnection instance
+	 */
+	public $dbArticles;
+	/**
 	 * @var string[] stores already rendered parameters, has to be
 	 * refreshed when a new trigger set is taken
 	 */
 	private $_rendered = [];
-	public function init()
-	{
+	public function init() {
 		parent::init();
 		$config = include(__DIR__ . '/config.php');
 		// this method is called when the module is being created
@@ -33,8 +36,7 @@ class ClinicsModule extends UWebModule {
 		$this -> setComponents($config['components']);
 	}
 
-	public function beforeControllerAction($controller, $action)
-	{
+	public function beforeControllerAction($controller, $action) {
 		if(parent::beforeControllerAction($controller, $action))
 		{
 			// this method is called before any module controller action is performed
@@ -168,7 +170,7 @@ class ClinicsModule extends UWebModule {
 		return null;
 	}
 	public function _isAllowedToEvaluate($name) {
-		return in_array($name, ['clinicsComments','doctorsComments']) || parent::_isAllowedToEvaluate($name);
+		return in_array($name, ['dbArticles','clinicsComments','doctorsComments']) || parent::_isAllowedToEvaluate($name);
 	}
 
 	public function averagePrice($triggers) {

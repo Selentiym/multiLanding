@@ -86,14 +86,6 @@ class ArticleResearch extends UClinicsModuleModel
 	}
 
 	/**
-	 * @return CDbConnection the database connection used for this class
-	 */
-	public function getDbConnection()
-	{
-		return Yii::app()->dbClinics;
-	}
-
-	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
@@ -102,5 +94,9 @@ class ArticleResearch extends UClinicsModuleModel
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	protected function getDbType() {
+		return 'article';
 	}
 }

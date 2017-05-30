@@ -20,6 +20,7 @@ return SiteDispatcher::mergeArray(
             'clinics' => [
                 'class' => 'application.modules.clinics.ClinicsModule',
                 'dbConfig' => 'dbClinics',
+                'dbArticles' => 'dbClinics',
                 'filesPath' => 'files/mrkt',
                 'clinicsComments' => function () {return Yii::app() -> getModule('clinicsComments'); }
             ],

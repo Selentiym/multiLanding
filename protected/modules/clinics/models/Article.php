@@ -849,4 +849,7 @@ class Article extends BaseModel {
 		$this -> text = preg_replace('~\<h1\>.*\</h1\>~ui','',$this -> text);
 		echo $heading;
 	}
+	protected function getDbType() {
+		return 'article';
+	}
 }

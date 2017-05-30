@@ -15,6 +15,7 @@ return SiteDispatcher::mergeArray(
             'clinics' => [
                 'class' => 'application.modules.clinics.ClinicsModule',
                 'dbConfig' => 'dbClinics',
+                'dbArticles' => 'dbArticles',
                 'filesPath' => 'files/mrtKtMozg',
                 'clinicsComments' => function () {return Yii::app() -> getModule('clinicsComments'); }
             ],
@@ -65,6 +66,15 @@ return SiteDispatcher::mergeArray(
                 ),
             ),
             'dbClinics'=>array(
+                'class' => 'CDbConnection',
+                'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
+                'tablePrefix' => 'tbl_',
+                'emulatePrepare' => true,
+                'username' => 'cq97848_clmod',
+                'password' => 'kicker1995',
+                'charset' => 'utf8',
+            ),
+            'dbArticles'=>array(
                 'class' => 'CDbConnection',
                 'connectionString' => 'mysql:host=localhost;dbname=cq97848_mozg',
                 'tablePrefix' => 'tbl_',

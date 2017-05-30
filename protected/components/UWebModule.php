@@ -9,7 +9,7 @@ class UWebModule extends \CWebModule implements iCallFunc {
 
     use tAssets;
 
-    protected $_dbConnection;
+    protected $_dbConnections;
     protected $_assetsPath;
 
     public $filesPath = 'files/';
@@ -37,22 +37,23 @@ class UWebModule extends \CWebModule implements iCallFunc {
     }
 
     /**
+     * @param string $attr - attribute that contains link to connection
      * @return CDbConnection
      * @throws AccessException
      * @throws CDbException
      */
-    public function getDbConnection() {
-        if (!$this -> _dbConnection) {
-            $temp = $this -> getAttribute('dbConfig');
+    public function getDbConnection($attr = 'dbConfig') {
+        if (!$this -> _dbConnections[$attr]) {
+            $temp = $this -> getAttribute($attr);
             if (!($temp instanceof CDbConnection)) {
                 $temp = Yii::app() -> getComponent($temp);
             }
             if (!($temp instanceof CDbConnection)) {
                 throw new CDbException("Could not establish connection in module ". get_class($this));
             }
-            $this -> _dbConnection = $temp;
+            $this -> _dbConnections[$attr] = $temp;
         }
-        return $this -> _dbConnection;
+        return $this -> _dbConnections[$attr];
     }
 
     /**
