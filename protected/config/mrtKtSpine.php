@@ -15,6 +15,7 @@ return SiteDispatcher::mergeArray(
             'clinics' => [
                 'class' => 'application.modules.clinics.ClinicsModule',
                 'dbConfig' => 'dbClinics',
+                'dbArticles' => 'dbArticles',
                 'filesPath' => 'files/mrtKtSpine',
                 'clinicsComments' => function () {return Yii::app() -> getModule('clinicsComments'); }
             ],
