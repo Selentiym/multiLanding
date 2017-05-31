@@ -76,11 +76,11 @@ return SiteDispatcher::mergeArray(
             ),
             'dbArticles'=>array(
                 'class' => 'CDbConnection',
-                'connectionString' => 'mysql:host=localhost;dbname=cq97848_mozg',
-                'tablePrefix' => 'tbl_',
+                'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
+                'tablePrefix' => 'mozg_',
                 'emulatePrepare' => true,
-                'username' => 'cq97848_mozg',
-                'password' => 'kicker',
+                'username' => 'cq97848_clmod',
+                'password' => 'kicker1995',
                 'charset' => 'utf8',
             ),
             'dbTaskGen'=>array(
