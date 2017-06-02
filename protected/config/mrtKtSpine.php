@@ -40,8 +40,8 @@ return SiteDispatcher::mergeArray(
                     '<module:(taskgen)>/task/<action:(getText)>' => '<module>/task/<action>',
                     '<module:(taskgen)>/task/<action:(getText)>/<id:\d+>' => '<module>/task/<action>',
                     '<area:(spb|msc)>' => 'home/landing',
-//                        '<modelName:(clinics|doctors)>-<area:(spb|msc)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
-//                        '<modelName:(clinics|doctors)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
+                    '<modelName:(clinics|doctors)>-<area:(spb|msc)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
+                    '<modelName:(clinics|doctors)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
                     'article' => 'home/articles',
                     'article/<verbiage:[\w-]+>' => 'home/articleView',
 //                        [
