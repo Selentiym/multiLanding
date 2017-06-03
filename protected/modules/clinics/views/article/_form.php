@@ -60,14 +60,14 @@ Yii::app()->clientScript->registerScript('PreviewScript','
             <?php echo CHtml::hiddenField('fileUpload', Yii::app()->createUrl("admin/fileUpload")); ?>
         <div>
             <?php echo $form->labelEx($model,'name'); ?>
-            <?php echo $form->textField($model,'name',array('size'=>50,'maxlength'=>50)); ?>
+            <?php echo $form->textField($model,'name'); ?>
             <?php echo $form->error($model,'name'); ?>
         </div>
             <?php echo $form->hiddenField($model,'id_taskgen',array('id' => 'id_taskgen','size'=>50,'maxlength'=>50)); ?>
 
         <div>
             <?php echo $form->labelEx($model,'verbiage'); ?>
-            <?php echo $form->textField($model,'verbiage',array('size'=>20,'maxlength'=>20)); ?>
+            <?php echo $form->textField($model,'verbiage'); ?>
             <?php echo $form->error($model,'verbiage'); ?>
         </div>
 
