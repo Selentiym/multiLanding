@@ -37,7 +37,7 @@ $model -> partner = true;
         }
         ?>
         <div class="phone">
-            <noindex><a rel="nofollow" href="tel:<?php echo $phone -> getUnformatted(); ?>"><?php echo $phone -> getFormatted(); ?></a></noindex>
+            <!--noindex--><a rel="nofollow" href="tel:<?php echo $phone -> getUnformatted(); ?>"><?php echo $phone -> getFormatted(); ?></a><!--/noindex-->
         </div>
     </div>
 

@@ -13,7 +13,7 @@ if ($model -> partner) {
 <button class="btn signUpButton">Записаться</button>
 <div class="mb-1">Или по телефону</div>
 <div class="phone">
-    <noindex><a rel="nofollow" href="tel:<?php echo $phone -> getUnformatted(); ?>"><?php echo $phone -> getFormatted(); ?></a></noindex>
+    <!--noindex--><a rel="nofollow" href="tel:<?php echo $phone -> getUnformatted(); ?>"><?php echo $phone -> getFormatted(); ?></a><!--/noindex-->
 </div>
 <?php } else { ?>
     <div class="mb-1">Зписаться можно по телефону</div>

@@ -82,7 +82,7 @@ $triggers = $_GET;
                     Режим работы 8.00-21.00
                 </div>
                 <div class="pr-1 col-12 col-md-auto font-weight-bold ">
-                    <i class="fa fa-phone" aria-hidden="true"></i> <noindex><a rel="nofollow" href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></noindex>
+                    <i class="fa fa-phone" aria-hidden="true"></i> <!--noindex--><a rel="nofollow" href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a><!--/noindex-->
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@ $triggers = $_GET;
             </div>
             <div class="col-6 col-md-3 mb-3 mb-md-0">
                 <span>Звоните круглосуточно</span><br/>
-                <span><noindex><a rel="nofollow" href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a></noindex></span>
+                <span><!--noindex--><a rel="nofollow" href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a><!--/noindex--></span>
             </div>
         </div>
     </div>
