@@ -257,4 +257,22 @@ class TriggerValues extends CTModel {
 		}
 		parent::afterSave();
 	}
+
+	/**
+	 * @param array $verbs array of verbiages for triggers whose values need not to br found
+	 * @return self[]
+	 */
+	public static function getAllValuesButForTriggers($verbs = []){
+		$crit = new CDbCriteria();
+		$forTriggers = new CDbCriteria();
+		$forTriggers -> addInCondition('verbiage',$verbs);
+		$crit -> addNotInCondition('trigger_id',
+				array_map(
+						function($data){
+							return $data -> id;
+						},
+						Triggers::model() -> findAll($forTriggers)
+				));
+		return self::model()->findAll($crit);
+	}
 }
