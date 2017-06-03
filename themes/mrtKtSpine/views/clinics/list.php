@@ -342,244 +342,47 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
     <a class="breadcrumb-item col-auto active" href="<?php $this -> createUrl('home/clinics',['area' => $triggers['area']]); ?>"><?php echo ($area = $fr('area','value')) ? $area : 'Поиск клиник' ; ?></a>
 </nav>
 <div class="container-fluid">
+    <form>
+        <div class="d-flex">
+            <div><?php echo Triggers::triggerHtml('area',$triggers); ?></div>
+            <div><?php echo Triggers::triggerHtml('mrt',$triggers); ?></div>
+            <div><?php echo Triggers::triggerHtml('kt',$triggers); ?></div>
+            <div><?php
+                echo CHtml::DropDownListChosen2(
+                    'metro',
+                    'metro',
+                    CHtml::listData(Metro::model() -> findAllByAttributes(['city' => $triggers['area']],['order' => 'name ASC']),'id','name'),
+                    //$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
+                    ['style' => 'width:100%', 'empty_line' => true, 'placeholder' => 'Метро'],
+                    $triggers['metro'] ? [$triggers['metro']] : [],
+                    [],
+                    true
+                );
+                ?></div>
+            <div>
+                <?php echo Triggers::triggerHtml('magnetType',$triggers); ?>
+            </div>
+            <div>
+                <?php echo Triggers::triggerHtml('field',$triggers); ?>
+            </div>
+            <div>
+                <?php echo Triggers::triggerHtml('slices',$triggers); ?>
+            </div>
+
+        </div>
+    </form>
+    <div class="text-center">
+        <?php
+        $blockMrt = ObjectPriceBlock::model() -> findByPk(5);
+        $blockKt = ObjectPriceBlock::model() -> findByPk(6);
+        $prices = array_merge($blockMrt -> prices, $blockKt -> prices);
+        foreach($prices as $price){
+            echo "<div class='list-group m-3 d-inline-block'>";
+            $this -> renderPartial('/prices/_single_price', ['price' => $price, 'mainPrice' => $research]);
+            echo "</div>";
+        } ?>
+    </div>
     <div class="row">
-        <div class="col-md-3">
-            <div id="accordion" role="tablist" aria-multiselectable="true">
-                <?php
-                $blockMrt = ObjectPriceBlock::model() -> findByPk(5);
-                $blockKt = ObjectPriceBlock::model() -> findByPk(6);
-                $prices = array_merge($blockMrt -> prices, $blockKt -> prices);
-                foreach($prices as $price){
-                    echo "<div class='list-group'>";
-                    $this -> renderPartial('/prices/_single_price', ['price' => $price, 'mainPrice' => $research]);
-                    echo "</div>";
-                } ?>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <form id="searchForm" action="prettyFormUrl" data-action="home/clinics" data-params="{}" data-gen-url="<?php echo addslashes(Yii::app() -> createUrl('home/createFormUrl')); ?>" class="noEmpty prettyFormUrl">
-<!--            <form id="searchForm">-->
-                <?php echo Triggers::triggerHtml('area',$triggers); ?>
-                <div class="d-flex align-items-start mb-3" id="formHead">
-                    <div>
-                        <?php echo Triggers::triggerHtml('mrt',$triggers); ?>
-                    </div>
-                    <div>
-                        <?php echo Triggers::triggerHtml('kt',$triggers); ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-md-4">
 
-                        <select id="research" name="research">
-                            <option value="">Исследование</option>
-                        <?php
-                            $cs -> registerScript('researchSelectScript','var $sel = $("#research"); $sel.select2(); $sel.trigger("change")',CClientScript::POS_READY);
-                            $crit = new CDbCriteria();
-                            $crit -> addInCondition('id_block',[5,6]);
-                            $crit -> order = 'id_block ASC';
-                            $prices = ObjectPrice::model() -> findAll($crit);
-                            foreach ($prices as $price) {
-                                $selected = $triggers['research'] == $price->verbiage ? " selected=selected" : "";
-                                echo "<option value='$price->verbiage'$selected data-type='$price->id_type'>$price->name</option>";
-                            }
-//                        echo CHtml::DropDownListChosen2(
-//                            'research',
-//                            'research',
-//                            CHtml::listData(ObjectPrice::model() -> findAll(['order' => 'id_block ASC']),'verbiage','name'),
-//                            //$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
-//                            ['style' => 'width:100%', 'empty_line' => true, 'placeholder' => 'Исследование'],
-//                            $triggers['research'] ? [$triggers['research']] : [],
-//                            [],
-//                            true
-//                        );
-                        echo "</select>";
-                        echo CHtml::DropDownListChosen2(
-                            'metro',
-                            'metro',
-                            CHtml::listData(Metro::model() -> findAllByAttributes(['city' => $triggers['area']],['order' => 'name ASC']),'id','name'),
-                            //$htmlOptions['disabled'] ? [] : CHtml::listData($this -> trigger_values,'verbiage','value'),
-                            ['style' => 'width:100%', 'empty_line' => true, 'placeholder' => 'Метро'],
-                            $triggers['metro'] ? [$triggers['metro']] : [],
-                            [],
-                            true
-                        );
-                        ?>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <?php
-                            echo Triggers::triggerHtml('magnetType',$triggers);
-                            echo Triggers::triggerHtml('field',$triggers);
-                            echo Triggers::triggerHtml('slices',$triggers);
-                        ?>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <?php
-                            $d = Triggers::triggerHtml('district',$triggers);
-                            if ($triggers['area'] == 'msc') {
-                                echo Triggers::triggerHtml('okrug',$triggers);
-                            }
-                            echo $d;
-                            echo Triggers::triggerHtml('street',$triggers);
-                            echo Triggers::triggerHtml('prigorod',$triggers);
-                        ?>
-                    </div>
-                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('time',$triggers); ?></div>
-                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('contrast',$triggers); ?></div>
-                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('doctor',$triggers); ?></div>
-                    <div class="col-12 col-md-4"><?php echo Triggers::triggerHtml('children',$triggers); ?></div>
-
-                </div>
-                <div class="row no-gutters justify-content-center">
-                    <div class="col-auto"><button type="submit" class="btn">Найти</button></div>
-                    <div class="col-auto ml-3"><a href="<?php echo $this -> createUrl('home/clinics',['area' => $triggers['area']],'&',true); ?>"><button type="button" class="btn" >Сбросить</button></a></div>
-                </div>
-                <?php echo Triggers::triggerHtml('sortBy',$triggers); ?>
-            </form>
-            <div id="mapContainer" class="hidden-sm-down mb-3">
-                <h2 class="mb-3">Клиники на карте</h2>
-                <div><button class="btn" data-toggle="collapse" data-target="#map">Показать на карте</button></div>
-                <div class="collapse"  id="map" style="width:100%; height:300px">
-                </div>
-                <div style="text-align:left" class="col-12 my-1 ml-2 form-inline">
-                    <div class="mx-2 form-group">
-                        <label for="sortBySelect">Сортировка по цене</label>
-                        <select class="form-control" id="sortBySelect">
-                            <?php
-                                $vals = ['' => 'нет','priceUp' => 'дешевле','priceDown' => 'дороже'];
-                                foreach ($vals as $val => $label) {
-                                    $selected = $val == $triggers['sortBy'] ? 'selected=selected' : '';
-                                    echo "<option value='$val' $selected>$label</option>";
-                                }
-                            ?>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div id="clinicsList">
-                <ul class="list-unstyled">
-                    <?php if (count($objects) == 0): ?>
-                    <li class="clinic mb-3 single-clinic pt-3">
-                        К сожалению клиник, удовлетворяющих всем критериям поиска, не найдено.
-                        Вы можете обратиться к специалистам "Общегородской Службы Записи", где вам помогут найти подходящий диагностический центр.
-                    </li>
-                    <?php endif; ?>
-                    <?php $this -> renderPartial('/clinics/_service',['triggers' => $triggers,'price' => $research]); ?>
-                    <?php foreach($objects as $clinic){
-                        $this -> renderPartial('/clinics/_single_clinics',['model' => $clinic,'price' => $research]);
-//                        break;
-                    } ?>
-                </ul>
-            </div>
-            <div class="pager">
-                <?php
-                    $copy = $triggers;
-                    unset($copy['isCity']);
-                    $this -> renderPartial('/pager',[
-                    'curPage' => $page,
-                    'totalPages' => ceil(count($allObjects) / $pageSize),
-                    'baseLink' => $this -> createUrl('home/clinics',array_merge($copy,['page'=>':pageNumber']))
-                ]) ?>
-            </div>
-        </div>
-        <div class="col-md-3 article-right">
-            <div class="card mb-3">
-                <div class="card-block">
-                    <h1 class="card-title"><?php echo $h1; ?></h1>
-                    <?php
-                    generateText($triggers);
-                    //echo "Пройти диагностику $r можно в ".$countClinics(['mrt','kt','research','area']). " медцентрах.";
-                    ?>
-
-                </div>
-            </div>
-<!--            --><?php //if ($triggers['contrast']): ?>
-<!--            <div class="card mb-3">-->
-<!--                <div class="card-block">-->
-<!--                    --><?php
-//                    contrastText($triggers);
-//                    //echo "Пройти диагностику $r можно в ".$countClinics(['mrt','kt','research','area']). " медцентрах.";
-//                    ?>
-<!---->
-<!--                </div>-->
-<!--            </div>-->
-<!--            --><?php //endif; ?>
-            <?php if ($a = ArticleRule::getArticle('dynamic')): ?>
-            <div class="card">
-                <div class="card-block">
-                    <?php
-                    if ($a) {
-                        echo $a -> prepareTextByVerbiage($triggers);
-                    } ?>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <?php
-            if ($research instanceof ObjectPrice) {
-                if ($commercialArticle = $research->getArticle()) {
-                    $this->renderPartial('/article/_popup_article', ['a' => $commercialArticle, 'triggers' => $triggers]);
-                }
-            }
-            $extraArticles = ArticleRule::getAllArticles('commercial', $triggers);
-            if (!empty($extraArticles)) {
-                foreach ($extraArticles as $article) {
-                    $this -> renderPartial('/article/_popup_article', ['a' => $article, 'triggers' => $triggers]);
-                }
-            }
-
-            $copy = $triggers;
-            unset($copy['area']);
-            unset($copy['district']);
-            unset($copy['metro']);
-            unset($copy['street']);
-            unset($copy['orderBy']);
-            unset($copy['isCity']);
-            if (count($copy) == 0) {
-                $articles = Article::model() -> root() -> findAllByAttributes(['id_type' => Article::getTypeId('text')]);
-            } elseif (count($copy) == 1) {
-                if ($copy['mrt']) {
-                    $parentVerb = 'mrt';
-                }
-                if ($copy['kt']) {
-                    $parentVerb = 'kt';
-                }
-                $parent = Article::model() -> findByAttributes(['verbiage' => $parentVerb]);
-                if ($parent) {
-                    $articles = Article::model()->findAllByAttributes(['parent_id' => $parent->id]);
-                }
-            }
-            if (!$articles) {
-                $criteria = new CDbCriteria();
-                $criteria -> compare('id_type', Article::getTypeId('text'));
-                $articles = $mod -> getArticles($copy, false, null, $criteria);
-            }
-            if (!empty($articles)) {
-                $decoratedArticles = 5;
-                $i = 0;
-                echo "<div class='card'><div class='card-block'><div class='card-title'><h3>Полезные статьи</h3></div>";
-                foreach ($articles as $article) {
-                    $url = $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage],null,false,true);
-                    $imageUrl = $article -> getImageUrl();
-                    if ($i < $decoratedArticles) {
-                        echo "
-                            <div>
-                                <a class='article-name' href='$url'>
-                                    <h3 class='text-center'>{$article->name}</h3>
-                                    <img style='width:90%;margin:5px auto; display:block;' class='mx-auto' src='$imageUrl' alt='".addslashes($a->name)."'/>
-                                </a>
-                            </div>
-                        ";
-                    } else {
-                        echo "
-                            <div><a class='article-name' href='$url'><h3>{$article->name}</h3></a></div>
-                        ";
-                    }
-                    $i ++;
-                }
-                echo "</div></div>";
-            }
-            ?>
-        </div>
     </div>
 </div>
