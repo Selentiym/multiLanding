@@ -53,7 +53,7 @@ return array(
     ],
     'mrtKtMozg' => [
         'host' => [
-            'мрт-и-кт-головного-мозга-и-головы.рф',
+            'мрт-и-кт-головного-мозга.рф',
             'xn-------83dkgbb3bezphknobcbc1a0ce.xn--p1ai',
             'andrei.cq97848.tmweb.ru',
         ],
