@@ -54,13 +54,15 @@ return array(
     'mrtKtMozg' => [
         'host' => [
             'мрт-и-кт-головного-мозга-и-головы.рф',
-            'http://xn---------6nfoeebbd5cikyukcktubcbchb7a6de53a.xn--p1ai/',
+            'xn-------83dkgbb3bezphknobcbc1a0ce.xn--p1ai',
             'andrei.cq97848.tmweb.ru',
         ],
         'userAgent' => false
     ],
     'mrtKtSpine' => [
         'host' => [
+            'мрт-и-кт-головного-мозга.рф',
+            'xn------8cdj3aeeoentakcblm2be7i.xn--p1ai',
             'spine.cq97848.tmweb.ru',
         ],
         'userAgent' => false
