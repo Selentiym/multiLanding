@@ -161,7 +161,7 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 	<a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl($this->id.'/'.$this->defaultAction); ?>">Главная</a>
 	<?php $area = $mod -> renderParameter($triggersPrepared, 'area','value'); ?>
 	<a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl('home/clinics',['area' => $triggers['area']]); ?>"><?php echo ($area) ? $area : 'Поиск клиник' ; ?></a>
-	<a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl('home/modelView',['modelName' => get_class($model)]); ?>"><?php echo $model -> name ; ?></a>
+	<a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl('home/modelView',['modelName' => get_class($model), 'verbiage' => $model -> verbiage]); ?>"><?php echo $model -> name ; ?></a>
 </nav>
 
 <div class="container-fluid clinic clinic-full" id="clinic" role="tablist">
