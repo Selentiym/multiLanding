@@ -72,7 +72,7 @@ $triggers = $_GET;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="<?php echo Yii::app() -> theme -> baseUrl."/images/favicon.ico"; ?>" rel="shortcut icon" type="image/x-icon" />
+    <link href="<?php echo Yii::app() -> theme -> baseUrl."/images/logo.ico"; ?>" rel="shortcut icon" type="image/x-icon" />
     <!--    <link rel="icon" href="../../favicon.ico">-->
 
     <?php
