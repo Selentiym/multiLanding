@@ -97,8 +97,8 @@ $triggers = $_GET;
                 <div class="pr-2 col-12 col-md-auto ">
                     Режим работы 8.00-21.00
                 </div>
-                <div class="pr-1 col-12 col-md-auto font-weight-bold align-items-center d-flex">
-                    <i class="fa fa-phone" aria-hidden="true"></i> <div class="ml-1"><a href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a><br/><a href="tel:<?php echo Yii::app() -> phoneMSC -> getUnformatted(); ?>"><?php echo Yii::app() -> phoneMSC -> getFormatted(); ?></a></div>
+                <div class="pr-1 col-12 col-md-auto font-weight-bold align-items-center">
+                    <i class="fa fa-phone d-inline-block align-middle" aria-hidden="true"></i>&nbsp<div class="ml-1 align-middle d-inline-block"><a href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a><br/><a href="tel:<?php echo Yii::app() -> phoneMSC -> getUnformatted(); ?>"><?php echo Yii::app() -> phoneMSC -> getFormatted(); ?></a></div>
                 </div>
             </div>
         </div>
