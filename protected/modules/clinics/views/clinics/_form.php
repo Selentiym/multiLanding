@@ -236,59 +236,6 @@
         <div>
             <?php echo $form->labelEx($model,'text'); ?>
             <div class="controls">
-			
-			<?php
-//				 $this->widget('application.extensions.tinymce.TinyMce',
-//                    array(
-//                        'model'=>$model,
-//                        'attribute'=>'text',
-//                        //'editorTemplate'=>'full',
-//                        'skin'=>'cirkuit',
-//
-//                        //'useCompression'=>false,
-//                        'settings'=> array(
-//                            'mode' =>"textareas",
-//                            'theme' => 'advanced',
-//                            'skin' => 'o2k7',
-//                            'theme_advanced_toolbar_location'=>'top',
-//                            'plugins' => 'add_margin,advimage,spellchecker,safari,pagebreak,style,layer,save,advlink,advlist,iespell,inlinepopups,insertdatetime,contextmenu,directionality,noneditable,nonbreaking,xhtmlxtras,table,template,paste',
-//							'paste_remove_styles' => true,
-//							'paste_remove_spans' => true,
-//							'cleanup' => true,
-//							'valid_elements' => 'div,h2,h1,p[style|class],ul,li,table[border],tr,td,tbody,img[src|style],a[href],b,i,span[style|class],strong,em',
-//							'theme_advanced_fonts' => 'Arial=arial,helvetica,sans-serif;Times New Roman=times new roman,times',
-//							'paste_word_valid_elements' => "p,ul,li,table,tr,td,tbody,a[href]",
-//							"content_css" => Yii::app() -> baseUrl."/css/tinymce.css, ".Yii::app() -> baseUrl."/css/custom.css, ".Yii::app() -> baseUrl."/css/styles.css",
-//							//http://www.tinymce.com/wiki.php/Configuration3x:formats - список параметров для style_formats
-//							'style_formats' => array(
-//								array('title' => 'Жирным','block' => 'p','classes' => 'checkbold'),
-//								array('title' => 'check2','block' => 'p','classes' => 'check2_class')
-//							),
-//							//'theme_advanced_font_sizes' => "Big text=30px,Small text=small,My Text Size=.mytextsize",
-//							//'theme_advanced_styles' => "Header 1=header1;Header 2=header2;Header 3=header3;Table Row=tableRow1",
-//							'theme_advanced_buttons1' => "mysplitbutton,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,removeformat,|,tablecontrols",
-//							'theme_advanced_buttons2' => "cut,copy,paste,pastetext,|,bullist,numlist,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,forecolor,backcolor",
-//							//'theme_advanced_buttons2' => "paste,pastetext",
-//							'theme_advanced_buttons3' => "styleselect,formatselect,fontselect,fontsizeselect",
-//							'theme_advanced_buttons4' => "",
-//							//'theme_advanced_buttons3' => "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
-//                            'theme_advanced_toolbar_location' => 'top',
-//                            'theme_advanced_toolbar_align' => 'left',
-//                            'theme_advanced_statusbar_location' => 'bottom',
-//                            'theme_advanced_resizing_min_height' => 30,
-//                            'height' => 300,
-//
-//                        ),
-//
-//                        'fileManager' => array(
-//                                    'class' => 'application.extensions.elFinder.TinyMceElFinder',
-//                                    'popupConnectorRoute' => 'elfinder/elfinderTinyMce', // relative route for TinyMCE popup action
-//                                    'popupTitle' => "Files",
-//                             ),
-//                        'htmlOptions'=>array('rows'=>5, 'cols'=>30, 'class'=>'tinymce'),
-//                    ));
-			?>
-
             <?php
             $this->widget('application.extensions.tinymce.TinyMce',
                 array(
@@ -300,54 +247,32 @@
                     )
                 ));
             ?>
-			
-			
-			
-                <?php /*$this->widget('application.extensions.tinymce.TinyMce',
-                    array(
-                        'model'=>$model,
-                        'attribute'=>'text',
-                        //'editorTemplate'=>'full',
-                        'skin'=>'cirkuit',
-                        
-                        //'useCompression'=>false,
-                        'settings'=> array(
-                            'mode' =>"textareas",
-                            'theme' => 'advanced',
-                            'skin' => 'cirkuit',
-                            'theme_advanced_toolbar_location'=>'top',
-                            'plugins' => 'advimage,spellchecker,safari,pagebreak,style,layer,save,advlink,advlist,iespell,inlinepopups,insertdatetime,contextmenu,directionality,noneditable,nonbreaking,xhtmlxtras,template',
-                            'theme_advanced_buttons1' => 'formatselect,forecolor,|,bold,italic,strikethrough,|,bullist,numlist,|,fontselect fontsizeselect,|,justifyleft,justifycenter,justifyright,justifyfull,|,link,unlink,image',
-                            'theme_advanced_buttons2' => '',
-                            'theme_advanced_buttons3' => '',
-                            'theme_advanced_toolbar_location' => 'top',
-                            'theme_advanced_toolbar_align' => 'left',
-                            'theme_advanced_statusbar_location' => 'bottom',
-                            'theme_advanced_resizing_min_height' => 30,
-                            'height' => 300,
-                            'width' => 100,
-                            //'file_browser_callback' => 'openmanager',
-                            //'open_manager_upload_path' => CHtml::encode(Yii::app()->basePath) . '/../images/uploads/',
-                            //'relative_urls' => false,
-                            
-                        ),
-                        
-                        'fileManager' => array(
-                                    'class' => 'application.extensions.elFinder.TinyMceElFinder',
-                                    'popupConnectorRoute' => 'elfinder/elfinderTinyMce', // relative route for TinyMCE popup action
-                                    'popupTitle' => "Files",
-                             ), 
-                        'htmlOptions'=>array('rows'=>5, 'cols'=>15, 'class'=>'tinymce'),
-                    )); */?>
-
-                        
             </div>
             <?php echo $form->error($model,'text'); ?>
             <br/>
         </div>
 
+        <div>
+            <?php echo $form->labelEx($model,'sales'); ?>
+            <div class="controls">
+                <?php
+                $this->widget('application.extensions.tinymce.TinyMce',
+                    array(
+                        'model'=>$model,
+                        'attribute'=>'sales',
+                        'htmlOptions' => ['style' => 'height:300px;witdh:80%'],
+                        'settings' => array(
+                            'entity_encoding' => 'raw',
+                        )
+                    ));
+                ?>
+            </div>
+            <?php echo $form->error($model,'sales'); ?>
+            <br/>
+        </div>
 
-<!--        <div>-->
+
+        <!--        <div>-->
 <!--            --><?php //echo $form->labelEx($model,'audio'); ?>
 <!--            --><?php
 //                echo (!empty($model->audio)?

@@ -226,6 +226,7 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 						</div>';
 					}
 					createBigButton('description','Описание');
+					createBigButton('sales','Акции и скидки');
 					createBigButton('doctors','Врачи');
 					createBigButton('prices','Цены');
 					createBigButton('reviews','Отзывы');
@@ -271,6 +272,15 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 							<span class="sr-only">Next</span>
 						</a>
 					</div>
+				</div>
+				<div class="collapse p-3" id="sales">
+					<?php
+						if (strlen(trim(strip_tags($model -> sales))) < 10) {
+							echo "<p>Информация о скидках отсутсвует</p>";
+						} else {
+							echo $model -> sales;
+						}
+					?>
 				</div>
 				<div class="collapse p-3"  id="doctors" >
 

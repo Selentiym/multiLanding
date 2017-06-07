@@ -30,6 +30,7 @@
  * @property string $video
  * @property string $keywords
  * @property string $description
+ * @property string $sales
  * @property bool $partner
  * @property bool $ignore_clinic
  * @property string $path
@@ -88,7 +89,7 @@ class clinics extends BaseModel {
 			array('verbiage, address, working_days, working_hours, video, title', 'length', 'max'=>255),
 			array('*', 'safe'),
 			array('id, name, verbiage, phone, phone_extra, fax, address, address_extra, site, district, metro_station, working_days, working_hours, services, rating, triggers, map_coordinates, text, audio, video, title, keywords, description, experience, partner', 'safe', 'on'=>'search'),
-			array('doctorsInput, mrt, kt, external_link, restrictions, path', 'safe')
+			array('doctorsInput, mrt, kt, external_link, restrictions, path, sales', 'safe')
 		);
 	}
 	protected function instantiate($attributes) {
