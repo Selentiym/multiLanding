@@ -343,7 +343,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
 </nav>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 hidden-sm-down">
             <div id="accordion" role="tablist" aria-multiselectable="true">
                 <?php foreach(ObjectPriceBlock::model() -> findAll(['order' => 'num ASC']) as $block){
                     $this -> renderPartial('/prices/_single_block', ['priceBlock' => $block, 'mainPrice' => $research]);
