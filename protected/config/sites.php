@@ -85,5 +85,18 @@ return array(
             'abc',
         ],
         'userAgent' => false
+    ],
+    'baseSpecLib' => [
+        'host' => [],
+        'userAgent' => false
+    ],
+    'mrtKtAbdomen' => [
+        'host' => [
+            'мрт-и-кт-брюшной-полости.рф',
+            'www.мрт-и-кт-брюшной-полости.рф',
+            'xn-------d4d3beggocsncbngg1aeem2k7f.xn--p1ai',
+            'www.xn-------d4d3beggocsncbngg1aeem2k7f.xn--p1ai'
+        ],
+        'userAgent' => false
     ]
 );

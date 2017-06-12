@@ -20,6 +20,7 @@ Yii::app() -> getClientScript() -> registerScript('VKComments'.$id,"
 
 ",CClientScript::POS_READY);
 ?>
+<div class="vk_container">
     <div class="reviews vkbody" id="<?php echo $id; ?>">
         <div class="wcomments_page _wcomments_page wcomments_section_posts">
             <div class="wcomments_head _wcomments_head clear_fix">
@@ -94,3 +95,4 @@ Yii::app() -> getClientScript() -> registerScript('VKComments'.$id,"
         $this->endWidget();
         ?>
     </div>
+</div>

@@ -345,9 +345,14 @@ class Triggers extends CTModel {
 	public function dumpExtraValues() {
 		return [];
 	}
-	public static function triggerHtml($verbiage, &$triggers){
+	public static function triggerHtml($verbiage, &$triggers, $htmlOptions = [], $dopOptions = []){
 		$t = self::model() -> findByAttributes(['verbiage' => $verbiage]);
-		return $t -> getHtml($triggers,['class' => 'trigger_select'],['noChildren' => true, 'placeholder' => $t -> name,'empty_line' => true]);
+		/**
+		 * @type Triggers $t
+		 */
+		$htmlOptions = array_merge(['class' => 'trigger_select'],$htmlOptions);
+		$dopOptions = array_merge(['noChildren' => true, 'placeholder' => $t -> name,'empty_line' => true], $dopOptions);
+		return $t -> getHtml($triggers,$htmlOptions,$dopOptions);
 		//
 	}
 }

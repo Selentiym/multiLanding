@@ -44,8 +44,13 @@ class BaseModel extends CTModel
 		}
 	}
 	public function relations() {
+		$blocks = Yii::app() -> params['priceBlocks'];
+		$specSiteAddition = '';
+		if (!empty($blocks)) {
+			$specSiteAddition = ' and priceForList.id_block IN ('.implode(',',$blocks).')';
+		}
 		return [
-			'prices' => [self::HAS_MANY, 'ObjectPriceValue', 'id_object', 'with' => ['price' => ['alias' => 'priceForList']], 'condition' => 'priceForList.object_type = ' . Objects::getNumber(get_class($this))],
+			'prices' => [self::HAS_MANY, 'ObjectPriceValue', 'id_object', 'with' => ['price' => ['alias' => 'priceForList']], 'condition' => 'priceForList.object_type = ' . Objects::getNumber(get_class($this)).$specSiteAddition],
 			'priceLink' => [self::HAS_ONE, 'ObjectPriceValue','id_object','with' => ['price' => ['together' => true]], 'condition' => 'price.object_type = ' . Objects::getNumber(get_class($this)).' AND pr.id_price=:pid'],
 			'toCountPrices' => [self::HAS_MANY, 'ObjectPriceValue','id_object','condition' => 'toCountPrices.id_price IN (:pids)']
 		];

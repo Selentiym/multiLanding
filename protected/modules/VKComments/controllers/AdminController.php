@@ -25,6 +25,9 @@ class AdminController extends Controller {
 	}
 	public function actionGetReviewsHtml(){
 		$data = $_POST;
+		if (empty($data['ids'])) {
+			$data['ids'] = [];
+		}
 		$page = $data['currentPage'];
 		if (!$page) {
 			$page = 0;

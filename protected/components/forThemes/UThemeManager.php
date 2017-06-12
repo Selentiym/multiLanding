@@ -44,7 +44,7 @@ class UThemeManager extends CThemeManager {
         if ($param) {
             foreach (self::$createdThemes as $key => $theme) {
                 if (preg_match('/'.$param.'$/', $key)) {
-                    return $theme -> getBaseUrl;
+                    return $theme -> getBaseUrl();
                 }
             }
         }

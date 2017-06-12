@@ -147,8 +147,4 @@ class TriggerParameter extends CTModel
 		}
 		return $arr[$verbiage];
 	}
-
-	protected function getDbType() {
-		return 'article';
-	}
 }

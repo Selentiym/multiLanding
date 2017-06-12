@@ -98,8 +98,4 @@ class TriggerParameterValue extends CTModel
 	{
 		return parent::model($className);
 	}
-
-	protected function getDbType() {
-		return 'article';
-	}
 }

@@ -25,6 +25,10 @@ class TickTrigger extends Triggers {
         if ($dopParameters['noChildren']) {
             $children = '';
         }
+        $renderFunc = $dopParameters['renderFunc'];
+        if (is_callable($renderFunc)) {
+            return call_user_func($renderFunc, $this, $htmlOptions, $dopParameters, $data);
+        }
         return "<label for='{$htmlOptions['id']}'>".CHtml::checkBox(
             $name,
             in_array($mainVal -> verbiage,empty($data[$this -> verbiage]) ? [] : [$data[$this -> verbiage]]),

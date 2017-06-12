@@ -41,4 +41,18 @@ abstract class UClinicsModuleModel extends UModuleModel {
         $i = $this -> getModule();
         return $i -> getDbConnection(self::$_connectionTypes[$this->getDbType()]);
     }
+    public static function groupBy($objects, $attr){
+        $rez = [];
+        foreach ($objects as $object) {
+            try {
+                if (is_callable($attr)) {
+                    $evaluated = call_user_func($attr, $object);
+                } else {
+                    $evaluated = $object -> $attr;
+                }
+                $rez[$evaluated][] = $object;
+            } catch (Exception $e) {}
+        }
+        return $rez;
+    }
 }

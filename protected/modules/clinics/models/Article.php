@@ -848,6 +848,7 @@ class Article extends BaseModel {
 		preg_replace('~\<h1\>(.*)\</h1\>~ui','',$this -> text);
 		$this -> text = preg_replace('~\<h1\>.*\</h1\>~ui','',$this -> text);
 		echo $heading;
+		return $heading;
 	}
 	protected function getDbType() {
 		return 'article';

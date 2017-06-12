@@ -54,6 +54,17 @@ class UTheme extends CTheme {
         }
         return $file;
     }
+    public function getLayoutFile($controller, $layoutName) {
+        $file = parent::getLayoutFile($controller, $layoutName);
+        $this -> setLastRenderedTheme($this);
+        if (!$file) {
+            $parent = $this -> getParentTheme();
+            if ($parent instanceof CTheme) {
+                $file = $parent->getLayoutFile($controller, $layoutName);
+            }
+        }
+        return $file;
+    }
 
     private function setLastRenderedTheme(CTheme $theme) {
         if ($man = $this -> getThemeManager()) {
