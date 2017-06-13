@@ -53,6 +53,7 @@ return SiteDispatcher::mergeArray(
                 'class'=>'application.extensions.bootstrap.components.Bootstrap'
             ),
             'urlManager'=>array(
+                'appendParams' => false,
                 //'urlFormat' => null,
                 'rules' => array(
                     '' => 'home/articles',
@@ -62,7 +63,7 @@ return SiteDispatcher::mergeArray(
                     '<module:(clinics)>/admin' => '<module>/admin/login',
                     '<module:(taskgen)>/task/<action:(getText)>' => '<module>/task/<action>',
                     '<module:(taskgen)>/task/<action:(getText)>/<id:\d+>' => '<module>/task/<action>',
-                    '<area:(spb|msc)>' => 'home/landing',
+                    //'<area:(spb|msc)>' => 'home/landing',
                     '<modelName:(clinics|doctors)>-<area:(spb|msc)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
                     '<modelName:(clinics|doctors)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
                     'article' => 'home/articles',
@@ -86,6 +87,7 @@ return SiteDispatcher::mergeArray(
                     ],
                     '<modelName:(clinics|doctors)>' => 'home/<modelName>Link',
                     'clinics-<area:(spb|msc)>' => 'home/clinics',
+                    'home/clinics/*' => 'error/404'
                 ),
             ),
             'dbClinics'=>array(
