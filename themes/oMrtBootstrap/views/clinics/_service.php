@@ -10,8 +10,13 @@ $model -> partner = true;
     <div class="col-12 col-md-9 small_info">
         <h3 class="mt-0"><a href="#">Бесплатная общегородская служба записи на МРТ и КТ диагностику</a></h3>
         <?php
-        icon('clock-o','пн-вс:круглосуточно');
-        icon('phone','Телефон');
+        icon('clock-o','пн-вс: 7.00-0.00');
+        if ($triggers['area'] == 'spb') {
+            $phone = Yii::app() -> phone;
+        } else {
+            $phone = Yii::app() -> phoneMSC;
+        }
+        icon('phone',CHtml::link($phone -> getFormatted(), 'tel:'.$phone->getUnformatted()));
         ?>
         <p>Пройти МРТ и КТ можно во всех районах города.</p>
         <div class="row">
