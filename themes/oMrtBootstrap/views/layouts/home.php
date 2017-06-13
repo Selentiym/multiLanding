@@ -4,6 +4,7 @@
  * User: user
  * Date: 01.04.2017
  * Time: 10:56
+ * @type HomeControllerCatalogCommon $this
  */
 $cs = Yii::app() -> getClientScript();
 $cs -> registerCoreScript('bootstrap4css');
@@ -109,10 +110,10 @@ $triggers = $_GET;
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0 d-flex">
                     <li class="nav-item <?php echo $triggers['area'] == 'spb' && (!$isTom) ? 'active' : ''; ?>">
-                        <a class="nav-link" href="<?php echo $this -> createUrl('home/clinics',['area' => 'spb']); ?>">МРТ в Санкт-Петербурге</a>
+                        <a class="nav-link" href="<?php echo $this -> createUrl('home/clinics',['area' => 'spb'], '&',true); ?>">МРТ в Санкт-Петербурге</a>
                     </li>
                     <li class="nav-item <?php echo $triggers['area'] == 'msc' && (!$isTom)? 'active' : ''; ?>">
-                        <a class="nav-link" href="<?php echo Yii::app() -> controller -> createUrl('home/clinics',['area' => 'msc']); ?>">МРТ в Москве</a>
+                        <a class="nav-link" href="<?php echo Yii::app() -> controller -> createUrl('home/clinics',['area' => 'msc'], '&',true); ?>">МРТ в Москве</a>
                     </li>
                     <li class="nav-item <?php echo ( $triggers['area'] != 'spb' && (!$isTom) && $triggers['area'] != 'msc' ) ? 'active' : ''; ?>">
 <!--                        <a class="nav-link" href="--><?php //echo Yii::app() -> controller -> createUrl('home/articles'); ?><!--">Все о МРТ и КТ</a>-->
