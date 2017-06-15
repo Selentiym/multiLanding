@@ -12,7 +12,7 @@ $cs = Yii::app()->getClientScript();
 
 Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/articles',[],'&',false,true));
 
-$cs -> registerMetaTag('22b30a9a80600a49','yandex-verification');
+$cs -> registerMetaTag('8648c6cd173fc2ad','yandex-verification');
 
 $this -> setPageTitle('Все об МРТ, КТ и ПЭТ');
 $mod = Yii::app() -> getModule('clinics');
@@ -30,18 +30,11 @@ foreach($articles as $a){
     $c++;
 }
 $this -> renderPartial('/article/_navBar',[]);
-
-$main = Article::model() -> findByAttributes(['verbiage' => 'mainPage']);
-if (!$main instanceof Article) {
-    $main = new Article();
-    $main -> name = 'Все об МРТ, КТ и ПЭТ';
-}
 ?>
 <div class="container-fluid article p-3">
     <div class="row">
         <div class="col-12 col-md-10 mx-auto">
-            <h1><?php echo $main -> name; ?></h1>
-            <?php echo $main -> text; ?>
+            <h1>Все об МРТ, КТ и ПЭТ</h1>
             <div class="row justify-content-between">
                 <div class="col-12">
                     <?php $this -> renderPartial('/article/renderList', array('articles' => $first_column)); ?>
