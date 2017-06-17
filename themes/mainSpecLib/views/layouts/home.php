@@ -63,6 +63,8 @@ $cs -> registerScript('initiate_popup_forms','
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <?php
+    echo Yii::t('scripts','yandexWM');
+    echo Yii::t('scripts','yandexCounter');
     $title = $this -> getPageTitle();
     $title = $title ? $title : Yii::app() -> name;
     ?>
