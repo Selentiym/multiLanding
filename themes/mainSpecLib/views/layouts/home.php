@@ -64,7 +64,6 @@ $cs -> registerScript('initiate_popup_forms','
 
     <?php
     echo Yii::t('scripts','yandexWM');
-    echo Yii::t('scripts','yandexCounter');
     $title = $this -> getPageTitle();
     $title = $title ? $title : Yii::app() -> name;
     ?>
@@ -88,6 +87,7 @@ $cs -> registerScript('initiate_popup_forms','
 </head>
 
 <body>
+<?php echo Yii::t('scripts','yandexCounter'); ?>
 <!-- Navigation -->
 <nav id="topNav" class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
