@@ -506,11 +506,11 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
             <?php endif; ?>
 
             <?php
-//            if ($research instanceof ObjectPrice) {
-//                if ($commercialArticle = $research->getArticle()) {
-//                    $this->renderPartial('/article/_popup_article', ['a' => $commercialArticle, 'triggers' => $triggers]);
-//                }
-//            }
+            if ($research instanceof ObjectPrice) {
+                if ($commercialArticle = $research->getArticle()) {
+                    $this->renderPartial('/article/_popup_article', ['a' => $commercialArticle, 'triggers' => $triggers]);
+                }
+            }
             $extraArticles = ArticleRule::getAllArticles('commercial', $triggers);
             if (!empty($extraArticles)) {
                 foreach ($extraArticles as $article) {
