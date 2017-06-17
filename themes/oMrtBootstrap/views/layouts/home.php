@@ -65,6 +65,8 @@ $cs -> registerScript('initiate_popup_forms','
 ',CClientScript::POS_READY);
 
 $cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/styles.css');
+$baseTheme = Yii::app() -> theme -> baseUrl;
+
 $isTom = strpos($_SERVER['REQUEST_URI'], 'tomography') !== false;
 $triggers = $_GET;
 ?>
@@ -73,7 +75,7 @@ $triggers = $_GET;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="<?php echo Yii::app() -> theme -> baseUrl."/images/logo.ico"; ?>" rel="shortcut icon" type="image/x-icon" />
+    <link href="<?php echo $baseTheme."/images/logo.ico"; ?>" rel="shortcut icon" type="image/x-icon" />
     <!--    <link rel="icon" href="../../favicon.ico">-->
 
     <?php
@@ -90,16 +92,34 @@ $triggers = $_GET;
 <header class="container-fluid">
     <div class="row align-items-start justify-content-between text-center">
         <div class="col-md-12 d-flex justify-content-around justify-content-md-end pt-3 p-md-3 align-items-center">
-            <div class="mr-auto"><a href="/"><img class="img-fluid" style="max-height:70px" src="<?php echo Yii::app() -> theme -> baseUrl; ?>/images/logo.png" alt="Логотип" /></a></div>
-            <div class="d-flex pr-4 align-items-center hidden-sm-down">
-                <i class="fa fa-phone fa-2x" style="color:green" aria-hidden="true"></i><div class="d-inline-block ">Запись на<br/> МРТ/КТ</div>
+            <div class="hidden-xs-down mr-auto mr-xl-0"><a href="/"><img class="img-fluid" style="max-height:70px" src="<?php echo $baseTheme; ?>/images/logo.png" alt="Логотип" /></a></div>
+            <div style="font-size:1.15rem;" class="headerText ml-3 mr-auto hidden-lg-down">
+                Общегородская<br class="hidden-xl-up"/> служба<br/> записи на<br class="hidden-xl-up"/> МРТ&nbsp;и&nbsp;КТ
             </div>
-            <div class="row align-items-center pr-1 pr-md-3">
+            <div class="ml-3 align-items-center row hidden-820-down">
+                <div class="col-auto">
+                    <img style="width:50px;" src="<?php echo $baseTheme; ?>/images/list.png" alt="list"/>
+                </div>
+                <ul id="header-list" class="text-left col">
+                    <li class="d-flex align-items-center"><div>Лучшие цены</div></li>
+                    <li class="d-flex align-items-center"><div>Бесплатная<br class="hidden-lg-up" /> консультация</div></li>
+                    <li class="d-flex align-items-center"><div>Актуальная<br class="hidden-lg-up" /> информация</div></li>
+                </ul>
+            </div>
+            <div class="row align-items-center pr-1 ml-md-3 pr-md-3">
                 <div class="pr-2 col-12 col-md-auto ">
-                    Режим работы 7.00-00.00
+                    <div class="row align-items-center hidden-sm-down">
+                        <div class="col-auto p-2"><img style="width:50px;" src="<?php echo $baseTheme; ?>/images/clock.png" alt="clock"/></div>
+                        <div  class="col-auto p-2">Мы работаем <br/><strong>без выходных</strong><div class="headerText">с&nbsp;7:00&nbsp;до&nbsp;00:00</div></div>
+                    </div>
                 </div>
                 <div class="pr-1 col-12 col-md-auto font-weight-bold align-items-center">
-                    <i class="fa fa-phone d-inline-block align-middle" aria-hidden="true"></i>&nbsp<div class="ml-1 align-middle d-inline-block"><a href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a><br/><a href="tel:<?php echo Yii::app() -> phoneMSC -> getUnformatted(); ?>"><?php echo Yii::app() -> phoneMSC -> getFormatted(); ?></a></div>
+                    <img style="width: 50px;" src="<?php echo $baseTheme; ?>/images/phone.png" alt="phone"/>&nbsp
+                    <div class="ml-1 align-middle d-inline-block">
+                        <strong>Запись на МРТ&nbsp;и&nbsp;КТ</strong><br/>
+                        <a href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a><br/>
+                        <a href="tel:<?php echo Yii::app() -> phoneMSC -> getUnformatted(); ?>"><?php echo Yii::app() -> phoneMSC -> getFormatted(); ?></a>
+                    </div>
                 </div>
             </div>
         </div>

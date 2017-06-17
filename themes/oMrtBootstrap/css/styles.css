@@ -189,3 +189,30 @@ body h2 {
     display: inline-block;
     cursor:pointer;
 }
+#header-list {
+    list-style-type: none;
+    padding-left:10px;
+    margin: 0;
+}
+#header-list {
+    vertical-align: middle;
+}
+#header-list li div{
+    /*display: inline-block;*/
+}
+#header-list li:before{
+    /*font-family: FontAwesome;*/
+    /*content: "\f129";*/
+    content:'\25B6';
+    padding-right:5px;
+    height:20px;
+}
+.headerText {
+    color: #57ae8a;
+    font-weight: bold;
+}
+@media only screen and (max-width : 820px) {
+    .hidden-820-down {
+        display: none;
+    }
+}
