@@ -647,6 +647,24 @@ class Article extends BaseModel {
 
 		},$text);
 
+		//Делаем так, чтобы картинки не слишком вылезали
+		//Achtung! Нарушается установленная через height высота
+		$text = preg_replace_callback('/<img .*>/ui',function($matches){
+			$imgText = $matches[0];
+			$attributes = preg_match_all("/(\S+)=[\"']?((?:.(?![\"']?\s+(?:\S+)=|[>\"']))+.)[\"']?/ui",$imgText, $matches);
+			//var_dump($matches);
+			$attrs = [];
+			foreach ($matches[1] as $key => $val) {
+				$attrs[$val] = $matches[2][$key];
+			}
+			$attrs['style'] = $attrs['style'].';max-width:100%;height:auto;';
+			$attrString = '';
+			foreach ($attrs as $key => $value) {
+				$attrString .= " $key='$value'";
+			}
+			return "<img ".$attrString."/>";
+		},$text);
+
 //		$text = preg_replace_callback('/if:\s*'.$singleParameter.'((.|\s)*)endif;/uim',function($matches) use ($renderParameter){
 //			//Получили название триггера и поле, которое отображать
 //			$trigger_verb = $matches[2];
