@@ -8,7 +8,7 @@ $model -> partner = true;
 ?>
 <li class="clinic mb-3 single-clinic pt-3 d-flex row">
     <div class="col-12 col-md-9 small_info">
-        <h3 class="mt-0"><a href="#">Бесплатная общегородская служба записи на МРТ и КТ диагностику</a></h3>
+        <h3 class="mt-0"><a href="<?php echo $this -> createUrl('home/service'); ?>">Бесплатная общегородская служба записи на МРТ и КТ диагностику</a></h3>
         <?php
         icon('clock-o','пн-вс: 7.00-0.00');
         if ($triggers['area'] == 'spb') {

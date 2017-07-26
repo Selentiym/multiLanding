@@ -8,7 +8,6 @@
 class HomeControllerCatalogCommon extends CController {
     public $defaultAction = 'articles';
     public $layout = 'home';
-
     public function beforeAction(){
         $path = Yii::getPathOfAlias('application.sites.oMrt.components.Helpers') . '.php';
         require_once($path);

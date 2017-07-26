@@ -87,6 +87,8 @@ return SiteDispatcher::mergeArray(
                     ],
                     '<modelName:(clinics|doctors)>' => 'home/<modelName>Link',
                     'clinics-<area:(spb|msc)>' => 'home/clinics',
+                    'service-<area:(spb|msc)>' => 'home/service',
+                    //'service/*' => 'error/404',
                     'home/clinics/*' => 'error/404'
                 ),
             ),

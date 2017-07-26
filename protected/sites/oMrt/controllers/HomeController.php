@@ -12,7 +12,22 @@ class HomeController extends HomeControllerCatalogCommon {
                 'class'=>'application.controllers.actions.FileViewAction',
                 'view' => '/article/tomography',
                 'guest' => true,
-            ),
+            )
+//            ,
+//            'service'=>array(
+//                'class'=>'application.controllers.actions.FileViewAction',
+//                'view' => '/clinics/serviceView',
+//                'partial' => false,
+//                'guest' => true,
+//            ),
         ]);
+    }
+    public function actionService(){
+        //$this -> layout = 'home';
+        $this -> render('/clinics/serviceView');
+    }
+    public function actionCheck(){
+        //$this -> layout = 'home';
+        $this -> render('/clinics/serviceView');
     }
 }

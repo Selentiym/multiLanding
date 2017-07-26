@@ -93,7 +93,8 @@ class clinics extends BaseModel {
 		);
 	}
 	protected function instantiate($attributes) {
-		if (($attributes['verbiage'] == 'service')&&(self::$createService)) {
+		$serv = ['service','servicespb','servicemsc'];
+		if (in_array($attributes['verbiage'],$serv)&&(self::$createService)) {
 			return new Service(null);
 		}
 		return new clinics(null);
