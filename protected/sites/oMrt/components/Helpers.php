@@ -198,3 +198,38 @@ function encapsulateTriggersForRender($triggers){
         return Yii::app() -> getModule('clinics') -> renderParameter($triggersPrepared, $trigger,$field);
     };
 }
+function articleForImagedShortcut(Article $a){
+    $arr = [];
+    $arr ['url'] = Yii::app() -> controller -> createUrl('home/articleView',['verbiage' => $a -> verbiage]);
+    $arr ['imageUrl'] = ($url = $a -> getImageUrl()) ? $url : Yii::app() -> getTheme() -> baseUrl . '/images/noImgArticle.png';
+    $arr ['name'] = $a -> name;
+    $arr ['description'] = $a -> description;
+    return $arr;
+}
+
+/**
+ * @return array
+ */
+function dataForStandardArticleCards(){
+    $baseTheme = Yii::app() -> getTheme() -> baseUrl;
+    return [
+        'msc' => [
+            'url' => Yii::app() -> controller -> createUrl('home/clinics',['area' => 'msc'], '&',true),
+            'imageUrl' => $baseTheme . '/images/noImgArticle.png',
+            'name' => 'Сделать МРТ и КТ в Москве',
+            'description' => 'Список медицинских центров Москвы, в которых можно пройти МРТ или КТ обследование.'
+        ],
+        'spb' => [
+            'url' => Yii::app() -> controller -> createUrl('home/clinics',['area' => 'spb'], '&',true),
+            'imageUrl' => $baseTheme . '/images/noImgArticle.png',
+            'name' => 'Сделать МРТ и КТ в Санкт-Петербурге',
+            'description' => 'Список медицинских центров Санкт-Петербурга, в которых можно пройти МРТ или КТ обследование.'
+        ],
+        'lib' => [
+            'url' => Yii::app() -> getBaseUrl() . '/',
+            'imageUrl' => $baseTheme . '/images/noImgArticle.png',
+            'name' => 'Все об МРТ, КТ и ПЭТ',
+            'description' => 'Библиотека'
+        ]
+    ];
+}

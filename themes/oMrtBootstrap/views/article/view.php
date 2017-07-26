@@ -76,6 +76,7 @@ if (!$code) { $code = 'msc'; }
 		<div class="children">
 			<?php
 				$children = empty($model -> giveChildren()) ? [] : $model -> giveChildren();
+				$children = array_merge(dataForStandardArticleCards(),$children);
 				$this -> renderPartial('/article/renderList',['articles' => $children]);
 			?>
 		</div>
