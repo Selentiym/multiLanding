@@ -649,7 +649,7 @@ class Article extends BaseModel {
 
 		//Делаем так, чтобы картинки не слишком вылезали
 		//Achtung! Нарушается установленная через height высота
-		$text = preg_replace_callback('/<img .*>/ui',function($matches){
+		$text = preg_replace_callback('/<img [^<>]*>/ui',function($matches){
 			$imgText = $matches[0];
 			$attributes = preg_match_all("/(\S+)=[\"']?((?:.(?![\"']?\s+(?:\S+)=|[>\"']))+.)[\"']?/ui",$imgText, $matches);
 			//var_dump($matches);
