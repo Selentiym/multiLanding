@@ -44,6 +44,7 @@ if (!$code) { $code = 'msc'; }
 <div class="row no-gutters">
 	<div class="col-12 p-3 mx-auto article row">
 		<div class="prices col-md-3">
+			<div class="text-center mb-3"><button class="btn signUpButton">Записаться на МРТ/КТ</button></div>
 			<?php $this -> renderPartial('/prices/_price_group_article',[
 					'id' => 'spbPrices',
 					'name' => 'Цены в Санкт-Петербурге',
@@ -61,6 +62,7 @@ if (!$code) { $code = 'msc'; }
 					'triggers' => ['area' => 'msc', 'sortBy' => 'priceUp']
 			]);
 			?>
+			<div class="text-center mb-3"><button class="btn signUpButton">Записаться на МРТ/КТ</button></div>
 		</div>
 		<div class="col-md-9">
 			<?php
