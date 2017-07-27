@@ -124,9 +124,10 @@ class ClinicsModule extends UWebModule {
 			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>ImportCsv' => '<moduleClinics>/admin/ImportCsv',
 			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>FieldsGlobal' => '<moduleClinics>/admin/FieldsGlobal',
 			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>FieldCreateGlobal' => '<moduleClinics>/admin/FieldCreateGlobal',
-			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>Fields/<id:\d+>' => '<moduleClinics>/admin/Fields',
-			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>FieldsCreate/<id:\d+>' => '<moduleClinics>/admin/FieldsCreate',
-			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>FieldsUpdate/<id:\d+>' => '<moduleClinics>/admin/FieldsUpdate',
+			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)><modelClass:(Fields|News)>/<id:\d+>' => '<moduleClinics>/admin/<modelClass>',
+			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)><modelClass:(Fields|News)>Create/<id:\d+>' => '<moduleClinics>/admin/<modelClass>Create',
+			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)><modelClass:(Fields|News)>Update/<id:\d+>' => '<moduleClinics>/admin/<modelClass>Update',
+			'<moduleClinics:(clinics)>/admin/NewsDelete/<id:\d+>' => '<moduleClinics>/admin/NewsDelete',
 			'<moduleClinics:(clinics)>/admin/FieldUpdateGlobal/<id:\d+>' => '<moduleClinics>/admin/FieldUpdateGlobal',
 			'<moduleClinics:(clinics)>/admin/FieldDeleteGlobal/<id:\d+>' => '<moduleClinics>/admin/FieldDeleteGlobal',
 			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>Delete/<id:\d+>' => '<moduleClinics>/admin/ObjectDelete',
@@ -142,6 +143,10 @@ class ClinicsModule extends UWebModule {
 			'<moduleClinics:(clinics)>/admin/triggerRequest/<verbiage:\w+>' => '<moduleClinics>/admin/triggerRequest',
 
 			'<moduleClinics:(clinics)>/admin/<modelClass:(TriggerParameter)><act:(List|Create|Update|Delete)>/<id:\d+>' => '<moduleClinics>/admin/<modelClass><act>',
+
+			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>Fields/<id:\d+>' => '<moduleClinics>/admin/Fields',
+			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>FieldsCreate/<id:\d+>' => '<moduleClinics>/admin/FieldsCreate',
+			'<moduleClinics:(clinics)>/admin/<modelName:(clinics|doctors)>FieldsUpdate/<id:\d+>' => '<moduleClinics>/admin/FieldsUpdate',
 		];
 	}
 
