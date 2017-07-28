@@ -31,6 +31,10 @@ $cs -> registerScript('initiate_popup_forms','
         show:false,
         focus:true
     });
+    $(".signUpButton").click(function(){
+        var city = $(this).attr("data-city");
+        $("#signUpFormModal").find("#cityInput").val(city);
+    });
     $("form.signUpForm").submit(function(e){
     var toSubmit = $(this).find("[type=\'submit\']");
     toSubmit.attr("disabled",true);
@@ -50,8 +54,12 @@ $cs -> registerScript('initiate_popup_forms','
 	} catch (err) {
 		console.log(err);
 	}
-    $.get("'.$this -> createUrl('/form/submit').'",$(this).serialize()).done(function(date){
-        alert("Ваша заявка успешно принята!");
+    $.get("'.$this -> createUrl('/form/submit').'",$(this).serialize(),function(){},"JSON").done(function(data){
+        if (data.success) {
+            alert("Ваша заявка успешно принята!");
+        } else {
+            alert("Заявка не отправлена, пожалуйста, попробуйте воспользоваться телефоном на странице.");
+        }
     }).fail(function(){
         alert("Возникла ошибка при отправке. Пожалуйста, попробуйте еще раз или воспользуйтесь одним из указанных телефонных номеров.");
     }).always(function () {
@@ -158,7 +166,7 @@ $triggers = $_GET;
         <div class="row justify-content-around align-items-center">
             <div class="col-6 col-md-3 mb-3 mb-md-0"><?php echo date('Y'); ?>, все права защищены</div>
             <div class="col-12 col-md-3 flex-last flex-md-unordered">
-                <button class="btn signUpButton">Записаться на МРТ/КТ</button>
+                <button class="btn signUpButton" <?php if (Geo::isCity('msc')) echo "data-city='msc'"; ?>>Записаться на МРТ/КТ</button>
             </div>
             <div class="col-6 col-md-3 mb-3 mb-md-0">
                 <span>Звоните круглосуточно</span><br/>
@@ -180,6 +188,7 @@ $triggers = $_GET;
                 </button>
             </div>
             <form class="signUpForm" id="signUpForm">
+                <input type="hidden" name="city" id="cityInput" />
             <div class="modal-body">
                 <div class="form-group">
                     <label for="recipient-name" class="form-control-label">Ваше имя:</label>

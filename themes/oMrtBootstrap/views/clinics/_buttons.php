@@ -6,11 +6,13 @@
 if ($model -> partner) {
     if ($model -> getFirstTriggerValue('area') -> verbiage == 'msc') {
         $phone = Yii::app() -> phoneMSC;
+        $city = 'msc';
     } else {
+        $city = 'spb';
         $phone = Yii::app() -> phone;
     }
 ?>
-<button class="btn signUpButton">Записаться</button>
+<button class="btn signUpButton" data-city="<?php echo $city; ?>">Записаться</button>
 <div class="mb-1">Или по телефону</div>
 <div class="phone">
     <a href="tel:<?php echo $phone -> getUnformatted(); ?>"><?php echo $phone -> getFormatted(); ?></a>
