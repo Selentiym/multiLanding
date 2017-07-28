@@ -10,11 +10,19 @@
  * @param string $class
  * @internal param ClinicsModule $mod
  */
-
 $mod = Yii::app() -> getModule('clinics');
 $page = $_GET['page'] ? $_GET['page'] : 1;
 unset($_GET['page']);
 $triggers = $_GET;
+$researchObject = $triggers['research'] ? ObjectPrice::model()->findByAttributes(['verbiage' => $triggers['research']]) : null;
+//Нормализуем триггеры по признаку наличия мрт=мрт и кт=кт меток
+if ($triggers['research']) {
+    unset($triggers['mrt']);
+    unset($triggers['kt']);
+}
+Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/clinics',$triggers,'&',false,true));
+//var_dump($triggers);
+//return;
 $model = clinics::model() -> findByAttributes(['verbiage' => 'service']);
 if (!$model) {
     $model = clinics::model();
@@ -296,7 +304,7 @@ $description = "В ".$geoName." ".$rRod. " можно пройти в ".count($a
 /**
  * @type ObjectPrice $research
  */
-$research = $triggers['research'] ? ObjectPrice::model()->findByAttributes(['verbiage' => $triggers['research']]) : null;
+$research = $researchObject;
 if ($research) {
     $description .= $research -> getArticle() -> description;
 }
