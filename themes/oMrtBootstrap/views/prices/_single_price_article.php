@@ -33,7 +33,7 @@ $highLight = (($mainPrice -> id)&&(($price->id==$mainPrice->id)||($price->id==$m
         <?php if ($price -> getCachedPrice()) :?>
         <div class="col-auto font-weight-bold mr-2">от <?php
             echo CHtml::link($price -> getCachedPrice(),$this -> createUrl('home/clinics',$triggers,'&',false,true));
-            ?>руб</div>
+            ?> руб</div>
         <?php endif; ?>
     <?php endif; ?>
 </div>
