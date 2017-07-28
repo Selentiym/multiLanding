@@ -846,7 +846,7 @@ class Article extends BaseModel {
 	 */
 	public function getImageUrl(){
 		$nodes = $this -> parseTags('img');
-		if (empty(array_filter($nodes))) {
+		if (empty($nodes)) {
 			return false;
 		}
 		foreach ($nodes as $node) {
