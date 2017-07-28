@@ -91,7 +91,7 @@ $triggers = $_GET;
     $title = $title ? $title : Yii::app() -> name;
     ?>
     <title><?php echo $title; ?></title>
-
+    <script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = 'https://vk.com/rtrg?p=VK-RTRG-145004-9vUy2';</script>
 </head>
 
 <body>

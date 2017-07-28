@@ -73,6 +73,8 @@ console.log(owl2);
 	$(links[anchor]).collapse("show");
 	if (links[anchor]) {
 		window.location.hash=links[anchor];
+	} else {
+	    $("#prices").collapse("show");
 	}
 //	alert(anchor);
 ',CClientScript::POS_READY);
