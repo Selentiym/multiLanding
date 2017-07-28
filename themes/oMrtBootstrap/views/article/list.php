@@ -21,6 +21,7 @@ $count = count($articles);
 $c = 0;
 $first_column = array();
 $second_column = array();
+$baseTheme = Yii::app() -> getTheme() -> baseUrl;
 foreach($articles as $a){
     if ($c < $count/2) {
         $first_column[] = $a;
@@ -41,6 +42,13 @@ $this -> renderPartial('/article/_navBar',[]);
                 </div>
                 <div class="col-12">
                     <?php $this -> renderPartial('/article/renderList', array('articles' => $second_column)); ?>
+                </div>
+                <div class="col-12">
+
+                    <?php
+                    $common = dataForStandardArticleCards();
+                    unset($common['lib']);
+                    $this -> renderPartial('/article/renderList', array('articles' => $common)); ?>
                 </div>
             </div>
         </div>

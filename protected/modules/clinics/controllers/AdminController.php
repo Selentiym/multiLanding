@@ -99,6 +99,35 @@ class AdminController extends Controller
                 'modelClass' => 'ObjectPriceBlock'
             ),
 
+
+            'News'=>array(
+                'class'=>'application.controllers.actions.ModelViewAction',
+                'modelClass' => $_GET['modelName'],
+                'scenario' => 'id',
+                //'access' => function () {return $this -> isSuperAdmin();},
+                'view' => '/news/_list'
+            ),
+            'NewsCreate'=>array(
+                'class'=>'application.controllers.actions.ModelCreateAction',
+                'modelClass' => 'News',
+                'scenario' => 'create',
+                'redirectUrl' => $this -> createUrl('admin/News',['modelName' => $_GET['modelName'], 'id' => $_GET['id']]),
+                'view' => '/news/create'
+            ),
+            'NewsUpdate'=>array(
+                'class'=>'application.controllers.actions.ModelUpdateAction',
+                'modelClass' => 'News',
+                'scenario' => 'update',
+                'redirectUrl' => function($model){
+                    return $this -> createUrl('admin/News',['modelName' => Objects::getName($model -> object_type), 'id' => $model -> id_object]);
+                },
+                'view' => '/news/update'
+            ),
+            'NewsDelete' => array(
+                'class' => 'application.controllers.actions.ModelDeleteAction',
+                'modelClass' => 'News'
+            ),
+
             'PriceList'=>array(
                 'class'=>'application.controllers.actions.ModelViewAction',
                 'modelClass' => $_GET['modelName'],
@@ -2236,6 +2265,7 @@ class AdminController extends Controller
                 'data' => $data,
             ]);
     }
+
     public function actionEditOurClinic(){
         $pk = Html::encode($_POST['pk']);
         $property = Html::encode($_POST['name']);
@@ -2256,6 +2286,21 @@ class AdminController extends Controller
         $clinic -> $property = $value == null ? null : $value;
         $clinic -> setScenario('noPrices');
         $clinic -> save();
+    }
+    public function actionConvertSalesToNews(){
+        $crit = new CDbCriteria();
+        $crit -> addCondition('length(sales) > 15');
+        foreach (clinics::model() -> findAll($crit) as $clinic) {
+            $news = new News();
+            $news -> published = new CDbExpression('FROM_UNIXTIME('.(time() - rand(0,864000)).')');
+            $news -> text = $clinic -> sales;
+            $news -> id_object = $clinic -> id;
+            $news -> object_type = Objects::getNumber(get_class($clinic));
+            $news -> save();
+            $clinic -> sales = null;
+            $clinic -> scenario = 'noPrices';
+            $clinic -> save();
+        }
     }
     private function getClinicsFromDocDoc($cityId, $shift, $clinicsArray = []) {
         $clinicsRequest = 'https://' . Yii::app()->params['dd.credentials'] . '@back.docdoc.ru/api/rest/1.0.4/json/clinic/list/start/' . $shift . '/count/100/city/' . $cityId . '/order/name';

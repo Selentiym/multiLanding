@@ -275,10 +275,12 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
 				</div>
 				<div class="collapse p-3" id="sales">
 					<?php
-						if (strlen(trim(strip_tags($model -> sales))) < 10) {
+						if (empty($model -> news)) {
 							echo "<p>Информация о скидках отсутсвует</p>";
 						} else {
-							echo $model -> sales;
+							foreach ($model -> news as $news) {
+								$this -> renderPartial('//clinics/_single_news',['model' => $news]);
+							}
 						}
 					?>
 				</div>

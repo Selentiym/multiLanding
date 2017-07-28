@@ -125,6 +125,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'urlExpression'=>function($data) {return $this -> createUrl("admin/objectCommentsList", array("id"=>$data->id,'modelName' => 'clinics'));},
 
         ),
+        array(
+            'class'=>'CLinkColumn',
+            'header'=>CHtml::encode('Новости'),
+            'label'=>CHtml::button("Редактировать"),
+            'urlExpression'=>function($data) {return $this -> createUrl("admin/News", array("id"=>$data->id,'modelName' => 'clinics'));},
+
+        ),
 
       array(
             'class'=>'CButtonColumn',

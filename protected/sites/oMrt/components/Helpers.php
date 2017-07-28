@@ -198,3 +198,38 @@ function encapsulateTriggersForRender($triggers){
         return Yii::app() -> getModule('clinics') -> renderParameter($triggersPrepared, $trigger,$field);
     };
 }
+function articleForImagedShortcut(Article $a){
+    $arr = [];
+    $arr ['url'] = Yii::app() -> controller -> createUrl('home/articleView',['verbiage' => $a -> verbiage]);
+    $arr ['imageUrl'] = ($url = $a -> getImageUrl()) ? $url : Yii::app() -> getTheme() -> baseUrl . '/images/noImgArticle.png';
+    $arr ['name'] = $a -> name;
+    $arr ['description'] = $a -> description;
+    return $arr;
+}
+
+/**
+ * @return array
+ */
+function dataForStandardArticleCards(){
+    $baseTheme = Yii::app() -> getTheme() -> baseUrl;
+    return [
+        'msc' => [
+            'url' => Yii::app() -> controller -> createUrl('home/clinics',['area' => 'msc'], '&',true),
+            'imageUrl' => $baseTheme . '/images/msk.jpg',
+            'name' => 'Сделать МРТ и КТ в Москве',
+            'description' => 'Лучшие предложения МРТ и КТ диагностики в Москве, более 170 клиник, информация о ценах и акциях, выбрать ближайший центр - адреса, районы, метро.  МРТ и КТ с контрастом, обзор частных и государственных клиник, где можно пройти обследование ночью, принимают ли маленьких детей.'
+        ],
+        'lib' => [
+            'url' => Yii::app() -> getBaseUrl() . '/',
+            'imageUrl' => $baseTheme . '/images/lib.jpg',
+            'name' => 'Все об МРТ, КТ и ПЭТ',
+            'description' => 'Всё об МРТ и КТ исследованиях, когда назначают, основные показания и противопоказания, советы по подготовке. Чем отличается МРТ от КТ, принцип работы, как проходит исследование. Ответы на самые часто задаваемые вопросы Вы найдёте в статьях этого раздела.'
+        ],
+        'spb' => [
+            'url' => Yii::app() -> controller -> createUrl('home/clinics',['area' => 'spb'], '&',true),
+            'imageUrl' => $baseTheme . '/images/spb.jpg',
+            'name' => 'Сделать МРТ и КТ в СПб',
+            'description' => 'Выгодные предложения МРТ и КТ диагностики в Санкт-Петербурге, более 100 медцентров, информация о ценах и скидках, выбрать ближайшую клинику - адреса, районы, метро.  МРТ и КТ с контрастированием, обзор частных и государственных центров, где можно пройти обследование круглосуточно, с какого возраста проводят диагностику ребенку.'
+        ]
+    ];
+}

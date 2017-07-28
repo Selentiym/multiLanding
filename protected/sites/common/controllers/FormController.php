@@ -4,6 +4,7 @@ class FormController extends AController
 {
 	public function actionSubmit()
 	{
+		$rez['success'] = true;
 		$adminemail="shubinsa1@gmail.com";  // e-mail админа
 		//$adminemail="bondartsev.nikita@gmail.com";  // e-mail админа
 		@$theme="Заказ с сайта MRT (".Yii::app() -> name.")";
@@ -24,6 +25,53 @@ class FormController extends AController
 				'phone' => $phone,
 				'description' => 'Заявка с '.Yii::app() -> name
 		);
+
+		/**
+		 * Send data to DocDoc
+		 */
+
+		if ($_GET['city'] == 'msc') {
+			try {
+				$rez['success'] = false;
+				if ($curl = curl_init()) {
+					curl_setopt($curl, CURLOPT_URL, 'https://'. Yii::app()->params['dd.credentials'] .'@back.docdoc.ru/api/rest/1.0.6/json/request');
+					curl_setopt($curl, CURLOPT_POST, true);
+					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+					$formattedNumber = preg_replace('/[^\d]/ui','',$params['phone']);
+					$cancel = false;
+					switch (mb_strlen($formattedNumber,'utf-8')) {
+						case 11:
+							if ((mb_substr($formattedNumber,0,1)) != 7) {
+								$formattedNumber = '7'.mb_substr($formattedNumber,1);
+							}
+							break;
+						case 10:
+							$formattedNumber = '7'.$formattedNumber;
+							break;
+						default:
+							$cancel = true;
+							break;
+					}
+					if (!$cancel) {
+						curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode([
+							'city' => 1,
+							'phone' => $formattedNumber
+						]));
+						$rez['success'] = true;
+						$raw = curl_exec($curl);
+						$out = json_decode($raw);
+						if ($out -> Response -> status == 'success') {
+							$rez['success'] = true;
+						}
+					}
+					curl_close($curl);
+				}
+			} catch (Exception $e) {}
+		}
+
+		/**
+		 *
+		 */
 
 //посылаем заявку к себе
 		if( $curl = curl_init() ) {
@@ -112,6 +160,7 @@ class FormController extends AController
 		} catch (Exception $e) {
 
 		}
+		echo json_encode($rez);
 	}
 
 	// Uncomment the following methods and override them if needed

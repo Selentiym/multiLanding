@@ -1,6 +1,28 @@
 <?php
 
 class Geo {
+    /**
+     * @var self $_instance
+     */
+    private static $_instance;
+
+    public static $cityCodes = array(
+        'Москва' => 'msc',
+        'Санкт-Петербург' => 'spb',
+		'Воронеж' => 'vrn',
+		'Екатеринбург' => 'ekb',
+		'Ижевск' => 'izh',
+		'Казань' => 'kazan',
+		'Краснодар' => 'krd',
+		'Московская область' => 'mo',
+		'Нижний Новгород' => 'nn',
+		'Новосибирск' => 'nsk',
+		'Пермь' => 'perm',
+		'Ростов-на-Дону' => 'rnd',
+		'Самара' => 'samara',
+		'Уфа' => 'ufa',
+		'Челябинск' => 'chlb'
+    );
 
     var $ip;
     var $charset = 'utf-8';
@@ -8,6 +30,12 @@ class Geo {
     public function __construct($options = null) {
 
         $this->dirname = dirname(__file__);
+
+        //Поскольку хотим иметь возможность тестирования, добавляем здесь первым приоритетом
+        //взятие ip из $_GET
+        if (!isset($options['ip'])) {
+            $options['ip'] = $_GET['ip'];
+        }
 
         // ip
         if (isset($options['ip']) && $this->is_valid_ip($options['ip'])) {
@@ -126,4 +154,25 @@ class Geo {
         return false; // иначе возвращаем false
     }
 
+    /**
+     * @return string
+     */
+    public static function getCityCode() {
+        if (!isset(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        $code = self::$cityCodes[self::$_instance -> get_value('city')];
+        if (!$code) {
+            $code = self::$cityCodes['Санкт-Петербург'];
+        }
+        return $code;
+    }
+
+    /**
+     * @param int $code
+     * @return bool
+     */
+    public static function isCity($code){
+        return self::getCityCode() == $code;
+    }
 }

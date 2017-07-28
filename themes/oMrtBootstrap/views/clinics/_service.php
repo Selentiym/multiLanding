@@ -32,7 +32,7 @@ $model -> partner = true;
     <div class="right-pane col-12 col-md-3 flex-first flex-md-unordered">
         <img class="mr-3 img-fluid" src="<?php echo Yii::app() -> theme -> baseUrl; ?>/images/logo_old.png" alt="Общегородская служба записи" />
         <div><div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
-        <button class="btn signUpButton">Записаться</button>
+        <button class="btn signUpButton" data-city="<?php echo $triggers['area']; ?>">Записаться</button>
         <div class="mb-1">Или по телефону</div>
         <?php
         if ($triggers['area'] == 'msc') {

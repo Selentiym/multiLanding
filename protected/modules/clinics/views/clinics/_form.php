@@ -252,26 +252,6 @@
             <br/>
         </div>
 
-        <div>
-            <?php echo $form->labelEx($model,'sales'); ?>
-            <div class="controls">
-                <?php
-                $this->widget('application.extensions.tinymce.TinyMce',
-                    array(
-                        'model'=>$model,
-                        'attribute'=>'sales',
-                        'htmlOptions' => ['style' => 'height:300px;witdh:80%'],
-                        'settings' => array(
-                            'entity_encoding' => 'raw',
-                        )
-                    ));
-                ?>
-            </div>
-            <?php echo $form->error($model,'sales'); ?>
-            <br/>
-        </div>
-
-
         <!--        <div>-->
 <!--            --><?php //echo $form->labelEx($model,'audio'); ?>
 <!--            --><?php
