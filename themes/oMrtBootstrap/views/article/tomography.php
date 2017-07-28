@@ -10,7 +10,7 @@
  */
 $cs = Yii::app()->getClientScript();
 
-Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/articles',[],'&',false,true));
+Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/tomography',[],'&',false,true));
 
 $this -> setPageTitle('Томография');
 $mod = Yii::app() -> getModule('clinics');
