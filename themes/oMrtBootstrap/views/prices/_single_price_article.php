@@ -6,6 +6,9 @@
  * @var mixed[] $triggers
  */
 $val = false;
+if (!$price instanceof ObjectPrice) {
+    return;
+}
 if ($model instanceof clinics) {
     $val = $model->getPriceValue($price->id)->value;
 }
