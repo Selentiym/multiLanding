@@ -3,7 +3,10 @@
  *
  */
 clinics::$createService = true;
-$model = clinics::model() -> findByAttributes(['verbiage' => 'service']);
+if (!in_array($triggers['area'],['spb','msc'])) {
+    $triggers['area'] = 'spb';
+}
+$model = clinics::model() -> findByAttributes(['verbiage' => 'service'.$triggers['area']]);
 $model -> partner = true;
 ?>
 <li class="clinic mb-3 single-clinic pt-3 d-flex row">

@@ -191,39 +191,10 @@ $cs -> registerScript('implementLinks',"
 $cs -> registerCoreScript('select2_4');
 $cs -> registerCoreScript('rateit');
 
-$cs->registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");
-//$extraArticles = ArticleRule::getAllArticles('commercial', $triggers);
-$toAdd = '';
-foreach ($allObjects as $clinic) {
-    $variab = 'v'.str_replace('-','',$clinic -> verbiage);
-    if ($clinic -> map_coordinates) {
-        $toAdd .= "{$variab} = new ymaps.Placemark( ".json_encode(array_values($clinic -> getCoordinates()))." , {
-											hintContent: '".prepareTextToJS ($clinic -> name).", ".prepareTextToJS ($clinic -> address)."'
-										});";
-        $toAdd .= "allClinics.geoObjects.add({$variab});
-        ";
-    }
-    $i++;
-//    if ($i>10) break;
-}
-$cs->registerScript("map_init","
-    ymaps.ready(function () {
-
-        allClinics = new ymaps.Map('map', {
-            center: ".($triggers['area'] == 'spb' ? '[59.939095, 30.315868]' : '[55.755814, 37.617635]') ." ,
-            zoom: 10,
-            id: 'map'
-        }, {
-            searchControlProvider: 'yandex#search'
-        });
-        ".$toAdd."
-        $('#map').on('shown.bs.collapse', function(){
-            $('#map').height(300);
-            $(window).trigger('resize');
-            allClinics.container.fitToViewport()
-        });
-    });
-",CClientScript::POS_READY);
+generateMap($allObjects,'map',[
+    'center' => ($triggers['area'] == 'spb' ? [59.939095, 30.315868] : [55.755814, 37.617635]),
+    'zoom' => 10
+]);
 
 $cs -> registerCoreScript('prettyFormUrl');
 $cs -> registerCoreScript('font-awesome');

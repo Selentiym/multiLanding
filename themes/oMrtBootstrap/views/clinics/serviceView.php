@@ -127,18 +127,15 @@ $cs -> registerScript('Order','
 		$(this).parent().children(".show").show();
 	});
 ',CClientScript::POS_READY);
-	$temp = $model -> getCoordinates();
-	$coordinaty[0] = $temp[1];
-	$coordinaty[1] = $temp[0];
-	if ($coordinaty[1]&&$coordinaty[0]) {
-        $cs->registerScript('mapAct', '
-			addCoords([' . $coordinaty[1] . ', ' . $coordinaty[0] . '],"' . CJavaScript::encode($model->name) . ', ' . $adress . '");
-		', CClientScript::POS_READY);
-    } else {
-        $cs->registerScript('mapAct', '
-			$("#map").html("Не удалось найти местоположение заправшиваемого объекта. Пожалуйста, сообщите о данной ошибке в техподдержку сайта. Адрес: ' . $adress . '.");
-		', CClientScript::POS_READY);
-    }
+$crit = new CDbCriteria();
+$crit -> compare('partner',1);
+$partners = clinics::model() -> userSearch(['area' => $model -> getFirstTriggerValue('area') -> id],'rating',-1,$crit);
+$partners = $partners['objects'];
+//$partners = [];
+generateMap($partners,'map',[
+    'center' => ($triggers['area'] == 'spb' ? [59.939095, 30.315868] : [55.755814, 37.617635]),
+    'zoom' => 10
+]);
 	//$this -> renderPartial('//home/searchForm', array('filterForm' => $filterForm, 'modelName' => $modelName, 'fromPage' => $fromPage,'page' => $page));
 $r = false;
 if ($model -> giveMinMrtPrice()) {
@@ -175,30 +172,14 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
         <div class="col-12 col-lg-10 mx-auto">
             <div class="row d-flex">
                 <div class="col-12 col-md-4">
-                    <?php
-                    $phrase = '';
-                    if ($model -> getFirstTriggerValue('mrt')) {
-                        $phrase = "МРТ";
-                    }
-                    if ($model -> getFirstTriggerValue('kt')) {
-                        if ($phrase) {
-                            $phrase .= ' и ';
-                        }
-                        $phrase .= "КТ";
-                    }
-                    ?>
                     <h1 class="mb-0 pb-1 text-center" style="font-size:1.5rem"><strong><?php echo $model -> name; ?></strong></h1>
-                    <?php if ($model -> getFirstTriggerValue('finance') -> verbiage == 'commercial'): ?>
-                        <h2 class="text-center mt-0"><?php echo "Центр $phrase диагностики"; ?></h2>
-                    <?php endif; ?>
-                    <?php $this -> renderPartial('/clinics/_iconData',['model' => $model, 'data' => $triggers, 'expanded' => true]); ?>
+                    <?php $this -> renderPartial('//clinics/_serviceIconData',['model' => $model, 'data' => $triggers, 'expanded' => true]); ?>
                     <div class="text-center">
                         <?php $this -> renderPartial('/clinics/_buttons',['model' => $model]); ?>
                     </div>
                 </div>
                 <div class="col-12 col-md-8 pt-5" >
                     <div id="map" style="height:400px;"></div>
-                    <div><h6>Как добраться</h6><?php echo $model -> path; ?></div>
                 </div>
             </div>
 
@@ -220,7 +201,6 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
                     }
                     ?>
                 </div>
-                <div><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
             </div>
 
             <div class="row buttons text-center" role="tablist">
@@ -293,7 +273,14 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
                     <?php
                     echo '<div class="owl-carousel">';
                     $doctors = [];
-
+                    foreach ($partners as $clinic) {
+                        if (!empty($clinic -> doctors)) {
+                            $doctors = array_merge($doctors, $clinic -> doctors);
+                        }
+                        if (count($doctors) > 30) {
+                            break;
+                        }
+                    }
                     foreach ($doctors as $doctor) {
                         $this -> renderPartial('/doctors/_carousel',['doctor' => $doctor]);
                     }
@@ -310,12 +297,6 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
                     echo Yii::app() -> getModule('clinics') -> getObjectsReviewsPool('clinics') -> showObjectCommentsWidget($model -> id);
                     ?>
                 </div>
-            </div>
-            <!--			<div class="row"></div>-->
-            <div id="clinicsList" class="col-12 col-md-8 p-3 mx-auto">
-                <ul class="list-unstyled">
-                    <?php $this -> renderPartial('/clinics/_service',['triggers' => $triggers]); ?>
-                </ul>
             </div>
         </div>
     </div>

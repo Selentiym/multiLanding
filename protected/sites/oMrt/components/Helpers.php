@@ -233,3 +233,36 @@ function dataForStandardArticleCards(){
         ]
     ];
 }
+function generateMap($objects, $containerId, $options){
+    $cs = Yii::app() -> getClientScript();
+    $cs->registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");
+//$extraArticles = ArticleRule::getAllArticles('commercial', $triggers);
+    $toAdd = '';
+    foreach ($objects as $object) {
+        $variab = 'v'.str_replace('-','',$object -> verbiage);
+        if ($object -> map_coordinates) {
+            $toAdd .= "{$variab} = new ymaps.Placemark( ".json_encode(array_values($object -> getCoordinates()))." , {
+                hintContent: '".prepareTextToJS ($object -> name).", ".prepareTextToJS ($object -> address)."'
+            });";
+            $toAdd .= $containerId.".geoObjects.add({$variab});
+            ";
+        }
+    }
+    $options['id'] = $containerId;
+    $options['zoom'] = $options['zoom'] ? $options['zoom'] : '10';
+    $cs->registerScript("map_init","
+    ymaps.ready(function () {
+
+        ".$containerId." = new ymaps.Map('".$containerId."', ".json_encode($options).", {
+            searchControlProvider: 'yandex#search'
+        });
+        ".$toAdd."
+        $('#".$containerId."').on('shown.bs.collapse', function(){
+            $('#".$containerId."').height(300);
+            $(window).trigger('resize');
+            ".$containerId.".container.fitToViewport()
+        });
+    });
+",CClientScript::POS_READY);
+
+}

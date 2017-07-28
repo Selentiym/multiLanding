@@ -168,6 +168,9 @@ class ClinicsModule extends UWebModule {
 	 * @return iCommentPool
 	 */
 	public function getObjectsReviewsPool($class) {
+		if ($class == 'Service') {
+			return $this -> clinicsComments;
+		}
 		if (in_array($class,['clinics','doctors'])) {
 			$name = $class . 'Comments';
 			return $this -> $name;
