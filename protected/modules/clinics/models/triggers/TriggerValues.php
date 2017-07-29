@@ -322,7 +322,6 @@ class TriggerValues extends CTModel {
 			$rez[$saveTriggerVerbiages[$verb]] = $verb;
 		}
 		$rez = array_merge($savedData, $rez);
-		var_dump($rez);
 		return $rez;
 	}
 
