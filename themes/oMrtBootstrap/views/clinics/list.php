@@ -14,6 +14,7 @@ $mod = Yii::app() -> getModule('clinics');
 $page = $_GET['page'] ? $_GET['page'] : 1;
 unset($_GET['page']);
 $triggers = TriggerValues::normalizeTriggerValueSet($_GET);
+$_GET = $triggers;
 $researchObject = $triggers['research'] ? ObjectPrice::model()->findByAttributes(['verbiage' => $triggers['research']]) : null;
 
 Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/clinics',$triggers,'&',false,true));
