@@ -13,13 +13,10 @@
 $mod = Yii::app() -> getModule('clinics');
 $page = $_GET['page'] ? $_GET['page'] : 1;
 unset($_GET['page']);
-$triggers = $_GET;
+$triggers = TriggerValues::normalizeTriggerValueSet($_GET);
+return;
 $researchObject = $triggers['research'] ? ObjectPrice::model()->findByAttributes(['verbiage' => $triggers['research']]) : null;
-//Нормализуем триггеры по признаку наличия мрт=мрт и кт=кт меток
-if ($triggers['research']) {
-    unset($triggers['mrt']);
-    unset($triggers['kt']);
-}
+
 Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/clinics',$triggers,'&',false,true));
 //var_dump($triggers);
 //return;
@@ -247,11 +244,13 @@ if (!$research) {
     $r = $research;
     $rRod = $fr('research','nameRod');
     $rVin = $fr('research','nameVin');
-    $keys[] = $research;
 }
 $rRod = isset($rRod) ? $rRod : $r;
 $rVin = isset($rVin) ? $rVin : $r;
 $text .= ($text ? ' с' : 'С').'делать '.$rVin;
+
+$keys[] = $rVin;
+$keys[] = 'цены на '.$rVin;
 
 if ($triggers['contrast']) {
     $text .= ' с контрастом';
@@ -300,13 +299,13 @@ $keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
 $geoName = generateGeo($fr,$triggers);
 //$geoName = $geoName ? $geoName : $fr('area','areaNameRod');
-$description = "В ".$geoName." ".$rRod. " можно пройти в ".count($allObjects). ' ' . clinicWord(count($allObjects)).", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
+$description = "В ".$geoName." ".$rRod. " можно пройти в ".count($allObjects). clinicWord(count($allObjects)).", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
 /**
  * @type ObjectPrice $research
  */
 $research = $researchObject;
 if ($research) {
-    $description .= $research -> getArticle() -> description;
+    $description .= ' '.$research -> getArticle() -> description;
 }
 Yii::app() -> getClientScript() -> registerMetaTag($description,'description');
 Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($keys)),'keywords');

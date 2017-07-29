@@ -10,8 +10,8 @@
  * @property string $value
  * @property string $logo
  *
- * @property TriggerValues[] $dependencies
- * @property TriggerValues[] $children
+ * @property TriggerValueDependency[] $dependencies
+ * @property TriggerValueDependency[] $children
  * @property Triggers $trigger
  */
 class TriggerValues extends CTModel {
@@ -274,5 +274,87 @@ class TriggerValues extends CTModel {
 						Triggers::model() -> findAll($forTriggers)
 				));
 		return self::model()->findAll($crit);
+	}
+
+	/**
+	 * Deletes child's trigger values if parent trigger value has not been set
+	 * @param mixed[] $triggers - dirty trigger set
+	 * @return mixed[] - clean trigger set
+	 */
+	public static function normalizeTriggerValueSet($triggers){
+		//Нормализуем триггеры по признаку наличия мрт=мрт и кт=кт меток
+		if ($triggers['research']) {
+			unset($triggers['mrt']);
+			unset($triggers['kt']);
+			$triggers = array_filter($triggers);
+		}
+		$crit = new CDbCriteria();
+		//Не все поля - обычные триггеры, мы хотим их присоединить позже
+		$special = clinics::model() -> SFields;
+		//Улица вполне себе нормально зависит от района
+		unset($special['street']);
+		$savedData = [];
+		foreach ($special as $key) {
+			if ($triggers[$key]) {
+				$savedData[$key] = $triggers[$key];
+			}
+			unset($triggers[$key]);
+		}
+		//проверяем, чтобы метро было нормальным
+		if (($savedData['metro'])&&($triggers['area'])) {
+			if (Metro::model() -> findByPk($savedData['metro']) -> city != $triggers['area']) {
+				unset($savedData['metro']);
+			}
+		}
+		$crit -> addInCondition('verbiage',array_values($triggers));
+		$crit -> with = 'dependencies';
+		$saveTriggerVerbiages = array_flip($triggers);
+		$vals = [];
+		foreach (TriggerValues::model() -> findAll($crit) as $value) {
+			$vals[$value -> verbiage] = $value;
+		}
+		foreach ($triggers as $verb) {
+//			var_dump($vals[$verb] -> dependencies);
+			self::isValid($verb, $vals);
+		}
+		$rez = [];
+		foreach ($vals as $verb => $value) {
+			$rez[$saveTriggerVerbiages[$verb]] = $verb;
+		}
+		$rez = array_merge($savedData, $rez);
+		var_dump($rez);
+		return $rez;
+	}
+
+	/**
+	 * @param $verb
+	 * @param $vals
+	 * @return bool
+	 */
+	private static function isValid ($verb, &$vals) {
+		//Если значение уже удалено, то ничего не делаем
+		if (!$vals[$verb]) {
+			return false;
+		}
+		//Проверяем выбрана ли хотя бы одна зависимость
+		/**
+		 * @type TriggerValues $value
+		 */
+		$value = $vals[$verb];
+		//На случай полного отсутствия зависимостей
+		$valid = true;
+		foreach ($value -> dependencies as $dependency) {
+			//Если хоть одна зависимость есть, то мы не може просто пропустить это значение
+			$valid = false;
+			if (self::isValid($dependency -> verbiage_parent, $vals)) {
+				//Если зависимость есть и она выбрана
+				$valid = true;
+				break;
+			}
+		}
+		if (!$valid) {
+			unset($vals[$verb]);
+		}
+		return $valid;
 	}
 }
