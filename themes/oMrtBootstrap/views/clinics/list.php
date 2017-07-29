@@ -215,6 +215,7 @@ $cs -> registerScript('Order','
 $keys = [];
 $triggersPrepared = Article::prepareTriggers($triggers);
 $fr = encapsulateTriggersForRender($triggers);
+$geoName = generateGeo($fr,$triggers);
 $text = '';
 
 if ($street = $fr('street','value')) {
@@ -230,7 +231,7 @@ if ($triggers['time']) {
 }
 $research = $fr('research', 'value');
 if (!$research) {
-    $keys[] = 'томография';
+    $keys[] = 'сделать томографию';
     if ($triggers['mrt']) {
         $r = 'МРТ ';
         $keys[] = 'мрт';
@@ -249,7 +250,11 @@ $rRod = isset($rRod) ? $rRod : $r;
 $rVin = isset($rVin) ? $rVin : $r;
 $text .= ($text ? ' с' : 'С').'делать '.$rVin;
 
-$keys[] = $rVin;
+$doKey = 'сделать ' . $rVin;
+if ($geoName) {
+    $doKey .= ' в '.$geoName;
+}
+$keys[] = $doKey;
 $keys[] = 'цены на '.$rVin;
 
 if ($triggers['contrast']) {
@@ -288,7 +293,7 @@ if ($temp = $fr("children","value")) {
     $keys[] = 'детям';
     $keys[] = 'ребенку';
 }
-$h1 = $text;
+$h1 = $text .' в '.$geoName;
 $title = $text;
 if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
     $keys[] = $r.' недорого';
@@ -297,7 +302,7 @@ if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
 }
 $keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
-$geoName = generateGeo($fr,$triggers);
+
 //$geoName = $geoName ? $geoName : $fr('area','areaNameRod');
 $description = "В ".$geoName." ".$rRod. " можно пройти в ".count($allObjects). clinicWord(count($allObjects)).", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
 /**
@@ -329,6 +334,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
             </div>
         </div>
         <div class="col-md-6">
+            <h2 class="text-center" style="font-size:1.75rem;">Цены и адреса, где можно сделать <?php echo $rVin; ?> в <?php echo $geoName; ?></h2>
             <form id="searchForm" action="prettyFormUrl" data-action="home/clinics" data-params="{}" data-gen-url="<?php echo addslashes(Yii::app() -> createUrl('home/createFormUrl')); ?>" class="noEmpty prettyFormUrl">
 <!--            <form id="searchForm">-->
                 <?php echo Triggers::triggerHtml('area',$triggers); ?>
