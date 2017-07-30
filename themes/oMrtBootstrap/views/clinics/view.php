@@ -212,6 +212,14 @@ $cs -> registerMetaTag($r.' в '.$model -> name.', '.'сделать '.$r.' го
 				<div class="col-12 col-md-8 pt-5" >
 					<div id="map" style="height:400px;"></div>
 					<div><h6>Как добраться</h6><?php echo $model -> path; ?></div>
+					<div class="mt-2" style="font-size:1.1rem">
+						<strong>Сравнить цены</strong> на <?php echo $r; ?> и посмотреть <strong>адреса других клиник</strong> в <?php echo $geoName; ?>
+						Вы можете <a href="<?php echo $this -> createUrl('home/clinics',[
+							'area' => $modelTriggers['area']['verb'],
+							'district' => $modelTriggers['district']['verb'],
+							'prigorod' => $modelTriggers['prigorod']['verb'],
+						], '&',true); ?>" style="font-weight: bold">здесь</a>.
+					</div>
 				</div>
 			</div>
 
