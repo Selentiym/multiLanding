@@ -11,6 +11,9 @@ if ($a=$model -> getFirstTriggerValue('area') -> verbiage) {
 }
 
 $triggersPrepared = Article::prepareTriggers($triggers);
+//$model ->
+//$fr = encapsulateTriggersForRender($triggers);
+//$geoName = generateGeo($fr,$triggers);
 $mod = Yii::app() -> getModule('clinics');
 $word = 'prices';
 $this->setPageTitle($model->title);
@@ -154,7 +157,8 @@ if ($val = $model -> getFirstTriggerValue('district')) {
 }
 
 $cs -> registerMetaTag($descr,'description');
-$cs -> registerMetaTag($r.' головного мозга, позвоночника, суставов, малого таза, брюшной полости, легких, носовых пазух, с контрастом','keywords');
+//$cs -> registerMetaTag($r.' головного мозга, позвоночника, суставов, малого таза, брюшной полости, легких, носовых пазух, с контрастом','keywords');
+$cs -> registerMetaTag($r.' в '.$model -> name.', '.'сделать '.$r.' головного мозга, цены на '.$r.' в '.$model -> name.', '.$r.' в '.$geoName ,'keywords');
 ?>
 
 <nav class="breadcrumb bg-faded no-gutters">
