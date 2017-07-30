@@ -21,7 +21,7 @@ $fr = encapsulateTriggersForRender($modelTriggers);
 $geoName = generateGeo($fr,$modelTriggers);
 $mod = Yii::app() -> getModule('clinics');
 
-Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/modelView',['verbiage' => $model -> verbiage, 'modelName' => 'clinics'],'&',false,true));
+Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/modelView',['verbiage' => $model -> verbiage, 'modelName' => 'clinics', 'area' => $model -> getFirstTriggerValue('area') -> verbiage],'&',false,true));
 $cs = Yii::app() -> getClientScript();
 //Ниже оно генерится
 //$cs -> registerMetaTag($model -> description,'description');
