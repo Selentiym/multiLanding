@@ -40,10 +40,11 @@
                 $defaultValue = '';
                 $time = strtotime($model -> $attr);
                 if ($time > 1000) {
-                    $defaultValue = "value='".date('o-m-d\TH:i:s',$time)."'";
+//                    $defaultValue = "value='".date('o-m-d\TH:i:s',$time)."'";
+                    $defaultValue = "value='".date('o-m-d',$time)."'";
                 }
                 echo $form->labelEx($model,$attr);
-                echo "<input type='datetime-local' ".$defaultValue." name='".CHtml::resolveName($model, $attr)."' />";
+                echo "<input type='date' ".$defaultValue." name='".CHtml::resolveName($model, $attr)."' />";
                 echo $form->error($model,$attr);
                 ?>
             </div>
@@ -54,10 +55,11 @@
                 $defaultValue = '';
                 $time = strtotime($model -> $attr);
                 if ($time > 1000) {
-                    $defaultValue = "value='".date('o-m-d\TH:i:s',$time)."'";
+//                    $defaultValue = "value='".date('o-m-d\TH:i:s',$time)."'";
+                    $defaultValue = "value='".date('o-m-d',$time)."'";
                 }
                 echo $form->labelEx($model,$attr);
-                echo "<input type='datetime-local' ".$defaultValue." name='".CHtml::resolveName($model, $attr)."' />";
+                echo "<input type='date' ".$defaultValue." name='".CHtml::resolveName($model, $attr)."' />";
                 echo $form->error($model,$attr);
                 ?>
             </div>
