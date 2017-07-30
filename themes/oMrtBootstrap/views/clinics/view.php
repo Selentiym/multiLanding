@@ -11,15 +11,17 @@ if ($a=$model -> getFirstTriggerValue('area') -> verbiage) {
 }
 
 $triggersPrepared = Article::prepareTriggers($triggers);
-//$model ->
-//$fr = encapsulateTriggersForRender($triggers);
-//$geoName = generateGeo($fr,$triggers);
+$modelTriggers = [];
+$modelTriggersObjects = $model -> giveTriggerValuesObjects();
+foreach ($modelTriggersObjects as $trigVerb => $val) {
+	$val = current($val);
+	$modelTriggers[$trigVerb] = ['verb' => $val -> verbiage, 'id' => $val -> id];
+}
+$fr = encapsulateTriggersForRender($modelTriggers);
+$geoName = generateGeo($fr,$modelTriggers);
 $mod = Yii::app() -> getModule('clinics');
-$word = 'prices';
-$this->setPageTitle($model->title);
 
 Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/modelView',['verbiage' => $model -> verbiage, 'modelName' => 'clinics'],'&',false,true));
-
 $cs = Yii::app() -> getClientScript();
 //Ниже оно генерится
 //$cs -> registerMetaTag($model -> description,'description');
@@ -148,13 +150,26 @@ if ($model -> giveMinKtPrice()) {
 		$r = 'КТ';
 	}
 }
-if ($val = $model -> getFirstTriggerValue('district')) {
-	$descr = "Где можно сделать $r в ".$val -> getParameterValueByVerbiage('districtPredl') -> value . " или возле метро ".$model -> getSortedMetroString()." - Клиника {$r}: $model->name, ".$model ->getFullAddress();
-} elseif ($val = $model -> getFirstTriggerValue('prigorod')) {
-	$descr = "Где можно сделать $r в ".$val -> getParameterValueByVerbiage('prigorodPredl') -> value . " - Клиника {$r}: $model->name, ".$model ->getFullAddress();
-} else {
-	$descr = "Где можно сделать $r - Клиника {$r}: $model->name, ".$model ->getFullAddress();
+$title = $model -> title;
+if (!$title) {
+	$title = 'Пройти '.$r.' обследование в клинике "'.$model -> name.'" по адресу '.$fr('area','value').', '.$model -> address;
 }
+$this->setPageTitle($title);
+$descr = $model -> description;
+if (!$descr) {
+	$descr = generateKeyedTextForClinic($fr, $modelTriggers).' можно в клинике "'.$model -> name.'" по адресу '.$model -> address;
+	$descr .= ". На страницы Вы сможете узнать цены на $r, прочитать отзывы о медицинском центре '$model->name', а также узнать часы его работы.";
+	if ($model -> partner) {
+		$descr .= " Вы также можете записаться на $r исследование в '$model->name', оставив заявку на обратный звонок или позвонив по телефону.";
+	}
+}
+//if ($val = $model -> getFirstTriggerValue('district')) {
+//	$descr = "Где можно сделать $r в ".$val -> getParameterValueByVerbiage('districtPredl') -> value . " или возле метро ".$model -> getSortedMetroString()." - Клиника {$r}: $model->name, ".$model ->getFullAddress();
+//} elseif ($val = $model -> getFirstTriggerValue('prigorod')) {
+//	$descr = "Где можно сделать $r в ".$val -> getParameterValueByVerbiage('prigorodPredl') -> value . " - Клиника {$r}: $model->name, ".$model ->getFullAddress();
+//} else {
+//	$descr = "Где можно сделать $r - Клиника {$r}: $model->name, ".$model ->getFullAddress();
+//}
 
 $cs -> registerMetaTag($descr,'description');
 //$cs -> registerMetaTag($r.' головного мозга, позвоночника, суставов, малого таза, брюшной полости, легких, носовых пазух, с контрастом','keywords');

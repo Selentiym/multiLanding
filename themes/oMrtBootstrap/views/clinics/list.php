@@ -231,7 +231,6 @@ if ($triggers['time']) {
 }
 $research = $fr('research', 'value');
 if (!$research) {
-    $keys[] = 'сделать томографию';
     if ($triggers['mrt']) {
         $r = 'МРТ ';
         $keys[] = 'мрт';
@@ -261,10 +260,13 @@ if ($triggers['contrast']) {
     $text .= ' с контрастом';
     $keys[] = 'с контрастом';
 }
+if (!$research) {
+    $keys[] = 'сделать томографию';
+}
 $field = $fr('field','value');
 $keys[] = $field;
 $slices = preg_replace('/[^\d]/','',$fr('slices','value'));
-$keys[] = $slices;
+$keys[] = $fr('slices','value');
 $type = $fr('magnetType', 'type');
 $keys[] = $type;
 if (($field)||($slices)||($type)) {

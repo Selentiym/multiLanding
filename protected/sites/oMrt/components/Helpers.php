@@ -192,7 +192,11 @@ function contrastText($triggers){
     }
 }
 function encapsulateTriggersForRender($triggers){
-    $triggersPrepared = Article::prepareTriggers($triggers);
+    if (!is_array(current($triggers))) {
+        $triggersPrepared = Article::prepareTriggers($triggers);
+    } else {
+        $triggersPrepared = $triggers;
+    }
     Yii::app() -> getModule('clinics') -> refreshRendered();
     return function ($trigger, $field) use ($triggersPrepared){
         return Yii::app() -> getModule('clinics') -> renderParameter($triggersPrepared, $trigger,$field);
@@ -265,4 +269,54 @@ function generateMap($objects, $containerId, $options){
     });
 ",CClientScript::POS_READY);
 
+}
+function generateKeyedTextForClinic($fr,$triggers) {
+    $text = '';
+    if ($distr = $fr('district','value')) {
+        $text .= $distr.' район,';
+    }
+    if ($triggers['time']) {
+        $text .= ($text ? ' к' : 'К').'руглосуточно';
+    }
+    //Тип обследования
+    if ($triggers['mrt']) {
+        $r = 'МРТ ';
+        $keys[] = 'мрт';
+    }
+    if ($triggers['kt']) {
+        $r = $r ? $r.' и КТ' : 'КТ' ;
+        $keys[] = 'кт';
+    }
+    $r = $r ? $r : 'МРТ или КТ';
+    $rRod = isset($rRod) ? $rRod : $r;
+    $rVin = isset($rVin) ? $rVin : $r;
+    $text .= ($text ? ' с' : 'С').'делать '.$rVin;
+
+    if ($triggers['contrast']) {
+        $text .= ' с контрастом';
+        $keys[] = 'с контрастом';
+    }
+    $field = $fr('field','value');
+    $keys[] = $field;
+    $slices = preg_replace('/[^\d]/','',$fr('slices','value'));
+    $keys[] = $fr('slices','value');
+    $type = $fr('magnetType', 'type');
+    $keys[] = $type;
+    if (($field)||($slices)||($type)) {
+
+        $text .= ' на';
+        if ($type) {
+            $text .= ' '.$type;
+        }
+        if ($field) {
+            $text .= ' '.$field;
+        } elseif($slices) {
+            $text .= ' '.$slices.'-срезовом';
+        }
+        $text .= ' томографе';
+    }
+    if ($temp = $fr("children","value")) {
+        $text .= ' детям';
+    }
+    return $text;
 }
