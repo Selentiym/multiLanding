@@ -115,24 +115,21 @@ class ObjectPriceValue extends CTModel
 	}
 	public function beforeSave() {
 		//Если уже существует данная цена, то не создаем новую запись в таблице, а только обновляем старую.
-		if (true) {
-			if ($this -> isNewRecord) {
-				$dupl = $this -> findByAttributes(['id_object' => $this -> id_object, 'id_price' => $this -> id_price]);
-				if ($dupl) {
-					if ($this -> getScenario() == 'noUpdateIfDup') {
-						return false;
-					}
-					$dupl -> value = $this -> value;
-					if ($dupl -> save()) {
-						return false;
-					} else {
-						$err = $dupl -> getErrors();
-					}
+		if ($this -> isNewRecord) {
+			$dupl = $this -> findByAttributes(['id_object' => $this -> id_object, 'id_price' => $this -> id_price]);
+			if ($dupl) {
+				if (($this -> getScenario() == 'noUpdateIfDup')||($this -> value == $dupl -> value)) {
+					return false;
+				}
+				$dupl -> value = $this -> value;
+				if ($dupl -> save()) {
+					return false;
+				} else {
+					$err = $dupl -> getErrors();
 				}
 			}
-			return true;
 		}
-		return false;
+		return true;
 	}
 
 	private static function addSeparatedFieldCondition($field,CDbCriteria $criteria, $id){

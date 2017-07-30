@@ -990,9 +990,11 @@ class BaseModel extends CTModel
 //			if ($this -> getPriceValue($price -> id)) {
 //				echo "Price ".$price -> name. " already exists, continue <br/>";
 //			}
+			//Создали массив альясов для цены
 			$toRun = array_filter(array_map(function($key)use($enc){
 						return mb_strtolower(trim($key),$enc);
 					},explode(';',$price -> name2)));
+			//Добавили в массив альясов само название
 			array_unshift($toRun,mb_strtolower($price -> name, $enc));
 			$p = false;
 			foreach ($toRun as $key) {
@@ -1003,8 +1005,11 @@ class BaseModel extends CTModel
 					}
 				}
 			}
+			//Обновляем цену, если нашли ее
 			if ($p) {
-				$obj = new ObjectPriceValue('noUpdateIfDup');
+				//$obj = new ObjectPriceValue('noUpdateIfDup');
+				//Мы хотим обновлять цену, если она была уже установлена
+				$obj = new ObjectPriceValue();
 				$obj->id_object = $this->id;
 				$obj->id_price = $price -> id;
 				$obj->value = $p;
