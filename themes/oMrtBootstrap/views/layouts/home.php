@@ -91,10 +91,12 @@ $mapped = [];
 foreach ($prices as $price) {
     $mapped[$price -> id] = $price;
 }
+$criteria = new CDbCriteria();
+$criteria -> addCondition('clinic.partner = 1');
 $prices = ObjectPrice::calculateMinValues($mapped, $triggers);
 $toShowPrices = [];
 foreach ($priceIds as $name => $id) {
-    if ($name >= 1) {
+    if (($name >= 1)||($name == 0)) {
         $name = $mapped[$id] -> name;
     }
     $toShowPrices[] = ['name' => $name, 'price' => $mapped[$id] -> getCachedPrice() -> value];
@@ -170,12 +172,12 @@ $triggers = $_GET;
 <?php echo Yii::t('scripts', 'GA'); ?>
 <header class="container-fluid">
     <div class="row align-items-start justify-content-between text-center">
-        <div class="col-md-12 d-flex justify-content-around justify-content-md-end pt-3 p-md-3 align-items-center">
+        <div class="col-md-12 d-flex justify-content-sm-around justify-content-md-end pt-3 p-md-3 align-items-center">
             <div class="hidden-xs-down mr-auto mr-xl-0"><a href="/"><img class="img-fluid" style="max-height:70px" src="<?php echo $baseTheme; ?>/images/logo.png" alt="Логотип" /></a></div>
             <div style="font-size:1.15rem;" class="headerText ml-3 mr-auto hidden-lg-down">
                 Общегородская<br class="hidden-xl-up"/> служба<br/> записи на<br class="hidden-xl-up"/> МРТ&nbsp;и&nbsp;КТ
             </div>
-            <div class="ml-3 align-items-center row hidden-820-down">
+            <div class="ml-3 align-items-center row">
                 <div class="col-auto">
                     <img style="width:50px;" src="<?php echo $baseTheme; ?>/images/price.png" alt="list"/>
                 </div>
@@ -183,15 +185,15 @@ $triggers = $_GET;
                     <div id="topSlider">
                         <div>
                             <div>Минимальная цена на</div>
-                            <div id="researchName"><strong>МРТ головного мозга</strong></div>
-                            <div><a href="#" class="signUpButton" style="font-size:1.5rem" id="researchPrice"><span>1500 руб</span></a></div>
+                            <div id="researchName"><strong><?php echo current($toShowPrices)['name']; ?></strong></div>
+                            <div><a href="#" class="signUpButton" style="font-size:1.5rem" id="researchPrice"><span><?php echo current($toShowPrices)['price']; ?> руб</span></a></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row align-items-center pr-1 ml-md-3 pr-md-3">
-                <div class="pr-2 col-12 col-md-auto ">
-                    <div class="row align-items-center hidden-sm-down">
+                <div class="pr-2 col-12 col-md-auto hidden-md-down">
+                    <div class="row align-items-center ">
                         <div class="col-auto p-2"><img style="width:50px;" src="<?php echo $baseTheme; ?>/images/clock.png" alt="clock"/></div>
                         <div  class="col-auto p-2">Мы работаем <br/><strong>без выходных</strong><div class="headerText">с&nbsp;7:00&nbsp;до&nbsp;00:00</div></div>
                     </div>
