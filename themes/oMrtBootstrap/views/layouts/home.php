@@ -10,6 +10,7 @@ $cs = Yii::app() -> getClientScript();
 $cs -> registerCoreScript('bootstrap4css');
 $cs -> registerCoreScript('bootstrap4js');
 $cs -> registerCoreScript('font-awesome');
+//$cs -> registerCoreScript('owl');
 $cs -> registerCoreScript('scrollToTopActivate');
 $cs -> registerCoreScript('maskedInput');
 $cs -> registerCoreScript('toggler');
@@ -73,6 +74,76 @@ $cs -> registerScript('initiate_popup_forms','
 ',CClientScript::POS_READY);
 
 $cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/styles.css');
+$priceIds = [
+    1,6,//GM
+    "МРТ сустава" => 83,//joint
+    22,26,//abdomen
+    29, 30,//pelvis
+    "МРТ отдела позвоночника" => 14,//spine
+    68,//kt lungs
+    "МРТ сосудов" => 60,
+    "КТ сосудов" => 78
+];
+$cityCode = Geo::getCityCode();
+$triggers = in_array($cityCode, ['spb','msc']) ? ['area' => $cityCode] : [] ;
+$prices = ObjectPrice::model() -> findAllByPk($priceIds);
+$mapped = [];
+foreach ($prices as $price) {
+    $mapped[$price -> id] = $price;
+}
+$prices = ObjectPrice::calculateMinValues($mapped, $triggers);
+$toShowPrices = [];
+foreach ($priceIds as $name => $id) {
+    if ($name >= 1) {
+        $name = $mapped[$id] -> name;
+    }
+    $toShowPrices[] = ['name' => $name, 'price' => $mapped[$id] -> getCachedPrice() -> value];
+}
+$cs -> registerScript('topCarousel','
+function topSlider(rss) {
+    var me = {
+        delay:5000,
+        animationLength: 1000,
+        fadeLength:500,
+        index: 0,
+        element:$("#topSlider"),
+        nameElement:$("#researchName"),
+        priceElement:$("#researchPrice"),
+        animateSlider: function(){
+            me.index = (me.index+1) % rss.length;
+            var nextItem = rss[me.index];
+            me.nameElement.children().fadeOut(me.fadeLength, function(){
+                me.nameElement.children().remove();
+                me.nameElement.append($("<strong>",{style:"display:none;"}).append(nextItem.name).fadeIn(me.animationLength));
+            });
+            me.priceElement.children().fadeOut(me.fadeLength, function(){
+                me.priceElement.children().remove();
+                me.priceElement.append($("<span>",{style:"display:none;"}).append(nextItem.price+" руб").fadeIn(me.animationLength));
+            });
+        },
+        interval: false,
+        stop:function(){
+            if (me.interval) {
+                clearInterval(me.interval);
+            }
+            me.interval = false;
+        },
+        start: function(){
+            if (me.interval) {
+                me.stop();
+            }
+            me.interval = setInterval(me.animateSlider, me.delay);
+        }
+    };
+    me.rss = rss;
+    me.element.mouseover(me.stop);
+    me.element.mouseout(me.start);
+    me.start();
+    return me;
+}
+var slider = topSlider('.json_encode($toShowPrices).');
+',CClientScript::POS_READY);
+
 $baseTheme = Yii::app() -> theme -> baseUrl;
 
 $isTom = strpos($_SERVER['REQUEST_URI'], 'tomography') !== false;
@@ -106,13 +177,17 @@ $triggers = $_GET;
             </div>
             <div class="ml-3 align-items-center row hidden-820-down">
                 <div class="col-auto">
-                    <img style="width:50px;" src="<?php echo $baseTheme; ?>/images/list.png" alt="list"/>
+                    <img style="width:50px;" src="<?php echo $baseTheme; ?>/images/price.png" alt="list"/>
                 </div>
-                <ul id="header-list" class="text-left col">
-                    <li class="d-flex align-items-center"><div>Лучшие цены</div></li>
-                    <li class="d-flex align-items-center"><div>Бесплатная<br class="hidden-lg-up" /> консультация</div></li>
-                    <li class="d-flex align-items-center"><div>Актуальная<br class="hidden-lg-up" /> информация</div></li>
-                </ul>
+                <div class="col">
+                    <div id="topSlider">
+                        <div>
+                            <div>Минимальная цена на</div>
+                            <div id="researchName"><strong>МРТ головного мозга</strong></div>
+                            <div><a href="#" class="signUpButton" style="font-size:1.5rem" id="researchPrice"><span>1500 руб</span></a></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row align-items-center pr-1 ml-md-3 pr-md-3">
                 <div class="pr-2 col-12 col-md-auto ">

@@ -143,9 +143,10 @@ class ObjectPrice extends CTModel
 	}
 	/**
 	 * @param ObjectPrice[]
-	 * @param mixed[]
+	 * @param mixed[] $triggers
 	 * @param CDbCriteria $criteria
-	 * @return ObjectPrice[] with the _cachedPrice set according to minimal price with gicen triggers
+	 *
+	 * @return ObjectPrice[] with the _cachedPrice set according to minimal price with given triggers
 	 */
 	public static function calculateMinValues($prices, $triggers = [], CDbCriteria $criteria = null){
 		$ids = [];
