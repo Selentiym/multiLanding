@@ -444,10 +444,21 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     </li>
                     <?php endif; ?>
                     <?php $this -> renderPartial('/clinics/_service',['triggers' => $triggers,'price' => $research]); ?>
-                    <?php foreach($objects as $clinic){
+                    <?php
+                    $counter = 1;
+                    foreach($objects as $clinic){
+                        if ($counter % 5 == 0) {
+                            echo "<li class='clinic mb-3 single-clinic pt-3 d-flex row'><div class='d-block text-center'>";
+                            echo "<div>Получить самую <strong>актуальную информацию</strong> и <strong>бесплатную</strong> консультацию по <strong>ценам на МРТ/КТ</strong> и <strong>адресам клиник</strong> в ".$geoName." вы можете, оставив </div>
+                            <div class='text-center'><button class='btn signUpButton' data-city='".$triggers['area']."'>Заявку на обратный звонок</button></div>";
+                            echo "<div>Через наш колл-центр Вы также можете </div><div class='text-center'><button class='btn signUpButton' data-city='".$triggers['area']."'>Записаться на $rVin в $geoName</button></div>";
+                            echo "</div></li>";
+                        }
+                        $counter ++;
                         $this -> renderPartial('/clinics/_single_clinics',['model' => $clinic,'price' => $research]);
 //                        break;
-                    } ?>
+                    }
+                    ?>
                 </ul>
             </div>
             <div class="pager">

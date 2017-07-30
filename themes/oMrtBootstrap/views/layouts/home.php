@@ -93,7 +93,7 @@ foreach ($prices as $price) {
 }
 $criteria = new CDbCriteria();
 $criteria -> addCondition('clinic.partner = 1');
-$prices = ObjectPrice::calculateMinValues($mapped, $triggers);
+$prices = ObjectPrice::calculateMinValues($mapped, $triggers, $criteria);
 $toShowPrices = [];
 foreach ($priceIds as $name => $id) {
     if (($name >= 1)||($name == 0)) {
