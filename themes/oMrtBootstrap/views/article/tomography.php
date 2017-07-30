@@ -11,7 +11,8 @@
 $cs = Yii::app()->getClientScript();
 
 Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/tomography',[],'&',false,true));
-
+$cs -> registerMetaTag('Что такое томография, протипопоказания томографии, сколько в среднем стоит томография, адреса где можно пройти МРТ или КТ, акции и скидки на обследования - все это можно найти на нашем сайте.','description');
+$cs -> registerMetaTag(implode(', ',['все о томографии','цены на МРТ и КТ','противопоказания для томографии','цены и адреса где можно сделать томографию']),'keywords');
 $this -> setPageTitle('Томография');
 $mod = Yii::app() -> getModule('clinics');
 $criteria = new CDbCriteria();

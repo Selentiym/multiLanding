@@ -14,7 +14,7 @@ Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl(
 
 $cs -> registerMetaTag('c05418a51fe33efa','yandex-verification');
 $cs -> registerMetaTag('fa27ede9b02e532c5b752c4cb14f0a21','wmail-verification');
-$cs -> registerMetaTag('Узнайте все о магнитно-резонансной и компьюетрной томографии. Здесь Вы также сможете найти список адресов где делают МРТ и КТ, а также узнать цены в различных клиниках.','description');
+$cs -> registerMetaTag('Узнайте все о магнитно-резонансной и компьютерной томографии. Здесь Вы также сможете найти список адресов где делают МРТ и КТ и узнать сколько стоит МРТ и КТ в различных клиниках.','description');
 $cs -> registerMetaTag(implode(', ',['информация об МРТ КТ и ПЭТ','цены на МРТ и КТ','сделать МРТ и КТ','вредна ли томография','адреса где делают МРТ и КТ']),'keywords');
 
 $this -> setPageTitle('Все об МРТ, КТ и ПЭТ');

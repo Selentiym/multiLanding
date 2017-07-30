@@ -152,7 +152,7 @@ if ($model -> giveMinKtPrice()) {
 }
 $title = $model -> title;
 if (!$title) {
-	$title = 'Пройти '.$r.' обследование в клинике "'.$model -> name.'" по адресу '.$fr('area','value').', '.$model -> address;
+	$title = 'Пройти '.$r.' в "'.$model -> name.'" по адресу '.$fr('area','value').', '.$model -> address;
 }
 $this->setPageTitle($title);
 $descr = $model -> description;
