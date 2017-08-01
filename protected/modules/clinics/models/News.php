@@ -6,12 +6,14 @@
  * The followings are the available columns in table '{{news}}':
  * @property integer $id
  * @property integer $id_object
+ * @property integer $id_price
  * @property integer $object_type
  * @property string $heading
  * @property string $text
  * @property string $validFrom
  * @property string $validTo
  * @property string $published
+ * @property string $saleSize
  *
  *
  * @property BaseModel $object
@@ -41,7 +43,7 @@ class News extends UModel {
 			array('id_object, object_type', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, id_object, object_type, text, heading, validFrom, validTo, published', 'safe'),
+			array('id, id_object, object_type, text, heading, validFrom, validTo, published, id_price, saleSize', 'safe'),
 		);
 	}
 
@@ -83,6 +85,8 @@ class News extends UModel {
 			'validFrom' => 'validFrom',
 			'validTo' => 'validTo',
 			'published' => 'Published',
+			'saleSize' => 'Величина скидки',
+			'id_price' => 'Связанная цена',
 		);
 	}
 

@@ -79,6 +79,22 @@
             </div>
 
             <div>
+                <?php echo $form->labelEx($model,'id_price'); ?>
+                <?php
+                echo $form -> dropDownList($model, 'id_price',['' => 'Выберите цену'] + CHtml::listData(ObjectPrice::model() -> findAll(),'id','name'));
+                ?>
+                <?php echo $form->error($model,'id_price'); ?>
+            </div>
+
+            <div>
+                <?php echo $form->labelEx($model,'saleSize'); ?>
+                <?php
+                echo $form -> textField($model, 'saleSize');
+                ?>
+                <?php echo $form->error($model,'saleSize'); ?>
+            </div>
+
+            <div>
                 <?php echo $form->labelEx($model,'text'); ?>
                 <div class="controls">
                     <?php

@@ -104,7 +104,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array(
             'class'=>'CLinkColumn',
             'header'=>CHtml::encode('Цены'),
-            'label' => CHtml::button("Редактировать"),
+            'label' => CHtml::button("Edit"),
             'urlExpression'=>function($data){
                 return $this -> createUrl("admin/Pricelists",["id" => $data -> id,'modelName' => 'clinics']);
             },
@@ -113,7 +113,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array(
             'class'=>'CLinkColumn',
             'header'=>CHtml::encode('Поля'),
-            'label'=>CHtml::button("Редактировать"),
+            'label'=>CHtml::button("Edit"),
             'urlExpression'=>function($data) {return $this -> createUrl("admin/Fields", array("id"=>$data->id,'modelName' => 'clinics'));},
 
         ),
@@ -121,14 +121,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array(
             'class'=>'CLinkColumn',
             'header'=>CHtml::encode('Отзывы'),
-            'label'=>CHtml::button("Редактировать"),
+            'label'=>CHtml::button("Edit"),
             'urlExpression'=>function($data) {return $this -> createUrl("admin/objectCommentsList", array("id"=>$data->id,'modelName' => 'clinics'));},
 
         ),
         array(
             'class'=>'CLinkColumn',
             'header'=>CHtml::encode('Новости'),
-            'label'=>CHtml::button("Редактировать"),
+            'label'=>CHtml::button("Edit"),
             'urlExpression'=>function($data) {return $this -> createUrl("admin/News", array("id"=>$data->id,'modelName' => 'clinics'));},
 
         ),
@@ -141,14 +141,15 @@ $this->widget('zii.widgets.grid.CGridView', array(
           'header' => CHtml::textField(
               'page', '',
               array(
-                  'onchange' => "$.fn.yiiGridView.update('clinics-grid',{ data:{clinics_page: $(this).val() }})"
+                  'onchange' => "$.fn.yiiGridView.update('clinics-grid',{ data:{clinics_page: $(this).val() }})",
+                  'style' => 'width:30px'
               )
           ),
             'buttons'=>array
             (
                 'update' => array
                 (
-                    'label'=> CHtml::encode('Редактировать'),
+                    'label'=> CHtml::encode('Edit'),
                     'url'=>function ($data) {
                         return $this -> createUrl("admin/ObjectUpdate",['id' => $data -> id,'modelName' => 'clinics']);
                     },
