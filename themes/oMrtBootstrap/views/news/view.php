@@ -6,6 +6,7 @@
  * Time: 15:06
  *
  * @var News $model
+ * @var HomeController $this
  * @type clinics $clinic
  */
 $areaVal = $model -> clinic -> getFirstTriggerValue('area');
@@ -14,6 +15,7 @@ $url = $this -> createUrl('home/showNews',['area' => $area,'id' => $model -> id]
 $clinic = $model -> clinic;
 $cs = Yii::app() -> getClientScript();
 $cs->registerLinkTag('canonical', null, $url);
+$this -> setPageTitle($model -> heading ? $model -> heading : 'Акции и скидки в '.$model -> clinic -> name);
 ?>
 
 <nav class="breadcrumb bg-faded no-gutters">

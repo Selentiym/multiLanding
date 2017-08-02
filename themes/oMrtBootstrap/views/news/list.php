@@ -18,7 +18,7 @@ $cs -> registerScript('submitform','
         location.href = url;
     });
 ',CClientScript::POS_READY);
-
+$phrase = ['spb' => 'Санкт-Петербурге','msc' => 'Москве', null => 'Москве и Санкт-Петербурге'];
 $data = $_GET;
 $page = $data['page'] > 0 ? $data['page'] : 1;
 $pageSize = 20;
@@ -27,6 +27,8 @@ $criteria = new CDbCriteria();
 $criteria -> limit = $pageSize;
 $criteria -> offset = $pageSize * ($page-1);
 $models = News::newsPageByCriteria($data, $criteria);
+$this -> setPageTitle('Новости, акции и скидки '.$phrase[$area]);
+$cs -> registerMetaTag('Здесь представлены акции и скидки на МРТ и КТ исследования в '.$phrase[$area].'.','description');
 ?>
 <nav class="breadcrumb bg-faded no-gutters">
     <a class="breadcrumb-item col-auto" href="<?php echo $this -> createUrl($this->id.'/'.$this->defaultAction); ?>">Главная</a>
@@ -38,7 +40,6 @@ $models = News::newsPageByCriteria($data, $criteria);
         <div class="col-12 col-md-9">
             <h1 style="font-size:1.75rem">Новости, акции и скидки на МРТ и КТ в
                 <?php
-                $phrase = ['spb' => 'Санкт-Петербурге','msc' => 'Москве', null => 'Москве и Санкт-Петербурге'];
                 echo $phrase[$area];
                 ?></h1>
             <form class="mb-3" id="areaForm">Ваш город:
