@@ -13,20 +13,6 @@ class HomeController extends HomeControllerCatalogCommon {
                 'view' => '/article/tomography',
                 'guest' => true,
             ),
-            'news' => array(
-                'class'=>'application.controllers.actions.FileViewAction',
-                'view' => '/news/list',
-                'guest' => true,
-            ),
-            'showNews' => array(
-                'class'=>'application.controllers.actions.ModelViewAction',
-                'view' => '/news/view',
-                'modelClass' => 'News',
-                'scenario' => 'view',
-                'guest' => true,
-                'layout' => 'home',
-                'partial' => false
-            ),
             'moreNewsForService' => array(
                 'class'=>'application.controllers.actions.FileViewAction',
                 'view' => '/news/feedback',
