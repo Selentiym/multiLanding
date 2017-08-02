@@ -34,7 +34,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'columns'=>array(
         array('name' => 'id', 'header' => 'ID'),
         array('name' => 'heading', 'header' => 'Заголовок'),
-        array('name' => 'text', 'header' => 'Текст новости'),
+//        array('name' => 'text', 'header' => 'Текст новости'),
         array('name' => 'validFrom', 'header' => 'От'),
         array('name' => 'validTo', 'header' => 'До'),
         array('name' => 'published', 'header' => 'Дата добавления'),
