@@ -265,7 +265,6 @@ class HomeControllerCatalogCommon extends CController {
 
     private function makeNewsSitemap(){
         //Сайтмап по новостям
-        echo SiteDispatcher::getFilesDir();
         $sitemap = new \samdark\sitemap\Sitemap(SiteDispatcher::getFilesDir().'/sitemapNews.xml');
         //Главная страница новостей
         $sitemap -> addItem($this -> fullUrl($this -> createUrl('home/news')),null,\samdark\sitemap\Sitemap::DAILY,0.8);
