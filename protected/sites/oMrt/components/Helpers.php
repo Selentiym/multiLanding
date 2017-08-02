@@ -320,3 +320,15 @@ function generateKeyedTextForClinic($fr,$triggers) {
     }
     return $text;
 }
+function salesWord($number){
+    if (($number < 20)&&($number > 10)) {
+        $str = $number.' акций';
+    } elseif ($number % 10 == 1) {
+        $str = $number.' акция';
+    } elseif (in_array($number % 10, [2,3,4])) {
+        $str = $number.' акции';
+    } else {
+        $str = $number.' акций';
+    }
+    return $str;
+}

@@ -17,6 +17,7 @@
  *
  *
  * @property BaseModel $object
+ * @property ObjectPrice $research
  */
 class News extends UModel {
 	/**
@@ -55,6 +56,8 @@ class News extends UModel {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'clinic' => [self::BELONGS_TO, 'clinics', 'id_object'],
+			'research' => [self::BELONGS_TO, 'ObjectPrice', 'id_price'],
 		);
 	}
 
@@ -168,5 +171,31 @@ class News extends UModel {
 			return 0;
 		}
 		return $time;
+	}
+	public static function newsPageByCriteria($data, $criteria = null){
+		if (! $criteria instanceof CDbCriteria) {
+			$criteria = new CDbCriteria();
+		}
+		//Сначала самые поздние
+		$criteria -> order = 'published DESC';
+		//Только активные акции
+		$criteria -> addCondition('validTo > FROM_UNIXTIME('.(time()-1024).') or (not validTo > 0)');
+		$criteria -> with = ['clinic'];
+		//По Питеру или Москве
+		if (in_array($data['area'], ['spb','msc'])) {
+			$search = ClinicsModule::prepareTriggers(['area' => $data['area']]);
+			clinics::model() -> setAliasedCondition($search,$criteria,'clinic.');
+		}
+		return News::model() -> findAll($criteria);
+	}
+	public function customFind($arg){
+		switch($this -> getScenario()) {
+			case 'view':
+				return self::model() -> findByPk($_GET['id']);
+			break;
+			default:
+				return self::model() -> findByPk($arg);
+			break;
+		}
 	}
 }

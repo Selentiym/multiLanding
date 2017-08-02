@@ -305,7 +305,7 @@ $cs -> registerMetaTag($r.' в '.$model -> name.', '.'сделать '.$r.' го
 						if (empty($model -> news)) {
 							echo "<p>Информация о скидках отсутсвует</p>";
 						} else {
-							foreach ($model -> news as $news) {
+							foreach (array_slice($model -> news,0,10) as $news) {
 								$this -> renderPartial('//clinics/_single_news',['model' => $news]);
 							}
 						}

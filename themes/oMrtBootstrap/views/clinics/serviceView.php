@@ -91,6 +91,16 @@ $cs = Yii::app()->getClientScript();
 $cs -> registerCoreScript('font-awesome');
 $cs->registerScriptFile(Yii::app()->theme->baseUrl.'/js/map.js');
 $cs -> registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");
+$cs -> registerScript('eventsOnShowMore','
+    $(document).on("click",".showMoreButton", function(){
+        var theButton = $(this);
+        $.get(theButton.attr("data-url"),{page:theButton.attr("data-page")}).done(function(data){
+            theButton.replaceWith(data);
+        });
+        return false;
+    });
+    $(".showMoreButton").trigger("click");
+',CClientScript::POS_READY);
 $cs -> registerScript('Order','
 	$("#sortby a").click(function(e){
 		$("#sortByField").val($(this).attr("sort"));
@@ -262,13 +272,8 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
                     </div>
                 </div>
                 <div class="collapse p-3" id="sales">
-                    <?php
-                    if (strlen(trim(strip_tags($model -> sales))) < 10) {
-                        echo "<p>Информация о скидках отсутсвует</p>";
-                    } else {
-                        echo $model -> sales;
-                    }
-                    ?>
+                    <?php $this -> renderPartial("/news/_showMoreButton",['page' => 1, "area" => $area]); ?>
+
                 </div>
                 <div class="collapse p-3"  id="doctors" >
 

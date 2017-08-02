@@ -149,6 +149,7 @@ var slider = topSlider('.json_encode($toShowPrices).');
 $baseTheme = Yii::app() -> theme -> baseUrl;
 
 $isTom = strpos($_SERVER['REQUEST_URI'], 'tomography') !== false;
+$isNews = strpos($_SERVER['REQUEST_URI'], 'news') !== false;
 $triggers = $_GET;
 ?>
 <!DOCTYPE html>
@@ -214,19 +215,23 @@ $triggers = $_GET;
             </button>
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0 d-flex">
-                    <li class="nav-item <?php echo $triggers['area'] == 'spb' && (!$isTom) ? 'active' : ''; ?>">
+                    <li class="nav-item <?php echo $triggers['area'] == 'spb' && (!($isTom||$isNews)) ? 'active' : ''; ?>">
                         <a class="nav-link" href="<?php echo $this -> createUrl('home/clinics',['area' => 'spb'], '&',true); ?>">Адреса и цены на МРТ в Санкт-Петербурге</a>
                     </li>
-                    <li class="nav-item <?php echo $triggers['area'] == 'msc' && (!$isTom)? 'active' : ''; ?>">
+                    <li class="nav-item <?php echo $triggers['area'] == 'msc' && (!($isTom||$isNews))? 'active' : ''; ?>">
                         <a class="nav-link" href="<?php echo Yii::app() -> controller -> createUrl('home/clinics',['area' => 'msc'], '&',true); ?>">Адреса и цены на МРТ в Москве</a>
                     </li>
-                    <li class="nav-item <?php echo ( $triggers['area'] != 'spb' && (!$isTom) && $triggers['area'] != 'msc' ) ? 'active' : ''; ?>">
+                    <li class="nav-item <?php echo ( $triggers['area'] != 'spb' && (!($isTom||$isNews)) && $triggers['area'] != 'msc' ) ? 'active' : ''; ?>">
 <!--                        <a class="nav-link" href="--><?php //echo Yii::app() -> controller -> createUrl('home/articles'); ?><!--">Все о МРТ и КТ</a>-->
                         <a class="nav-link" href="<?php echo Yii::app() -> baseUrl."/"; ?>">Все о МРТ, КТ и ПЭТ</a>
                     </li>
                     <li class="nav-item <?php echo ( $isTom ) ? 'active' : ''; ?>">
 <!--                        <a class="nav-link" href="--><?php //echo Yii::app() -> controller -> createUrl('home/articles'); ?><!--">Все о МРТ и КТ</a>-->
-                        <a class="nav-link" href="<?php echo $this -> createUrl('home/tomography'); ?>">Томография</a>
+                        <a class="nav-link" href="<?php echo $this -> createUrl('home/tomography',[], '&',true); ?>">Томография</a>
+                    </li>
+                    <li class="nav-item <?php echo ( $isNews ) ? 'active' : ''; ?>">
+<!--                        <a class="nav-link" href="--><?php //echo Yii::app() -> controller -> createUrl('home/articles'); ?><!--">Все о МРТ и КТ</a>-->
+                        <a class="nav-link" href="<?php echo $this -> createUrl('home/news',[], '&',true); ?>">Новости</a>
                     </li>
                 </ul>
             </div>

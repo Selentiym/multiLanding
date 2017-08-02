@@ -8,13 +8,20 @@
 <div class="card mb-3">
     <?php if ($model -> heading) : ?>
         <div class="card-header">
-            <h3><?php echo $model -> heading; ?></h3>
+            <h2><?php echo $model -> heading; ?></h2>
         </div>
     <?php endif; ?>
 
     <div class="card-block">
         <div class="card-text">
-        <?php echo $model -> text; ?>
+            <?php
+            echo $model -> text;
+            if ($model -> research) :
+            ?>
+            <div>
+                Сравнить цены на
+                <?php $this -> renderPartial('/prices/_catalogLink',['model' => $model -> research,'triggers'=>['area' => $model -> clinic -> getFirstTriggerValue('area') -> verbiage,'sortBy'=>'priceUp']]); ?>
+            </div><?php endif; ?>
         </div>
     </div>
     <?php
@@ -32,5 +39,3 @@
     }
     ?>
 </div>
-
-
