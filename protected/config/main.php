@@ -117,6 +117,14 @@ return array(
 		),
 		*/
 		'clientScript' => array(
+				'class' => 'application.vendors.yii-EClientScript.EClientScript',
+				'combineScriptFiles' => true, // By default this is set to true, set this to true if you'd like to combine the script files
+				'combineCssFiles' => true, // By default this is set to true, set this to true if you'd like to combine the css files
+				'optimizeScriptFiles' => true,	// @since: 1.1
+				'optimizeCssFiles' => true, // @since: 1.1
+				'optimizeInlineScript' => false, // @since: 1.6, This may case response slower
+				'optimizeInlineCss' => false, // @since: 1.6, This may case response slower
+
 				'defaultScriptPosition' => CClientScript::POS_READY,
 				'defaultScriptFilePosition' => CClientScript::POS_BEGIN,
 				'coreScriptPosition' => CClientScript::POS_HEAD,
