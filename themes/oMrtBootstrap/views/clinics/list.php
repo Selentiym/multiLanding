@@ -521,6 +521,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
             $copy = $triggers;
             unset($copy['area']);
             unset($copy['district']);
+            unset($copy['prigorod']);
             unset($copy['metro']);
             unset($copy['street']);
             unset($copy['orderBy']);
