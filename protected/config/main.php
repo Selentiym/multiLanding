@@ -342,22 +342,7 @@ return array(
 //			]
 //		]
 
-//		'log'=>array(
-//			'class'=>'CLogRouter',
-//			'routes'=>array(
-//				array(
-//					'class'=>'CFileLogRoute',
-//					'levels'=>'error, warning',
-//					'showInFireBug' => true
-//				),
-//				// uncomment the following to show log messages on web pages
-//				/*
-//				array(
-//					'class'=>'CWebLogRoute',
-//				),
-//				*/
-//			),
-//		),
+
 	),
 
 	// application-level parameters that can be accessed

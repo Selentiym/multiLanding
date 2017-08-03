@@ -104,6 +104,7 @@ return SiteDispatcher::mergeArray(
                 'username' => 'cq97848_clmod',
                 'password' => 'kicker1995',
                 'charset' => 'utf8',
+                'schemaCachingDuration' => 30
             ),
             'dbClinicComments'=>array(
                 'class' => 'CDbConnection',

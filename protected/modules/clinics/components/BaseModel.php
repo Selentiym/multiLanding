@@ -125,9 +125,74 @@ class BaseModel extends CTModel
 	 * @param integer $limit - a limit of objects to be found
 	 * @param CDbCriteria $initialCrit
 	 * @param bool $strictResearch
-	 * @return array of model objects that fit the search options
+	 * @return array the resulting clinics
 	 */
-	public function userSearch($search,$order='rating',$limit=-1, CDbCriteria $initialCrit = null, $strictResearch = false) {
+	public function UserSearch($search,$order='rating',$limit=-1, CDbCriteria $initialCrit = null, $strictResearch = false) {
+		$criteria = $this -> prepareForUserSearch($search,$order,$limit, $initialCrit);
+		$objects_filtered = $this -> model() -> findAll($criteria);
+		//Поиск с другим исследованием
+		if (($search['research'])&&(count($objects_filtered)==0)&&(!$strictResearch)) {
+			//Далее будет использована для поиска по другому исследованию
+			$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
+//			$search['research'] = ;
+			/**
+			 * @type ObjectPrice $price
+			 */
+			if ($price -> id_replace_price) {
+				//$search['research'] = $price->replacement;
+				//$saveCrit = $this->SFilter($search, $saveCrit, $order);
+				$params = $criteria -> params;
+				if ($params[':pid']) {
+					$params[':pid'] = $price -> id_replace_price;
+				}
+				$criteria -> params = $params;
+				$objects_filtered = $this->model()->findAll($criteria);
+			}
+		}
+		$rez['objects'] = $objects_filtered;
+		return $rez;
+		//
+	}
+	/**
+	 * @param array $search a search array that specifies what is being searched
+	 * @param string $order - a field to be ordered by
+	 * @param integer $limit - a limit of objects to be found
+	 * @param CDbCriteria $initialCrit
+	 * @param bool $strictResearch
+	 * @return int number of clinics that apply to the condition
+	 */
+	public function UserCount($search,$order='rating',$limit=-1, CDbCriteria $initialCrit = null, $strictResearch = false) {
+		$criteria = $this -> prepareForUserSearch($search,$order,$limit, $initialCrit);
+		$num = $this -> model() -> count($criteria);
+		//Поиск с другим исследованием
+		if (($search['research'])&&($num==0)&&(!$strictResearch)) {
+			//Далее будет использована для поиска по другому исследованию
+			$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
+//			$search['research'] = ;
+			/**
+			 * @type ObjectPrice $price
+			 */
+			if ($price -> id_replace_price) {
+				//$search['research'] = $price->replacement;
+				//$saveCrit = $this->SFilter($search, $saveCrit, $order);
+				$params = $criteria -> params;
+				if ($params[':pid']) {
+					$params[':pid'] = $price -> id_replace_price;
+				}
+				$criteria -> params = $params;
+				$num = $this->model()->count($criteria);
+			}
+		}
+		return $num;
+	}
+	/**
+	 * @param array $search a search array that specifies what is being searched
+	 * @param string $order - a field to be ordered by
+	 * @param integer $limit - a limit of objects to be found
+	 * @param CDbCriteria $initialCrit
+	 * @return CDbCriteria to search clinics that fit the $search
+	 */
+	 private function prepareForUserSearch(&$search,$order='rating',$limit=-1, CDbCriteria $initialCrit = null) {
 		//Если поле сортировки не задано, сортируем по рейтингу
 		if ((!$order)&&($order !== false)) {
 			$order='rating';
@@ -147,27 +212,11 @@ class BaseModel extends CTModel
 			}
 		}
 		self::setAliasedCondition($search, $criteria,'');
-		if ($search['research']) {
-			//Далее будет использована для поиска по другому исследованию
-			$saveCrit = clone $criteria;
-			$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
-		}
-		$criteria = $this -> SFilter($search, $criteria, $order);
 
-		$objects_filtered = $this -> model() -> findAll($criteria);
-		//Поиск с другим исследованием
-		if (($search['research'])&&(count($objects_filtered)==0)&&(!$strictResearch)&&($price instanceof ObjectPrice)) {
-//			$search['research'] = ;
-			if ($price -> replacement) {
-				$search['research'] = $price->replacement;
-				$saveCrit = $this->SFilter($search, $saveCrit, $order);
-				$objects_filtered = $this->model()->findAll($saveCrit);
-			}
-		}
-		$rez['objects'] = $objects_filtered;
-		return $rez;
+		$criteria = $this -> SFilter($search, $criteria, $order);
+ 		return $criteria;
 	}
-	
+
 	/** лишняя функция.
 	 * @arg array search a search array that specifies what is being searched
 	 * @arg array objects an array of object which are to be filtered according to search options

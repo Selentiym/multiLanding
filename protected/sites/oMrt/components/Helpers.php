@@ -55,7 +55,7 @@ function countClinics ($condition){
     if (!$condition['prigorod']) {
         $condition['isCity'] = 'city';
     }
-    return count(Yii::app() -> getModule('clinics') -> getClinics($condition));
+    return Yii::app() -> getModule('clinics') -> countClinics($condition);
 }
 function generateGeo($fr, &$triggers, $form = 'Predl'){
 

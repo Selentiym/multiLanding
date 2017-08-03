@@ -65,6 +65,24 @@ class ClinicsModule extends UWebModule {
 		$criteria->with = array_merge($criteria->with,['prices']);
 		return $this -> getObjects('clinics',$triggers,$order,$limit,$criteria);
 	}
+	/**
+	 * @param array $triggers
+	 * @param string $order
+	 * @param int $limit
+	 * @param CDbCriteria|null $criteria
+	 * @return mixed
+     */
+	public function countClinics (array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
+		$order = $triggers['sortBy'];
+		if (!$criteria instanceof CDbCriteria) {
+			$criteria = new CDbCriteria();
+		}
+		if (empty($criteria->with)) {
+			$criteria->with = [];
+		}
+		$criteria->with = array_merge($criteria->with,['prices']);
+		return $this -> countObjects('clinics',$triggers,$order,$limit,$criteria);
+	}
 	public function getArticles (array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
 		return $this -> getObjects('Article',$triggers,$order,$limit,$criteria);
 	}
@@ -96,6 +114,19 @@ class ClinicsModule extends UWebModule {
 	protected function getObjects($class,array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
 		$triggers = $this -> prepareTriggers($triggers);
 		return $class::model() -> userSearch($triggers, $order, $limit, $criteria)['objects'];
+	}
+	/**
+	 * @param string $class
+	 * @param array $triggers consisting of pairs ['trigger_verbiage' => 'trigger_value_verbiage']
+	 * or of pairs ['trigger_verbiage' => 'trigger_value_id']
+	 * @param string $order
+	 * @param int $limit
+	 * @param CDbCriteria $criteria additional criteria to be filtered by
+	 * @return int number of clinics that correspond to the specified condition
+	 */
+	protected function countObjects($class,array $triggers, $order = 'rating', $limit = -1, CDbCriteria $criteria = null) {
+		$triggers = $this -> prepareTriggers($triggers);
+		return $class::model() -> UserCount($triggers, $order, $limit, $criteria);
 	}
 
 
