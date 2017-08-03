@@ -14,6 +14,9 @@ $id = $a -> verbiage;
         <div>
         <?php
         if ($a) {
+            if ($heading) {
+                echo "<h2 class='text-center' style='font-size:1.25rem'>$heading</h2>";
+            }
             echo $a -> description;
             $url = $a -> getImageUrl();
             if ($url) {

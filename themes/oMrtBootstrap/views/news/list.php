@@ -99,8 +99,9 @@ $cs -> registerMetaTag('Здесь представлены акции и ски
             <?php
             $extraArticles = [Article::model() -> findByAttributes(['verbiage' => 'mrt-besplatno']),Article::model() -> findByAttributes(['verbiage' => 'kt-besplatno'])];
             if (!empty($extraArticles)) {
+                $head = ['mrt-besplatno' => 'МРТ бесплатно', 'kt-besplatno' => 'КТ бесплатно'];
                 foreach ($extraArticles as $article) {
-                    $this -> renderPartial('/article/_popup_article', ['a' => $article, 'triggers' => []]);
+                    $this -> renderPartial('/article/_popup_article', ['a' => $article, 'heading' => $head[$article -> verbiage],'triggers' => []]);
                 }
             }
             ?>
