@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Host: http://xn----xtbekk.xn--p1ai/
+Crawl-delay: 5
 Sitemap: http://xn----xtbekk.xn--p1ai/sitemapSPB.xml
 Sitemap: http://xn----xtbekk.xn--p1ai/sitemapMSC.xml
 Sitemap: http://xn----xtbekk.xn--p1ai/sitemapNews.xml
