@@ -33,7 +33,7 @@ class HomeController extends HomeControllerCatalogCommon {
         $this -> render('/clinics/serviceView');
     }
     public function actionCheck(){
-        //$this -> layout = 'home';
-        $this -> render('/clinics/serviceView');
+        $medem = clinics::model() -> findByAttributes(['verbiage' => 'medem']);
+        $medem -> savePrices();
     }
 }

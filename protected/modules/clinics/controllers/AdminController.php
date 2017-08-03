@@ -53,6 +53,18 @@ class AdminController extends Controller
 	
 	private $_model;
 
+    public function init(){
+        parent::init();
+        Yii::app() -> setComponent('clientScript',[
+            'combineScriptFiles' => false,
+            'combineCssFiles' => false,
+            'optimizeScriptFiles' => false,
+            'optimizeCssFiles' => false,
+            'optimizeInlineScript' => false,
+            'optimizeInlineCss' => false,
+        ]);
+    }
+
     public function actions(){
         return [
             'objectCommentsList'=>array(
