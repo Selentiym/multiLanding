@@ -42,19 +42,24 @@ if (!$code) { $code = 'msc'; }
 
 <div class="row no-gutters">
     <div class="col-12 p-3 mx-auto article row">
-        <div class="prices col-12 justify-content-around">
+        <div class="prices col-12 justify-content-around row">
             <?php
-
-            $spbPrices = $this -> renderPartial('/article/_priceSet',[
-                'prices' => $model -> getPrices(),
-                'triggers' => ['area' => 'spb']
-            ],true);
-            $this -> renderPartial('/common/_dropDown',['name' => 'Пройти обследование в Санкт-Петербурге','content' => $spbPrices, 'shown' => true]);
-            $mscPrices = $this -> renderPartial('/article/_priceSet',[
-                'prices' => $model -> getPrices(),
-                'triggers' => ['area' => 'msc']
-            ],true);
-            $this -> renderPartial('/common/_dropDown',['name' => 'Пройти обследование в Москве','content' => $mscPrices, 'shown' => true]);
+            if (count($model -> getPrices())) {
+                $spbPrices = $this->renderPartial('/article/_priceSet', [
+                    'prices' => $model->getPrices(),
+                    'triggers' => ['area' => 'spb'],
+                    'adding' => ' в Санкт-Петербурге'
+                ], true);
+                echo $spbPrices;
+                //$this->renderPartial('/common/_dropDown', ['name' => 'Пройти обследование в Санкт-Петербурге', 'content' => $spbPrices, 'shown' => true]);
+                $mscPrices = $this->renderPartial('/article/_priceSet', [
+                    'prices' => $model->getPrices(),
+                    'triggers' => ['area' => 'msc'],
+                    'adding' => ' в Москве'
+                ], true);
+                echo $mscPrices;
+                //$this->renderPartial('/common/_dropDown', ['name' => 'Пройти обследование в Москве', 'content' => $mscPrices, 'shown' => true]);
+            }
             ?>
         </div>
         <div class="col-md-10 col-12 mx-auto">
