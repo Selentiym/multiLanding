@@ -483,17 +483,10 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
 
                 </div>
             </div>
-<!--            --><?php //if ($triggers['contrast']): ?>
-<!--            <div class="card mb-3">-->
-<!--                <div class="card-block">-->
-<!--                    --><?php
-//                    contrastText($triggers);
-//                    //echo "Пройти диагностику $r можно в ".$countClinics(['mrt','kt','research','area']). " медцентрах.";
-//                    ?>
-<!---->
-<!--                </div>-->
-<!--            </div>-->
-<!--            --><?php //endif; ?>
+            <?php
+            //Закрываем обвес для индексации
+            if (count($allObjects) == 0) { echo "<!--noindex-->"; } ?>
+
             <?php if ($a = ArticleRule::getArticle('dynamic')): ?>
             <div class="card">
                 <div class="card-block">
@@ -517,7 +510,8 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     $this -> renderPartial('/article/_popup_article', ['a' => $article, 'triggers' => $triggers]);
                 }
             }
-
+            //Конец куска запрещенного к индексации обвеса
+            if (count($allObjects) == 0) { echo "<!--/noindex-->"; }
             $copy = $triggers;
             unset($copy['area']);
             unset($copy['district']);
