@@ -3,13 +3,13 @@
  *
  * @var \clinics|\doctors $model
  */
-if ($model -> partner) {
-    if ($model -> getFirstTriggerValue('area') -> verbiage == 'msc') {
-        $phone = Yii::app() -> phoneMSC;
-        $city = 'msc';
-    } else {
+
+$showPretty = $model -> partner;
+$phone = $model -> getPhoneObject();
+if ($showPretty) {
+    $city = $model->getFirstTriggerValue('area')->verbiage;
+    if (!in_array($city,['spb','msc'])) {
         $city = 'spb';
-        $phone = Yii::app() -> phone;
     }
 ?>
 <button class="btn signUpButton" data-city="<?php echo $city; ?>">Записаться</button>
@@ -20,12 +20,11 @@ if ($model -> partner) {
 <?php } else { ?>
     <div class="mb-1">Зписаться можно по телефону</div>
     <?php
-        if ($model -> phone) {
-            echo "<div class='phone'>{$model -> phone}</div>";
+        if ($phone -> getFormatted()) {
+            echo "<div class='phone'>".$phone -> getFormatted()."</div>";
         } else {
             echo "<div>К сожалению, данных по телефону нет</div>";
         }
     ?>
-
 <?php } ?>
 

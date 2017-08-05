@@ -33,6 +33,7 @@
  * @property string $sales
  * @property bool $partner
  * @property bool $ignore_clinic
+ * @property bool $showIndividualNumber
  * @property string $path
  *
  *
@@ -89,7 +90,7 @@ class clinics extends BaseModel {
 			array('verbiage, address, working_days, working_hours, video, title', 'length', 'max'=>255),
 			array('*', 'safe'),
 			array('id, name, verbiage, phone, phone_extra, fax, address, address_extra, site, district, metro_station, working_days, working_hours, services, rating, triggers, map_coordinates, text, audio, video, title, keywords, description, experience, partner', 'safe', 'on'=>'search'),
-			array('doctorsInput, mrt, kt, external_link, restrictions, path, sales', 'safe')
+			array('doctorsInput, mrt, kt, external_link, restrictions, path, sales, showIndividualNumber', 'safe')
 		);
 	}
 	protected function instantiate($attributes) {
@@ -798,6 +799,22 @@ class clinics extends BaseModel {
 			}
 		} else {
 			$phone = $this -> phone ? $this -> phone : '';
+		}
+		return $phone;
+	}
+
+	/**
+	 * @return iPhoneComponent
+	 */
+	public function getPhoneObject(){
+		if (($this -> showIndividualNumber)||(!$this -> partner)) {
+			$phone = new Phone($this -> phone);
+		} else {
+			if ($this->getFirstTriggerValue('area')->verbiage == 'msc') {
+				$phone = Yii::app()->phoneMSC;
+			} else {
+				$phone = Yii::app()->phone;
+			}
 		}
 		return $phone;
 	}

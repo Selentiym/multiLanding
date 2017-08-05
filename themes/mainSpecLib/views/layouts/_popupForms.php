@@ -18,7 +18,7 @@ Yii::app() -> getClientScript() -> registerScript('initiate_popup_forms','
     var regExpEight = /^\+7\(8/;
     $("form.signUpForm").submit(function(e){
     //Проверяем, что цифра не потерялась
-    var phoneEl = $(this).find("[type=\'tel\']");
+    var phoneEl = $(this).find("[name=\'phone\']");
     var phoneString = phoneEl.val();
     if (regExpEight.test(phoneString) && ! regExpSpbCode.test(phoneString)) {
         if (!confirm("Вы уверены, что не опечатались при наборе номера? Введенный номер содержит код, начинающийся с 8. Вы ввели: "+phoneEl.val()+" Обратите внимание, что +7 проставляется автоматически.")) {

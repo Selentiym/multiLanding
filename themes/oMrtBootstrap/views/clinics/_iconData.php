@@ -109,7 +109,11 @@ if ($model -> metro_station) : ?>
 
 <div class="phone ">
     <i class="fa fa-mobile fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-    <div class="text p-adr"><?php echo $model -> getPhone(); ?></div>
+    <?php if ($model -> partner) : ?>
+        <div class="text p-adr"><a href="tel:<?php echo $model -> getPhoneObject() -> getUnformatted(); ?>"><?php echo $model -> getPhoneObject() -> getFormatted(''); ?></a></div>
+    <?php else: ?>
+        <div class="text p-adr"><?php echo $model -> getPhoneObject() -> getFormatted(''); ?></div>
+    <?php endif; ?>
 </div>
 <?php if (($model -> mrt)||($model -> getFirstTriggerValue('field'))||($model -> getFirstTriggerValue('magnetType'))||($model -> getFirstTriggerValue('mrt'))) : ?>
     <div class="row no-gutters align-items-center">

@@ -196,6 +196,12 @@
                 echo CHtml::activeCheckBox($model,'ignore_clinic');
             ?>
         </div>
+        <div>
+            Показывать индивидуальный номер
+            <?php
+                echo CHtml::activeCheckBox($model,'showIndividualNumber');
+            ?>
+        </div>
         <br/>
 
         <div>
