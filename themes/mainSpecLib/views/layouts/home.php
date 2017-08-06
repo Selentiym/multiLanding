@@ -45,7 +45,7 @@ $baseTheme = Yii::app() -> getThemeManager() -> getBaseUrl("mainSpecLib");
 <?php echo Yii::t('scripts','yandexCounter'); ?>
 <!-- Navigation -->
 <nav id="topNav" class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <button style="margin-top:15px;" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#"><img alt="logo" style="height:70px" class="p-2" src="<?php echo $baseTheme.'/images/logo.png'; ?>"/></a>

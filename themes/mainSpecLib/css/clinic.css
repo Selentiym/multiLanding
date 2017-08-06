@@ -21,3 +21,6 @@
     width:1px;
     height:1px;
 }
+#clinicNav li.nav-item {
+    width:100%;
+}
