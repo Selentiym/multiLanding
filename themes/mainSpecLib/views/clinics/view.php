@@ -63,8 +63,54 @@ console.log(owl2);
  * end doctors
  */
 $sales = (strlen(trim(strip_tags($model -> sales))) > 10);
+$cs -> registerScript('sticky','
+(function(){
+var panel = document.getElementById("clinicNav"), basePanel = document.getElementById("topNav");
+var $panel = $(panel);
+var isSticky = false;
+var rect, baseNavRect;
+$(document).scroll(function(){
+    rect = panel.getBoundingClientRect();
+    if (!isSticky) {
+        if (rect.top < 0) {
+            $panel.addClass("sticky");
+            $panel.removeClass("row");
+            isSticky = true;
+        }
+    } else {
+        baseNavRect = basePanel.getBoundingClientRect();
+        if (baseNavRect.top + baseNavRect.height > rect.top) {
+            $panel.removeClass("sticky");
+            $panel.addClass("row");
+            isSticky = false;
+        }
+    }
+});
+})();
 
+',CClientScript::POS_READY);
 ?>
+<div id="clinicNav" class="header_topline navbar navbar-toggleable-lg navbar-light row">
+    <button style="margin-top:15px;" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#clinicNavbarText" aria-controls="clinicNavbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#"><img alt="logo" style="height:70px" class="p-2" src="<?php echo $baseTheme.'/images/logo.png'; ?>"/></a>
+    <div class="collapse navbar-collapse" id="clinicNavbarText">
+        <ul class="nav navbar-nav align-items-center">
+            <li class="nav-item"><a href="#description" class="list-group-item list-group-item-action">Описание</a></li>
+            <li class="nav-item"><a href="#mapHead" class="list-group-item list-group-item-action">Карта</a></li>
+            <?php if($sales): ?>
+                <li class="nav-item"><a href="#sales" class="list-group-item list-group-item-action">Акции&nbsp;и&nbsp;скидки</a></li>
+            <?php endif; ?>
+            <li class="nav-item"><a href="#prices" class="list-group-item list-group-item-action">Цены</a></li>
+            <?php if(count($model -> doctors)) : ?>
+                <li class="nav-item"><a href="#doctors" class="list-group-item list-group-item-action">Врачи</a></li>
+            <?php endif; ?>
+            <li class="nav-item"><a href="#reviewsHead" class="list-group-item list-group-item-action">Отзывы</a></li>
+            <li class="nav-item buttonLine"><a class="btn signUpButton list-group-item list-group-item-action" style="background-color: #5cb85c">Записаться на МРТ или КТ обследование</a></li>
+        </ul>
+    </div>
+</div>
 <div class="row clinicsPage">
 <div class="col-12 col-md-10 mx-auto">
     <h1 class="text-center"><?php echo $model -> name; ?></h1>
@@ -80,27 +126,6 @@ $sales = (strlen(trim(strip_tags($model -> sales))) > 10);
                 <?php
                 $this -> renderPartial('/clinics/_tags',['model' => $model]);
                 ?>
-            </div>
-        </div>
-        <div id="clinicNav" class="header_topline navbar navbar-toggleable-lg navbar-light">
-            <button style="margin-top:15px;" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#clinicNavbarText" aria-controls="clinicNavbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand ml-3" href="#"><img alt="logo" style="height:70px" class="p-2" src="<?php echo $baseTheme.'/images/logo.png'; ?>"/></a>
-            <div class="collapse navbar-collapse" id="clinicNavbarText">
-                <ul class="nav navbar-nav align-items-center">
-                    <li class="nav-item"><a href="#description" class="list-group-item list-group-item-action">Описание</a></li>
-                    <li class="nav-item"><a href="#mapHead" class="list-group-item list-group-item-action">Карта</a></li>
-                    <?php if($sales): ?>
-                    <li class="nav-item"><a href="#sales" class="list-group-item list-group-item-action">Акции&nbsp;и&nbsp;скидки</a></li>
-                    <?php endif; ?>
-                    <li class="nav-item"><a href="#prices" class="list-group-item list-group-item-action">Цены</a></li>
-                    <?php if(count($model -> doctors)) : ?>
-                    <li class="nav-item"><a href="#doctors" class="list-group-item list-group-item-action">Врачи</a></li>
-                    <?php endif; ?>
-                    <li class="nav-item"><a href="#reviewsHead" class="list-group-item list-group-item-action">Отзывы</a></li>
-                    <li class="nav-item buttonLine"><a class="btn signUpButton list-group-item list-group-item-action" style="background-color: #5cb85c">Записаться на МРТ или КТ обследование</a></li>
-                </ul>
             </div>
         </div>
     </div>

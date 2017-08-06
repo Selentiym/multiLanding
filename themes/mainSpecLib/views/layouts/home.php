@@ -75,50 +75,9 @@ $baseTheme = Yii::app() -> getThemeManager() -> getBaseUrl("mainSpecLib");
     <div class="footer-blurb">
         <div class="container">
             <div class="row">
-                <div class="col-sm-3 footer-blurb-item">
-                    <h3><i class="fa fa-text-height" aria-hidden="true"></i> Dynamic</h3>
-                    <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</p>
-                    <p><a class="btn btn-primary" href="#">Procrastinate</a></p>
+                <div class="col text-center">
+                    <button class="btn btn-success signUpButton">Записаться на МРТ или КТ обследование</button>
                 </div>
-                <div class="col-sm-3 footer-blurb-item">
-                    <h3><i class="fa fa-wrench" aria-hidden="true"></i> Efficient</h3>
-                    <p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. </p>
-                    <p><a class="btn btn-success" href="#">Unleash</a></p>
-                </div>
-                <div class="col-sm-3 footer-blurb-item">
-                    <h3><i class="fa fa-paperclip" aria-hidden="true"></i> Complete</h3>
-                    <p>Professionally cultivate one-to-one customer service with robust ideas. Completely synergize resource taxing relationships via premier niche markets. Dynamically innovate resource-leveling customer service for state of the art customer service.</p>
-                    <p><a class="btn btn-primary" href="#">Complete</a></p>
-                </div>
-                <div class="col-sm-3 footer-blurb-item">
-
-                    <!-- Thumbnails -->
-                    <h3><i class="fa fa-camera" aria-hidden="true"></i> Phosfluorescent</h3>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <a href="#" class="img-fluid">
-                                <img src="" alt="">
-                            </a>
-                        </div>
-                        <div class="col-xs-6">
-                            <a href="#" class="img-fluid">
-                                <img src="" alt="">
-                            </a>
-                        </div>
-                        <div class="col-xs-6">
-                            <a href="#" class="img-fluid">
-                                <img src="" alt="">
-                            </a>
-                        </div>
-                        <div class="col-xs-6">
-                            <a href="#" class="img-fluid">
-                                <img src="" alt="">
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-
             </div>
             <!-- /.row -->
         </div>
@@ -126,8 +85,7 @@ $baseTheme = Yii::app() -> getThemeManager() -> getBaseUrl("mainSpecLib");
 
     <div class="small-print">
         <div class="container">
-            <p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
-            <p>Copyright &copy; Example.com 2015 </p>
+            <p>Все права защищены &copy; <?php echo Yii::app() -> name.', '.date('o'); ?> </p>
         </div>
     </div>
 </footer>
@@ -154,13 +112,13 @@ $baseTheme = Yii::app() -> getThemeManager() -> getBaseUrl("mainSpecLib");
 <script>
     // Initialize tooltip component
     $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 
     // Initialize popover component
     $(function () {
-        $('[data-toggle="popover"]').popover()
-    })
+        $('[data-toggle="popover"]').popover();
+    });
 </script>
 
 </body>
