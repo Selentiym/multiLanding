@@ -14,9 +14,9 @@
     z-index: 80;
     width:100%;
 }
-/*#topNav {*/
-    /*margin-top:84px;*/
-/*}*/
+#topNav {
+    min-height:60px;
+}
 .anchorHolder {
     position:relative;
     top:-85px;

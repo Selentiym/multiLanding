@@ -97,8 +97,8 @@ $(document).scroll(function(){
     <a class="navbar-brand" href="#"><img alt="logo" style="height:70px" class="p-2" src="<?php echo $baseTheme.'/images/logo.png'; ?>"/></a>
     <div class="collapse navbar-collapse" id="clinicNavbarText">
         <ul class="nav navbar-nav align-items-center">
-            <li class="nav-item"><a href="#description" class="list-group-item list-group-item-action">Описание</a></li>
             <li class="nav-item"><a href="#mapHead" class="list-group-item list-group-item-action">Карта</a></li>
+            <li class="nav-item"><a href="#description" class="list-group-item list-group-item-action">Описание</a></li>
             <?php if($sales): ?>
                 <li class="nav-item"><a href="#sales" class="list-group-item list-group-item-action">Акции&nbsp;и&nbsp;скидки</a></li>
             <?php endif; ?>
@@ -111,11 +111,12 @@ $(document).scroll(function(){
         </ul>
     </div>
 </div>
-<div class="row clinicsPage">
+<div class="row clinicsPage pt-3">
 <div class="col-12 col-md-10 mx-auto">
-    <h1 class="text-center"><?php echo $model -> name; ?></h1>
+    <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-md-6 text-center">
+            <h1 class="text-center"><?php echo $model -> name; ?></h1>
             <img class="mr-3 img-fluid" src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt="<?php echo htmlspecialchars($model -> name); ?>">
             <div class="text-left"><?php $this -> renderPartial('/clinics/_icons', ['model' => $model]); ?></div>
             <div class="text-center"><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
@@ -128,6 +129,11 @@ $(document).scroll(function(){
                 ?>
             </div>
         </div>
+        <div class="col-md-6 col-12">
+            <div id="mapHead" class="anchorHolder"></div>
+            <div id="map" style="height:400px; width:90%; margin: 0 auto;"></div>
+        </div>
+    </div>
     </div>
     <div id="description" class="anchorHolder"></div>
     <div>
@@ -165,9 +171,6 @@ $(document).scroll(function(){
             </a>
         </div>
     </div>
-    <div id="mapHead" class="anchorHolder"></div>
-    <h3>Карта</h3>
-    <div id="map" style="height:400px; width:80%; margin: 0 auto;"></div>
     <?php if ($sales): ?>
         <div id="sales" class="anchorHolder"></div>
         <h3>Акции и скидки</h3>

@@ -53,6 +53,7 @@ class BaseModel extends CTModel
 		}
 		return [
 			'prices' => [self::HAS_MANY, 'ObjectPriceValue', 'id_object', 'with' => ['price' => ['alias' => 'priceForList']], 'condition' => 'priceForList.object_type = ' . Objects::getNumber(get_class($this)).$specSiteAddition],
+			'allPrices' => [self::HAS_MANY, 'ObjectPriceValue', 'id_object', 'with' => ['price' => ['alias' => 'priceForList']], 'condition' => 'priceForList.object_type = ' . Objects::getNumber(get_class($this))],
 			'priceLink' => [self::HAS_ONE, 'ObjectPriceValue','id_object','with' => ['price' => ['together' => true]], 'condition' => 'price.object_type = ' . Objects::getNumber(get_class($this)).' AND pr.id_price=:pid'],
 			'toCountPrices' => [self::HAS_MANY, 'ObjectPriceValue','id_object','condition' => 'toCountPrices.id_price IN (:pids)'],
 			'news' => [self::HAS_MANY, 'News', 'id_object', 'condition' => 'object_type = ' . Objects::getNumber(get_class($this)), 'order' => 'published DESC'],
