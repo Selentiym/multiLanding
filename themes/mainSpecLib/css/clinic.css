@@ -1,0 +1,23 @@
+.header_topline {
+    background: #eee;
+    border-bottom:1px solid black;
+    padding: 4px 0;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 80;
+    width: 100%;
+    height: 84px;
+    line-height: 1.3;
+}
+#topNav {
+    margin-top:84px;
+}
+.anchorHolder {
+    position:relative;
+    top:-85px;
+    display: inline-block;
+    width:1px;
+    height:1px;
+}

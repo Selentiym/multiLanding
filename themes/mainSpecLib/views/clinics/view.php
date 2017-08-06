@@ -26,7 +26,7 @@ if ($coordinaty[1]&&$coordinaty[0]) {
 			$("#map").html("Не удалось найти местоположение заправшиваемого объекта. Пожалуйста, сообщите о данной ошибке в техподдержку сайта. Адрес: ' . $adress . '.");
 		', CClientScript::POS_READY);
 }
-
+$cs -> registerCssFile($baseTheme.'/css/clinic.css');
 /**
  * doctors
  */
@@ -82,24 +82,29 @@ $sales = (strlen(trim(strip_tags($model -> sales))) > 10);
                 ?>
             </div>
         </div>
-        <div class="col-12 col-md-6">
-            <div class="list-group">
-                <a href="#description" class="list-group-item list-group-item-action">
-                    Описание
-                </a>
-                <a href="#mapHead" class="list-group-item list-group-item-action">Карта</a>
-                <?php if($sales): ?>
-                <a href="#sales" class="list-group-item list-group-item-action">Акции и скидки</a>
-                <?php endif; ?>
-                <a href="#prices" class="list-group-item list-group-item-action">Цены</a>
-                <?php if(count($model -> doctors)) : ?>
-                <a href="#doctors" class="list-group-item list-group-item-action">Врачи</a>
-                <?php endif; ?>
-                <a href="#reviewsHead" class="list-group-item list-group-item-action">Отзывы</a>
+        <div id="clinicNav" class="header_topline navbar navbar-toggleable-md">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#clinicNavbarText" aria-controls="clinicNavbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#"><img alt="logo" style="height:70px" class="p-2" src="<?php echo $baseTheme.'/images/logo.png'; ?>"/></a>
+            <div class="collapse navbar-collapse" id="clinicNavbarText">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"><a href="#description" class="list-group-item list-group-item-action">Описание</a></li>
+                    <li class="nav-item"><a href="#mapHead" class="list-group-item list-group-item-action">Карта</a></li>
+                    <?php if($sales): ?>
+                    <li class="nav-item"><a href="#sales" class="list-group-item list-group-item-action">Акции и скидки</a></li>
+                    <?php endif; ?>
+                    <li class="nav-item"><a href="#prices" class="list-group-item list-group-item-action">Цены</a></li>
+                    <?php if(count($model -> doctors)) : ?>
+                    <li class="nav-item"><a href="#doctors" class="list-group-item list-group-item-action">Врачи</a></li>
+                    <?php endif; ?>
+                    <li class="nav-item"><a href="#reviewsHead" class="list-group-item list-group-item-action">Отзывы</a></li>
+                </ul>
             </div>
         </div>
     </div>
-    <div id="description">
+    <div id="description" class="anchorHolder"></div>
+    <div>
         <div class="mb-3">
             <?php echo $model -> text; ?>
         </div>
@@ -134,10 +139,12 @@ $sales = (strlen(trim(strip_tags($model -> sales))) > 10);
             </a>
         </div>
     </div>
-    <h3 id="mapHead">Карта</h3>
+    <div id="mapHead" class="anchorHolder"></div>
+    <h3>Карта</h3>
     <div id="map" style="height:400px; width:80%; margin: 0 auto;"></div>
     <?php if ($sales): ?>
-        <h3 id="sales">Акции и скидки</h3>
+        <div id="sales" class="anchorHolder"></div>
+        <h3>Акции и скидки</h3>
         <div class="p-3">
             <?php
             if (strlen(trim(strip_tags($model -> sales))) < 10) {
@@ -148,8 +155,8 @@ $sales = (strlen(trim(strip_tags($model -> sales))) > 10);
             ?>
         </div>
     <?php endif; ?>
-
-    <h3 id="prices">Цены на исследования</h3>
+    <div id="prices" class="anchorHolder"></div>
+    <h3>Цены на исследования</h3>
     <div class="p3 mx-auto justify-content-around row">
         <?php
         $typedPrices = UClinicsModuleModel::groupBy($model -> getPriceValues(),function(ObjectPriceValue $pv){ return $pv -> price -> id_type;});
@@ -187,7 +194,8 @@ $sales = (strlen(trim(strip_tags($model -> sales))) > 10);
         ?>
     </div>
     <?php if (count($model -> doctors)): ?>
-        <h3 id="doctors">Врачи</h3>
+        <div id="doctors" class="anchorHolder"></div>
+        <h3>Врачи</h3>
         <div class="row p-3">
 
             <?php
@@ -207,7 +215,8 @@ $sales = (strlen(trim(strip_tags($model -> sales))) > 10);
         $this -> renderPartial('/clinics/_priceList',['model' => $model,'blocks' => ObjectPriceBlock::model()->findAll(['order' => 'num ASC'])]);
         ?>
     </div>
-    <h3 id="reviewsHead">Отзывы</h3>
+    <div id="reviewsHead" class="anchorHolder"></div>
+    <h3>Отзывы</h3>
     <div class="p-3 mx-auto" style="max-width: 700px" id="reviews" >
         <?php
         echo Yii::app() -> getModule('clinics') -> getObjectsReviewsPool(get_class($model)) -> showObjectCommentsWidget($model -> id);
