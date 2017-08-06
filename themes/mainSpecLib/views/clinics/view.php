@@ -188,7 +188,7 @@ $(document).scroll(function(){
     <h3>Цены на исследования</h3>
     <div class="p3 mx-auto justify-content-around row">
         <?php
-        $typedPrices = UClinicsModuleModel::groupBy($model -> getPriceValues(),function(ObjectPriceValue $pv){ return $pv -> price -> id_type;});
+        $typedPrices = UClinicsModuleModel::groupBy($model -> getPriceValues(true),function(ObjectPriceValue $pv){ return $pv -> price -> id_type;});
         $names = [
             1 => '<i class="fa fa-life-ring"></i>&nbsp;МРТ',
             2 => '<i class="fa fa-server"></i>&nbsp;КТ',
@@ -197,7 +197,16 @@ $(document).scroll(function(){
         foreach ($typedPrices as $type => $pricesOfType) {
             ob_start();
             $blockedPrices = UClinicsModuleModel::groupBy($pricesOfType,function(ObjectPriceValue $pv){ return $pv -> price -> id_block;});
-            foreach ($blockedPrices as $blockId => $pricesOfBlock) {
+            $newBlocked = [];
+            //Выносим тематические цены вверх
+            foreach (Yii::app() -> params['priceBlocks'] as $blockId) {
+                if ($blockedPrices[$blockId]) {
+                    $newBlocked[$blockId] = $blockedPrices[$blockId];
+                    unset($blockedPrices[$blockId]);
+                }
+            }
+            $newBlocked = array_replace($newBlocked, $blockedPrices);
+            foreach ($newBlocked as $blockId => $pricesOfBlock) {
                 /**
                  * @type ObjectPriceBlock $block
                  * @type ObjectPriceValue[] $pricesOfBlock
@@ -212,12 +221,12 @@ $(document).scroll(function(){
                 }
                 $block = $firstPrice -> price -> block;
 
-                $this -> renderPartial('/common/_dropDown', ['name' => '<i class="fa fa-rouble" aria-hidden="true"></i>&nbsp;'.$block -> name, 'content' => $content]);
+                $this -> renderPartial('/common/_dropDown', ['name' => '<i class="fa fa-rouble" aria-hidden="true"></i>&nbsp;'.$block -> name, 'content' => $content,'shown' => in_array($blockId,Yii::app() -> params['priceBlocks'])]);
             }
             $out = ob_get_contents();
             ob_end_clean();
             echo "<div class='col-md-4 col-12'>";
-            $this -> renderPartial('/common/_dropDown', ['name' => $names[$type],'content' => $out]);
+            $this -> renderPartial('/common/_dropDown', ['name' => $names[$type],'content' => $out,'shown' => true]);
             echo "</div>";
         }
         ?>

@@ -5,7 +5,9 @@
  * @property string $external_link
  * @property string $name
  * @property ObjectPriceValue[] $priceValues
- * @property News[] $news
+ *
+ * @property ObjectPriceValue[] $prices
+ * @property ObjectPriceValue[] $allPrices
  */
 class BaseModel extends CTModel
 {
@@ -926,7 +928,10 @@ class BaseModel extends CTModel
 	/**
 	 * @return ObjectPriceValue[]
 	 */
-	public function getPriceValues() {
+	public function getPriceValues($all = false) {
+		if ($all) {
+			return $this -> allPrices;
+		}
 		return $this -> prices;
 //		$criteria = new CDbCriteria();
 //		$criteria -> addInCondition('id_price', CHtml::giveAttributeArray(ObjectPrice::model() -> findAllByAttributes(['object_type' => Objects::getNumber(get_class($this))]),'id'));
