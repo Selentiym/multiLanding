@@ -15,41 +15,58 @@
 		<h2 style="font-size:1rem"><a href="<?php echo $model -> getUrl(); ?>"><?php echo $model -> name; ?></a></h2>
 		<div><?php $this -> renderPartial('/clinics/_icons',['model' => $model]); ?></div>
 		<?php
-			$block = $price -> block;
 			$mainPrice = $price;
-			$pricesHtml = [];
-			if ($block instanceof ObjectPriceBlock) {
-				foreach($block -> prices as $price) {
-					$val = $model -> getPriceValue($price -> id);
-					$isMin = $price -> id == $mainPrice -> id;
-					if ($val instanceof ObjectPriceValue) {
-						$pricesHtml[$price -> id] = $this -> renderPartial('/common/_dropDownLine',[
-							'class' => ($isMain) ? 'active' : '',
-							'name' => $price -> name,
-							'price' => $val -> value
-						], true);
-					}
+			if ($mainPrice instanceof ObjectPrice) {
+				$val = $model->getPriceValue($mainPrice->id);
+				$relaced = false;
+				if (!$val instanceof ObjectPriceValue) {
+					$val = $model -> getPriceValue($mainPrice -> id_replace_price);
+					$replaced = true;
 				}
-				if (!$pricesHtml[$mainPrice -> id]) {
-					$repl = $mainPrice -> id_replace_price;
-					$val = $model -> getPriceValue($repl);
-					if ($val instanceof ObjectPriceValue) {
-						unset($pricesHtml[$repl]);
-						$pricesHtml[$mainPrice -> id] = $pricesHtml[$mainPrice -> id] = $this -> renderPartial('/common/_dropDownLine',[
-								'class' => 'active',
-								'name' => $mainPrice -> replacement -> name.' (в том числе '.$mainPrice -> name.')',
-								'price' => $val -> value
-						], true);
-					}
-				}
-				$save = $pricesHtml[$mainPrice -> id];
-				unset($pricesHtml[$mainPrice -> id]);
-				$content = $save . implode('',$pricesHtml);
-				$this -> renderPartial('/common/_dropDown',[
-					'name' => 'Цены',
-					'shown' => true,
-					'content' => $content
+				echo "<ul class='list-group my-2'>";
+				$this->renderPartial('/common/_dropDownLine', [
+						'class' => 'active singlePrice',
+						'name' => $replaced ? $mainPrice->replacement->name . ' (в том числе ' . $mainPrice->name . ')' : $mainPrice->name,
+						'price' => $val->value
 				]);
+				echo "</ul>";
+			} else {
+				$pricesHtml = [];
+				if (!empty($blocks)) {
+					foreach ($blocks as $block) {
+						foreach ($block->prices as $price) {
+							$val = $model->getPriceValue($price->id);
+							$isMain = $price->id == $mainPrice->id;
+							if ($val instanceof ObjectPriceValue) {
+								$pricesHtml[$price->id] = $this->renderPartial('/common/_dropDownLine', [
+										'class' => ($isMain) ? 'active' : '',
+										'name' => $price->name,
+										'price' => $val->value
+								], true);
+							}
+						}
+						if (!$pricesHtml[$mainPrice->id]) {
+							$repl = $mainPrice->id_replace_price;
+							$val = $model->getPriceValue($repl);
+							if ($val instanceof ObjectPriceValue) {
+								unset($pricesHtml[$repl]);
+								$pricesHtml[$mainPrice->id] = $pricesHtml[$mainPrice->id] = $this->renderPartial('/common/_dropDownLine', [
+										'class' => 'active',
+										'name' => $mainPrice->replacement->name . ' (в том числе ' . $mainPrice->name . ')',
+										'price' => $val->value
+								], true);
+							}
+						}
+						$save = $pricesHtml[$mainPrice->id];
+						unset($pricesHtml[$mainPrice->id]);
+						$content = $save . implode('', $pricesHtml);
+					}
+					$this->renderPartial('/common/_dropDown', [
+							'name' => 'Цены',
+							'shown' => true,
+							'content' => $content
+					]);
+				}
 			}
 		?>
 		<div class="text-center">

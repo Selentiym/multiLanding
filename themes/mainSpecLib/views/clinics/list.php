@@ -44,6 +44,9 @@ if ($page != 'noPage') {
 } else {
     $objects = $allObjects;
 }
+if (!$triggers['research']) {
+    $blocks = ObjectPriceBlock::model() -> findAllByPk(Yii::app() -> params['priceBlocks']);
+}
 //$criteria -> offset = $page >= 1 ? $pageSize * ($page - 1) : 0 ;
 //$criteria -> limit = $pageSize;
 //$objects = $mod -> getClinics($triggers,null,null,$criteria);
@@ -451,7 +454,7 @@ $prices = $this -> getPrices();
         <div>
         <?php
             foreach ($objects as $clinic) {
-                $this -> renderPartial('/clinics/_single_clinics',['model' => $clinic,'price' => $research]);
+                $this -> renderPartial('/clinics/_single_clinics',['model' => $clinic,'price' => $research,'blocks' => $blocks]);
             }
         ?>
         </div>
