@@ -476,12 +476,72 @@ $prices = $this -> getPrices();
                 <?php generateText($triggers); ?>
             </div>
         </div>
-            <?php
+        <?php
+        if (count($allObjects) == 0) { echo "<!--noindex-->"; }
         $extraArticles = ArticleRule::getAllArticles('commercial', $triggers);
         if (!empty($extraArticles)) {
             foreach ($extraArticles as $article) {
                 $this -> renderPartial('/article/_popup_article', ['a' => $article, 'triggers' => $triggers]);
             }
+        }
+        if (count($allObjects) == 0) { echo "<!--/noindex-->"; }
+        //Ссылки на информационные статьи
+        $copy = $triggers;
+        unset($copy['area']);
+        unset($copy['district']);
+        unset($copy['prigorod']);
+        unset($copy['metro']);
+        unset($copy['street']);
+        unset($copy['orderBy']);
+        unset($copy['isCity']);
+        if (count($copy) == 0) {
+            $articles = Article::model() -> root() -> findAllByAttributes(['id_type' => Article::getTypeId('text')]);
+        } elseif (count($copy) == 1) {
+            if ($copy['mrt']) {
+                $parentVerb = 'mrt';
+            }
+            if ($copy['kt']) {
+                $parentVerb = 'kt';
+            }
+            $parent = Article::model() -> findByAttributes(['verbiage' => $parentVerb]);
+            if ($parent) {
+                $articles = Article::model()->findAllByAttributes(['parent_id' => $parent->id]);
+            }
+        }
+        if (!$articles) {
+            $criteria = new CDbCriteria();
+            $criteria -> compare('id_type', Article::getTypeId('text'));
+            $articles = $mod -> getArticles($copy, false, null, $criteria);
+        }
+        if (!empty($articles)) {
+//            $decoratedArticles = 5;
+            $decoratedArticles = 2;
+            $i = 0;
+            echo "<div class='card'><div class='card-header p-b-0'><h5 class='card-title text-center'><i class='fa fa-warning' aria-hidden='true'></i>&nbsp;Может пригодиться</h5></div><div class='card-block'>";
+            foreach ($articles as $article) {
+                $url = $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage],null,false,true);
+                $imageUrl = $article -> getImageUrl();
+                if ($i < $decoratedArticles) {
+                    echo "
+                            <div>
+                                <a class='article-name' href='$url'>
+                                    <h3 class='text-center' style='font-size: 1rem;'>{$article->name}</h3></a>
+                                    ";
+                    if ($imageUrl) {
+                        echo "<a class='article-name w-100 d-block' href='$url'><img style='width:90%;margin:5px auto; display:block;' class='mx-auto' src='$imageUrl' alt='".addslashes($a->name)."'/></a>";
+                    }
+                    echo "
+                                </a>
+                            </div>
+                        ";
+                } else {
+                    echo "
+                            <div><a class='article-name' href='$url'><h3 class='text-center' style='font-size: 1rem;'>{$article->name}</h3></a></div>
+                        ";
+                }
+                $i ++;
+            }
+            echo "</div></div>";
         }
         ?>
 
