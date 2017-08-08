@@ -514,8 +514,7 @@ $prices = $this -> getPrices();
             $articles = $mod -> getArticles($copy, false, null, $criteria);
         }
         if (!empty($articles)) {
-//            $decoratedArticles = 5;
-            $decoratedArticles = 2;
+            $decoratedArticles = 5;
             $i = 0;
             echo "<div class='card'><div class='card-header p-b-0'><h5 class='card-title text-center'><i class='fa fa-warning' aria-hidden='true'></i>&nbsp;Может пригодиться</h5></div><div class='card-block'>";
             foreach ($articles as $article) {

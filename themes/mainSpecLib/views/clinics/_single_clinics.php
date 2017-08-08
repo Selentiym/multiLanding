@@ -12,7 +12,7 @@
 		<div class="text-center"><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
 	</div>
 	<div class="col-12 col-sm-9">
-		<h2 style="font-size:1rem"><a href="<?php echo $model -> getUrl(); ?>"><?php echo $model -> name; ?></a></h2>
+		<h2 style="font-size:1rem"><a href="<?php echo $model -> getUrl(); ?>"><?php echo Yii::app() -> params['clinicPrefix'].' "'.$model -> name.'"'; ?></a></h2>
 		<div><?php $this -> renderPartial('/clinics/_icons',['model' => $model]); ?></div>
 		<?php
 			$mainPrice = $price;

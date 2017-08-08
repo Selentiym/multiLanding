@@ -116,7 +116,7 @@ $(document).scroll(function(){
     <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-md-6 text-center">
-            <h1 class="text-center"><?php echo $model -> name; ?></h1>
+            <h1 class="text-center"><?php echo Yii::app() -> params['clinicPrefix'].' "'.$model -> name.'"'; ?></h1>
             <img class="mr-3 img-fluid" src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt="<?php echo htmlspecialchars($model -> name); ?>">
             <div class="text-left"><?php $this -> renderPartial('/clinics/_icons', ['model' => $model]); ?></div>
             <div class="text-center"><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
@@ -186,7 +186,7 @@ $(document).scroll(function(){
     <?php endif; ?>
     <div id="prices" class="anchorHolder"></div>
     <h3>Цены на исследования</h3>
-    <div class="p3 mx-auto justify-content-around row">
+    <div class="p3 mx-auto justify-content-center row">
         <?php
         $typedPrices = UClinicsModuleModel::groupBy($model -> getPriceValues(true),function(ObjectPriceValue $pv){ return $pv -> price -> id_type;});
         $names = [

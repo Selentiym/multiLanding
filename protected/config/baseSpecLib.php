@@ -141,7 +141,8 @@ return SiteDispatcher::mergeArray(
         'params'=>array(
             'siteId' => 'oMrt',
             'formLine' => -9,
-            'dd.credentials' => 'partner.2751:JhZdjiuk'
+            'dd.credentials' => 'partner.2751:JhZdjiuk',
+            'clinicPrefix' => 'Центр диагностики'
         ),
     )
 );

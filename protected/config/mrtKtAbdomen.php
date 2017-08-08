@@ -111,7 +111,8 @@ return SiteDispatcher::mergeArray(
             'priceBlocks' => [
                 7,//mrtAbdomen
                 8,//ktAbdomen
-            ]
+            ],
+            'clinicPrefix' => 'Центр диагностики брюшной полости'
         ),
     )
 );
