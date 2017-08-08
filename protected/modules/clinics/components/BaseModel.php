@@ -34,8 +34,8 @@ class BaseModel extends CTModel
 	protected $_priceValues;
 	
 	/** лишняя функция.
-	 * @arg array search a search array that specifies what is being searched
-	 * @arg array objects an array of object which are to be filtered according to search options
+	 * @param array search a search array that specifies what is being searched
+	 * @param array objects an array of object which are to be filtered according to search options
 	 * @return array of model object that fit the search options
 	 * (unlike search function this one is overriden in every doughter class and contains options that are specific)
 	 */
@@ -59,10 +59,12 @@ class BaseModel extends CTModel
 			'priceLink' => [self::HAS_ONE, 'ObjectPriceValue','id_object','with' => ['price' => ['together' => true]], 'condition' => 'price.object_type = ' . Objects::getNumber(get_class($this)).' AND pr.id_price=:pid'],
 			'toCountPrices' => [self::HAS_MANY, 'ObjectPriceValue','id_object','condition' => 'toCountPrices.id_price IN (:pids)'],
 			'news' => [self::HAS_MANY, 'News', 'id_object', 'condition' => 'object_type = ' . Objects::getNumber(get_class($this)), 'order' => 'published DESC'],
+			'triggerValues' => [self::MANY_MANY, 'TriggerValues', '{{'.$this -> getNormalizedClassName() .'_trigger_assignments}}(id_object,id_trigger_value)'],
+			'triggerLinks' => [self::HAS_MANY, $this->getNormalizedClassName().'TriggerAssignment','id_object'],
 		];
 	}
 	/**
-	 * @arg array search a search array that specifies which filterform will be displayed
+	 * @param array search a search array that specifies which filterform will be displayed
 	 * @return filter form that is to be displayed on the searchpage. It is the interface to search. 
 	 * The form is different for different specialities.
 	 */
@@ -106,11 +108,17 @@ class BaseModel extends CTModel
 	}
 	public function setAliasedCondition($search, CDbCriteria $criteria = null, $alias = ''){
 		$search = array_filter($search);
+		if (empty($criteria -> with)) {
+			$criteria -> with = [$alias.'triggerLinks'=>['together' => true]];
+		} else {
+			$criteria -> with = array_merge($criteria -> with,[$alias.'triggerLinks'=>['together' => true]]);
+		}
 		foreach ($search as $key => $option) {
 			//если поле не относится к особым, тогда сохраняем условие на него.
 			if (!in_array($key, $this -> SFields)) {
 				if (trim($option) != "") {
-					$criteria = self::addSeparatedFieldCondition($alias.'triggers',$criteria, trim($option));
+					$criteria -> addCondition('triggerLinks.id_trigger_value = '.$option);
+					//$criteria = self::addSeparatedFieldCondition($alias.'triggers',$criteria, trim($option));
 					//$filter[] = $option;
 				}
 			}
@@ -221,8 +229,8 @@ class BaseModel extends CTModel
 	}
 
 	/** лишняя функция.
-	 * @arg array search a search array that specifies what is being searched
-	 * @arg array objects an array of object which are to be filtered according to search options
+	 * @param array search a search array that specifies what is being searched
+	 * @param array objects an array of object which are to be filtered according to search options
 	 * @return array - an array of model object that fit the search options
 	 * (unlike search function this one is overriden in every doughter class and contains options that are specific)
 	 */
@@ -333,7 +341,7 @@ class BaseModel extends CTModel
 		}
 	}
 	/**
-	 * @arg array fields - default fields (default - present in the database) that are to be exported
+	 * @param array fields - default fields (default - present in the database) that are to be exported
 	 * @return exported csv file
 	 */
 	public function ExportCsv($fields,$prices)
@@ -669,13 +677,13 @@ class BaseModel extends CTModel
 	 * Делает так, что массив объектов $objectClass, который привязан через таблицу
 	 * стал равен массиву, айди которого находятся в $ids
 	 *
-	 * @arg array ids - an ids array of objects to be assigned to the this object
-	 * @arg string objectClass - the name of the class of objects which correspond to the linking table record
-	 * @arg string propertyName - the name of relational property that contains the array of objects
-	 * @arg string PK - the name of the PrimaryKey property for this object
-	 * @arg string PK_name - the name of the PrimaryKey in the linking table fo "big" objects
-	 * @arg string PK_small - the name of the PrimaryKey property for objects to be saved
-	 * @arg string PK_small_name - the name of the PrimaryKey in the linking table for "small" objects
+	 * @param array $ids - an ids array of objects to be assigned to the this object
+	 * @param string $objectClass - the name of the class of objects which correspond to the linking table record
+	 * @param string $propertyName - the name of relational property that contains the array of objects
+	 * @param string $PK - the name of the PrimaryKey property for this object
+	 * @param string $PK_name - the name of the PrimaryKey in the linking table fo "big" objects
+	 * @param string $PK_small - the name of the PrimaryKey property for objects to be saved
+	 * @param string $PK_small_name - the name of the PrimaryKey in the linking table for "small" objects
 	 */
 	public function SavePropertyArrayChanges($ids, $objectClass, $propertyName, $PK, $PK_name, $PK_small, $PK_small_name) {
 		//Пполучаем то, что было
@@ -1123,5 +1131,17 @@ class BaseModel extends CTModel
 			return $this -> address;
 		}
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getNormalizedClassName(){
+		static $translate = [
+			'clinics' => 'clinics',
+			'doctors' => 'doctors',
+			'Service' => 'clinics',
+			'Article' => '',
+		];
+		return $translate[get_class($this)];
+	}
 }
-?>

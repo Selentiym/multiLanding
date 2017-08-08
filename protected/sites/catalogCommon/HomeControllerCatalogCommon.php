@@ -346,4 +346,13 @@ class HomeControllerCatalogCommon extends CController {
         if($error=Yii::app()->errorHandler->error)
             $this->render('/system/error404', $error);
     }
+    public function actionCopyTriggersToTable(){
+//        $model = clinics::model();
+        foreach (clinics::model() -> findAll() as $clinic) {
+            /**
+             * @type clinics $clinic
+             */
+            $clinic -> SavePropertyArrayChanges(array_filter(explode(';',$clinic -> triggers)), 'clinicsTriggerAssignment', 'triggerValues', 'id', 'id_object', 'id', 'id_trigger_value');
+        }
+    }
 }
