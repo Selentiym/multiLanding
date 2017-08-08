@@ -293,6 +293,9 @@ class TriggerValues extends CTModel {
 		$special = clinics::model() -> SFields;
 		//Улица вполне себе нормально зависит от района
 		unset($special['street']);
+		//Поле магнита зависит от открытости/закрытости, но не надо снимть поиск,
+		// если не выбрана открытость магнита
+		$special[] = 'field';
 		$savedData = [];
 		foreach ($special as $key) {
 			if ($triggers[$key]) {

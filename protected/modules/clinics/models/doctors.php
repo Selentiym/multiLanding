@@ -231,181 +231,8 @@ class doctors extends BaseModel
 	
 	
 	
-	public function ReadData(){
-
-	}
+	public function ReadData(){}
 	
-	public function filterByTriggerValuesIdString($doctors, $string)
-	{
-		$ids = array_filter(array_map('trim', explode(';',$string)));
-		return doctors::model() -> filterByTriggerValuesIdArray($doctors, $ids);
-	}
-	public function filterByTriggerValuesIdArray($doctors, $ids)
-	{
-		$filtered = array();
-		$number = count($ids);
-		foreach($doctors as $doctor)
-		{
-			if (count(array_intersect($ids, array_map('trim',explode(';',$doctor -> triggers)))) == $number)
-			{
-				$filtered[] = $doctor;
-			}
-		}
-		return $filtered;
-	}
-	//import data function. $handle is a handle to a csv-encoded file to be analized
-	/*public function ImportCsv($handle = false, $fields = Array ())
-	{
-		if ($handle)
-		{
-			$firstline = fgetcsv($handle, 2000, ';');
-			//Получили массив <название в файле экспорта> => <поле в таблице>
-			//$fields = array_flip($this -> fields);
-			$fields = array_flip($fields);
-			$keys = array_keys($fields);
-			//Получили список id-шников нестандартных полей, использованных в файле.
-			$customFieldsIds = Array();
-			foreach ($firstline as $key )
-			{
-				if (!in_array($key, $keys))
-				{
-					$field = Fields::model() -> findByAttributes(array('title' => $key));
-					//Сохраняем id-шник, если поняли, что это за поле.
-					if ($field) 
-					{
-						$customFieldsIds[] = $field -> id;
-					} else {
-						$customFiledsIds[] = -1;
-					}
-				}
-			}
-			while(($line = fgetcsv($handle, 2000, ';')) !== false)
-			{
-				//Пробегаемся по всем стандартным ключам, расположенным в начале.
-				//print_r($line);
-				reset($line);
-				reset($customFieldsIds);
-				$customFields = Array();
-				foreach ($firstline as $key )
-				{
-					//Если поле стандартное, тогда добавляем его как атрибут модели клиника. $doctor_arr - массив будущих атрибутов модели клиника
-					//echo "<br/>".($key);
-					
-					if (in_array(trim($key), $keys))
-					{
-						
-						switch ($fields[($key)])
-						{
-							case 'district':
-								$distr_ids = doctors::model() -> giveDistrictIdsByNameString(current($line));
-								
-								$doctor_arr['district'] = implode(',', $distr_ids);
-							break;
-							case 'triggers':
-								$trigger_ids = doctors::model() -> giveTriggersByNameString(current($line));
-								$doctor_arr['triggers'] = implode(';',$trigger_ids);
-							break;
-							case 'metro_station':
-								$metro_ids = $this -> model() -> giveSubwayIdsByNameString(current($line));
-								$doctor_arr['metro_station'] = implode(";", $metro_ids);
-							break;
-							default:
-								$doctor_arr[$fields[($key)]] = current($line);
-								//echo "<br/>".$fields[($key)];
-								
-						}
-						if(next($line)===false)
-						{
-							break;
-						}
-					} else {//Если же поле не стандартное, то сохраняем его значение в массив, где ключ - id-шник поля.
-						$id = current($customFieldsIds);
-						if ($id != -1)
-						{
-							$customFields[$id] = current($line);
-						}
-						next($customFieldsIds);
-						if(next($line)===false)
-						{
-							break;
-						}
-					}
-				}
-				//Обработка кастомных полей
-				/*$customFields = CHtml::listData(Fields::model()->findAll(), 'title','id');
-				if (!$empty)
-				{
-					foreach ($customFields as $title => $id)
-					{
-						$insertCustomFields[$id] = current($line);
-						if(next($line)===false)
-						{
-							break;
-						}
-					}
-				} else {
-					$insertCustomFields = Array();
-				}
-				//print_r($insertCustomFields);
-				//Заносим данные в базу.
-				//Если не существует клиники с таким verbiage
-				if (!doctors::model() -> findByAttributes(array('verbiage' => $doctor_arr['verbiage'])))
-				{
-					$doctor = new doctors();
-					$doctor -> attributes = $doctor_arr;
-					//Сохраняем клинику
-					if ($doctor -> save())
-					{
-						//echo $doctor -> id;
-						$id = $doctor -> id;
-						//Устанавливаем значения кастомных полей.
-						foreach($customFields as $fid => $value)
-						{
-							$fields_assign = new DoctorsFields();
-							$fields_assign -> doctor_id = $id;
-							$fields_assign -> field_id = $fid;
-							$fields_assign -> value = $value;
-							if (!$fields_assign -> save())
-							{
-								echo "not saved";
-							}
-						}
-					} else {
-						$errors[$doctor -> name] = $doctor -> getErrors();
-					}
-				} else {
-					$exist[] = $doctor_arr['verbiage'];
-					//echo "exists";
-				}
-				//break;
-			}
-			//fclose($handle);
-			if (!empty($exist))
-			{
-				Yii::app() -> user -> setFlash('doctorExists', 'Клиники с адресами:<br/>'.implode("<br/>",$exist)." - уже есть в базе данных.");
-			}
-			if (!empty($errors))
-			{
-				$string = CHtml::encode("При импорте клиник возникли следующие ошибки:")."<br/>";
-				foreach ($errors as $name => $errors)
-				{
-					$string .= CHtml::encode("Клиника с названием ".$name.":")."<br/>";
-					$content = "";
-					foreach($errors as $field => $error)
-					{
-						$content .= CHtml::tag('li', array() ,"Поле: ".$field.", ошибка: ".implode(", ",$error));
-					}
-					$string .= CHtml::tag('ol',array(),$content);
-				}//
-				Yii::app() -> user -> setFlash('errorsWhileImporting',$string);
-			}else {
-				Yii::app()->user->setFlash('successfullDoctorsImport', 'Список клиник успешно импортирован.');
-			}
-		}
-		return true;
-	}*/
-	
-	//public function FillDoctorFieldsFromArray($model, $post_arr)
 	public function FillFieldsFromArray($model, $post_arr)
 	{
 		$model->attributes=$post_arr['doctors'];
@@ -506,64 +333,11 @@ class doctors extends BaseModel
 			}
 		}
 	}
-    public function doctorInit($model, $post_arr = NULL , $files_arr = NULL)
-    {   //var_dump($post_arr['doctors']['Additional']); die();
-        if (!$post_arr)
-		{
-			return false;
-		}
-		if (!$files_arr)
-		{
-			return false;
-		}
-		if(isset($post_arr['doctors']))
-        {
-			$this -> FillDoctorFieldsFromArray($model, $post_arr);
 
-			if($model->save()) {
-				if(isset($files_arr['doctors'])) {
-					$this -> DoctorFilesOperationsFromArray($model, $files_array);
-				}
-				//Повторное сохранение, уже с изменениями в файлах.
-				if ($model->save()){
-					if ($this->isSuperAdmin())
-						$this->redirect(array('doctors'));
-					else {
-						Yii::app()->user->setFlash('successfullSave', CHtml::encode('Изменения сохранены'));
-						return; 
-					}
-				} else {
-					return false;
-				}
-			 }
-			 else
-				return false;
-        }
-        return;
-    }
-
-	
 	/*
 	* Data transform functions ids <-> names
 	*/
-	public function getDistrNames()
-	{
-		if (!isset($this -> _DistrNames))
-		{
-			$this -> _DistrNames = $this -> giveDistrNames();
-		}
-		return $this -> _DistrNames;
-	}
-	public function getSubwayNames()
-	{
-		if (!isset($this -> _SubwayNames))
-		{
-			$this -> _SubwayNames = $this -> giveSubwayNames();
-		}
-		return $this -> _SubwayNames;
-	}
-	public function giveSubwayNames($data = '')
-	{
+	public function giveSubwayNames($data = '') {
 		if (strlen($data) == 0)
 		{
 			$data = $this -> metro_station;
@@ -574,8 +348,7 @@ class doctors extends BaseModel
 		return array_values(CHtml::listData(Metro::model()->findAll($criteria), 'id','name'));//костыль. переписать
 
 	}
-	public function giveDistrNames($data = '')
-	{
+	public function giveDistrNames($data = ''){
 		if (strlen($data == 0))
 		{
 			$data = $this -> district;
@@ -584,50 +357,6 @@ class doctors extends BaseModel
 		$criteria = new CDbCriteria();
 		$criteria->addInCondition("id", $distr_ids);
 		return array_values(CHtml::listData(Districts::model()->findAll($criteria), 'id','name'));//костыль. переписать
-	}
-	public function giveTriggerValues($data = '')
-	{
-		if (strlen($data == 0))
-		{
-			$data = $this -> triggers;
-		}
-		$trigger_ids = array_map('trim', explode(";",$data));
-		
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("id", $trigger_ids);
-		return array_values(CHtml::listData(TriggerValues::model()->findAll($criteria), 'id','value'));//костыль. переписать
-	}
-	public function giveDistrictIdsByNameString($NameString)
-	{
-		$names = array_map('trim', explode(',',$NameString));
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("name", $names);
-		return array_keys(CHtml::listData(Districts::model()->findAll($criteria), 'id','name'));//костыль. переписать
-
-	}
-	public function giveSubwayIdsByNameString($NameString)
-	{
-		$names = array_map('trim', explode(',',$NameString));
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("name", $names);
-		return array_keys(CHtml::listData(Metro::model()->findAll($criteria), 'id','name'));//костыль. переписать
-	}
-	public function giveTriggersByNameString($NameString)
-	{
-		$trigger_values = array_map('trim', explode(',',$NameString));
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("value", $trigger_values);
-		return array_keys(CHtml::listData(TriggerValues::model()->findAll($criteria), 'id','value'));//костыль. переписать
-	}
-	/*
-	* Common function
-	*/
-	public function giveIdsByNameString($NameString, $model)
-	{
-		$names = array_map('trim', explode(',',$NameString));
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("name", $names);
-		return array_keys(CHtml::listData($model -> findAll($criteria), 'id','name'));//костыль. переписать
 	}
 
 	public function giveLogoUrl(){

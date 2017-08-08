@@ -65,16 +65,16 @@ class clinics extends BaseModel {
 	/**
 	 * @return string the associated database table name
 	 */
-	public function tableName()
-	{
+	public function tableName() {
+
 		return '{{clinics}}';
 	}
 
 	/**
 	 * @return array validation rules for model attributes.
 	 */
-	public function rules()
-	{
+	public function rules() {
+
 		return array(
 			array('name, verbiage', 'required', 'message' => CHtml::encode('Поле <{attribute}> не может быть пустым.')),
             array('verbiage',
@@ -104,8 +104,8 @@ class clinics extends BaseModel {
      * @return array relational rules.
      */
      
-    public function relations()
-    {
+    public function relations() {
+
         return parent::relations() + array(
             //'comments' => array(self::HAS_MANY, 'Comments', 'object_id', 'condition' => 'comments.object_type = '.Objects::model() -> getNumber(get_class($this))),
             //'approved_comments' => array(self::HAS_MANY, 'Comments', 'object_id','order'=> 'id DESC', 'condition' => 'approved_comments.object_type = '.Objects::model() -> getNumber(get_class($this)).' AND approved_comments.approved=1'),
@@ -118,8 +118,8 @@ class clinics extends BaseModel {
     /**
 	 * @return array customized attribute labels (name=>label)
 	 */
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
+
 		return array(
 			'id' => 'ID',
 			'name' => CHtml::encode('Имя'),
@@ -153,8 +153,8 @@ class clinics extends BaseModel {
     /** This is a standard search function (not in use)
      * 
      */
-	public function search()
-	{
+	public function search() {
+
 		$criteria=new CDbCriteria;
 		$criteria -> order = 'partner DESC';
 		$criteria->compare('id',$this->id);
@@ -185,15 +185,15 @@ class clinics extends BaseModel {
 	}//*/
 
     // this is standard function for getting a model of the current class
-	public static function model($className=__CLASS__)
-	{
+	public static function model($className=__CLASS__) {
+
 		return parent::model($className);
 	}
 	/** Function to determine which attribute will be used to name file folder.
 	*
 	*/
-	public function FolderKey()
-	{
+	public function FolderKey() {
+
 		return 'verbiage';
 	}
 	
@@ -204,8 +204,8 @@ class clinics extends BaseModel {
 	/**
 	* Function to be called after $model -> save() methods succeeds
 	*/
-	public function afterSave()
-	{
+	public function afterSave() {
+
 		
 		parent::afterSave();
 		//Сохраняем изменения в массиве докторов
@@ -218,10 +218,10 @@ class clinics extends BaseModel {
 		$this -> SavePropertyArrayChanges($this -> doctorsInput, 'Employment', 'doctors', 'id', 'id_clinic', 'id', 'id_doctor');
 
 		//Если у модели клиники определены какие-то значения дополнительных полей, то сохраняем их.
-		if (isset($this -> additional))
-		{
-			foreach ($this -> additional as $id => $value)
-			{
+		if (isset($this -> additional)) {
+
+			foreach ($this -> additional as $id => $value) {
+
 				$current_field = FieldsValue::model()->findByPk(trim($id));
 				$current_field -> value = $value;
 				if (!$current_field -> save()) {
@@ -243,185 +243,9 @@ class clinics extends BaseModel {
 	
 	
 	
-	public function ReadData(){
-	}
+	public function ReadData(){}
 	
-	public function filterByTriggerValuesIdString($clinics, $string)
-	{
-		$ids = array_filter(array_map('trim', explode(';',$string)));
-		return clinics::model() -> filterByTriggerValuesIdArray($clinics, $ids);
-	}
-	public function filterByTriggerValuesIdArray($clinics, $ids)
-	{
-		$filtered = array();
-		$number = count($ids);
-		foreach($clinics as $clinic)
-		{
-			if (count(array_intersect($ids, array_map('trim',explode(';',$clinic -> triggers)))) == $number)
-			{
-				$filtered[] = $clinic;
-			}
-		}
-		return $filtered;
-	}
-	//import data function. $handle is a handle to a csv-encoded file to be analized
-	/*public function ImportCsv($handle = false, $fields = Array ())
-	{
-		if ($handle)
-		{
-			$firstline = $this -> my_fgetcsv($handle, 2000, ';');
-			//Получили массив <название в файле экспорта> => <поле в таблице>
-			//$fields = array_flip($this -> fields);
-			$fields = array_flip($fields);
-			$keys = array_keys($fields);
-			//Получили список id-шников нестандартных полей, использованных в файле.
-			$customFieldsIds = Array();
-			foreach ($firstline as $key )
-			{
-				if (!in_array($key, $keys))
-				{
-					$field = Fields::model() -> findByAttributes(array('title' => $key));
-					//Сохраняем id-шник, если поняли, что это за поле.
-					if ($field) 
-					{
-						$customFieldsIds[] = $field -> id;
-					} else {
-						$customFiledsIds[] = -1;
-					}
-				}
-			}
-			while(($line = $this -> my_fgetcsv($handle, 2000, ';')) !== false)
-			{
-				//Пробегаемся по всем стандартным ключам, расположенным в начале.
-				//print_r($line);
-				reset($line);
-				reset($customFieldsIds);
-				$customFields = Array();
-				foreach ($firstline as $key )
-				{
-					//Если поле стандартное, тогда добавляем его как атрибут модели клиника. $clinic_arr - массив будущих атрибутов модели клиника
-					//echo "<br/>".($key);
-					
-					if (in_array(trim($key), $keys))
-					{
-						
-						switch ($fields[($key)])
-						{
-							case 'district':
-								$distr_ids = Clinics::model() -> giveDistrictIdsByNameString(current($line));
-								
-								$clinic_arr['district'] = implode(',', $distr_ids);
-							break;
-							case 'triggers':
-								$trigger_ids = Clinics::model() -> giveTriggersByNameString(current($line));
-								$clinic_arr['triggers'] = implode(';',$trigger_ids);
-							break;
-							case 'metro_station':
-								$metro_ids = $this -> model() -> giveSubwayIdsByNameString(current($line));
-								$clinic_arr['metro_station'] = implode(";", $metro_ids);
-							break;
-							default:
-								$clinic_arr[$fields[($key)]] = current($line);
-								//echo "<br/>".$fields[($key)];
-								
-						}
-						if(next($line)===false)
-						{
-							break;
-						}
-					} else {//Если же поле не стандартное, то сохраняем его значение в массив, где ключ - id-шник поля.
-						$id = current($customFieldsIds);
-						if ($id != -1)
-						{
-							$customFields[$id] = current($line);
-						}
-						next($customFieldsIds);
-						if(next($line)===false)
-						{
-							break;
-						}
-					}
-				}
-				//Обработка кастомных полей
-				/*$customFields = CHtml::listData(Fields::model()->findAll(), 'title','id');
-				if (!$empty)
-				{
-					foreach ($customFields as $title => $id)
-					{
-						$insertCustomFields[$id] = current($line);
-						if(next($line)===false)
-						{
-							break;
-						}
-					}
-				} else {
-					$insertCustomFields = Array();
-				}
-				//print_r($insertCustomFields);
-				//Заносим данные в базу.
-				//Если не существует клиники с таким verbiage
-				if (!Clinics::model() -> findByAttributes(array('verbiage' => $clinic_arr['verbiage'])))
-				{
-					$clinic = new Clinics();
-					$clinic -> attributes = $clinic_arr;
-					//Сохраняем клинику
-					if ($clinic -> save())
-					{
-						//echo $clinic -> id;
-						$id = $clinic -> id;
-						//Устанавливаем значения кастомных полей.
-						foreach($customFields as $fid => $value)
-						{
-							$fields_assign = new FieldsValue();
-							$fields_assign -> object_id = $id;
-							$fields_assign -> field_id = $fid;
-							$fields_assign -> value = $value;
-							if (!$fields_assign -> save())
-							{
-								//echo "not saved";
-								new CustomFlash('warning', 'FieldsValue', 'NotSaved'.$fields_assign -> object_id.'_'.$fields_assign -> field_id, 'Поле клиники с номером '.$fields_assign -> object_id. ' и значением '.$fields_assign -> value. ' не добавлено.');
-								//print_r($fields_assign -> getErrors());
-							}
-						}
-					} else {
-						$errors[$clinic -> name] = $clinic -> getErrors();
-					}
-				} else {
-					$exist[] = $clinic_arr['verbiage'];
-					//echo "exists";
-				}
-				//break;
-			}
-			//fclose($handle);
-			if (!empty($exist))
-			{
-				Yii::app() -> user -> setFlash('clinicExists', 'Клиники с адресами:<br/>'.implode("<br/>",$exist)." - уже есть в базе данных.");
-			}
-			if (!empty($errors))
-			{
-				$string = CHtml::encode("При импорте клиник возникли следующие ошибки:")."<br/>";
-				foreach ($errors as $name => $errors)
-				{
-					$string .= CHtml::encode("Клиника с названием ".$name.":")."<br/>";
-					$content = "";
-					foreach($errors as $field => $error)
-					{
-						$content .= CHtml::tag('li', array() ,"Поле: ".$field.", ошибка: ".implode(", ",$error));
-					}
-					$string .= CHtml::tag('ol',array(),$content);
-				}//
-				Yii::app() -> user -> setFlash('errorsWhileImporting',$string);
-			}else {
-				Yii::app()->user->setFlash('successfullClinicsImport', 'Список клиник успешно импортирован.');
-			}
-		}
-		return true;
-	}*/
-	
-	
-	//public function FillClinicFieldsFromArray($model, $post_arr)
-	public function FillFieldsFromArray($model, $post_arr)
-	{
+	public function FillFieldsFromArray($model, $post_arr) {
 		$model->attributes=$post_arr[get_class($this)];
 		$model -> text = $post_arr[get_class($this)]['text'];
 		//print_r($post_arr[get_class($this)]);
@@ -458,18 +282,17 @@ class clinics extends BaseModel {
 	/** Function that saves files to corresponding folders and updates model's file data.
 	* it also tries to delete previous files if they exist.
 	*/
-	public function FilesOperationsFromArray($model, $files_arr) 
-	{
+	public function FilesOperationsFromArray($model, $files_arr) {
 		// logo and audio
 		
 		$files_filePath = $model -> giveFileFolderAbsoluteUrl(NULL, 'files');
-		if (!file_exists($files_filePath))
-		{
+		if (!file_exists($files_filePath)) {
+
 			@mkdir($files_filePath);
 		}
 		$images_filePath = $model -> giveImageFolderAbsoluteUrl();
-		if (!file_exists($images_filePath))
-		{
+		if (!file_exists($images_filePath)) {
+
 			@mkdir($images_filePath);
 		}
 		if(!empty($files_arr[get_class($this)]['name']['logo'])){
@@ -518,66 +341,10 @@ class clinics extends BaseModel {
 			}
 		}
 	}
-    public function clinicInit($model, $post_arr = NULL , $files_arr = NULL)
-    {   //var_dump($post_arr[get_class($this)]['Additional']); die();
-        if (!$post_arr)
-		{
-			return false;
-		}
-		if (!$files_arr)
-		{
-			return false;
-		}
-		if(isset($post_arr[get_class($this)]))
-        {
-			$this -> FillClinicFieldsFromArray($model, $post_arr);
+	public function giveSubwayNames($data = '') {
 
-			if($model->save()) {
-				if(isset($files_arr[get_class($this)])) {
-					$this -> ClinicFilesOperationsFromArray($model, $files_array);
-				}
-				//Повторное сохранение, уже с изменениями в файлах.
-				if ($model->save()){
-					if ($this->isSuperAdmin())
-						$this->redirect(array('clinics'));
-					else {
-						Yii::app()->user->setFlash('successfullSave', CHtml::encode('Изменения сохранены'));
-						return; 
-					}
-				} else {
-					return false;
-				}
-			 }
-			 else
-				return false;
-        }
-        return;
-    }
+		if (strlen($data) == 0) {
 
-	
-	/*
-	* Data transform functions ids <-> names
-	*/
-	public function getDistrNames()
-	{
-		if (!isset($this -> _DistrNames))
-		{
-			$this -> _DistrNames = $this -> giveDistrNames();
-		}
-		return $this -> _DistrNames;
-	}
-	public function getSubwayNames()
-	{
-		if (!isset($this -> _SubwayNames))
-		{
-			$this -> _SubwayNames = $this -> giveSubwayNames();
-		}
-		return $this -> _SubwayNames;
-	}
-	public function giveSubwayNames($data = '')
-	{
-		if (strlen($data) == 0)
-		{
 			$data = $this -> metro_station;
 		}
 		$subway_ids = array_map('trim', explode(";",$data));
@@ -586,60 +353,15 @@ class clinics extends BaseModel {
 		return array_values(CHtml::listData(Metro::model()->findAll($criteria), 'id','name'));//костыль. переписать
 
 	}
-	public function giveDistrNames($data = '')
-	{
-		if (strlen($data == 0))
-		{
+	public function giveDistrNames($data = '') {
+		if (strlen($data == 0)) {
+
 			$data = $this -> district;
 		}
 		$distr_ids = array_map('trim', explode(";",$data));
 		$criteria = new CDbCriteria();
 		$criteria->addInCondition("id", $distr_ids);
 		return array_values(CHtml::listData(Districts::model()->findAll($criteria), 'id','name'));//костыль. переписать
-	}
-	public function giveTriggerValues($data = '')
-	{
-		if (strlen($data == 0))
-		{
-			$data = $this -> triggers;
-		}
-		$trigger_ids = array_map('trim', explode(";",$data));
-		
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("id", $trigger_ids);
-		return array_values(CHtml::listData(TriggerValues::model()->findAll($criteria), 'id','value'));//костыль. переписать
-	}
-	public function giveDistrictIdsByNameString($NameString)
-	{
-		$names = array_map('trim', explode(',',$NameString));
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("name", $names);
-		return array_keys(CHtml::listData(Districts::model()->findAll($criteria), 'id','name'));//костыль. переписать
-
-	}
-	public function giveSubwayIdsByNameString($NameString)
-	{
-		$names = array_map('trim', explode(',',$NameString));
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("name", $names);
-		return array_keys(CHtml::listData(Metro::model()->findAll($criteria), 'id','name'));//костыль. переписать
-	}
-	public function giveTriggersByNameString($NameString)
-	{
-		$trigger_values = array_filter(array_map('trim', explode(',',$NameString)));
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("value", $trigger_values);
-		return array_keys(CHtml::listData(TriggerValues::model()->findAll($criteria), 'id','value'));//костыль. переписать
-	}
-	/*
-	* Common function
-	*/
-	public function giveIdsByNameString($NameString, $model)
-	{
-		$names = array_map('trim', explode(',',$NameString));
-		$criteria = new CDbCriteria();
-		$criteria->addInCondition("name", $names);
-		return array_keys(CHtml::listData($model -> findAll($criteria), 'id','name'));//костыль. переписать
 	}
 	public function modelFromImportArray($array, $header = array()){
 		$model = new self;
@@ -649,8 +371,6 @@ class clinics extends BaseModel {
 				$key = array_flip(array_map(function ($key) use ($enc) {
 					return (mb_strtolower(trim($key),$enc));
 				},$header));
-				
-				
 				$model -> name = $array[$key['название']];
 				//Название почему-то не хочет выбираться.
 				//$model -> name = $array[0];
@@ -757,14 +477,8 @@ class clinics extends BaseModel {
 				}
 			}
 		} else {
-			echo "jopa";
 			return false;
 		}
-	}
-	public function addTriggerValue($id){
-		$had = explode(';',$this -> triggers);
-		$had[] = $id;
-		$this -> triggers = implode(';', $had);
 	}
 	/**
 	 * @param mixed[] $search a search array that specifies what is being searched
@@ -786,23 +500,6 @@ class clinics extends BaseModel {
 		}
 		return $criteria;
 	}
-
-	/**
-	 * @return string
-	 */
-	public function getPhone(){
-		if ($this -> partner) {
-			if ($this->getFirstTriggerValue('area')->verbiage == 'msc') {
-				$phone = Yii::app()->phoneMSC -> getFormatted();
-			} else {
-				$phone = Yii::app()->phone -> getFormatted();
-			}
-		} else {
-			$phone = $this -> phone ? $this -> phone : '';
-		}
-		return $phone;
-	}
-
 	/**
 	 * @return iPhoneComponent
 	 */

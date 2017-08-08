@@ -8,21 +8,21 @@
  * @property integer $id_object
  * @property integer $id_trigger_value
  */
-class clinicsTriggerAssignment extends TriggerAssignment
+class doctorsTriggerAssignment extends TriggerAssignment
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{clinics_trigger_assignments}}';
+		return '{{doctors_trigger_assignments}}';
 	}
 
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return clinicsTriggerAssignment the static model class
+	 * @return doctorsTriggerAssignment the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -33,6 +33,6 @@ class clinicsTriggerAssignment extends TriggerAssignment
 	 * @return string;
 	 */
 	public function getObjectName() {
-		return 'clinics';
+		return 'doctors';
 	}
 }

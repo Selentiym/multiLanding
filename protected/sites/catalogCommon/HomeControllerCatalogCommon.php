@@ -346,13 +346,17 @@ class HomeControllerCatalogCommon extends CController {
         if($error=Yii::app()->errorHandler->error)
             $this->render('/system/error404', $error);
     }
-    public function actionCopyTriggersToTable(){
+    public function actionCopyTriggersToTable($className = ''){
+        if (!in_array($className,['clinics','doctors','Article'])) {
+            echo "Неверно задано имя класса";
+            return;
+        }
 //        $model = clinics::model();
-        foreach (clinics::model() -> findAll() as $clinic) {
+        foreach ($className::model() -> findAll() as $object) {
             /**
-             * @type clinics $clinic
+             * @type BaseModel $object
              */
-            $clinic -> SavePropertyArrayChanges(array_filter(explode(';',$clinic -> triggers)), 'clinicsTriggerAssignment', 'triggerValues', 'id', 'id_object', 'id', 'id_trigger_value');
+            $object -> SavePropertyArrayChanges(array_filter(explode(';',$object -> triggers)), $className::model() -> getNormalizedClassName().'TriggerAssignment', 'triggerValues', 'id', 'id_object', 'id', 'id_trigger_value');
         }
     }
 }

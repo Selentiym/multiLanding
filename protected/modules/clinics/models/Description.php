@@ -66,24 +66,6 @@ class Description extends CTModel
 			'text' => 'Текст комментария',
 		);
 	}
-	public function giveTriggerValues(){
-		$criteria = new CDbCriteria;
-		$trigger_values_ids = array_filter(array_map('trim',explode(';', $this -> trigger_values)));
-		$criteria -> addInCondition('id', $trigger_values_ids);
-		$trigger_values = TriggerValues::model() -> findAll($criteria);
-		return $trigger_values;
-	}
-	public function giveTriggerString()
-	{
-		$triggers = $this -> giveTriggerValues();
-		$triggerString = '';
-		foreach ($triggers as $trigger)
-		{
-			$triggerString .= $trigger -> value.', ';
-		}
-		$triggerString = substr($triggerString, 0, strripos($triggerString, ','));
-		return $triggerString;
-	}
 	public function giveModelByTriggerArray($triggers, $modelName)
 	{
 		asort($triggers);

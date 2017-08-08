@@ -61,7 +61,7 @@ $cityRod = $model -> getFirstTriggerValue('area') -> verbiage == 'msc' ? 'Мос
 
     <div class="phone ">
         <i class="fa fa-mobile fa-lg fa-fw" aria-hidden="true"></i>&nbsp;
-        <div class="text p-adr"><?php echo $model -> getPhone(); ?></div>
+        <div class="text p-adr"><?php echo $model -> getPhoneObject() -> getFormatted(); ?></div>
     </div>
     <?php if (($model -> mrt)||($model -> getFirstTriggerValue('field'))||($model -> getFirstTriggerValue('magnetType'))||($model -> getFirstTriggerValue('mrt'))) : ?>
         <div class="row no-gutters align-items-center">

@@ -99,7 +99,9 @@ class Article extends BaseModel {
 		return array(
 			'parent' => array(self::BELONGS_TO, 'Article', 'parent_id'),
 			'researches' => array(self::HAS_MANY, 'ArticleResearch', 'id_article','with' => 'price'),
-			'priceLink' => [self::HAS_ONE, 'ArticleResearch','id_article','together' => true, 'condition' => 'verbiage_research=:pverbiage']
+			'priceLink' => [self::HAS_ONE, 'ArticleResearch','id_article','together' => true, 'condition' => 'verbiage_research=:pverbiage'],
+			'triggerValues' => [self::MANY_MANY, 'TriggerValues', '{{'.$this -> getNormalizedClassName() .'_trigger_assignments}}(id_object,id_trigger_value)'],
+			'triggerLinks' => [self::HAS_MANY, $this->getNormalizedClassName().'TriggerAssignment','id_object'],
 		);
 	}
 	public function getPrices(){
@@ -815,9 +817,6 @@ class Article extends BaseModel {
 //			unset($search['research']);
 //		}
 //		return parent::SFilter($search);
-	}
-	public function getReadyToDisplay() {
-		return;
 	}
 
 	/**

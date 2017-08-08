@@ -63,67 +63,32 @@ class BaseModel extends CTModel
 			'triggerLinks' => [self::HAS_MANY, $this->getNormalizedClassName().'TriggerAssignment','id_object'],
 		];
 	}
-	/**
-	 * @param array search a search array that specifies which filterform will be displayed
-	 * @return filter form that is to be displayed on the searchpage. It is the interface to search. 
-	 * The form is different for different specialities.
-	 */
-	public function giveFilterForm($search)
-	{
-		$speciality = $search['speciality'];
-		//Если специальность выбрана, то делаем форму с фильтрами.
-		if ($speciality) {
-			//считываем данные по специальности
-			$criteria = new CDbCriteria;
-			//$criteria -> with = array('speciality'=>array('condition' => 'id = :id', 'params' => array(':id' => $speciality)));
-			$criteria -> compare('object_type', Objects::model() -> getNumber(get_class($this)));
-			$criteria -> compare('speciality_id', $speciality);
-			$filter = Filters::model() -> find($criteria);
-			//определяем какие поля должны быть (айди триггеров)
-			$filterFields = array_map('trim', explode(';', $filter->fields));
-			//получаем объекты триггеров вместе со значениями. Связь trigger_values связывает триггеры со значениями has_many
-			$triggers_obj = Triggers::model()->with('trigger_values')->findAll();
-			$triggers = array();
-			//задаем массив для создания формы.
-			foreach ($triggers_obj as $trigger) {
-				if (in_array($trigger->id, $filterFields))
-					$triggers[$trigger->verbiage][$trigger->name] = $trigger->trigger_values;
-			}
-			//print_r($triggers);
-			if(Yii::app()->request->isAjaxRequest)
-				$filterForm = CJSON::encode($triggers); //$metros_array = array_map('trim', explode(';', $clinic->metro_station));
-			else
-				$filterForm = $triggers;  
-		} else {
-		   $filterForm = null;
-		}
-       return $filterForm; 
-	}
-	private static function addTriggerCondition(CDbCriteria $criteria, $id){
-		return self::addSeparatedFieldCondition('triggers',$criteria,$id);
-	}
 	private static function addSeparatedFieldCondition($field,CDbCriteria $criteria, $id){
 		$criteria -> addCondition("$field LIKE '%;$id;%' OR $field LIKE '%;$id' OR $field LIKE '$id;%' OR $field = '$id'");
 		return $criteria;
 	}
 	public function setAliasedCondition($search, CDbCriteria $criteria = null, $alias = ''){
 		$search = array_filter($search);
-		if (empty($criteria -> with)) {
-			$criteria -> with = [$alias.'triggerLinks'=>['together' => true]];
-		} else {
-			$criteria -> with = array_merge($criteria -> with,[$alias.'triggerLinks'=>['together' => true]]);
-		}
+		$join = '';
+		$i = 0;
+		$className = $this -> getNormalizedClassName();
+		$conds = [];
 		foreach ($search as $key => $option) {
+			++$i;
 			//если поле не относится к особым, тогда сохраняем условие на него.
 			if (!in_array($key, $this -> SFields)) {
 				if (trim($option) != "") {
-					$criteria -> addCondition('triggerLinks.id_trigger_value = '.$option);
-					//$criteria = self::addSeparatedFieldCondition($alias.'triggers',$criteria, trim($option));
-					//$filter[] = $option;
+					$name = "`trig$i`";
+					$join .= " LEFT OUTER JOIN `{{{$className}_trigger_assignments}}` $name  ON `t`.`id` = $name.`id_object` AND $name.`id_trigger_value` = $option";
+					$conds[] = "$name.`id` is not null";
+					//$criteria -> addCondition('triggerLinks.id_trigger_value = '.$option);
 				}
 			}
 		}
-
+		$criteria -> join = $criteria -> join . $join;
+		if (!empty($conds)) {
+			$criteria -> addCondition(implode(' AND ', $conds));
+		}
 		if ($search['metro']) {
 			foreach ($search['metro'] as $m) {
 				$criteria = self::addSeparatedFieldCondition($alias.'metro_station',$criteria, trim($m));
@@ -229,8 +194,8 @@ class BaseModel extends CTModel
 	}
 
 	/** лишняя функция.
-	 * @param array search a search array that specifies what is being searched
-	 * @param array objects an array of object which are to be filtered according to search options
+	 * @param array $search a search array that specifies what is being searched
+	 * @param array $objects an array of object which are to be filtered according to search options
 	 * @return array - an array of model object that fit the search options
 	 * (unlike search function this one is overriden in every doughter class and contains options that are specific)
 	 */
@@ -272,52 +237,6 @@ class BaseModel extends CTModel
 		}
 		return $criteria;
 		//TODO implement mrt or kt search via triggers
-
-//		if (!empty($search['mrt'])) {
-//			if (!$this -> giveMinMrtPrice()) {
-//				return false;
-//			}
-//		}
-//		if (!empty($search['kt'])) {
-//			if (!$this -> giveMinKtPrice()) {
-//				return false;
-//			}
-//		}
-
-		//already conditioned via sql
-
-//		if (!empty($search['metro'])) {
-//			//Если хотя бы одна станция выбрана, то пробегаем по всем выбранным и смотрим, есть ли хоть какая-нибудь.
-//			$check = false;
-//			$metroArr = array_filter(array_map('trim', explode(';', $this->metro_station)));
-//			//print_r($metroArr);
-//			//print_r($search['metro']);
-//			foreach($search['metro'] as $id) {
-//				if (in_array($id, $metroArr)) {
-//					//Если есть, то замечательно.
-//					$check = true;
-//					break;
-//				}
-//			}
-//			$ok &= $check;
-//		}
-		//already searched via sql
-		//$triggers_array = array_map('trim', explode(';', $this->triggers));
-//		if ($search['research']) {
-//			$p = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
-//			if ($p instanceof ObjectPrice) {
-//				$ok &= ObjectPriceValue::model() -> findByAttributes(['id_price' => $p -> id, 'id_object' => $this -> id]) instanceof ObjectPriceValue;
-//			}
-//		}
-		return $ok;
-	}
-	/**
-	 * Transforms parameters like districts from a string to an array 
-	 * in order to display them in the corresponding view.
-	 * Currently it is in base model, but should be different in all of them.
-	 */
-	public function getReadyToDisplay() {
-
 	}
 	/**
 	 * Tansforms data into correct encoding and writes it to a file.
@@ -373,6 +292,9 @@ class BaseModel extends CTModel
 			$this -> my_fputcsv($file, $names,";");
 			foreach($objects as $object)
 			{
+				/**
+				 * @type BaseModel $object
+				 */
 				$current_object_array = Array();
 				foreach($fields as $key => $v)
 				{
@@ -383,7 +305,7 @@ class BaseModel extends CTModel
 							$current_object_array[] = implode(",", $distr_arr);
 						break;
 						case 'triggers':
-							$trigger_arr = $object -> giveTriggerValues();
+							$trigger_arr = CHtml::listData($object -> giveTriggerValuesObjects(),'id','value');
 							$current_object_array[] = implode(",", $trigger_arr);
 						break;
 						case 'metro_station':
@@ -651,29 +573,6 @@ class BaseModel extends CTModel
 		return array_keys(CHtml::listData($model -> findAll($criteria), 'id','name'));//костыль. переписать
 	}
 	/**
-	 * @return array of all speciality names
-	 */
-	public function giveAllSpecialities(){
-		$criteria = new CDbCriteria;
-		$criteria -> compare('trigger_id',8);
-		$rez = TriggerValues::model() -> findAll($criteria);
-		return CHtml::listData($rez, 'id', 'value');
-	}
-	/**
-	 * @return array of speciality names of the current object
-	 */
-	public function giveSpecialities(){
-		$triggers = array_map('trim', explode(";",$this -> triggers));
-		$all_spec = $this -> giveAllSpecialities();
-		$all_spec_ids = array_keys($all_spec);
-		$cur_spec_ids = array_intersect($all_spec_ids, $triggers);
-		$rez = array();
-		foreach($cur_spec_ids as $id) {
-			$rez[$id] = $all_spec[$id];
-		}
-		return $rez;
-	}
-	/**
 	 * Делает так, что массив объектов $objectClass, который привязан через таблицу
 	 * стал равен массиву, айди которого находятся в $ids
 	 *
@@ -713,7 +612,6 @@ class BaseModel extends CTModel
 		}
 	}
 	public function beforeSave(){
-		
 		if (parent::beforeSave()) {
 			try {
 				if (!$this -> map_coordinates) {
@@ -757,7 +655,7 @@ class BaseModel extends CTModel
 		$name = giveDistrictByCoords($lat, $long);
 		$distr = TriggerValues::model() -> findByAttributes(['value' => $name]);
 		if ($distr instanceof TriggerValues) {
-			$this -> triggers .= ';'.$distr -> id;
+			$this -> addTriggerValue($distr -> id);
 		}
 	}
 	public function parseCoords() {
@@ -805,10 +703,7 @@ class BaseModel extends CTModel
 	 */
 	public function giveTriggerValuesObjects() {
 		if (!isset($this -> allTriggerValues)) {
-			$triggers_array = array_filter(array_map('trim', explode(';', $this->triggers)));
-			$criteria = new CDbCriteria;
-			$criteria -> addInCondition('t.id', $triggers_array);
-			foreach ( TriggerValues::model() -> with('trigger') -> findAll($criteria) as $obj) {
+			foreach ( $this -> getRelated('triggerValues', false, ['with' => 'trigger']) as $obj) {
 				/**
 				 * @type TriggerValues $obj
 				 */
@@ -819,7 +714,7 @@ class BaseModel extends CTModel
 			}
 		}
 		return $this -> allTriggerValues;
-	}//*/
+	}
 	public function giveMrtPrices() {
 		return array_filter($this -> getPriceValues(), function($pr) {
 			/**
@@ -929,7 +824,7 @@ class BaseModel extends CTModel
 	 * @param bool $refresh
 	 * @return null|ObjectPriceValue
 	 */
-	public function getPriceValue ($id,$refresh = false) {
+	public function getPriceValue($id,$refresh = false) {
 		return $this -> getPriceValuesArray($refresh)[$id];
 	}
 
@@ -941,10 +836,6 @@ class BaseModel extends CTModel
 			return $this -> allPrices;
 		}
 		return $this -> prices;
-//		$criteria = new CDbCriteria();
-//		$criteria -> addInCondition('id_price', CHtml::giveAttributeArray(ObjectPrice::model() -> findAllByAttributes(['object_type' => Objects::getNumber(get_class($this))]),'id'));
-//		$criteria -> compare('id_object', $this -> id);
-//		return ObjectPriceValue::model() -> findAll($criteria);
 	}
 
 	/**
@@ -1084,6 +975,7 @@ class BaseModel extends CTModel
 				}
 			}
 		}
+		return true;
 	}
 	public function parsePrices(){
 		//static $rez;
@@ -1140,8 +1032,24 @@ class BaseModel extends CTModel
 			'clinics' => 'clinics',
 			'doctors' => 'doctors',
 			'Service' => 'clinics',
-			'Article' => '',
+			'Article' => 'article',
 		];
 		return $translate[get_class($this)];
+	}
+
+	/**
+	 * @return TriggerAssignment
+	 */
+	public function getTriggerAssignmentModel(){
+		$className = $this -> getNormalizedClassName().'TriggerAssignment';
+		return $className::model();
+	}
+
+	public function addTriggerValue($id){
+		$assign = $this -> getTriggerAssignmentModel();
+		$assign -> setIsNewRecord(true);
+		$assign -> id_object = $this -> id;
+		$assign -> id_trigger_value = $id;
+		$assign -> save();
 	}
 }

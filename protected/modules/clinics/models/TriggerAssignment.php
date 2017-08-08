@@ -99,6 +99,16 @@ abstract class TriggerAssignment extends UModel {
     {
         return parent::model($className);
     }
+    public function beforeSave() {
+        if (!parent::beforeSave()) {
+            return false;
+        }
+        $dup = $this -> findByAttributes(['id_object' => $this -> id_object, 'id_trigger_value' => $this -> id_trigger_value]);
+        if ($dup instanceof CActiveRecord) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * @return string;
