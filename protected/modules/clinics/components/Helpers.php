@@ -91,7 +91,10 @@ function prepareTextToJS($str) {
 }
 function giveDistrictByCoords($lat,$long){
     $url = "https://geocode-maps.yandex.ru/1.x/?kind=district&geocode=N{$lat}%20E{$long}&format=json";
-    $json = file_get_contents($url);
+    $json = @file_get_contents($url);
+    if (!$json) {
+        return false;
+    }
     $rez = json_decode($json);
     $name = '';
     try {

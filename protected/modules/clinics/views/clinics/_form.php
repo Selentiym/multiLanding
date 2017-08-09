@@ -1,4 +1,9 @@
-    <?php $form=$this->beginWidget('CActiveForm', array(
+<?php
+/**
+ * @var AdminController $this
+ * @var clinics $model
+ */
+    $form=$this->beginWidget('CActiveForm', array(
         'id'=>'clinics-form',
         // Please note: When you enable ajax validation, make sure the corresponding
         // controller action is handling ajax validation correctly.
@@ -180,7 +185,8 @@
 
             <?php
             $triggers= CHtml::listData(TriggerValues::getAllValuesButForTriggers(['street']), 'id', 'value');
-			echo CHtml::activeDropDownList(TriggerValues::model(),'id',$triggers, array('name'=>'triggers_array[]','multiple' => 'multiple'),array_map('trim', explode (';', $model->triggers)));
+//			$temp = CHtml::listData(,'id','id');
+            echo CHtml::activeDropDownList(TriggerValues::model(),'id',$triggers, array('name'=>'triggers_array[]','multiple' => 'multiple'),CHtml::listData($model -> giveTriggerValuesUnstructured(),'id','id'));
             ?>
             <?php echo $form->error($model,'triggers'); ?>
         </div>

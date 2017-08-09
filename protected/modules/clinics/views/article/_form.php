@@ -142,7 +142,7 @@ Yii::app()->clientScript->registerScript('PreviewScript','
 			$triggers = array_merge(array('0'=>''),CHtml::listData(TriggerValues::getAllValuesButForTriggers(['street']), 'id', 'value'));
 			//$triggers = CHtml::listData(TriggerValues::model()->findAll(), 'id', 'value');
 			//print_r($triggers);
-			echo CHtml::activeDropDownList(TriggerValues::model(),'id',$triggers, array('name'=>'triggers_array[]','multiple'=>'multiple','allow_single_deselect'=>'true'),array_map('trim', explode (';', $model->triggers)));
+			echo CHtml::activeDropDownList(TriggerValues::model(),'id',$triggers, array('name'=>'triggers_array[]','multiple'=>'multiple','allow_single_deselect'=>'true'),CHtml::listData($model -> giveTriggerValuesUnstructured(),'id','id'));
             ?>
 		</div>
 

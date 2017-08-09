@@ -233,15 +233,8 @@ class doctors extends BaseModel
 	
 	public function ReadData(){}
 	
-	public function FillFieldsFromArray($model, $post_arr)
-	{
-		$model->attributes=$post_arr['doctors'];
-		$model -> education = $post_arr['doctors']['education'];
-		$model -> curses = $post_arr['doctors']['curses'];
-		//print_r($post_arr['doctors']);
-		//$model -> rewards = $_POST["doctors"]["rewards"];
-		//$model -> rewards = $_POST["doctors"]["rewards"];
-		
+	public function FillFieldsFromArray($model, $post_arr) {
+		parent::FillFieldsFromArray($model, $post_arr);
 		//metro
 		if (!empty($post_arr['metro_station_array'])) {
 			$metro = implode(';', $post_arr['metro_station_array']);
@@ -249,7 +242,6 @@ class doctors extends BaseModel
 		} else {
 			$model -> metro_station = '';
 		}
-
 		//districts
 		if (!empty($post_arr['district_array'])) {
 			$district = implode(';', $post_arr['district_array']);
@@ -257,18 +249,8 @@ class doctors extends BaseModel
 		} else {
 			$model -> district = '';
 		}
-
-		//triggers
-		if (!empty($post_arr['triggers_array'])) {
-			$triggers = implode(';', $post_arr['triggers_array']);
-			$model->triggers = $triggers;//substr($triggers, 0, strrpos($triggers, ';'));
-		} else {
-			$model -> triggers = '';
-		}
-		//additional fields
-		if (isset($post_arr['doctors']['Additional']) && !empty($post_arr['doctors']['Additional'])) {
-			$model -> additional = $post_arr['doctors']['Additional'];
-		}
+		$model -> education = $post_arr['doctors']['education'];
+		$model -> curses = $post_arr['doctors']['curses'];
 	}
 	/** Function that saves files to corresponding folders and updates model's file data.
 	* it also tries to delete previous files if they exist.

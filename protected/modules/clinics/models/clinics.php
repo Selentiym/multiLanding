@@ -246,11 +246,7 @@ class clinics extends BaseModel {
 	public function ReadData(){}
 	
 	public function FillFieldsFromArray($model, $post_arr) {
-		$model->attributes=$post_arr[get_class($this)];
-		$model -> text = $post_arr[get_class($this)]['text'];
-		//print_r($post_arr[get_class($this)]);
-		$model -> partner = $post_arr[get_class($this)]["partner"] > 0 ? 1 : 0;
-		$model -> ignore_clinic = $post_arr[get_class($this)]["ignore_clinic"] > 0 ? 1 : 0;
+		parent::FillFieldsFromArray($model, $post_arr);
 		//metro
 		if (!empty($post_arr['metro_station_array'])) {
 			$metro = implode(';', $post_arr['metro_station_array']);
@@ -258,7 +254,6 @@ class clinics extends BaseModel {
 		} else {
 			$model -> metro_station = '';
 		}
-
 		//districts
 		if (!empty($post_arr['district_array'])) {
 			$district = implode(';', $post_arr['district_array']);
@@ -266,18 +261,10 @@ class clinics extends BaseModel {
 		} else {
 			$model -> district = '';
 		}
-
-		//triggers
-		if (!empty($post_arr['triggers_array'])) {
-			$triggers = implode(';', $post_arr['triggers_array']);
-			$model->triggers = $triggers;//substr($triggers, 0, strrpos($triggers, ';'));
-		} else {
-			$model -> triggers = '';
-		}
-		//additional fields
-		if (isset($post_arr[get_class($this)]['Additional']) && !empty($post_arr[get_class($this)]['Additional'])) {
-			$model -> additional = $post_arr[get_class($this)]['Additional'];
-		}
+		$model -> text = $post_arr[get_class($this)]['text'];
+		//print_r($post_arr[get_class($this)]);
+		$model -> partner = $post_arr[get_class($this)]["partner"] > 0 ? 1 : 0;
+		$model -> ignore_clinic = $post_arr[get_class($this)]["ignore_clinic"] > 0 ? 1 : 0;
 	}
 	/** Function that saves files to corresponding folders and updates model's file data.
 	* it also tries to delete previous files if they exist.

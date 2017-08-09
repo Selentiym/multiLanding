@@ -143,20 +143,9 @@ class Article extends BaseModel {
 		return $this -> ParentList;
 	}
     public function beforeSave() {
-		$post_arr = $_POST;
 		$sc = $this -> getScenario();
-		if (($sc == 'create')||($sc == 'update')) {
-			//triggers
-			if (!empty($post_arr['triggers_array'])) {
-				$triggers = implode(';', $post_arr['triggers_array']);
-				$this -> triggers = $triggers;//substr($triggers, 0, strrpos($triggers, ';'));
-			} else {
-				$this -> triggers = '';
-			}
-		}
 		if ($sc != 'createDescendant') {
 			$criteria = new CDbCriteria;
-
 			// prevent app from saving an article with existing URL
 			if (!$this->isNewRecord) {
 				$criteria->condition = 'id <> :id';
@@ -767,6 +756,12 @@ class Article extends BaseModel {
 		}
 	}
 	public function afterSave() {
+		$sc = $this -> getScenario();
+		if (($sc == 'create')||($sc == 'update')) {
+			//triggers
+			//not good that $_POST is hardcoded
+			$this->SavePropertyArrayChanges($_POST['triggers_array'], static::model()->getNormalizedClassName() . 'TriggerAssignment', 'triggerValues', 'id', 'id_object', 'id', 'id_trigger_value');
+		}
 		if (in_array($this -> getScenario(), ['update', 'create'])) {
 			$data = $this -> research_input;
 			$hasObjects = [];
@@ -869,5 +864,13 @@ class Article extends BaseModel {
 	}
 	protected function getDbType() {
 		return 'article';
+	}
+
+	/**
+	 * @param BaseModel $model
+	 * @param array $post_arr
+	 */
+	public function FillFieldsFromArray($model, $post_arr) {
+		parent::FillFieldsFromArray($model, $post_arr);
 	}
 }

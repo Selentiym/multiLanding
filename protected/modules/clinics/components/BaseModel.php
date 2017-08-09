@@ -8,9 +8,10 @@
  *
  * @property ObjectPriceValue[] $prices
  * @property ObjectPriceValue[] $allPrices
+ *
+ * It is a ancestor of all models that should be searched by triggers
  */
-class BaseModel extends CTModel
-{
+abstract class BaseModel extends CTModel {
 	/**
 	 * @var TriggerValues
 	 */
@@ -32,7 +33,6 @@ class BaseModel extends CTModel
 	 * @var ObjectPriceValue[]
 	 */
 	protected $_priceValues;
-	
 	/** лишняя функция.
 	 * @param array search a search array that specifies what is being searched
 	 * @param array objects an array of object which are to be filtered according to search options
@@ -585,8 +585,9 @@ class BaseModel extends CTModel
 	 * @param string $PK_small_name - the name of the PrimaryKey in the linking table for "small" objects
 	 */
 	public function SavePropertyArrayChanges($ids, $objectClass, $propertyName, $PK, $PK_name, $PK_small, $PK_small_name) {
-		//Пполучаем то, что было
+		//Получаем то, что было
 		$start_ids = CHtml::giveAttributeArray($this -> $propertyName, $PK_small);
+		$ids = empty($ids) ? [] : $ids;
 		//находим то, чего нет в конечном массиве.
 		$to_del = array_diff($start_ids, $ids);
 		//находим то, что нужно добавить
@@ -599,6 +600,7 @@ class BaseModel extends CTModel
 		if (!empty($to_del)) {
 			$objectClass::model() -> deleteAll($criteria);
 		}
+//		Yii::app() -> end();
 		//Добавляем нужное
 		foreach($to_add as $id) {
 			$model = new $objectClass;
@@ -672,13 +674,16 @@ class BaseModel extends CTModel
 		//var_dump(Html::listData($met,'id','id'));
 		$this->metro_station = implode(';', Html::listData($met, 'id', 'id'));
 	}
-	public function afterSave() {
+	public function afterSave($noPrices = false) {
 		parent::afterSave();
-		if ($this -> getScenario() != 'noPrices') {
+		if (($this -> getScenario() != 'noPrices')&&(!$noPrices)) {
 			ob_start();
 			$this -> savePrices();
 			ob_end_clean();
 		}
+		//triggers
+		//not good that $_POST is hardcoded
+		$this->SavePropertyArrayChanges($_POST['triggers_array'], static::model()->getNormalizedClassName() . 'TriggerAssignment', 'triggerValues', 'id', 'id_object', 'id', 'id_trigger_value');
 	}
 	public function preparePrices($prices){
 		$mrt = array();
@@ -699,7 +704,7 @@ class BaseModel extends CTModel
 		return array_merge($mrt,$kt,$other);
 	}
 	/**
-	 * @return TriggerValues[]
+	 * @return array[TriggerValues[]]
 	 */
 	public function giveTriggerValuesObjects() {
 		if (!isset($this -> allTriggerValues)) {
@@ -714,6 +719,15 @@ class BaseModel extends CTModel
 			}
 		}
 		return $this -> allTriggerValues;
+	}
+	public function giveTriggerValuesUnstructured(){
+		$rez = [];
+		if (!empty($structured = $this -> giveTriggerValuesObjects())) {
+			foreach ($structured as $vals) {
+				$rez = array_merge($rez, $vals);
+			}
+		}
+		return $rez;
 	}
 	public function giveMrtPrices() {
 		return array_filter($this -> getPriceValues(), function($pr) {
@@ -986,6 +1000,9 @@ class BaseModel extends CTModel
 		if (!$rez) {
 			require_once(Yii::getPathOfAlias('application.components.simple_html_dom') . '.php');
 			$html = @file_get_html($this -> external_link);
+			if (!$html) {
+				return [];
+			}
 			$enc = "utf-8";
 			$rez = [];
 			$lines = $html -> find('.price-table tr');
@@ -1051,5 +1068,17 @@ class BaseModel extends CTModel
 		$assign -> id_object = $this -> id;
 		$assign -> id_trigger_value = $id;
 		$assign -> save();
+	}
+
+	/**
+	 * @param BaseModel $model
+	 * @param array $post_arr
+	 */
+	public function FillFieldsFromArray($model, $post_arr) {
+		$model->attributes=$post_arr[get_class($this)];
+		//additional fields
+		if (isset($post_arr[get_class($this)]['Additional']) && !empty($post_arr[get_class($this)]['Additional'])) {
+			$model -> additional = $post_arr[get_class($this)]['Additional'];
+		}
 	}
 }

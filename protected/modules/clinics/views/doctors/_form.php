@@ -167,20 +167,7 @@
 
             <?php
 			$triggers= CHtml::listData(TriggerValues::model()->findAll(), 'id', 'value');
-			echo CHtml::activeDropDownList(TriggerValues::model(),'id',$triggers, array('name'=>'triggers_array[]','multiple' => 'multiple'),array_map('trim', explode (';', $model->triggers)));
-            /*$this->widget('application.extensions.EchMultiSelect.EchMultiSelect', array(
-                'name' => 'triggers_array',
-                'data' => $triggers,
-                'value' => array_map('trim', explode (';', $model->triggers)),
-                'options' => array(
-                    'selectedText' =>Yii::t('EchMultiSelect.EchMultiSelect','# выбрано'),
-                    'autoOpen'=>false,
-                    'filter'=> false,
-                    'noneSelectedText'=> Yii::t('EchMultiSelect.EchMultiSelect','Выберите триггер..'),
-                    'checkAllText' => Yii::t('EchMultiSelect.EchMultiSelect','Выбрать все'),
-                    'uncheckAllText' => Yii::t('EchMultiSelect.EchMultiSelect','Очистить все'),
-                ),
-            ));*/
+			echo CHtml::activeDropDownList(TriggerValues::model(),'id',$triggers, array('name'=>'triggers_array[]','multiple' => 'multiple'),CHtml::listData($model -> giveTriggerValuesUnstructured(),'id','id'));
             ?>
             <?php echo $form->error($model,'triggers'); ?>
         </div>
