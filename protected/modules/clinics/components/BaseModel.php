@@ -79,7 +79,7 @@ abstract class BaseModel extends CTModel {
 			if (!in_array($key, $this -> SFields)) {
 				if (trim($option) != "") {
 					$name = "`trig$i`";
-					$join .= " LEFT OUTER JOIN `{{{$className}_trigger_assignments}}` $name  ON `t`.`id` = $name.`id_object` AND $name.`id_trigger_value` = $option";
+					$join .= " LEFT JOIN `{{{$className}_trigger_assignments}}` $name  ON `t`.`id` = $name.`id_object` AND $name.`id_trigger_value` = $option";
 					$conds[] = "$name.`id` is not null";
 					//$criteria -> addCondition('triggerLinks.id_trigger_value = '.$option);
 				}

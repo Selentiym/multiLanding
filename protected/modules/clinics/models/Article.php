@@ -566,6 +566,12 @@ class Article extends BaseModel {
 
 		//Если поле тупо value, то нужно отобразить само значение параметра
 		if ($field == 'value') {
+			//Почему-то с этой строчки отсылаются запросы
+			// SELECT * FROM `tbl_trigger_values` `t` WHERE `t`.`id` IS NULL LIMIT 1
+			//На всякий случай запретил
+			if (!$val_id['id']) {
+				return '';
+			}
 			$val = TriggerValues::model() -> findByPk($val_id['id']);
 			if ($val instanceof TriggerValues) {
 				return $val -> value;

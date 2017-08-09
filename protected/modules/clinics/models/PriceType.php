@@ -106,7 +106,7 @@ class PriceType extends CTModel
 	public static function getId($alias) {
 		static $arr;
 		if (!isset($arr)) {
-			foreach (self::model() -> findAll() as $type) {
+			foreach (self::model() -> cache(3600) -> findAll() as $type) {
 				$arr[$type -> alias] = $type -> id;
 			}
 		}
@@ -119,7 +119,7 @@ class PriceType extends CTModel
 	public static function getAlias($id) {
 		static $arr;
 		if (!isset($arr)) {
-			foreach (self::model() -> findAll() as $type) {
+			foreach (self::model() -> cache(3600) -> findAll() as $type) {
 				$arr[$type -> id] = $type -> alias;
 			}
 		}

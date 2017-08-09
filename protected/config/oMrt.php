@@ -45,6 +45,19 @@ return SiteDispatcher::mergeArray(
                 'class' => 'application.components.constantPhoneComponent',
                 'number' => '8 (812) 407-29-86'
             ],
+            'cache' => [
+                'class'=>'CFileCache'
+            ],
+//            'cache'=>[
+//                'class' => 'CMemCache',
+//                'servers' => [
+//                    [
+//                        'host' => '127.0.0.1',
+//                        'port' => 11211,
+//                        'weight' => 64
+//                    ],
+//                ]
+//            ],
             'phoneMSC' => [
                 'class' => 'application.components.constantPhoneComponent',
                 'number' => '8 (495) 125-29-54'
@@ -96,7 +109,7 @@ return SiteDispatcher::mergeArray(
                     'home/clinics/*' => 'error/404'
                 ),
             ),
-            'dbClinics'=>require(__DIR__.DIRECTORY_SEPARATOR.'dbs'.DIRECTORY_SEPARATOR.'dbClinics.pss.php'),
+            'dbClinics'=>require(__DIR__.'/dbs/dbClinics.pss.php'),
             'dbClinicComments'=>array(
                 'class' => 'CDbConnection',
                 'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
