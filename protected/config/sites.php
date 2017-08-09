@@ -48,6 +48,8 @@ return array(
         'host' => [
             'о-мрт.рф',
             'xn----xtbekk.xn--p1ai',
+            'debug.о-мрт.рф',
+            'debug.xn----xtbekk.xn--p1ai',
         ],
         'userAgent' => false
     ],
