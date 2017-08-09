@@ -113,7 +113,7 @@ class PriceType extends CTModel
 		return $arr[$alias];
 	}
 	/**
-	 * @param $alias
+	 * @param $id
 	 * @return int
 	 */
 	public static function getAlias($id) {

@@ -9,7 +9,7 @@
  * @type ObjectPrice $mainPrice
  */
 $temp = ['mrt' => false, 'kt' => false];
-$type = $price -> type -> alias;
+$type = PriceType::getAlias($price -> id_type);
 $temp[$type] = $type;
 unset ($temp['other']);
 $temp['research'] = $price -> verbiage;
