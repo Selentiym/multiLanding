@@ -96,16 +96,7 @@ return SiteDispatcher::mergeArray(
                     'home/clinics/*' => 'error/404'
                 ),
             ),
-            'dbClinics'=>array(
-                'class' => 'CDbConnection',
-                'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
-                'tablePrefix' => 'tbl_',
-                'emulatePrepare' => true,
-                'username' => 'cq97848_clmod',
-                'password' => 'kicker1995',
-                'charset' => 'utf8',
-                'schemaCachingDuration' => 30
-            ),
+            'dbClinics'=>require(__DIR__.DIRECTORY_SEPARATOR.'dbs'.DIRECTORY_SEPARATOR.'dbClinics.pss.php'),
             'dbClinicComments'=>array(
                 'class' => 'CDbConnection',
                 'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
