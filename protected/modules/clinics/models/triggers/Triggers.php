@@ -346,7 +346,7 @@ class Triggers extends CTModel {
 		return [];
 	}
 	public static function triggerHtml($verbiage, &$triggers, $htmlOptions = [], $dopOptions = []){
-		$t = self::model() -> findByAttributes(['verbiage' => $verbiage]);
+		$t = self::model() -> with('parent','children') -> findByAttributes(['verbiage' => $verbiage]);
 		/**
 		 * @type Triggers $t
 		 */

@@ -14,7 +14,8 @@ return SiteDispatcher::mergeArray(
         'language' => 'oMrt',
         'defaultController' => 'home',
         'import' => [
-            'application.sites.catalogCommon.HomeControllerCatalogCommon'
+            'application.sites.catalogCommon.HomeControllerCatalogCommon',
+            'application.extensions.identityMap.*'
         ],
         'modules'=>array(
             'clinics' => [

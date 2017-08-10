@@ -5,7 +5,8 @@
  * Date: 01.02.2017
  * Time: 12:16
  */
-abstract class UClinicsModuleModel extends UModuleModel {
+//AActiveRecord is needed to implement identity map pattern
+abstract class UClinicsModuleModel extends AActiveRecord {
     private static $_connectionTypes = [
         'clinic' => 'dbConfig',
         'article' => 'dbArticles'

@@ -223,9 +223,9 @@ abstract class BaseModel extends CTModel {
 		}
 		if ($price) {
 			if (empty($criteria -> with)) {
-				$criteria -> with = ['priceLink'=>['alias' => 'pr']];
+				$criteria -> with = ['priceLink'=>['alias' => 'pr','select' => false]];
 			} else {
-				$criteria -> with = array_merge($criteria -> with,['priceLink'=>['alias' => 'pr']]);
+				$criteria -> with = array_merge($criteria -> with,['priceLink'=>['alias' => 'pr','select' => false]]);
 			}
 			$criteria -> together = true;
 			if (empty($criteria -> params)) {

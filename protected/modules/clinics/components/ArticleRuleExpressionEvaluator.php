@@ -62,6 +62,9 @@ class ArticleRuleExpressionEvaluator extends aLogicalExpressionEvaluator {
             /**
              * @type ObjectPrice $price
              */
+            if (!$this -> _args['research']) {
+                return false;
+            }
             $price = ObjectPrice::model() -> findByAttributes(['verbiage' => $this -> _args['research']]);
             if (! $price instanceof ObjectPrice) {
                 return false;

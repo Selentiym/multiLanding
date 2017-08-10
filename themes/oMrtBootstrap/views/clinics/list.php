@@ -8,8 +8,9 @@
  * @param $icon
  * @param $text
  * @param string $class
- * @internal param ClinicsModule $mod
+ * @param ClinicsModule $mod
  */
+$_GET = array_map('addslashes',$_GET);
 $mod = Yii::app() -> getModule('clinics');
 $page = $_GET['page'] ? $_GET['page'] : 1;
 unset($_GET['page']);
@@ -38,17 +39,21 @@ $forPartnerCriteria = clone $criteria;
 $forPartnerCriteria -> compare('partner', 1);
 $partnerCount = $mod -> countClinics($triggers, null, null, $forPartnerCriteria);
 $pageSize = max($partnerCount + 4, 20);
-$allObjects = $mod -> getClinics($triggers,null,null,$criteria);
+/**
+ * @type ClinicsModule $mod
+ */
 $start = $page >= 1 ? $pageSize * ($page - 1) : 0;
 if ($start > count($allObjects)) {
     $start = 0;
     $page = 1;
 }
+//Добавляем условие на часть клиник
 if ($page != 'noPage') {
-    $objects = array_slice($allObjects,$start,$pageSize);
-} else {
-    $objects = $allObjects;
+    $criteria -> offset = $start;
+    $criteria -> limit = $pageSize;
 }
+$allObjects = $mod -> getClinics($triggers,null,$pageSize,$criteria);
+$objects = &$allObjects;
 //$criteria -> offset = $page >= 1 ? $pageSize * ($page - 1) : 0 ;
 //$criteria -> limit = $pageSize;
 //$objects = $mod -> getClinics($triggers,null,null,$criteria);
@@ -333,7 +338,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
     <div class="row">
         <div class="col-md-3 hidden-sm-down">
             <div id="accordion" role="tablist" aria-multiselectable="true">
-                <?php foreach(ObjectPriceBlock::model() -> findAll(['order' => 'num ASC']) as $block){
+                <?php foreach(ObjectPriceBlock::model() -> findAll(['order' => 'num ASC','with' => 'prices']) as $block){
                     $this -> renderPartial('/prices/_single_block', ['priceBlock' => $block, 'mainPrice' => $research]);
                 } ?>
             </div>

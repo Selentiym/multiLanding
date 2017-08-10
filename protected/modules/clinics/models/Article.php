@@ -798,7 +798,7 @@ class Article extends BaseModel {
 	public function SFilter($search, $criteria, $order = '') {
 		if ($search['research']) {
 			//$price = ObjectPrice::model() -> findByAttributes(['verbiage' => $search['research']]);
-			$criteria->with = ['priceLink' => ['alias' => 'pr']];
+			$criteria->with = ['priceLink' => ['alias' => 'pr','select' => false]];
 			$criteria->together = true;
 			if ($search['research'] instanceof ObjectPrice) {
 				$search['research'] = $search['research'] -> verbiage;
