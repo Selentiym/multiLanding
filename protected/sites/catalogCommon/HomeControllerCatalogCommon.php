@@ -359,4 +359,7 @@ class HomeControllerCatalogCommon extends CController {
             $object -> SavePropertyArrayChanges(array_filter(explode(';',$object -> triggers)), $className::model() -> getNormalizedClassName().'TriggerAssignment', 'triggerValues', 'id', 'id_object', 'id', 'id_trigger_value');
         }
     }
+    protected function afterRender($view, &$output){
+        $output = trim(preg_replace('/>\s+</', '><', $output));
+    }
 }
