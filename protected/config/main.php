@@ -21,6 +21,7 @@ return array(
 		'application.components.forThemes.*',
 		'application.components.expressions.*',
 		'application.sites.common.controllers.*',
+		'application.extensions.identityMap.*'
 	),
 
 	'modules'=>array(
