@@ -38,7 +38,8 @@ if (!$triggers['prigorod']) {
 $forPartnerCriteria = clone $criteria;
 $forPartnerCriteria -> compare('partner', 1);
 $partnerCount = $mod -> countClinics($triggers, null, null, $forPartnerCriteria);
-$numberOfObjects = $mod -> countClinics($triggers,null,$pageSize,$criteria);
+$forNumberCriteria = clone $criteria;
+$numberOfObjects = $mod -> countClinics($triggers,null,$pageSize,$forNumberCriteria);
 $pageSize = max($partnerCount + 4, 20);
 /**
  * @type ClinicsModule $mod
