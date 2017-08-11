@@ -85,6 +85,7 @@ $this -> setPageTitle($model -> heading ? $model -> heading : 'Акции и с�
             </div>
         </div>
     </div>
+    <!--noindex-->
     <div class="row">
         <div class="col">
         <?php
@@ -93,4 +94,5 @@ $this -> setPageTitle($model -> heading ? $model -> heading : 'Акции и с�
         ?>
         </div>
     </div>
+    <!--/noindex-->
 </div>
