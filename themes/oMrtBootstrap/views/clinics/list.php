@@ -202,6 +202,7 @@ $cs -> registerScript('implementLinks',"
 
 $cs -> registerCoreScript('select2_4');
 $cs -> registerCoreScript('rateit');
+$cs -> registerCoreScript('lazyImage');
 
 generateMap($allObjects,'map',[
     'center' => ($triggers['area'] == 'spb' ? [59.939095, 30.315868] : [55.755814, 37.617635]),
@@ -554,11 +555,12 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     $url = $this -> createUrl('home/articleView',['verbiage' => $article -> verbiage],null,false,true);
                     $imageUrl = $article -> getImageUrl();
                     if ($i < $decoratedArticles) {
+                        //images are being downloaded lazily
                         echo "
                             <div>
                                 <a class='article-name' href='$url'>
                                     <h3 class='text-center'>{$article->name}</h3>
-                                    <img style='width:90%;margin:5px auto; display:block;' class='mx-auto' src='$imageUrl' alt='".addslashes($a->name)."'/>
+                                    <img style='width:90%;margin:5px auto; display:block;' class='mx-auto lazyLoad' src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' data-src='$imageUrl' alt='".addslashes($a->name)."'/>
                                 </a>
                             </div>
                         ";

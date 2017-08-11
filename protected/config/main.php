@@ -187,6 +187,12 @@ return array(
 							'position' => CClientScript::POS_READY,
 							'depends' => ['jquery']
 						],
+						'lazyImage' => [
+							'baseUrl' => 'libs/lazyImage/',
+							'js' => [
+								'script.js'
+							],
+						],
 						'select2' => [
 							'baseUrl' => 'libs/select2/',
 							'js' => [
