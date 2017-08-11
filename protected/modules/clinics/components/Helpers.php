@@ -236,3 +236,136 @@ function getCoordinates($address) {
     }
     return $rez;
 }
+/*
+* Original name: "Irwin Associates image resizer"
+* url: https://github.com/gandalf458/bulk-image-resizer
+*
+* Base author: «Irwin» (http://www.irwinassociates.eu/)
+* Modding: «Heavenanvil» (heavenanvil@gmail.com / heavenanvil.ru)
+* Help: «Sail» (http://forum.php.su/profile.php?action=show&member=17335)
+*/
+function imageResize($fileName, $maxWidth, $maxHeight, $fixedWidth, $fixedHeight, $oldDir, $newDir, $quality)
+{
+    $file = $oldDir.DIRECTORY_SEPARATOR.$fileName;
+    $fileDest = $newDir.DIRECTORY_SEPARATOR.$fileName;
+    list($width, $height) = getimagesize($file);
+    $skip = false;
+
+    $again = isset($_POST['checkbox1']) ? 1 : 0;
+    $zoom = isset($_POST['checkbox2']) ? 1 : 0;
+    //       $show_img = isset($_POST['checkbox3']) ? 1 : 0;
+
+    if ( $fixedWidth )
+    {
+        $newWidth  = $fixedWidth;
+        $newHeight = ($newWidth / $width) * $height;
+    }
+    elseif ( $fixedHeight )
+    {
+        $newHeight = $fixedHeight;
+        $newWidth  = ($newHeight / $height) * $width;
+    }
+    elseif ( $width < $height )                                                     // Вертикальное изображение
+    {
+        $newHeight = $maxHeight;
+        $newWidth  = ($newHeight / $height) * $width;
+    }
+    elseif ( $width > $height )                                                     // Горизонтальное изображение
+    {
+        $newWidth  = $maxWidth;
+        $newHeight = ($newWidth / $width) * $height;
+    }
+    else                                                                                                    // Квадратное изображение
+    {
+        $newWidth  = $maxHeight;
+        $newHeight = $maxHeight;
+    }
+
+    if ($zoom == 1)                                                                                 // Увеличивать маленькие изображения
+    {
+        if (( $width < $newWidth ) AND ( $height < $newHeight ))
+        {
+            $newWidth = $width;
+            $newHeight = $height;
+            $skip = false;
+        }
+    }
+    if (( $width < $newWidth ) AND ( $height < $newHeight ) AND ($zoom == 0))
+    {
+        $skip = true;
+    }
+
+    if ($again == 1)                                                                                        // Обрабатывать повторно (пересжимать)
+    {
+        if ((( $width == $newWidth ) AND ( $height < $newHeight )) OR
+            (( $width < $newWidth ) AND ( $height == $newHeight )))
+        {
+            $skip = false;
+        }
+    }
+
+    if ($again == 0)                                                                                        // Обрабатывать повторно (пересжимать)
+    {
+        if ((( $width == $newWidth ) AND ( $height <= $newHeight )) OR
+            (( $width <= $newWidth ) AND ( $height == $newHeight )))
+        {
+            $skip = true;
+        }
+    }
+
+    global $sWidth, $sHeight, $sNewWidth, $sNewHeight, $filesize, $newfilesize;
+    $sWidth = $width;
+    $sHeight = $height;
+    $sNewWidth = $newWidth;
+    $sNewHeight = $newHeight;
+    $filesize1 = filesize($file);
+    $filesize = round($filesize1/1000, 2);
+    $extn = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+    $imageDest = imagecreatetruecolor($newWidth, $newHeight);
+
+    // jpeg
+    if ( $extn == 'jpg' or $extn == 'jpeg' )
+    {
+        if ($skip == false)
+        {
+            $imageSrc  = imagecreatefromjpeg($file);
+            if ( imagecopyresampled($imageDest, $imageSrc, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height) )
+            {
+                imagejpeg($imageDest, $fileDest, $quality);
+                imagedestroy($imageSrc);
+                imagedestroy($imageDest);
+                if($fileDest == $file) {
+                    clearstatcache(TRUE, $fileDest);
+                }
+                $newfilesize1 = filesize($fileDest);
+                $newfilesize = round($newfilesize1/1000, 2);
+                return true;
+            }
+            return false;
+        }
+    }
+
+    // png
+    if ( $extn == 'png' )
+    {
+        if ($skip == false)
+        {
+            imagealphablending($imageDest, false);
+            imagesavealpha($imageDest, true);
+            $imageSrc = imagecreatefrompng($file);
+            if ( imagecopyresampled($imageDest, $imageSrc, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height) )
+            {
+                imagepng($imageDest, $fileDest, ($quality / 10) - 1);
+                imagedestroy($imageSrc);
+                imagedestroy($imageDest);
+                if($fileDest == $file) {
+                    clearstatcache(TRUE, $fileDest);
+                }
+                $newfilesize1 = filesize($fileDest);
+                $newfilesize = round($newfilesize1/1000, 2);
+                return true;
+            }
+            return false;
+        }
+    }
+}

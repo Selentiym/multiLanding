@@ -38,12 +38,13 @@ if (!$triggers['prigorod']) {
 $forPartnerCriteria = clone $criteria;
 $forPartnerCriteria -> compare('partner', 1);
 $partnerCount = $mod -> countClinics($triggers, null, null, $forPartnerCriteria);
+$numberOfObjects = $mod -> countClinics($triggers,null,$pageSize,$criteria);
 $pageSize = max($partnerCount + 4, 20);
 /**
  * @type ClinicsModule $mod
  */
 $start = $page >= 1 ? $pageSize * ($page - 1) : 0;
-if ($start > count($allObjects)) {
+if ($start > $numberOfObjects) {
     $start = 0;
     $page = 1;
 }
@@ -314,7 +315,7 @@ $keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
 
 //$geoName = $geoName ? $geoName : $fr('area','areaNameRod');
-$description = "В ".$geoName." ".$rRod. " можно пройти в ".count($allObjects). clinicWord(count($allObjects)).", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
+$description = "В ".$geoName." ".$rRod. " можно пройти в ".$numberOfObjects. clinicWord($numberOfObjects).", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
 /**
  * @type ObjectPrice $research
  */
@@ -472,7 +473,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                     unset($copy['isCity']);
                     $this -> renderPartial('/pager',[
                     'curPage' => $page,
-                    'totalPages' => ceil(count($allObjects) / $pageSize),
+                    'totalPages' => ceil($numberOfObjects / $pageSize),
                     'baseLink' => $this -> createUrl('home/clinics',array_merge($copy,['page'=>':pageNumber']))
                 ]) ?>
             </div>
@@ -490,7 +491,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
             </div>
             <?php
             //Закрываем обвес для индексации
-            if (count($allObjects) == 0) { echo "<!--noindex-->"; } ?>
+            if ($numberOfObjects == 0) { echo "<!--noindex-->"; } ?>
 
             <?php if ($a = ArticleRule::getArticle('dynamic')): ?>
             <div class="card">
@@ -516,7 +517,7 @@ Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($key
                 }
             }
             //Конец куска запрещенного к индексации обвеса
-            if (count($allObjects) == 0) { echo "<!--/noindex-->"; }
+            if ($numberOfObjects == 0) { echo "<!--/noindex-->"; }
             $copy = $triggers;
             unset($copy['area']);
             unset($copy['district']);
