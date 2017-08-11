@@ -33,7 +33,7 @@
 			$r = 'МРТ или КТ';
 		}
 		?>
-		<a href="<?php echo $model -> getUrl(); ?>"><img class="mr-3 img-fluid" src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt="<?php echo "Центр $r ".htmlspecialchars($model -> name); ?>"></a>
+		<a href="<?php echo $model -> getUrl(); ?>"><img class="mr-3 img-fluid lazyLoad" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt="<?php echo "Центр $r ".htmlspecialchars($model -> name); ?>"></a>
 		<div><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
 		<div class="mb-1"><a href="<?php echo $model -> getUrl(); ?>#reviews">Читать отзывы</a></div>
 		<?php $this -> renderPartial('/clinics/_buttons',['model' => $model]); ?>
