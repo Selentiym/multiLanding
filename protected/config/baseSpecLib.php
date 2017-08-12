@@ -58,7 +58,7 @@ return SiteDispatcher::mergeArray(
                 'rules' => array(
                     '' => 'home/articles',
                     'robots.txt' => 'seo/robots',
-                    'sitemap<name:(SPB|MSC)>.xml' => 'seo/sitemap',
+                    'sitemap<name:(SPB|MSC|News)>.xml' => 'seo/sitemap',
                     //'clinics' => 'home/clinics',
                     '<module:(clinics)>/admin' => '<module>/admin/login',
                     '<module:(taskgen)>/task/<action:(getText)>' => '<module>/task/<action>',

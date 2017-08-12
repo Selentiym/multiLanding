@@ -87,6 +87,11 @@ class HomeControllerCatalogCommon extends CController {
     }
     
     private function research($area = null){
+        if ($blocks = Yii::app() -> params['priceBlocks']) {
+            $crit = new CDbCriteria();
+            $crit -> addInCondition('id_block', $blocks);
+            return CHtml::listData(ObjectPrice::model() -> findAll($crit), 'id', 'verbiage');
+        }
         return [
             false,
             'mrtMozg', 'mrtHyp', 'mrtOrbit','mrtBackSpine','mrtChestSpine','mrtNeckSpine',
@@ -203,7 +208,7 @@ class HomeControllerCatalogCommon extends CController {
             'children' => [false,'yes'],
             'contrast' => [false, 'withConstrast']
         ];
-
+        $path = SiteDispatcher::getFilesDir().'/sitemapSPB.xml';
         $sitemap = new samdark\sitemap\Sitemap(SiteDispatcher::getFilesDir().'/sitemapSPB.xml');
 
 
