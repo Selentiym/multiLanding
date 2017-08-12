@@ -15,6 +15,10 @@ class ModelAttributeUrlRule extends CUrlRule implements iCallFunc{
     public $pattern;
     public $attributeInPattern = false;
     /**
+     * @var callable
+     */
+    public $validateModel;
+    /**
      * ModelAttributeUrlRule constructor.
      * Does nothing, cause parent constructer needs arguments which I am ot able to pass before configuring
      * parent::__construct() is to be called in init with all needed parameters later!
@@ -169,7 +173,14 @@ class ModelAttributeUrlRule extends CUrlRule implements iCallFunc{
         $modelClass = $modelClass instanceof CActiveRecord ? $modelClass : CActiveRecord::model($modelClass);
         if ($modelClass instanceof CActiveRecord) {
             $model = $modelClass -> findByAttributes([$this -> attribute => $val]);
-            if ($model) return true;
+            if (!$model) {
+                return false;
+            }
+            $seed = true;
+            if (is_callable($this -> validateModel)) {
+                $seed = call_user_func($this -> validateModel,$model);
+            }
+            return $seed;
         }
         return false;
     }

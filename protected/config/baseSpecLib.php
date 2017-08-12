@@ -75,6 +75,9 @@ return SiteDispatcher::mergeArray(
                         'attribute' => 'verbiage',
                         'attributeInPattern' => 'research',
                         'route' => 'home/<modelName>',
+                        'validateModel' => function($model){
+                            return in_array($model -> id_block, Yii::app() -> params['priceBlocks']);
+                        },
                         'pattern' => '<modelName:(clinics|doctors)>-<area:(spb|msc)>/<research:[\w-_]+>'
                     ],
                     [
@@ -83,6 +86,9 @@ return SiteDispatcher::mergeArray(
                         'attribute' => 'verbiage',
                         'attributeInPattern' => 'research',
                         'route' => 'home/<modelName>Link',
+                        'validateModel' => function($model){
+                            return in_array($model -> id_block, Yii::app() -> params['priceBlocks']);
+                        },
                         'pattern' => '<modelName:(clinics|doctors)>/<research::[\w-_]+>'
                     ],
                     '<modelName:(clinics|doctors)>' => 'home/<modelName>Link',
@@ -142,7 +148,7 @@ return SiteDispatcher::mergeArray(
             'siteId' => 'oMrt',
             'formLine' => -9,
             'dd.credentials' => 'partner.2751:JhZdjiuk',
-            'clinicPrefix' => 'Центр диагностики'
+            'clinicPrefix' => 'Центр диагностики',
         ),
     )
 );
