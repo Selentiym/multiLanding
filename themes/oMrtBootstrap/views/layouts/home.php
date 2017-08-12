@@ -99,7 +99,9 @@ foreach ($priceIds as $name => $id) {
     if (($name >= 1)||($name == 0)) {
         $name = $mapped[$id] -> name;
     }
-    $toShowPrices[] = ['name' => $name, 'price' => $mapped[$id] -> getCachedPrice() -> value];
+    if ($val = $mapped[$id] -> getCachedPrice() -> value) {
+        $toShowPrices[] = ['name' => $name, 'price' => $val];
+    }
 }
 $cs -> registerScript('topCarousel','
 function topSlider(rss) {
