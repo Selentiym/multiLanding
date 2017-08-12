@@ -1,2 +1,5 @@
 User-agent: *
 Allow: /
+Host: http://xn-------d4d3beggocsncbngg1aeem2k7f.xn--p1ai
+Sitemap: http://xn-------d4d3beggocsncbngg1aeem2k7f.xn--p1ai/sitemapSPB.xml
+Sitemap: http://xn-------d4d3beggocsncbngg1aeem2k7f.xn--p1ai/sitemapMSC.xml
