@@ -86,10 +86,10 @@ class clinics extends BaseModel {
             array('site', 'length', 'max'=>1000),
             array('logo', 'file', 'types'=>'jpg, gif, png', 'maxSize' => 1048576, 'allowEmpty'=>true),
             array('audio', 'file', 'types'=>'mp3', 'maxSize' => 209715200, 'allowEmpty'=>true),
-            array('district, metro_station, phone, fax, triggers, map_coordinates, keywords, description', 'length', 'max'=>2000),
+            array('district, metro_station, phone, fax, map_coordinates, keywords, description', 'length', 'max'=>2000),
 			array('verbiage, address, working_days, working_hours, video, title', 'length', 'max'=>255),
 			array('*', 'safe'),
-			array('id, name, verbiage, phone, phone_extra, fax, address, address_extra, site, district, metro_station, working_days, working_hours, services, rating, triggers, map_coordinates, text, audio, video, title, keywords, description, experience, partner', 'safe', 'on'=>'search'),
+			array('id, name, verbiage, phone, phone_extra, fax, address, address_extra, site, district, metro_station, working_days, working_hours, services, rating, map_coordinates, text, audio, video, title, keywords, description, experience, partner', 'safe', 'on'=>'search'),
 			array('doctorsInput, mrt, kt, external_link, restrictions, path, sales, showIndividualNumber', 'safe')
 		);
 	}
@@ -135,7 +135,6 @@ class clinics extends BaseModel {
 			'working_hours' => CHtml::encode('Рабочие часы'),
 			'rating' => CHtml::encode('Рейтинг'),
 			'logo' => CHtml::encode('Логотип'),
-			'triggers' => CHtml::encode('Триггеры'),
 			'pictures' => CHtml::encode('Изображения'),
 			'map_coordinates' => CHtml::encode('Координаты на карте'),
 			'text' => CHtml::encode('Описание'),
@@ -427,11 +426,6 @@ class clinics extends BaseModel {
 				} else {
 					$triggerString .= ',государственная клиника';
 				}
-				$trigger_ids = $this -> giveTriggersByNameString($triggerString);
-				$model -> triggers = implode(';',$trigger_ids);
-				//print_r($trigger_ids);
-				//echo $triggerString;
-				//Добавляем цены.
 				/*foreach($toAddPrices as $priceName => $priceValue){
 					$price = new Pricelist;
 					$price -> object_type = Objects::model() -> getNumber(get_class($this));
