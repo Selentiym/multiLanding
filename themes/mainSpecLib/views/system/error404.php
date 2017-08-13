@@ -18,7 +18,7 @@ $cs -> registerCoreScript('maskedInput');
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 text-center font-weight-bold mainColor" style="font-size: 1.5em; font-size:2.0vw; color:white;">Упс! Искомая страница не найдена.</div>
-                <div class="col-12 text-center" style="font-size: 1.5em; font-size:2.0vw;color:white;">Вы можете начать поиск <a href="<?php echo Yii::app() -> baseUrl; ?>" style="color:white; border-bottom:1px dotted white;">с начала</a></div>
+                <div class="col-12 text-center" style="font-size: 1.5em; font-size:2.0vw;color:white;">Вы можете начать поиск <a href="<?php echo Yii::app() -> baseUrl; ?>/" style="color:white; border-bottom:1px dotted white;">с начала</a></div>
                 <div class="col-12 text-center" style="font-size: 1.5em; font-size:2.0vw;color:white;">Или <button class="btn btn-primary signUpButton">получить консультацию</button></div>
             </div>
         </div>
