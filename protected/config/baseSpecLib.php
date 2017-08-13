@@ -70,6 +70,10 @@ return SiteDispatcher::mergeArray(
 //                    'tomography' => 'home/tomography',
                     'service-<area:(spb|msc)>' => 'home/service',
                     'article/<verbiage:[\w-_]+>' => 'home/articleView',
+                    'sales-<area:(spb|msc)>' => 'home/news',
+                    'sales-<area:(spb|msc)>/show/<id:\d+>' => 'home/showNews',
+                    'sales/show/<id:\d+>' => 'home/showNews',
+                    'sales' => 'home/news',
                     [
                         'class' => 'application.components.urlRules.ModelAttributeUrlRule',
                         'modelClass' => 'ObjectPrice',

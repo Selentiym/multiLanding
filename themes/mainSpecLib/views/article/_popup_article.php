@@ -5,6 +5,9 @@
  * Date: 11.06.2017
  * Time: 16:29
  */
+if (!$a instanceof Article) {
+    return;
+}
 $id = $a -> verbiage;
 ?>
 <div class="card mb-2">

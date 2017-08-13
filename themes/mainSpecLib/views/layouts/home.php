@@ -115,7 +115,7 @@ var slider = topSlider('.json_encode($toShowPrices).');
 <div class="row align-items-start justify-content-between text-center">
     <div class="col-md-12 d-flex justify-content-sm-around justify-content-md-end pt-3 p-md-3 align-items-center">
         <div class="hidden-xs-down mr-auto mr-xl-0"><a href="/"><img class="img-fluid" style="max-height:70px" src="<?php echo $baseTheme; ?>/images/logo.png" alt="Логотип" /></a></div>
-        <div style="font-size:1.15rem;" class="headerText ml-3 mr-auto hidden-lg-down">
+        <div style="font-size:1.15rem;color:#0275d8;" class="font-weight-bold headerText ml-3 mr-auto hidden-lg-down">
             Единый<br/> консультативный<br/> центр&nbsp;по<br class="hidden-xl-up"/> МРТ&nbsp;и&nbsp;КТ
         </div>
         <div class="ml-3 align-items-center row">
@@ -156,7 +156,7 @@ var slider = topSlider('.json_encode($toShowPrices).');
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav align-items-center">
         <li class="nav-item">
             <a class="nav-link" href="<?php echo Yii::app() -> baseUrl.'/'; ?>">Библиотека</a>
         </li>
@@ -166,8 +166,17 @@ var slider = topSlider('.json_encode($toShowPrices).');
         <li class="nav-item">
             <a class="nav-link" href="<?php echo Yii::app() -> controller -> createUrl('home/clinics',['area' => 'spb'], '&', true); ?>">Каталог клиник Санкт-Петербурга</a>
         </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Единый консультативный центр по МРТ и КТ</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="<?php echo Yii::app() -> controller -> createUrl('home/service',['area' => 'spb'], '&', true); ?>">В Санкт-Петербурге</a>
+                <a class="dropdown-item" href="<?php echo Yii::app() -> controller -> createUrl('home/service',['area' => 'msc'], '&', true); ?>">В Москве</a>
+            </div>
+        </li>
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo Yii::app() -> controller -> createUrl('home/service',[], '&', true); ?>">Единый консультативный центр по МРТ и КТ</a>
+            <a class="nav-link" href="<?php echo $this -> createUrl('home/news',[], '&',true); ?>">
+                <button class="btn btn-primary" href="<?php echo $this -> createUrl('home/news',[], '&',true); ?>">Скидки</button>
+            </a>
         </li>
     </ul>
     </div>

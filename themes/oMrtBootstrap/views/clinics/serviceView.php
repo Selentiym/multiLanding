@@ -273,7 +273,6 @@ $cs -> registerMetaTag($r.' головного мозга, позвоночни�
                 </div>
                 <div class="collapse p-3" id="sales">
                     <?php $this -> renderPartial("/news/_showMoreButton",['page' => 1, "area" => $area]); ?>
-
                 </div>
                 <div class="collapse p-3"  id="doctors" >
 

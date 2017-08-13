@@ -27,4 +27,17 @@ class baseSpecHelpers {
             " <span class='custom-control-description'>{$mainVal->value}</span></label>" . $children;
         }]);
     }
+
+    public static function salesWord($number){
+        if (($number < 20)&&($number > 10)) {
+            $str = $number.' скидок';
+        } elseif ($number % 10 == 1) {
+            $str = $number.' скидка';
+        } elseif (in_array($number % 10, [2,3,4])) {
+            $str = $number.' скидки';
+        } else {
+            $str = $number.' скидок';
+        }
+        return $str;
+    }
 }

@@ -13,12 +13,6 @@ class HomeController extends HomeControllerCatalogCommon {
                 'view' => '/article/tomography',
                 'guest' => true,
             ),
-            'moreNewsForService' => array(
-                'class'=>'application.controllers.actions.FileViewAction',
-                'view' => '/news/feedback',
-                'guest' => true,
-                'partial' => true
-            ),
 //            ,
 //            'service'=>array(
 //                'class'=>'application.controllers.actions.FileViewAction',

@@ -232,7 +232,6 @@ $triggers = $_GET;
                         <a class="nav-link" href="<?php echo $this -> createUrl('home/tomography',[], '&',true); ?>">Томография</a>
                     </li>
                     <li class="nav-item <?php echo ( $isNews ) ? 'active' : ''; ?>">
-<!--                        <a class="nav-link" href="--><?php //echo Yii::app() -> controller -> createUrl('home/articles'); ?><!--">Все о МРТ и КТ</a>-->
                         <a class="nav-link" href="<?php echo $this -> createUrl('home/news',[], '&',true); ?>">Новости</a>
                     </li>
                 </ul>

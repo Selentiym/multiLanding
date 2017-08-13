@@ -8,11 +8,14 @@
  * @var SpecSiteHomeController $this
  */
 $triggers = $_GET;
+if (!in_array($triggers['area'],['spb','msc'])) {
+    $triggers['area'] = 'spb';
+}
 $model = clinics::model() -> findByAttributes(['verbiage' => 'service'.$triggers['area']]);
-$model -> name = "Единый консультативный центр по МРТ и КТ".($triggers['area'] == 'msc' ? ' в Москве' : ' в Санкт-Петербурге');
 if (!$model) {
     $model = clinics::model();
 }
+$model -> name = "Единый консультативный центр по МРТ и КТ".($triggers['area'] == 'msc' ? ' в Москве' : ' в Санкт-Петербурге');
 Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/service',['area' => $triggers['area']],'&',false,true));
 $cs = Yii::app() -> getClientScript();
 $cs -> registerCoreScript('jquery');
@@ -21,6 +24,17 @@ $baseTheme = Yii::app() -> themeManager -> getBaseUrl('mainSpecLib');
 $cs -> registerScriptFile($baseTheme.'/js/map.js',CClientScript::POS_END);
 $cs -> registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");
 $cs -> registerCssFile($baseTheme.'/css/clinic.css');
+//Handlers on showMoreButton
+$cs -> registerScript('eventsOnShowMore','
+    $(document).on("click",".showMoreButton", function(){
+        var theButton = $(this);
+        $.get(theButton.attr("data-url"),{page:theButton.attr("data-page")}).done(function(data){
+            theButton.replaceWith(data);
+        });
+        return false;
+    });
+    $(".showMoreButton").trigger("click");
+',CClientScript::POS_READY);
 //На карте отображаем всех партнеров
 $partners = clinics::model() -> userSearch(['area' => $model -> getFirstTriggerValue('area') -> id],'rating',-1,$crit);
 $partners = $partners['objects'];
@@ -71,7 +85,6 @@ if ($article instanceof Article) {
     $cs -> registerMetaTag($article -> description,'description');
     $this -> setPageTitle($article -> title);
 }
-$sales = (strlen(trim(strip_tags($model -> sales))) > 10);
 $cs -> registerScript('sticky','
 (function(){
 var panel = document.getElementById("clinicNav"), basePanel = document.getElementById("topNav");
@@ -108,9 +121,7 @@ $(document).scroll(function(){
         <ul class="nav navbar-nav align-items-center">
             <li class="nav-item"><a href="#mapHead" class="list-group-item list-group-item-action">Карта</a></li>
             <li class="nav-item"><a href="#description" class="list-group-item list-group-item-action">Описание</a></li>
-            <?php if($sales): ?>
-                <li class="nav-item"><a href="#sales" class="list-group-item list-group-item-action">Акции&nbsp;и&nbsp;скидки</a></li>
-            <?php endif; ?>
+            <li class="nav-item"><a href="#sales" class="list-group-item list-group-item-action">Акции&nbsp;и&nbsp;скидки</a></li>
             <li class="nav-item"><a href="#prices" class="list-group-item list-group-item-action">Цены</a></li>
             <?php if(count($model -> doctors)) : ?>
                 <li class="nav-item"><a href="#doctors" class="list-group-item list-group-item-action">Врачи</a></li>
@@ -194,19 +205,11 @@ $(document).scroll(function(){
                 </a>
             </div>
         </div>
-        <?php if ($sales): ?>
-            <div id="sales" class="anchorHolder"></div>
-            <h3>Акции и скидки</h3>
-            <div class="p-3">
-                <?php
-                if (strlen(trim(strip_tags($model -> sales))) < 10) {
-                    echo "<p>Информация о скидках отсутсвует</p>";
-                } else {
-                    echo $model -> sales;
-                }
-                ?>
-            </div>
-        <?php endif; ?>
+        <div id="sales" class="anchorHolder"></div>
+        <h3>Акции и скидки</h3>
+        <div class="p-3 text-center" id="sales">
+            <?php $this -> renderPartial("/news/_showMoreButton",['page' => 1, "area" => $triggers['area']]); ?>
+        </div>
         <div id="prices" class="anchorHolder"></div>
         <h3>Цены на исследования</h3>
         <div class="p3 mx-auto justify-content-center row">
