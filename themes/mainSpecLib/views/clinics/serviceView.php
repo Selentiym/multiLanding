@@ -139,22 +139,14 @@ $(document).scroll(function(){
                     <h1 class="text-center"><?php echo $model -> name; ?></h1>
                     <div class="text-left">
                         <?php
-                        $phone = $model -> getPhoneObject();
-                        $this -> renderPartial('/clinics/_icon',['iClass' => 'fa-phone', 'text' => CHtml::link($phone -> getFormatted(),'tel:'.$phone -> getUnformatted())]);
-                        $this -> renderPartial('/clinics/_icon', ['iClass' => 'fa-map', 'text' => "Клиники по <strong>всему городу</strong>!"]);
-                        $this -> renderPartial('/clinics/_icon', ['iClass' => 'fa-train', 'text' => 'Любая <strong>удобная Вам станция</strong> метро']);
-                        $this -> renderPartial('/clinics/_icon', ['iClass' => 'fa-calendar-check-o', 'text' => 'Звоните <strong>с 8:00 до 23:00</strong>, заявки принимаем <strong>круглосуточно</strong>!']);
-                        $this -> renderPartial('/clinics/_icon', ['iClass' => 'fa-hand-stop-o', 'text' => '<strong>Без ограничений</strong> по весу или объему!']);
+                        $this -> renderPartial('/clinics/_serviceIcons',['model' => $model]);
                         ?>
                     </div>
                     <div class="text-center"><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
                     <div class="text-center"><button class="btn btn-outline-success signUpButton">Записаться</button></div>
                     <div class="text-center">
                         <?php
-                        $tags = ['МРТ','КТ','круглосуточно', 'высокопольный магнит','современное оборудование','ночью дешевле','высококвалифицированные специалисты','открытый магнит','с контрастом','частная', 'любое метро','любой район'];
-                        foreach ($tags as $tag) {
-                            echo " <span class='badge badge-info'>".$tag."</span> ";
-                        }
+                        $this -> renderPartial('/clinics/_serviceTags',['model' => $model]);
                         ?>
                     </div>
                 </div>

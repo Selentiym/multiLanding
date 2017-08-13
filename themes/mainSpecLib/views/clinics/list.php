@@ -452,6 +452,7 @@ $prices = $this -> getPrices();
 
         <!-- Clinics -->
         <div>
+            <?php $this -> renderPartial('/clinics/_service',['triggers' => $triggers,'price' => $research, 'blocks' => $blocks]); ?>
         <?php
             foreach ($objects as $clinic) {
                 $this -> renderPartial('/clinics/_single_clinics',['model' => $clinic,'price' => $research,'blocks' => $blocks]);

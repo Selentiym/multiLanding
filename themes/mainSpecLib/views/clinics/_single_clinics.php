@@ -1,19 +1,19 @@
 <?php
 /**
- * @type clinics|doctors $model
+ * @var clinics|doctors $model
+ * @var ObjectPriceBlock[] $blocks
  */
-//$model -> refresh();
 ?>
-
-
 <div class="row">
 	<div class="col-12 col-sm-3">
 		<a href="<?php echo $model -> getUrl(); ?>"><img class="mr-3 img-fluid" src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt="<?php echo "Центр $r ".htmlspecialchars($model -> name); ?>"></a>
 		<div class="text-center"><div class="rateit" data-rateit-value="<?php echo $model->rating; ?>" data-rateit-ispreset="true" data-rateit-readonly="true"></div></div>
 	</div>
-	<div class="col-12 col-sm-9">
+	<div class="col-12 col-sm-9 mb-2">
 		<h2 style="font-size:1rem"><a href="<?php echo $model -> getUrl(); ?>"><?php echo Yii::app() -> params['clinicPrefix'].' "'.$model -> name.'"'; ?></a></h2>
 		<div><?php $this -> renderPartial('/clinics/_icons',['model' => $model]); ?></div>
+	</div>
+	<div class="col-12">
 		<?php
 			$mainPrice = $price;
 			if ($mainPrice instanceof ObjectPrice) {
@@ -64,7 +64,7 @@
 					$this->renderPartial('/common/_dropDown', [
 							'name' => 'Цены',
 							'shown' => true,
-							'content' => $content
+							'content' => $content,
 					]);
 				}
 			}
