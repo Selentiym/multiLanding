@@ -161,7 +161,6 @@ class doctors extends BaseModel
 		$criteria->compare('working_hours',$this->working_hours,true);
 		$criteria->compare('rating',$this->rating);
 		$criteria->compare('logo',$this->logo,true);
-		$criteria->compare('triggers',$this->triggers,true);
 		$criteria->compare('pictures',$this->pictures,true);
 		$criteria->compare('map_coordinates',$this->map_coordinates,true);
 		$criteria->compare('text',$this->text,true);
