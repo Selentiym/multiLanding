@@ -174,36 +174,6 @@ $(document).scroll(function(){
                     }
                 ?>
             </div>
-            <div id="clinic-carousel" class="carousel slide mx-auto" data-ride="carousel">
-                <div class="carousel-inner" role="listbox">
-                    <?php
-                    $images = array_map(function($image){
-                        return trim($image);
-                    }, explode(';', $model->pictures));
-                    $images = array_filter($images, function ($image) use($model) {
-                        return file_exists($model -> giveImageFolderAbsoluteUrl().'/'.$image)&&($image);
-                    });
-                    $active='active';
-                    foreach ($images as $im) {
-                        echo '
-
-                            <div class="carousel-item '.$active.'">
-                                <img class="d-block img-fluid mx-auto" src="'.$model->giveImageFolderRelativeUrl() . '/' . $im.'" alt="Фотография единого консультативного центра МРТ и КТ">
-                            </div>
-                            ';
-                        $active = '';
-                    }
-                    ?>
-                </div>
-                <a class="carousel-control-prev" href="#clinic-carousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#clinic-carousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
         </div>
         <div id="sales" class="anchorHolder"></div>
         <h3>Акции и скидки</h3>
