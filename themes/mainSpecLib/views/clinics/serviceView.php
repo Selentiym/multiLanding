@@ -137,7 +137,6 @@ $(document).scroll(function(){
             <div class="row">
                 <div class="col-12 col-md-6 text-center">
                     <h1 class="text-center"><?php echo $model -> name; ?></h1>
-                    <img class="mr-3 img-fluid" src="<?php echo $model -> giveImageFolderRelativeUrl() . $model -> logo;?>" alt="<?php echo htmlspecialchars($model -> name); ?>">
                     <div class="text-left">
                         <?php
                         $phone = $model -> getPhoneObject();
