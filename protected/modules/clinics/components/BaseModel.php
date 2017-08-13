@@ -708,6 +708,7 @@ abstract class BaseModel extends CTModel {
 	 */
 	public function giveTriggerValuesObjects() {
 		if (!isset($this -> allTriggerValues)) {
+			$this -> allTriggerValues = [];
 			foreach ( $this -> getRelated('triggerValues', false, ['with' => 'trigger']) as $obj) {
 				/**
 				 * @type TriggerValues $obj

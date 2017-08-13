@@ -67,7 +67,8 @@ return SiteDispatcher::mergeArray(
                     '<modelName:(clinics|doctors)>-<area:(spb|msc)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
                     '<modelName:(clinics|doctors)>/show/<verbiage:[\w-_]+>' => 'home/modelView',
                     'article' => 'home/articles',
-                    'tomography' => 'home/tomography',
+//                    'tomography' => 'home/tomography',
+                    'service-<area:(spb|msc)>' => 'home/service',
                     'article/<verbiage:[\w-_]+>' => 'home/articleView',
                     [
                         'class' => 'application.components.urlRules.ModelAttributeUrlRule',

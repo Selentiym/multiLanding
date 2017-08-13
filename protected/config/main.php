@@ -339,15 +339,15 @@ return array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'error/index',
 		),
-		'log' => [
-			'class' => 'CLogRouter',
-			'routes' => [
-				'db' => [
-					'class' => 'CWebLogRoute',
-					'categories' => 'system.db.CDbCommand',
-				]
-			]
-		]
+//		'log' => [
+//			'class' => 'CLogRouter',
+//			'routes' => [
+//				'db' => [
+//					'class' => 'CWebLogRoute',
+//					'categories' => 'system.db.CDbCommand',
+//				]
+//			]
+//		]
 
 
 	),

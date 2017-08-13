@@ -255,6 +255,7 @@ function generateMap($objects, $containerId, $options){
     $options['id'] = $containerId;
     $options['zoom'] = $options['zoom'] ? $options['zoom'] : '10';
     $cs->registerScript("map_init","
+    if (typeof ymaps !== 'undefined') {
     ymaps.ready(function () {
 
         ".$containerId." = new ymaps.Map('".$containerId."', ".json_encode($options).", {
@@ -264,9 +265,12 @@ function generateMap($objects, $containerId, $options){
         $('#".$containerId."').on('shown.bs.collapse', function(){
             $('#".$containerId."').height(300);
             $(window).trigger('resize');
-            ".$containerId.".container.fitToViewport()
+            ".$containerId.".container.fitToViewport();
         });
     });
+    } else {
+        alert('Ошибка при загрузке карты!');
+    }
 ",CClientScript::POS_READY);
 
 }

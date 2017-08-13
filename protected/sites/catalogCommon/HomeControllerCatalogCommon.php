@@ -21,6 +21,11 @@ class HomeControllerCatalogCommon extends CController {
                 'view' => '/article/list',
                 'guest' => true,
             ),
+            'service'=>array(
+                'class'=>'application.controllers.actions.FileViewAction',
+                'view' => '/clinics/serviceView',
+                'guest' => true,
+            ),
             'articleView'=>array(
                 'class'=>'application.controllers.actions.ModelViewAction',
                 'view' => '/article/view',

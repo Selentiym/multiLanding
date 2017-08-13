@@ -28,12 +28,8 @@ class HomeController extends HomeControllerCatalogCommon {
 //            ),
         ]);
     }
-    public function actionService(){
-        //$this -> layout = 'home';
-        $this -> render('/clinics/serviceView');
-    }
     public function actionCheck(){
-        $medem = clinics::model() -> findByAttributes(['verbiage' => 'medem']);
-        $medem -> savePrices();
+//        $medem = clinics::model() -> findByAttributes(['verbiage' => 'medem']);
+//        $medem -> savePrices();
     }
 }
