@@ -62,7 +62,8 @@ class ClinicsModule extends UWebModule {
 		if (empty($criteria->with)) {
 			$criteria->with = [];
 		}
-		$criteria->with = array_merge($criteria->with,['prices']);
+		//Если сразу выбирать цены, то сбивается количество
+		//$criteria->with = array_merge($criteria->with,['prices']);
 		return $this -> getObjects('clinics',$triggers,$order,$limit,$criteria);
 	}
 	/**
