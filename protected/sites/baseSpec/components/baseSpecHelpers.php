@@ -45,14 +45,14 @@ class baseSpecHelpers {
      * @param int $num
      * @return string
      */
-    public static function medCenterWord($num){
+    public static function medCenterWordRod($num){
         $r = $num;
         if ($num == 11) {
-            $r .= ' медицинских центрах';
+            $r .= ' медицинских центров';
         } elseif ($num % 10 == 1) {
-            $r .= ' медицинском центре';
+            $r .= ' медицинского центра';
         } elseif($num % 10 != 1 ){
-            $r .= ' медицинских центрах';
+            $r .= ' медицинских центров';
         }
         return $r;
     }

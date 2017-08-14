@@ -261,54 +261,54 @@ $cs -> registerScript('Order','
 	});
 ',CClientScript::POS_READY);
 
-$keys = [];
+//$keys = [];
 $triggersPrepared = Article::prepareTriggers($triggers);
 $fr = encapsulateTriggersForRender($triggers);
 $text = '';
 
 if ($street = $fr('street','value')) {
     $text .= $street.",";
-    $keys[] = $street;
+    //$keys[] = $street;
 } elseif ($distr = $fr('district','value')) {
     $text .= $distr.' район,';
-    $keys[] = $distr;
+    //$keys[] = $distr;
 }
 if ($triggers['time']) {
     $text .= ($text ? ' к' : 'К').'руглосуточно';
-    $keys[] = 'круглосуточно';
+    //$keys[] = 'круглосуточно';
 }
 $research = $fr('research', 'value');
 if (!$research) {
-    $keys[] = 'томография';
+    //$keys[] = 'томография';
     if ($triggers['mrt']) {
         $r = 'МРТ ';
-        $keys[] = 'мрт';
+        //$keys[] = 'мрт';
     }
     if ($triggers['kt']) {
         $r = $r ? $r.' и КТ' : 'КТ' ;
-        $keys[] = 'кт';
+        //$keys[] = 'кт';
     }
     $r = $r ? $r : 'МРТ или КТ';
 } else {
     $r = $research;
     $rRod = $fr('research','nameRod');
     $rVin = $fr('research','nameVin');
-    $keys[] = $research;
+    //$keys[] = $research;
 }
 $rRod = isset($rRod) ? $rRod : $r;
 $rVin = isset($rVin) ? $rVin : $r;
-$text .= ($text ? ' с' : 'С').'делать '.$rVin;
+$text .= ($text ? ' а' : 'А').'дреса и цены клиник, где можно сделать '.$rVin;
 
 if ($triggers['contrast']) {
     $text .= ' с контрастом';
-    $keys[] = 'с контрастом';
+    //$keys[] = 'с контрастом';
 }
 $field = $fr('field','value');
-$keys[] = $field;
+//$keys[] = $field;
 $slices = preg_replace('/[^\d]/','',$fr('slices','value'));
-$keys[] = $slices;
+//$keys[] = $slices;
 $type = $fr('magnetType', 'type');
-$keys[] = $type;
+//$keys[] = $type;
 if (($field)||($slices)||($type)) {
 
     $text .= ' на';
@@ -322,9 +322,9 @@ if (($field)||($slices)||($type)) {
     }
     $text .= ' томографе';
 }
-$keys[] = 'томограф';
+//$keys[] = 'томограф';
 $metro = $fr('metro','value');
-$keys[] = $metro;
+//$keys[] = $metro;
 if (!$street) {
     if ($metro) {
         $text .= ' около метро '.$metro;
@@ -332,21 +332,22 @@ if (!$street) {
 }
 if ($temp = $fr("children","value")) {
     $text .= ' детям';
-    $keys[] = 'детям';
-    $keys[] = 'ребенку';
+    //$keys[] = 'детям';
+    //$keys[] = 'ребенку';
 }
 $h1 = $text;
 $title = $text;
 if ($triggersPrepared['sortBy']['verbiage'] == 'priceUp') {
-    $keys[] = $r.' недорого';
+    //$keys[] = $r.' недорого';
     $h1 .= ' недорого - представленные ниже клиники сгруппированы с учетом: Скидок, Акций и цен Ночью';
     $title .= ' недорого - здесь представлены клиники с наиболее выгодной ценой на данное исследование с учетом скидок, акций и ночных цен';
 }
-$keys[] = 'поиск клиник';
+//$keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
 $geoName = generateGeo($fr,$triggers);
 //$geoName = $geoName ? $geoName : $fr('area','areaNameRod');
-$description = "$rRod проводят в ". baseSpecHelpers::medCenterWord(count($allObjects))." в $geoName. Здесь Вы найдете подробную информацию о каждой подходящей клинике, а также сможете осуществить поиск по параметрам исследовния. ";
+//$description = "$rRod проводят в ". baseSpecHelpers::medCenterWord(count($allObjects))." в $geoName. Здесь Вы найдете подробную информацию о каждой подходящей клинике, а также сможете осуществить поиск по параметрам исследовния. ";
+$description = "Адреса и цены ".baseSpecHelpers::medCenterWordRod($numberOfObjects)." МРТ и КТ в $geoName, где можно пройти $rVin. ";
 /**
  * @type ObjectPrice $research
  */
@@ -355,7 +356,7 @@ if ($research) {
     $description .= $research -> getArticle() -> description;
 }
 Yii::app() -> getClientScript() -> registerMetaTag($description,'description');
-Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($keys)),'keywords');
+//Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($keys)),'keywords');
 /**
  * @type SpecSiteHomeController $this
  */

@@ -77,8 +77,8 @@ var slider = topSlider('.json_encode($toShowPrices).');
 
 ?>
 <!DOCTYPE html>
-<!-- Template by Quackit.com -->
 <html lang="en">
+<!-- Template by Quackit.com -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
