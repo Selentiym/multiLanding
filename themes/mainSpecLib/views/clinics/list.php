@@ -346,7 +346,7 @@ $keys[] = 'поиск клиник';
 $this -> pageTitle = $title;
 $geoName = generateGeo($fr,$triggers);
 //$geoName = $geoName ? $geoName : $fr('area','areaNameRod');
-$description = "В ".$geoName." ".$rRod. " можно пройти в ".count($allObjects). ' ' . clinicWord(count($allObjects)).", на данной странице представлены все эти медицинские центры, также здесь вы можете провести детальный поиск по различным параметрам исследования.";
+$description = "$rRod проводят в ". baseSpecHelpers::medCenterWord(count($allObjects))." в $geoName. Здесь Вы найдете подробную информацию о каждой подходящей клинике, а также сможете осуществить поиск по параметрам исследовния. ";
 /**
  * @type ObjectPrice $research
  */
@@ -389,13 +389,16 @@ $prices = $this -> getPrices();
 
     <!-- Center Column -->
     <div class="col-sm-6 col-12">
+        <div class="mb-3">
+            <h2 class="text-center" style="font-size:1.75rem;">Адреса клиник и цены на обследование "<?php echo $r; ?>" в <?php echo $geoName; ?></h2>
+        </div>
         <!--Form-->
         <div class="card mb-3">
             <div class="card-header p-b-0">
-                <h5 class="card-title">
+                <h2 class="card-title" style="font-size: 1.25rem">
                     <i class="fa fa-search" aria-hidden="true"></i>&nbsp;
                     Поиск клиник
-                </h5>
+                </h2>
             </div>
             <div class="card-block">
                 <form id="searchForm" action="prettyFormUrl" data-action="home/clinics" data-params="{}" data-gen-url="<?php echo addslashes(Yii::app() -> createUrl('home/createFormUrl')); ?>" class="noEmpty prettyFormUrl row">
@@ -477,10 +480,10 @@ $prices = $this -> getPrices();
 
         <div class="card mb-2">
             <div class="card-header p-b-0">
-                <h5 class="card-title text-center">
+                <h1 class="card-title text-center" style="font-size: 1.25rem" >
                     <i class="fa fa-exclamation" aria-hidden="true"></i>
                     <?php echo $h1 ?>
-                </h5>
+                </h1>
             </div>
             <div class="card-block">
                 <?php generateText($triggers); ?>

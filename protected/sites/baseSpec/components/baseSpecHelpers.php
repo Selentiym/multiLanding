@@ -40,4 +40,20 @@ class baseSpecHelpers {
         }
         return $str;
     }
+
+    /**
+     * @param int $num
+     * @return string
+     */
+    public static function medCenterWord($num){
+        $r = $num;
+        if ($num == 11) {
+            $r .= ' медицинских центрах';
+        } elseif ($num % 10 == 1) {
+            $r .= ' медицинском центре';
+        } elseif($num % 10 != 1 ){
+            $r .= ' медицинских центрах';
+        }
+        return $r;
+    }
 }

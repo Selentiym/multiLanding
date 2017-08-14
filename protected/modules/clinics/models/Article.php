@@ -11,6 +11,8 @@
  * @property integer $level
  * @property string $text
  * @property string $description
+ * @property string $title
+ * @property string $keywords
  * @property integer $id_type
  * @property integer $id_taskgen
  * @property string $triggers
