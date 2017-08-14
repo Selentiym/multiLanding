@@ -326,7 +326,7 @@ if ($research) {
     $description .= ' '.$research -> getArticle() -> description;
 }
 Yii::app() -> getClientScript() -> registerMetaTag($description,'description');
-Yii::app() -> getClientScript() -> registerMetaTag(implode(',',array_filter($keys)),'keywords');
+Yii::app() -> getClientScript() -> registerMetaTag(implode(', ',array_filter($keys)),'keywords');
 
 /**
  * @type CController $this
