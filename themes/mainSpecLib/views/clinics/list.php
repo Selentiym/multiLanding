@@ -8,13 +8,19 @@
  * @param $icon
  * @param $text
  * @param string $class
- * @internal param ClinicsModule $mod
+ * @param ClinicsModule $mod
  */
-
+$_GET = array_map('addslashes',$_GET);
 $mod = Yii::app() -> getModule('clinics');
 $page = $_GET['page'] ? $_GET['page'] : 1;
 unset($_GET['page']);
-$triggers = $_GET;
+$triggers = TriggerValues::normalizeTriggerValueSet($_GET);
+$_GET = $triggers;
+$researchObject = $triggers['research'] ? ObjectPrice::model()->findByAttributes(['verbiage' => $triggers['research']]) : null;
+
+Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl('home/clinics',$triggers,'&',false,true));
+//var_dump($triggers);
+//return;
 $model = clinics::model() -> findByAttributes(['verbiage' => 'service']);
 if (!$model) {
     $model = clinics::model();
@@ -31,22 +37,25 @@ if (!$triggers['prigorod']) {
 }
 $forPartnerCriteria = clone $criteria;
 $forPartnerCriteria -> compare('partner', 1);
-$partnerCount = count($mod -> getClinics($triggers, null, null, $forPartnerCriteria));
+$partnerCount = $mod -> countClinics($triggers, null, null, $forPartnerCriteria);
+$forNumberCriteria = clone $criteria;
+$numberOfObjects = $mod -> countClinics($triggers,null,$pageSize,$forNumberCriteria);
 $pageSize = max($partnerCount + 4, 20);
-$allObjects = $mod -> getClinics($triggers,null,null,$criteria);
+/**
+ * @type ClinicsModule $mod
+ */
 $start = $page >= 1 ? $pageSize * ($page - 1) : 0;
-if ($start > count($allObjects)) {
+if ($start > $numberOfObjects) {
     $start = 0;
     $page = 1;
 }
+//Добавляем условие на часть клиник
 if ($page != 'noPage') {
-    $objects = array_slice($allObjects,$start,$pageSize);
-} else {
-    $objects = $allObjects;
+    $criteria -> offset = $start;
+    $criteria -> limit = $pageSize;
 }
-if (!$triggers['research']) {
-    $blocks = ObjectPriceBlock::model() -> findAllByPk(Yii::app() -> params['priceBlocks']);
-}
+$allObjects = $mod -> getClinics($triggers,null,$pageSize,$criteria);
+$objects = &$allObjects;
 //$criteria -> offset = $page >= 1 ? $pageSize * ($page - 1) : 0 ;
 //$criteria -> limit = $pageSize;
 //$objects = $mod -> getClinics($triggers,null,null,$criteria);
