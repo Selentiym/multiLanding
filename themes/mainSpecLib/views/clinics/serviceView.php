@@ -21,6 +21,10 @@ $cs = Yii::app() -> getClientScript();
 $cs -> registerCoreScript('jquery');
 $cs -> registerCoreScript('rateit');
 $baseTheme = Yii::app() -> themeManager -> getBaseUrl('mainSpecLib');
+//metatags
+$cs -> registerMetaTag('Консультация по МРТ и КТ, цены на обследование, адреса где делают МРТ и КТ. Помощь в выборе клиники по всем параметрам. Любой район города, рядом с метро. Доступные цены!','description');
+$this -> setPageTitle($model -> name);
+$cs -> registerMetaTag('сделать МРТ брюшной области, дешево пройти МРТ и КТ, цены на МРТ и КТ, клиники где делают томографию, Москва, Санкт-Петербург','keywords');
 $cs -> registerScriptFile($baseTheme.'/js/map.js',CClientScript::POS_END);
 $cs -> registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");
 $cs -> registerCssFile($baseTheme.'/css/clinic.css');
@@ -167,12 +171,12 @@ $(document).scroll(function(){
             </div>
         </div>
         <div id="sales" class="anchorHolder"></div>
-        <h3>Акции и скидки</h3>
+        <h2>Акции и скидки</h2>
         <div class="p-3 text-center" id="sales">
             <?php $this -> renderPartial("/news/_showMoreButton",['page' => 1, "area" => $triggers['area']]); ?>
         </div>
         <div id="prices" class="anchorHolder"></div>
-        <h3>Цены на исследования</h3>
+        <h2>Цены на исследования</h2>
         <div class="p3 mx-auto justify-content-center row">
             <?php
             $typedPrices = UClinicsModuleModel::groupBy($model -> getPriceValues(true),function(ObjectPriceValue $pv){ return $pv -> price -> id_type;});
@@ -220,7 +224,7 @@ $(document).scroll(function(){
         </div>
         <?php if (count($model -> doctors)): ?>
             <div id="doctors" class="anchorHolder"></div>
-            <h3>Врачи</h3>
+            <h2>Врачи</h2>
             <div class="row p-3">
 
                 <?php
@@ -241,7 +245,7 @@ $(document).scroll(function(){
             ?>
         </div>
         <div id="reviewsHead" class="anchorHolder"></div>
-        <h3>Отзывы</h3>
+        <h2>Отзывы</h2>
         <div class="p-3 mx-auto" style="max-width: 700px" id="reviews" >
             <?php
             echo Yii::app() -> getModule('clinics') -> getObjectsReviewsPool(get_class($model)) -> showObjectCommentsWidget($model -> id);

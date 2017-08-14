@@ -89,6 +89,25 @@ $(document).scroll(function(){
 })();
 
 ',CClientScript::POS_READY);
+
+$r = false;
+if ($model -> giveMinMrtPrice()) {
+    $r = "МРТ";
+}
+if ($model -> giveMinKtPrice()) {
+    if ($r) {
+        $r .= ' и КТ';
+    } else {
+        $r = 'КТ';
+    }
+}
+$title = Yii::app() -> params['clinicPrefix'].' "'.$model -> name.'"';
+$this->setPageTitle($title);
+$descr .= "На странице представлена самая акутальная информация о медицинском центре \"".$model -> name."\": когда он работает, сколько стоит пройти ".Yii::app() -> params['researchText']." - и проверенные отзывы. ";
+if ($model -> partner) {
+    $descr .= ' Можно также оставить заявку на обратный звонок и записаться на '.Yii::app() -> params['researchText'].' в клинику "'.$model -> name.'"';
+}
+$cs -> registerMetaTag($descr,'description');
 ?>
 <div id="clinicNav" class="header_topline navbar navbar-toggleable-lg navbar-light row">
     <button style="margin-top:15px;" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#clinicNavbarText" aria-controls="clinicNavbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,7 +157,7 @@ $(document).scroll(function(){
     <div id="description" class="anchorHolder"></div>
     <div>
         <div class="mb-3">
-            <?php echo $model -> text; ?>
+            <?php echo $model -> getText(true); ?>
         </div>
         <div id="clinic-carousel" class="carousel slide mx-auto" data-ride="carousel">
             <div class="carousel-inner" role="listbox">

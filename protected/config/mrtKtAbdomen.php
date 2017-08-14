@@ -104,6 +104,7 @@ return SiteDispatcher::mergeArray(
                 7,//mrtAbdomen
                 8,//ktAbdomen
             ],
+            'researchText' => 'МРТ и КТ брюшной полости',
             'clinicPrefix' => 'Центр диагностики брюшной полости'
         ),
     )

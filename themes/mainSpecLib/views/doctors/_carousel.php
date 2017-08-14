@@ -24,7 +24,7 @@ if ((file_exists($doctor -> giveImageFolderAbsoluteUrl() . $doctor -> logo)&&($d
     </div>
     <div class="card-block row ">
         <div class="col-12 col-md-4 ">
-        <img class="rounded-circle" style="width:100%; height:auto;" src="<?php echo $url; ?>"/>
+        <img class="rounded-circle" style="width:100%; height:auto;" alt="<?php echo htmlspecialchars($doctor -> name); ?>" src="<?php echo $url; ?>"/>
         </div>
         <div class="col-12 col-md-8 media-body">
             <?php if ($doctor -> education): ?>

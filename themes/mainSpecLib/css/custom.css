@@ -58,8 +58,10 @@ h1, h2, h3, h4, h5, h6 {
 .articleModal .modal-dialog{
 	max-width: 80%;!important;
 }
-.clinicsPage h3{
+.clinicsPage h3, .clinicsPage h2{
 	text-align: center;
+	font-size:1.75rem;
+	font-weight:bold;
 }
 .btn {
 	cursor: pointer;

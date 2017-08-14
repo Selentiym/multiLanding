@@ -1082,4 +1082,17 @@ abstract class BaseModel extends CTModel {
 			$model -> additional = $post_arr[get_class($this)]['Additional'];
 		}
 	}
+
+	/**
+	 * @param bool $clearH1
+	 * @return string
+	 */
+	public function getText($clearH1 = false){
+		$rez = $this -> text;
+		if ($clearH1) {
+			$rez = preg_replace('/<h1/','<h2',$rez);
+			$rez = preg_replace('/<\/h1/','</h2',$rez);
+		}
+		return $rez;
+	}
 }

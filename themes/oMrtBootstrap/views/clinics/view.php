@@ -158,7 +158,7 @@ $this->setPageTitle($title);
 $descr = $model -> description;
 if (!$descr) {
 	$descr = generateKeyedTextForClinic($fr, $modelTriggers).' можно в клинике "'.$model -> name.'" по адресу '.$model -> address;
-	$descr .= ". На страницы Вы сможете узнать цены на $r, прочитать отзывы о медицинском центре '$model->name', а также узнать часы его работы.";
+	$descr .= ". На странице Вы сможете узнать цены на $r, прочитать отзывы о медицинском центре '$model->name', а также узнать часы его работы.";
 	if ($model -> partner) {
 		$descr .= " Вы также можете записаться на $r исследование в '$model->name', оставив заявку на обратный звонок или позвонив по телефону.";
 	}
