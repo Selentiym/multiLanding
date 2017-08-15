@@ -16,6 +16,22 @@ $clinic = $model -> clinic;
 $cs = Yii::app() -> getClientScript();
 $cs->registerLinkTag('canonical', null, $url);
 $this -> setPageTitle($model -> heading ? $model -> heading : 'Акции и скидки в '.$model -> clinic -> name);
+$str .= 'В медицинском центре <a href=\''.$model -> clinic -> getUrl().'\'>"'.$model -> clinic -> name."\"</a> ";
+if ($from) {
+    $str .= "<strong>". ($opened ? " с " : "C ") .date('j.m.Y',$from)."</strong>";
+    $opened = true;
+}
+if ($to) {
+    $str .= "<strong>".($opened ? " по " : "По ").date('j.m.Y',$to)."</strong>";
+    $opened = true;
+}
+$str .= ' действует <strong>акция</strong> ';
+$str .=  $model -> saleSize ? 'до '.$model -> saleSize : '' ;
+if ($model -> research instanceof ObjectPrice) {
+    $str .= " на ";
+    $str .= $this -> renderPartial('/prices/_catalogLink',['model' => $model -> research,'triggers'=>['area'=>$area]], true);
+}
+$cs -> registerMetaTag(strip_tags($str),'description');
 ?>
 
 
@@ -33,22 +49,9 @@ $this -> setPageTitle($model -> heading ? $model -> heading : 'Акции и с�
                 $from = $model -> getTimeAttr('validFrom');
                 $to = $model -> getTimeAttr('validTo');
                 $opened = true;
+                $str = '';
                 if (($from)||($to)) {
-                    echo 'В медицинском центре <a href=\''.$model -> clinic -> getUrl().'\'>"'.$model -> clinic -> name."\"</a> ";
-                    if ($from) {
-                        echo "<strong>". ($opened ? " с " : "C ") .date('j.m.Y',$from)."</strong>";
-                        $opened = true;
-                    }
-                    if ($to) {
-                        echo "<strong>".($opened ? " по " : "По ").date('j.m.Y',$to)."</strong>";
-                        $opened = true;
-                    }
-                    echo ' действует <strong>акция</strong> ';
-                    echo $model -> saleSize ? 'до '.$model -> saleSize : '' ;
-                    if ($model -> research instanceof ObjectPrice) {
-                        echo " на ";
-                        $this -> renderPartial('/prices/_catalogLink',['model' => $model -> research,'triggers'=>['area'=>$area]]);
-                    }
+                    echo $str;
                 }
                 ?>
             </div>

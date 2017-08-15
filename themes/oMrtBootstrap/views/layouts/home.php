@@ -202,7 +202,7 @@ $triggers = $_GET;
                     </div>
                 </div>
                 <div class="pr-1 col-12 col-md-auto font-weight-bold align-items-center">
-                    <img style="width: 50px;" src="<?php echo $baseTheme; ?>/images/phone.png" alt="phone"/>&nbsp
+                    <img style="width: 50px;" src="<?php echo $baseTheme; ?>/images/phone.png" alt="phone"/>&nbsp;
                     <div class="ml-1 align-middle d-inline-block">
                         <strong>Запись на МРТ&nbsp;и&nbsp;КТ</strong><br/>
                         <a href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a><br/>
