@@ -11,6 +11,7 @@ $triggers = $_GET;
 if (!in_array($triggers['area'],['spb','msc'])) {
     $triggers['area'] = 'spb';
 }
+
 $model = clinics::model() -> findByAttributes(['verbiage' => 'service'.$triggers['area']]);
 if (!$model) {
     $model = clinics::model();
@@ -179,7 +180,7 @@ $(document).scroll(function(){
         <h2>Цены на исследования</h2>
         <div class="p3 mx-auto justify-content-center row">
             <?php
-            $typedPrices = UClinicsModuleModel::groupBy($model -> getPriceValues(true),function(ObjectPriceValue $pv){ return $pv -> price -> id_type;});
+            $typedPrices = UClinicsModuleModel::groupBy($model -> getPriceValuesArray(),function(ObjectPriceValue $pv){ return $pv -> price -> id_type;});
             $names = [
                 1 => '<i class="fa fa-life-ring"></i>&nbsp;МРТ',
                 2 => '<i class="fa fa-server"></i>&nbsp;КТ',
