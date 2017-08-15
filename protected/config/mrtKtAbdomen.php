@@ -46,7 +46,7 @@ return SiteDispatcher::mergeArray(
             ],
             'phoneMSC' => [
                 'class' => 'application.components.constantPhoneComponent',
-                'number' => '8 (495) 000-00-00'
+                'number' => '8 (495) 125-29-54'
             ],
             'bootstrap'=>array(
                 'class'=>'application.extensions.bootstrap.components.Bootstrap'
