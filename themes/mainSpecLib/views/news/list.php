@@ -82,7 +82,7 @@ $cs -> registerMetaTag('На странице Вы найдете скидки �
                     <p>В <strong>Санкт-Петербурге</strong> сейчас действует <a href="<?php echo $this -> createUrl('home/news',['area' => 'spb']); ?>"><?php echo baseSpecHelpers::salesWord($spb); ?></a></p>
                     <p>В <strong>Москве</strong> сейчас действует <a href="<?php echo $this -> createUrl('home/news',['area' => 'msc']); ?>"><?php echo baseSpecHelpers::salesWord($msc); ?></a></p>
                     <?php if (count($researchedNews) > 0): ?>
-                    <p>нижеперечисленные исследования можно <strong>более выгодно</strong>:
+                    <p>нижеперечисленные исследования можно пройти <strong>более выгодно</strong>:
                     <ul>
                         <?php foreach($researchedNews as $news){
                             echo"<li><a href='".$this -> createUrl('home/clinics',['research' => $news -> research -> verbiage, 'area' => $area,'sortBy' => 'priceUp'])."'>".$news -> research -> name."</a></li>";

@@ -76,6 +76,9 @@ class CHtml extends Html {
         }
         if (count($selected_ids) > 0) {
             foreach($selected_ids as $id){
+                if (!$id) {
+                    continue;
+                }
                 $selected[$id] = array('selected' => 'selected');
             }
         }
