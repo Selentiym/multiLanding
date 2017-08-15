@@ -42,7 +42,7 @@ return SiteDispatcher::mergeArray(
         'components'=>array(
             'phone' => [
                 'class' => 'application.components.constantPhoneComponent',
-                'number' => '8 (812) 000-00-00'
+                'number' => '8 (812) 241-10-46'
             ],
             'phoneMSC' => [
                 'class' => 'application.components.constantPhoneComponent',
