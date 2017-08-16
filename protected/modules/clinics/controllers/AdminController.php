@@ -825,6 +825,11 @@ class AdminController extends Controller
                     $obj->id_object = $object->id;
                     $obj->id_price = $id;
                     $obj->value = $val;
+                    if ($_POST['pricesLocked'][$id]) {
+                        $obj -> locked = 1;
+                    } else {
+                        $obj -> locked = 0;
+                    }
                     if (!$obj -> save()) {
                         $err = $obj -> getErrors();
                     }

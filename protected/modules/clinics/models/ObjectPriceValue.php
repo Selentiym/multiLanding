@@ -8,6 +8,7 @@
  * @property integer $id_object
  * @property double $value
  * @property integer $id
+ * @property bool $locked
  *
  * @property ObjectPrice $price
  */
@@ -34,7 +35,7 @@ class ObjectPriceValue extends CTModel
 			array('value', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_price, id_object, value, id', 'safe', 'on'=>'search'),
+			array('id_price, id_object, value, id, locked', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -118,10 +119,12 @@ class ObjectPriceValue extends CTModel
 		if ($this -> isNewRecord) {
 			$dupl = $this -> findByAttributes(['id_object' => $this -> id_object, 'id_price' => $this -> id_price]);
 			if ($dupl) {
-				if (($this -> getScenario() == 'noUpdateIfDup')||($this -> value == $dupl -> value)) {
+				//Если цена закрытая, то не трогаем ее при автообновлении
+				if (($this -> getScenario() == 'autoUpdate') && ($dupl -> locked)) {
 					return false;
 				}
 				$dupl -> value = $this -> value;
+				$dupl -> locked = $this -> locked;
 				if ($dupl -> save()) {
 					return false;
 				} else {

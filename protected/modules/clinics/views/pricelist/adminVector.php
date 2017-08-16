@@ -10,6 +10,13 @@
  */
 $o = Objects::getNumber(get_class($object));
 $blocks = ObjectPriceBlock::model() -> findAll(['order' => 'num DESC']);
+$cs = Yii::app() -> getClientScript();
+$cs -> registerCoreScript('jquery');
+$cs -> registerScript('selectAll','
+$("#selectAll").change(function(){
+    $("input[type=checkbox]").prop("checked",$(this).is(":checked"));
+});
+',CClientScript::POS_READY);
 ?>
 <h1>Прайслист <?php echo get_class($object) == 'clinics' ? 'клиники' : 'доктора'; ?> <<?php echo $object -> name; ?>></h1>
 <style>
@@ -29,6 +36,7 @@ $blocks = ObjectPriceBlock::model() -> findAll(['order' => 'num DESC']);
         <th>Блок</th>
         <th>Имя</th>
         <th>Значение</th>
+        <th>locked<input type="checkbox" id="selectAll"/></th>
     </tr>
 <?php
 $object -> getPriceValue(-1,true);

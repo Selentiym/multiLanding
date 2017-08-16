@@ -978,7 +978,7 @@ abstract class BaseModel extends CTModel {
 			if ($p) {
 				//$obj = new ObjectPriceValue('noUpdateIfDup');
 				//Мы хотим обновлять цену, если она была уже установлена
-				$obj = new ObjectPriceValue();
+				$obj = new ObjectPriceValue('autoUpdate');
 				$obj->id_object = $this->id;
 				$obj->id_price = $price -> id;
 				$obj->value = $p;

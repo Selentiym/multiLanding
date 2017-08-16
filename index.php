@@ -21,7 +21,9 @@ if (!$config) {
 if (file_exists('debug.pss.php')) {
     defined('YII_DEBUG') or define('YII_DEBUG', true);
     register_shutdown_function(function($saveTime){
-        echo "Время работы скрипта: ".(round((microtime(true)-$saveTime)*100)/100);
+        if (!Yii::app() -> request -> isAjaxRequest) {
+            echo "Время работы скрипта: " . (round((microtime(true) - $saveTime) * 100) / 100);
+        }
     },microtime(true));
 }
 // specify how many levels of call stack should be shown in each log message
