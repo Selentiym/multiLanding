@@ -15,7 +15,7 @@
     </div>
     <div class="card-block">
         <?php if ($imageUrl) : ?>
-            <a href="<?php echo $url; ?>"><img class="img-fluid" src="<?php echo $imageUrl; ?>" alt="<?php echo $model -> name; ?>" /></a>
+            <a href="<?php echo $url; ?>"><img class="img-fluid" src="<?php echo $imageUrl; ?>" alt="<?php echo $name; ?>" /></a>
         <?php endif; ?>
         <div>
             <?php echo $text; ?>
