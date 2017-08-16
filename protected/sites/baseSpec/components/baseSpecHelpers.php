@@ -90,5 +90,4 @@ class baseSpecHelpers {
         $arr ['description'] = $a -> description;
         return $arr;
     }
-
 }
