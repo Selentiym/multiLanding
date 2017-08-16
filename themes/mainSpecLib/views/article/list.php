@@ -37,5 +37,12 @@ $cs -> registerMetaTag($keys,'keywords');
         <div class="children row">
         <?php $this -> renderPartial('/article/renderList',['articles' => $articles]); ?>
         </div>
+        <div class="col-12">
+
+            <?php
+            $common = baseSpecHelpers::dataForStandardArticleCards();
+            unset($common['lib']);
+            $this -> renderPartial('/article/renderList', array('articles' => $common)); ?>
+        </div>
     </div>
 </div>

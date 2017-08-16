@@ -87,7 +87,7 @@ $cs -> registerMetaTag(strip_tags($str),'description');
     <div class="row">
         <div class="col">
         <?php
-        $common = dataForStandardArticleCards();
+        $common = baseSpecHelpers::dataForStandardArticleCards();
         $this -> renderPartial('/article/renderList', array('articles' => $common));
         ?>
         </div>
