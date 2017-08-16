@@ -6,6 +6,10 @@
  * Time: 16:04
  */
 class Service extends clinics {
+    /**
+     * @var array
+     */
+    private $_priceTriggers = [];
     public function parsePrices() {
         if (!$this -> external_link) {
             return [];
@@ -26,9 +30,16 @@ class Service extends clinics {
         return $rez;
     }
 
+    /**
+     * array $triggers
+     */
+    public function setTriggers($triggers) {
+        $this -> _priceTriggers = $triggers;
+    }
     public function getPriceValuesArray($refresh = false, $triggers = []){
         if ((!isset($this -> _priceValues))||$refresh) {
             $old = parent::getPriceValuesArray(true);
+            $triggers = array_filter(array_merge($this -> _priceTriggers, $triggers));
             $this -> _priceValues = [];
             $objs = ObjectPrice::model() -> findAllByAttributes(['object_type' => Objects::getNumber('clinics')]);
             //Потом будем для них искать минимальную цену

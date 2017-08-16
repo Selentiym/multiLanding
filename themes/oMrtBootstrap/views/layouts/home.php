@@ -85,22 +85,20 @@ $priceIds = [
     "КТ сосудов" => 78
 ];
 $cityCode = Geo::getCityCode();
-$triggers = in_array($cityCode, ['spb','msc']) ? ['area' => $cityCode] : [] ;
+$triggers = in_array($cityCode, ['spb','msc']) ? ['area' => $cityCode] : ['area' => 'spb'] ;
 $prices = ObjectPrice::model() -> findAllByPk($priceIds);
 $mapped = [];
 foreach ($prices as $price) {
     $mapped[$price -> id] = $price;
 }
-$criteria = new CDbCriteria();
-$criteria -> addCondition('clinic.partner = 1');
-$prices = ObjectPrice::calculateMinValues($mapped, $triggers, $criteria);
-$toShowPrices = [];
-foreach ($priceIds as $name => $id) {
-    if (($name >= 1)||($name == 0)) {
-        $name = $mapped[$id] -> name;
-    }
-    if ($val = $mapped[$id] -> getCachedPrice() -> value) {
-        $toShowPrices[] = ['name' => $name, 'price' => $val];
+$service = clinics::model() -> findByAttributes(['verbiage' => 'service'.$triggers['area']]);
+if ($service instanceof Service) {
+    $service -> setTriggers($triggers);
+    foreach ($priceIds as $name => $id) {
+        if (($name >= 1)||($name == 0)) {
+            $name = $mapped[$id] -> name;
+        }
+        $toShowPrices[] = ['name' => $name, 'price' => $service -> getPriceValue($id) -> value];
     }
 }
 $cs -> registerScript('topCarousel','
