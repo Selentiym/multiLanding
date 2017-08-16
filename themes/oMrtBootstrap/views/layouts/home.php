@@ -75,14 +75,16 @@ $cs -> registerScript('initiate_popup_forms','
 
 $cs->registerCssFile(Yii::app() -> theme -> baseUrl.'/css/styles.css');
 $priceIds = [
-    1,6,//GM
-    "МРТ сустава" => 83,//joint
-    22,26,//abdomen
-    29, 30,//pelvis
+    1,
+    "любую КТ" => 6,//GM
     "МРТ отдела позвоночника" => 14,//spine
-    68,//kt lungs
+    32,//knee joint
+    "МРТ тазобедренного/плечевого сустава" => 31,//joint
+    22,26,//abdomen
+    29, //30,//pelvis
+    //68,//kt lungs
     "МРТ сосудов" => 60,
-    "КТ сосудов" => 78
+    //"КТ сосудов" => 78
 ];
 $cityCode = Geo::getCityCode();
 $triggers = in_array($cityCode, ['spb','msc']) ? ['area' => $cityCode] : ['area' => 'spb'] ;
