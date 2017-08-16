@@ -95,7 +95,7 @@ $service = clinics::model() -> findByAttributes(['verbiage' => 'service'.$trigge
 if ($service instanceof Service) {
     $service -> setTriggers($triggers);
     foreach ($priceIds as $name => $id) {
-        if (($name >= 1)||($name == 0)) {
+        if (($name > 1)||($name === 0)||($name === 1)) {
             $name = $mapped[$id] -> name;
         }
         $toShowPrices[] = ['name' => $name, 'price' => $service -> getPriceValue($id) -> value];
