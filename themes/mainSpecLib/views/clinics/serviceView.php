@@ -21,14 +21,15 @@ Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl(
 $cs = Yii::app() -> getClientScript();
 $cs -> registerCoreScript('jquery');
 $cs -> registerCoreScript('rateit');
-$baseTheme = Yii::app() -> themeManager -> getBaseUrl('mainSpecLib');
+$baseSpecTheme = Yii::app() -> themeManager -> getBaseUrl('mainSpecLib');
+$baseTheme = Yii::app() -> getTheme() -> getBaseUrl();
 //metatags
 $cs -> registerMetaTag('Консультация по МРТ и КТ, цены на обследование, адреса где делают МРТ и КТ. Помощь в выборе клиники по всем параметрам. Любой район города, рядом с метро. Доступные цены!','description');
 $this -> setPageTitle($model -> name);
 $cs -> registerMetaTag('сделать МРТ брюшной области, дешево пройти МРТ и КТ, цены на МРТ и КТ, клиники где делают томографию, Москва, Санкт-Петербург','keywords');
-$cs -> registerScriptFile($baseTheme.'/js/map.js',CClientScript::POS_END);
+$cs -> registerScriptFile($baseSpecTheme.'/js/map.js',CClientScript::POS_END);
 $cs -> registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");
-$cs -> registerCssFile($baseTheme.'/css/clinic.css');
+$cs -> registerCssFile($baseSpecTheme.'/css/clinic.css');
 //Handlers on showMoreButton
 $cs -> registerScript('eventsOnShowMore','
     $(document).on("click",".showMoreButton", function(){

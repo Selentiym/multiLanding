@@ -11,8 +11,9 @@ Yii::app()->clientScript->registerLinkTag('canonical', null, $this -> createUrl(
 $cs = Yii::app() -> getClientScript();
 $cs -> registerCoreScript('jquery');
 $cs -> registerCoreScript('rateit');
-$baseTheme = Yii::app() -> themeManager -> getBaseUrl('mainSpecLib');
-$cs -> registerScriptFile($baseTheme.'/js/map.js',CClientScript::POS_END);
+$baseSpecTheme = Yii::app() -> themeManager -> getBaseUrl('mainSpecLib');
+$baseTheme = Yii::app() -> getTheme() -> getBaseUrl();
+$cs -> registerScriptFile($baseSpecTheme.'/js/map.js',CClientScript::POS_END);
 $cs -> registerScriptFile("https://api-maps.yandex.ru/2.1/?lang=ru_RU");
 $temp = $model -> getCoordinates();
 $coordinaty[0] = $temp[1];
@@ -26,7 +27,7 @@ if ($coordinaty[1]&&$coordinaty[0]) {
 			$("#map").html("Не удалось найти местоположение заправшиваемого объекта. Пожалуйста, сообщите о данной ошибке в техподдержку сайта. Адрес: ' . $adress . '.");
 		', CClientScript::POS_READY);
 }
-$cs -> registerCssFile($baseTheme.'/css/clinic.css');
+$cs -> registerCssFile($baseSpecTheme.'/css/clinic.css');
 /**
  * doctors
  */
