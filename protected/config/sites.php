@@ -61,11 +61,41 @@ return array(
         ],
         'userAgent' => false
     ],
+    'mrtKtAbdomen' => [
+        'host' => [
+            'мрт-и-кт-брюшной-полости.рф',
+            'www.мрт-и-кт-брюшной-полости.рф',
+            'xn-------d4d3beggocsncbngg1aeem2k7f.xn--p1ai',
+            'www.xn-------d4d3beggocsncbngg1aeem2k7f.xn--p1ai'
+        ],
+        'userAgent' => false
+    ],
     'mrtKtSpine' => [
         'host' => [
             'мрт-и-кт-головного-мозга.рф',
             'xn------8cdj3aeeoentakcblm2be7i.xn--p1ai',
             'spine.cq97848.tmweb.ru',
+        ],
+        'userAgent' => false
+    ],
+    'mrtKtJoints' => [
+        'host' => [
+            'мрт-и-кт-суставов.рф',
+            'xn------8cdka1bro1aorahedp.xn--p1ai',
+        ],
+        'userAgent' => false
+    ],
+    'mrtKtVessels' => [
+        'host' => [
+            'мрт-и-кт-сосудов.рф',
+            'xn------hddjvpmxborbgeu.xn--p1ai',
+        ],
+        'userAgent' => false
+    ],
+    'mrtKtPelvis' => [
+        'host' => [
+            'мрт-и-кт-малого-таза.рф',
+            'xn-------73dbav2bdxogf6abx0bei.xn--p1ai',
         ],
         'userAgent' => false
     ],
@@ -92,13 +122,4 @@ return array(
         'host' => [],
         'userAgent' => false
     ],
-    'mrtKtAbdomen' => [
-        'host' => [
-            'мрт-и-кт-брюшной-полости.рф',
-            'www.мрт-и-кт-брюшной-полости.рф',
-            'xn-------d4d3beggocsncbngg1aeem2k7f.xn--p1ai',
-            'www.xn-------d4d3beggocsncbngg1aeem2k7f.xn--p1ai'
-        ],
-        'userAgent' => false
-    ]
 );

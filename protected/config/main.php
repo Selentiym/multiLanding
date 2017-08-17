@@ -1,4 +1,14 @@
 <?php
+
+function mainTable($prefix = 'tbl_'){
+	static $temp;
+	if (!$temp) {
+		$temp = require(__DIR__.'/dbs/dbMain.pss.php');
+	}
+	$temp['tablePrefix'] = $prefix;
+	return $temp;
+}
+
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 

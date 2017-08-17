@@ -5,61 +5,28 @@
  * Date: 24.04.2017
  * Time: 21:21
  */
+
 return SiteDispatcher::mergeArray(
     require_once(dirname(__FILE__).'/baseSpecLib.php'),
     array(
-        'name' => 'Самая крупная сеть МРТ и КТ диагностических центров',
+        'name' => 'МРТ и КТ головы и шеи',
         'theme' => 'oMrt/oMrtBootstrap/mainSpecLib/mrtKtMozg',
         'language' => 'mrtKtMozg',
-        'modules'=>array(
-            'clinics' => [
-                'class' => 'application.modules.clinics.ClinicsModule',
-                'dbConfig' => 'dbClinics',
-                'dbArticles' => 'dbArticles',
-                'filesPath' => 'files/mrtKtMozg',
-                'clinicsComments' => function () {return Yii::app() -> getModule('clinicsComments'); }
-            ],
-            'taskgen' => [
-                'class' => 'application.modules.taskgen.TaskGenModule',
-                'dbConfig' => 'dbTaskGen'
-            ],
-        ),
         'components'=>array(
-            'phone' => [
-                'class' => 'application.components.constantPhoneComponent',
-                'number' => 'телефон'
-            ],
-            'dbClinics'=>array(
-                'class' => 'CDbConnection',
-                'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
-                'tablePrefix' => 'tbl_',
-                'emulatePrepare' => true,
-                'username' => 'cq97848_clmod',
-                'password' => 'kicker1995',
-                'charset' => 'utf8',
-            ),
-            'dbArticles'=>array(
-                'class' => 'CDbConnection',
-                'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
-                'tablePrefix' => 'mozg_',
-                'emulatePrepare' => true,
-                'username' => 'cq97848_clmod',
-                'password' => 'kicker1995',
-                'charset' => 'utf8',
-            ),
-            'dbTaskGen'=>array(
-                'class' => 'CDbConnection',
-                'connectionString' => 'mysql:host=localhost;dbname=cq97848_newtgen',
-                'tablePrefix' => 'tbl_',
-                'emulatePrepare' => true,
-                'username' => 'cq97848_newtgen',
-                'password' => 'kicker1995',
-                'charset' => 'utf8',
-            ),
+            'dbClinicComments'=>mainTable('mozg_clc_'),
+            'dbArticles'=>mainTable('mozg_'),
         ),
         'params'=>array(
             'siteId' => 'mrtKtMozg',
-            'formLine' => -9
+            'formLine' => -9,
+            'priceBlocks' => [
+                1,//mrtMozg
+                2,//ktMozg
+                3,//mrtNeck
+                4,//ktNeck
+            ],
+            'researchText' => 'МРТ и КТ головы и шеи',
+            'clinicPrefix' => 'Центр диагностики головы и шеи'
         ),
     )
 );

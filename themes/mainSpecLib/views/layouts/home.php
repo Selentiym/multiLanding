@@ -6,7 +6,8 @@
  * Time: 13:04
  */
 $cs = Yii::app() -> getClientScript();
-$baseTheme = Yii::app() -> getThemeManager() -> getBaseUrl("mainSpecLib");
+$baseTheme = Yii::app() -> getTheme() -> getBaseUrl();
+$baseSpecTheme = Yii::app() -> getThemeManager() -> getBaseUrl("mainSpecLib");
 $crit = new CDbCriteria();
 $crit -> addInCondition('id_block',Yii::app() -> params['priceBlocks']);
 $prices = ObjectPrice::model() -> findAll($crit);
@@ -96,7 +97,7 @@ var slider = topSlider('.json_encode($toShowPrices).');
     $cs -> registerCoreScript('bootstrap4js');
     $cs -> registerCoreScript('maskedInput');
     $cs -> registerCoreScript('scrollToTopActivate');
-    $cs -> registerCssFile($baseTheme.'/css/custom.css');
+    $cs -> registerCssFile($baseSpecTheme.'/css/custom.css');
     $cs -> registerCoreScript('font-awesome');
     ?>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -119,7 +120,7 @@ var slider = topSlider('.json_encode($toShowPrices).');
         </div>
         <div class="ml-3 align-items-center row">
             <div class="col-auto">
-                <img style="width:50px;" src="<?php echo $baseTheme; ?>/images/lamp.png" alt="list"/>
+                <img style="width:50px;" src="<?php echo $baseSpecTheme; ?>/images/lamp.png" alt="list"/>
             </div>
             <div class="col">
                 <div id="topSlider">
@@ -133,12 +134,12 @@ var slider = topSlider('.json_encode($toShowPrices).');
         <div class="row align-items-center pr-1 ml-md-3 pr-md-3">
             <div class="pr-2 col-12 col-md-auto hidden-md-down">
                 <div class="row align-items-center ">
-                    <div class="col-auto p-2"><img style="width:50px;" src="<?php echo $baseTheme; ?>/images/time.png" alt="clock"/></div>
+                    <div class="col-auto p-2"><img style="width:50px;" src="<?php echo $baseSpecTheme; ?>/images/time.png" alt="clock"/></div>
                     <div  class="col-auto p-2"><strong>Звоните</strong><div class="headerText">с&nbsp;7:00&nbsp;до&nbsp;00:00</div></div>
                 </div>
             </div>
             <div class="pr-1 col-12 col-md-auto font-weight-bold align-items-center">
-                <img style="width: 50px;" src="<?php echo $baseTheme; ?>/images/assign.png" alt="phone"/>&nbsp
+                <img style="width: 50px;" src="<?php echo $baseSpecTheme; ?>/images/assign.png" alt="phone"/>&nbsp
                 <div class="ml-1 align-middle d-inline-block">
                     <strong>Консультация&nbsp;по МРТ&nbsp;и&nbsp;КТ</strong><br/>
                     <a href="tel:<?php echo Yii::app() -> phone -> getUnformatted(); ?>"><?php echo Yii::app() -> phone -> getFormatted(); ?></a><br/>

@@ -109,43 +109,10 @@ return SiteDispatcher::mergeArray(
                     'home/clinics/*' => 'error/404'
                 ),
             ),
-            'dbClinics'=>require(__DIR__.'/dbs/dbClinics.pss.php'),
-            'dbClinicComments'=>array(
-                'class' => 'CDbConnection',
-                'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
-                'tablePrefix' => 'tbl_clc_',
-                'emulatePrepare' => true,
-                'username' => 'cq97848_clmod',
-                'password' => 'kicker1995',
-                'charset' => 'utf8',
-            ),
-            'dbComments'=>array(
-                'class' => 'CDbConnection',
-                'connectionString' => 'mysql:host=localhost;dbname=cq97848_clmod',
-                'tablePrefix' => 'tbl_c_',
-                'emulatePrepare' => true,
-                'username' => 'cq97848_clmod',
-                'password' => 'kicker1995',
-                'charset' => 'utf8',
-            ),
-            'dbTaskGen'=>array(
-                'class' => 'CDbConnection',
-                'connectionString' => 'mysql:host=localhost;dbname=cq97848_taskgen',
-                'tablePrefix' => 'tbl_',
-                'emulatePrepare' => true,
-                'username' => 'cq97848_taskgen',
-                'password' => 'kicker',
-                'charset' => 'utf8',
-            ),
-            'dbTracker'=>array(
-                'class' => 'CDbConnection',
-                'connectionString' => 'mysql:host=localhost;dbname=cq97848_landing',
-                'tablePrefix' => 'mrkt_',
-                'emulatePrepare' => true,
-                'username' => 'cq97848_landing',
-                'password' => 'kicker',
-                'charset' => 'utf8',
-            ),
+            'dbClinics'=>mainTable('tbl_'),
+            'dbClinicComments'=>mainTable('tbl_clc_'),
+            'dbComments'=>mainTable('tbl_c_'),
+            'dbTaskGen'=>require(__DIR__."/dbs/dbTaskgenDasha.pss.php"),
             'errorHandler' => [
                 'errorAction' => 'home/error'
             ]

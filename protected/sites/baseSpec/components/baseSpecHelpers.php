@@ -85,7 +85,7 @@ class baseSpecHelpers {
     public static function articleForImagedShortcut(Article $a){
         $arr = [];
         $arr ['url'] = Yii::app() -> controller -> createUrl('home/articleView',['verbiage' => $a -> verbiage]);
-        $arr ['imageUrl'] = ($url = $a -> getImageUrl()) ? $url : Yii::app() -> getTheme() -> baseUrl . '/images/noImgArticle.png';
+        $arr ['imageUrl'] = ($url = $a -> getImageUrl()) ? $url : Yii::app() -> getThemeManager() -> getTheme("mainSpecLib") -> baseUrl . '/images/noImgArticle.png';
         $arr ['name'] = $a -> name;
         $arr ['description'] = $a -> description;
         return $arr;
