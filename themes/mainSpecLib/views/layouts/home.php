@@ -21,6 +21,7 @@ foreach ($prices as $price) {
 $service = clinics::model() -> findByAttributes(['verbiage' => 'service'.$triggers['area']]);
 if ($service instanceof Service) {
     $service -> setTriggers($triggers);
+    $toShowPrices = [];
     foreach ($priceIds as $name => $id) {
         if (($name > 1)||($name === 0)||($name === 1)) {
             $name = $mapped[$id] -> name;

@@ -11,7 +11,6 @@ return SiteDispatcher::mergeArray(
         'name' => 'МРТ и КТ брюшной полости',
         'theme' => 'oMrt/oMrtBootstrap/mainSpecLib/mrtKtAbdomen',
         'language' => 'mrtKtAbdomen',
-        'defaultController' => 'home',
         'import' => [
             'application.sites.catalogCommon.HomeControllerCatalogCommon'
         ],

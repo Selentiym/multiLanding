@@ -2340,4 +2340,7 @@ class AdminController extends Controller
             return $clinicsArray;
         }
     }
+    public function actionPss(){
+        echo md5($_GET["translate"].'unique salt');
+    }
 }
