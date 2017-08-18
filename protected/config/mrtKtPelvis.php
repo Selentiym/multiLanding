@@ -17,7 +17,7 @@ return SiteDispatcher::mergeArray(
             'dbArticles'=>mainTable('pel_'),
         ),
         'params'=>array(
-            'siteId' => 'mrtKtPel',
+            'siteId' => 'mrtKtPelvis',
             'formLine' => -9,
             'priceBlocks' => [
                 5,//mrtSpine
