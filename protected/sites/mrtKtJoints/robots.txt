@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Host: http://xn------8cdka1bro1aorahedp.xn--p1ai
+Sitemap: http://xn------8cdka1bro1aorahedp.xn--p1ai/sitemapSPB.xml
+Sitemap: http://xn------8cdka1bro1aorahedp.xn--p1ai/sitemapMSC.xml
+Sitemap: http://xn------8cdka1bro1aorahedp.xn--p1ai/sitemapNews.xml
