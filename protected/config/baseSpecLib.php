@@ -100,7 +100,7 @@ return SiteDispatcher::mergeArray(
                     'clinics-<area:(spb|msc)>' => 'home/clinics',
                 ),
             ),
-            'dbClinics'=>require(__DIR__.DIRECTORY_SEPARATOR.'dbs'.DIRECTORY_SEPARATOR.'dbClinics.pss.php'),
+            'dbClinics'=>mainTable('tbl_'),
             'dbClinicComments'=>mainTable('tbl_clc_'),
             'dbComments'=>mainTable('tbl_c_'),
             'dbTaskGen'=> require(__DIR__ . '/dbs/dbTaskgenDasha.pss.php'),
