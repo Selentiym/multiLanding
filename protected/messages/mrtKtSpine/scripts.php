@@ -6,6 +6,7 @@
  * Time: 22:14
  */
 return array (
+    'yandexWM' => '<meta name="yandex-verification" content="8648c6cd173fc2ad" />',
     'GA' => '<span></span>',
     'yandexCounter' => '
 <!-- Yandex.Metrika counter -->

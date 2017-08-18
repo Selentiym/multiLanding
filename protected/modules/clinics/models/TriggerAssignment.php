@@ -11,7 +11,7 @@
  * @property BaseModel $object
  * @property TriggerValues $value
  */
-abstract class TriggerAssignment extends UModel {
+abstract class TriggerAssignment extends UClinicsModuleModel {
 
     /**
      * @return array validation rules for model attributes.
@@ -81,12 +81,9 @@ abstract class TriggerAssignment extends UModel {
         ));
     }
 
-    /**
-     * @return CDbConnection the database connection used for this class
-     */
-    public function getDbConnection()
+    public function getDbType()
     {
-        return Yii::app()->dbClinics;
+        return 'clinic';
     }
 
     /**

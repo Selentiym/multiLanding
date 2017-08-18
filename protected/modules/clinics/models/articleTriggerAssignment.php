@@ -35,4 +35,11 @@ class articleTriggerAssignment extends TriggerAssignment
 	public function getObjectName() {
 		return 'article';
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getDbType() {
+		return 'article';
+	}
 }
