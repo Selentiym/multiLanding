@@ -20,8 +20,8 @@ return SiteDispatcher::mergeArray(
             'siteId' => 'mrtKtPelvis',
             'formLine' => -9,
             'priceBlocks' => [
-                5,//mrtSpine
-                6,//ktSpine
+                9,//mrtPelvis
+                10,//ktPelvis
             ],
             'researchText' => 'МРТ и КТ малого таза',
             'clinicPrefix' => 'Центр диагностики малого таза'
