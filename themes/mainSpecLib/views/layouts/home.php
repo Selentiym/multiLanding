@@ -27,7 +27,9 @@ if ($service instanceof Service) {
         if (($name > 1)||($name === 0)||($name === 1)) {
             $name = $mapped[$id] -> name;
         }
-        $toShowPrices[] = ['name' => $name, 'price' => $service -> getPriceValue($id) -> value];
+        if ($service -> getPriceValue($id) -> value > 0) {
+            $toShowPrices[] = ['name' => $name, 'price' => $service -> getPriceValue($id) -> value];
+        }
     }
 }
 $cs -> registerScript('topCarousel','
