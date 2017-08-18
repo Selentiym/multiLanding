@@ -18,7 +18,8 @@ return array (
                     id:45660609,
                     clickmap:true,
                     trackLinks:true,
-                    accurateTrackBounce:true
+                    accurateTrackBounce:true,
+                    webvisor:true
                 });
             } catch(e) { }
         });
