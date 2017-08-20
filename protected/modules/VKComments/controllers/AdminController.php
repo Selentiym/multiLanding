@@ -1,6 +1,6 @@
 <?php
 class AdminController extends Controller {
-	protected function beforeAction(){
+	protected function beforeAction($action){
 		Comment::setModule($this -> getModule());
 		VKAccount::setModule($this -> getModule());
 		return true;

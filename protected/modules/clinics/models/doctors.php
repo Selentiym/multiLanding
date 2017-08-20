@@ -194,9 +194,9 @@ class doctors extends BaseModel
 	/**
 	* Function to be called after $model -> save() methods succeeds
 	*/
-	public function afterSave()
+	public function afterSave($noPrices = false)
 	{
-		parent::afterSave();
+		parent::afterSave($noPrices = false);
 		//Сохраняем изменения в массиве докторов
 		if (!isset($this -> clinicsInput)) {
 			$this -> clinicsInput = array();
@@ -230,7 +230,7 @@ class doctors extends BaseModel
 	
 	
 	
-	public function ReadData(){}
+	public function ReadData($data){}
 	
 	public function FillFieldsFromArray($model, $post_arr) {
 		parent::FillFieldsFromArray($model, $post_arr);
