@@ -188,7 +188,7 @@ class News extends UModel {
 		}
 		return News::model() -> findAll($criteria);
 	}
-	public function customFind($arg){
+	public function customFind($arg, $external = false, $scenario = false){
 		switch($this -> getScenario()) {
 			case 'view':
 				return self::model() -> findByPk($_GET['id']);
