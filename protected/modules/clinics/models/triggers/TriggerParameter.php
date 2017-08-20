@@ -117,7 +117,7 @@ class TriggerParameter extends CTModel
 		parent::readData($get);
 	}
 
-	public function customFind($arg, $external = false, $scenario = false) {
+	public function customFind($id = NULL) {
 		switch($this -> getScenario()) {
 			case 'list':
 				return $this;
@@ -126,12 +126,12 @@ class TriggerParameter extends CTModel
 				return $this;
 				break;
 			default:
-				if ($arg) {
-					return $this -> findByPk($arg);
+				if ($id) {
+					return $this -> findByPk($id);
 				}
 				break;
 		}
-		return parent::customFind($arg, $external, $scenario);
+		return parent::customFind($id);
 	}
 
 	/**

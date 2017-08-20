@@ -763,7 +763,7 @@ class Article extends BaseModel {
 			$this -> parent_id = 0;
 		}
 	}
-	public function afterSave() {
+	public function afterSave($noPrices = false) {
 		$sc = $this -> getScenario();
 		if (($sc == 'create')||($sc == 'update')) {
 			//triggers

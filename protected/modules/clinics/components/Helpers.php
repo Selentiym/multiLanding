@@ -58,6 +58,9 @@ function str2url($str) {
 }
 
 function prepareTextToJS($str) {
+    return htmlspecialchars(strip_tags($str));
+}
+function prepareTextToJS_old($str) {
     $search = array ("'<script[^>]*?>.*?</script>'si",  // Вырезает javaScript
         "'<[\/\!]*?[^<>]*?>'si",           // Вырезает HTML-теги
         "'([\r\n])[\s]+'",                 // Вырезает пробельные символы
@@ -70,7 +73,7 @@ function prepareTextToJS($str) {
         "'&(cent|#162);'i",
         "'&(pound|#163);'i",
         "'&(copy|#169);'i",
-        "'&#(\d+);'e");                    // интерпретировать как php-код
+        "'&#(\d+);'");
 
     $replace = array ("",
         "",
